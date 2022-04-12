@@ -136,7 +136,7 @@ class RegionalStatsWorldMap extends DashboardChartBase {
 
     private _worldMap;
     private colors: any = d3.scale.category10();
-    private refreshIntervalId: number;
+    private refreshIntervalId: any;
 
     worldMap = element => {
         let instance: any;
