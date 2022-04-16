@@ -36,6 +36,26 @@ export class SideBarComponent extends AppComponentBase {
             new SideBarMenuItem('Settings', 'Pages.Administration.Tenant.Settings', 'icon-settings', '/app/admin/tenantSettings')
         ]),
         new SideBarMenuItem('DemoUiComponents', 'Pages.DemoUiComponents', 'icon-puzzle', '/app/admin/demo-ui-components'),
+        new SideBarMenuItem('Tài sản', '', 'icon-puzzle', '',[
+            new SideBarMenuItem('Ghi tăng','','icon-puzzle',''),
+            new SideBarMenuItem('Thay đổi thông tin','','icon-puzzle',''),
+            new SideBarMenuItem('Điều chuyển','','icon-puzzle',''),
+            new SideBarMenuItem('Khấu hao','','icon-puzzle',''),
+            new SideBarMenuItem('Ghi giảm','','icon-puzzle',''),
+            new SideBarMenuItem('Kiểm kê','','icon-puzzle',''),
+            new SideBarMenuItem('Khác','','icon-puzzle','',[
+                new SideBarMenuItem('Lập kế hoạch mua sắm','','icon-puzzle',''),
+                new SideBarMenuItem('Lập đề nghị trang cấp','','icon-puzzle',''),
+                new SideBarMenuItem('Bảo dưỡng tài sản','','icon-puzzle',''),
+                new SideBarMenuItem('Lập đề nghị xử lí','','icon-puzzle',''),
+            ]),
+        ]),
+        new SideBarMenuItem('Danh mục', '', 'icon-puzzle', '',[
+            new SideBarMenuItem('Loại tài sản','','icon-puzzle','/app/main/property-types'),
+            new SideBarMenuItem('Thống kê tài sản','','icon-puzzle',''),
+            new SideBarMenuItem('Bộ phận','','icon-puzzle',''),
+        ]),
+        new SideBarMenuItem('Báo cáo', '', 'icon-puzzle', ''),
     ]);
 
     checkChildMenuItemPermission(menuItem): boolean {

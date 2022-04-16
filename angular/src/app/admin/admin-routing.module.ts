@@ -15,6 +15,7 @@ import { HostDashboardComponent } from './dashboard/host-dashboard.component';
 import { SubscriptionManagementComponent } from './subscription-management/subscription-management.component';
 import { InvoiceComponent } from './subscription-management/invoice/invoice.component';
 import { DemoUiComponentsComponent } from './demo-ui-components/demo-ui-components.component';
+import { PropertyTypeComponent } from '@app/main/property-types/property-types.component';
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import { DemoUiComponentsComponent } from './demo-ui-components/demo-ui-componen
                     { path: 'invoice/:paymentId', component: InvoiceComponent, data: { permission: 'Pages.Administration.Tenant.SubscriptionManagement' } },
                     { path: 'tenantSettings', component: TenantSettingsComponent, data: { permission: 'Pages.Administration.Tenant.Settings' } },
                     { path: 'hostDashboard', component: HostDashboardComponent, data: { permission: 'Pages.Administration.Host.Dashboard' } },
-                    { path: 'demo-ui-components', component: DemoUiComponentsComponent, data: { permission: 'Pages.DemoUiComponents' } }
+                    { path: 'demo-ui-components', component: DemoUiComponentsComponent, data: { permission: 'Pages.DemoUiComponents' } },
+                    // { path: 'property-type', component: PropertyTypeComponent, data: { permission: '' } }
                 ]
             }
         ])

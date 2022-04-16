@@ -59,6 +59,7 @@ import { DemoUiFileUploadComponent } from './demo-ui-components/demo-ui-file-upl
 import { DemoUiInputMaskComponent } from './demo-ui-components/demo-ui-input-mask.component';
 import { DemoUiEditorComponent } from './demo-ui-components/demo-ui-editor.component';
 import { InputMaskModule } from 'primeng/primeng';
+import { PropertyTypeComponent } from '@app/main/property-types/property-types.component';
 
 @NgModule({
     imports: [
@@ -120,7 +121,8 @@ import { InputMaskModule } from 'primeng/primeng';
         DemoUiSelectionComponent,
         DemoUiFileUploadComponent,
         DemoUiInputMaskComponent,
-        DemoUiEditorComponent
+        DemoUiEditorComponent,
+        PropertyTypeComponent
     ],
     exports: [
         AddMemberModalComponent

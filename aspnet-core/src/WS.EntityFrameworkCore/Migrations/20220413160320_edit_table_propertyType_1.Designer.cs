@@ -18,9 +18,10 @@ using WS.MultiTenancy.Payments;
 namespace WS.Migrations
 {
     [DbContext(typeof(WSDbContext))]
-    partial class WSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220413160320_edit_table_propertyType_1")]
+    partial class edit_table_propertyType_1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

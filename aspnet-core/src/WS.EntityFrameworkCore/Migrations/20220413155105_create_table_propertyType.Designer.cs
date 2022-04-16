@@ -18,9 +18,10 @@ using WS.MultiTenancy.Payments;
 namespace WS.Migrations
 {
     [DbContext(typeof(WSDbContext))]
-    partial class WSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220413155105_create_table_propertyType")]
+    partial class create_table_propertyType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1152,6 +1153,8 @@ namespace WS.Migrations
                     b.Property<string>("PropertyTypeCode")
                         .IsRequired()
                         .HasMaxLength(32);
+
+                    b.Property<string>("PropertyTypeId");
 
                     b.Property<string>("PropertyTypeName")
                         .IsRequired()

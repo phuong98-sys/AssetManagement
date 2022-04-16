@@ -10,6 +10,7 @@ using WS.MultiTenancy;
 using WS.MultiTenancy.Accounting;
 using WS.MultiTenancy.Payments;
 using WS.Storage;
+using WS.PropertyTypes;
 
 namespace WS.EntityFrameworkCore
 {
@@ -30,6 +31,7 @@ namespace WS.EntityFrameworkCore
         public virtual DbSet<Invoice> Invoices { get; set; }
 
         public DbSet<PersistedGrantEntity> PersistedGrants { get; set; }
+        public DbSet<PropertyType> PropertyTypes { get; set; }
 
         public WSDbContext(DbContextOptions<WSDbContext> options)
             : base(options)
@@ -40,6 +42,7 @@ namespace WS.EntityFrameworkCore
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
 
             modelBuilder.Entity<BinaryObject>(b =>
             {

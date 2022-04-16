@@ -34,6 +34,7 @@ import { DataTableModule } from 'primeng/primeng';
 import { PaginatorModule } from 'primeng/primeng';
 import { FileUploadModule as PrimeNgFileUploadModule, ProgressBarModule } from 'primeng/primeng';
 import { ChatMessageComponent } from './shared/layout/chat/chat-message.component';
+import { PropertyTypeComponent } from './main/property-types/property-types.component';
 
 @NgModule({
     declarations: [
@@ -53,7 +54,8 @@ import { ChatMessageComponent } from './shared/layout/chat/chat-message.componen
         ChatBarComponent,
         ChatFriendListItemComponent,
         NotificationSettingsModalComponent,
-        ChatMessageComponent
+        ChatMessageComponent,
+        PropertyTypeComponent
     ],
     imports: [
         ngCommon.CommonModule,
