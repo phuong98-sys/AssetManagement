@@ -4219,6 +4219,64 @@ export class ProfileServiceProxy {
 }
 
 @Injectable()
+export class PropertyTypeServiceProxy {
+    private http: Http;
+    private baseUrl: string;
+    protected jsonParseReviver: (key: string, value: any) => any = undefined;
+
+    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getAll(): Observable<ListResultDtoOfPropertyTypeDto> {
+        let url_ = this.baseUrl + "/api/services/app/PropertyType/GetAll";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = {
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processGetAll(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGetAll(response_);
+                } catch (e) {
+                    return <Observable<ListResultDtoOfPropertyTypeDto>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<ListResultDtoOfPropertyTypeDto>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetAll(response: Response): Observable<ListResultDtoOfPropertyTypeDto> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? ListResultDtoOfPropertyTypeDto.fromJS(resultData200) : new ListResultDtoOfPropertyTypeDto();
+            return Observable.of(result200);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<ListResultDtoOfPropertyTypeDto>(<any>null);
+    }
+}
+
+@Injectable()
 export class RoleServiceProxy {
     private http: Http;
     private baseUrl: string;
@@ -12341,6 +12399,104 @@ export class ChangeUserLanguageDto implements IChangeUserLanguageDto {
 
 export interface IChangeUserLanguageDto {
     languageName: string;
+}
+
+export class ListResultDtoOfPropertyTypeDto implements IListResultDtoOfPropertyTypeDto {
+    items: PropertyTypeDto[];
+
+    constructor(data?: IListResultDtoOfPropertyTypeDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(PropertyTypeDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfPropertyTypeDto {
+        let result = new ListResultDtoOfPropertyTypeDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface IListResultDtoOfPropertyTypeDto {
+    items: PropertyTypeDto[];
+}
+
+export class PropertyTypeDto implements IPropertyTypeDto {
+    id: string;
+    propertyTypeCode: string;
+    propertyTypeName: string;
+    note: string;
+    parentPropertyTypeId: string;
+    creationTime: moment.Moment;
+
+    constructor(data?: IPropertyTypeDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.propertyTypeCode = data["propertyTypeCode"];
+            this.propertyTypeName = data["propertyTypeName"];
+            this.note = data["note"];
+            this.parentPropertyTypeId = data["parentPropertyTypeId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): PropertyTypeDto {
+        let result = new PropertyTypeDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["propertyTypeCode"] = this.propertyTypeCode;
+        data["propertyTypeName"] = this.propertyTypeName;
+        data["note"] = this.note;
+        data["parentPropertyTypeId"] = this.parentPropertyTypeId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+}
+
+export interface IPropertyTypeDto {
+    id: string;
+    propertyTypeCode: string;
+    propertyTypeName: string;
+    note: string;
+    parentPropertyTypeId: string;
+    creationTime: moment.Moment;
 }
 
 export class ListResultDtoOfRoleListDto implements IListResultDtoOfRoleListDto {
