@@ -9,6 +9,8 @@ import { TenantsComponent } from './tenants/tenants.component';
 import { RolesComponent } from 'app/roles/roles.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { PropertyTypeComponent } from './contents/property-type/property-type.component';
+import { TestComponent } from './test/test.component';
+
 
 @NgModule({
     imports: [
@@ -23,7 +25,10 @@ import { PropertyTypeComponent } from './contents/property-type/property-type.co
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
-                    { path: 'property-type', component: PropertyTypeComponent, canActivate: [AppRouteGuard] },
+                    { path: 'contents', children:[
+                        {path: 'property-type', component: PropertyTypeComponent, canActivate: [AppRouteGuard] }
+                    ], canActivate: [AppRouteGuard] },
+                    { path: 'test', component: TestComponent, canActivate: [AppRouteGuard] },
                 ]
             }
         ])

@@ -40,6 +40,7 @@ import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import {TableModule} from 'primeng/table';
 import { PropertyTypeComponent } from './contents/property-type/property-type.component';
+import { TestComponent } from './test/test.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { PropertyTypeComponent } from './contents/property-type/property-type.co
     SidebarLogoComponent,
     SidebarUserPanelComponent,
     SidebarMenuComponent,
-    PropertyTypeComponent
+    PropertyTypeComponent,
+    TestComponent,
   ],
   imports: [
     CommonModule,
