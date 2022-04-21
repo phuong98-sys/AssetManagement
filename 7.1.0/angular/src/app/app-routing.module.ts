@@ -11,6 +11,7 @@ import { ChangePasswordComponent } from './users/change-password/change-password
 import { TestComponent } from './test/test.component';
 import { AssetTypeComponent } from './contents/asset-type/asset-type.component';
 import { AssetComponent } from './contents/asset/asset.component';
+import { CreateOrEditAssetComponent } from './contents/asset/create-or-edit-asset/create-or-edit-asset.component';
 
 
 @NgModule({
@@ -29,7 +30,9 @@ import { AssetComponent } from './contents/asset/asset.component';
                     { path: 'contents', children:[
                         {path: 'asset-type', component: AssetTypeComponent, canActivate: [AppRouteGuard] },
                         {path: 'asset-statistic', component: TestComponent, canActivate: [AppRouteGuard] },
-                        {path: 'asset', component: AssetComponent, canActivate: [AppRouteGuard] },
+                        {path: 'asset', component: AssetComponent, canActivate: [AppRouteGuard], children: [
+                            {path: 'create', component: CreateOrEditAssetComponent, canActivate: [AppRouteGuard]}
+                        ] },
                     ], canActivate: [AppRouteGuard] },
                     
                 ]
