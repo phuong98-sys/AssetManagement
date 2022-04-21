@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\DoAnTotNghiep\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {}
+    "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {}
   },
   "projects": {
-    "D:\\DoAnTotNghiep\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
+    "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DoAnTotNghiep\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj",
+        "projectUniqueName": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj",
         "projectName": "AssetManagement.Core",
-        "projectPath": "D:\\DoAnTotNghiep\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj",
+        "projectPath": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj",
         "packagesPath": "C:\\Users\\Win 10\\.nuget\\packages\\",
-        "outputPath": "D:\\DoAnTotNghiep\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\obj\\",
+        "outputPath": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

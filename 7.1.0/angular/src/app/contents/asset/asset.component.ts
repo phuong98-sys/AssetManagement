@@ -43,4 +43,3 @@ export class AssetComponent extends AppComponentBase implements OnInit {
     this._router.navigate(['app/contents/asset/create']);
   }
 }
-}

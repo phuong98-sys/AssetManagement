@@ -1746,6 +1746,36 @@ namespace AssetManagement.Migrations
                     b.ToTable("AbpTenants");
                 });
 
+            modelBuilder.Entity("AssetManagement.ReduceAssets.ReduceAsset", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReduceAssetCode")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<DateTime>("ReduceAssetDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("TotalRecovery")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ReduceAsset");
+                });
+
             modelBuilder.Entity("WS.PropertyTypes.PropertyType", b =>
                 {
                     b.Property<int>("Id")

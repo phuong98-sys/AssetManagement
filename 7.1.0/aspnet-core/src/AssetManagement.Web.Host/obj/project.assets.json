@@ -9487,11 +9487,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\DoAnTotNghiep\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\AssetManagement.Web.Host.csproj",
+      "projectUniqueName": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\AssetManagement.Web.Host.csproj",
       "projectName": "AssetManagement.Web.Host",
-      "projectPath": "D:\\DoAnTotNghiep\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\AssetManagement.Web.Host.csproj",
+      "projectPath": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\AssetManagement.Web.Host.csproj",
       "packagesPath": "C:\\Users\\Win 10\\.nuget\\packages\\",
-      "outputPath": "D:\\DoAnTotNghiep\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\obj\\",
+      "outputPath": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -9511,8 +9511,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\DoAnTotNghiep\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Core\\AssetManagement.Web.Core.csproj": {
-              "projectPath": "D:\\DoAnTotNghiep\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Core\\AssetManagement.Web.Core.csproj"
+            "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Core\\AssetManagement.Web.Core.csproj": {
+              "projectPath": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Core\\AssetManagement.Web.Core.csproj"
             }
           }
         }

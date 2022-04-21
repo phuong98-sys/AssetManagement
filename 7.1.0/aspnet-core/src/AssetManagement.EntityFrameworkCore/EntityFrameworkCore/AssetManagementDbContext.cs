@@ -7,6 +7,7 @@ using WS.PropertyTypes;
 using AssetManagement.IncreaseAssets;
 using AssetManagement.Assets;
 using AssetManagement.AssetTypes;
+using AssetManagement.ReduceAssets;
 
 namespace AssetManagement.EntityFrameworkCore
 {
@@ -17,6 +18,7 @@ namespace AssetManagement.EntityFrameworkCore
         public DbSet<IncreaseAsset> IncreaseAssets { get; set; }
         public DbSet<Asset> Assets { get; set; }
         public DbSet<AssetType> AssetTypes { get; set; }
+        public DbSet<ReduceAsset> ReduceAssets { get; set; }
         public AssetManagementDbContext(DbContextOptions<AssetManagementDbContext> options)
             : base(options)
         {
