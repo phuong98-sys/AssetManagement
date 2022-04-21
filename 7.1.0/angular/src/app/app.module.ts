@@ -39,8 +39,9 @@ import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import {TableModule} from 'primeng/table';
-import { PropertyTypeComponent } from './contents/property-type/property-type.component';
+import { AssetTypeComponent } from './contents/asset-type/asset-type.component';
 import { TestComponent } from './test/test.component';
+import { AssetComponent } from './contents/asset/asset.component';
 
 @NgModule({
   declarations: [
@@ -71,8 +72,9 @@ import { TestComponent } from './test/test.component';
     SidebarLogoComponent,
     SidebarUserPanelComponent,
     SidebarMenuComponent,
-    PropertyTypeComponent,
+    AssetTypeComponent,
     TestComponent,
+    AssetComponent,
   ],
   imports: [
     CommonModule,

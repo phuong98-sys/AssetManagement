@@ -4,12 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using WS.PropertyTypes.DTO;
+using WS.AssetTypes.DTO;
 
-namespace WS.PropertyTypes
+namespace WS.AssetTypes
 {
-    public interface IPropertyTypeAppService: IApplicationService
+    public interface IAssetTypeAppService: IApplicationService
     {
-        Task<ListResultDto<PropertyTypeDto>> GetAll();
+        Task<ListResultDto<AssetTypeDto>> GetAll();
     }
 }

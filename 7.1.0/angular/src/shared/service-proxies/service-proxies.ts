@@ -141,6 +141,132 @@ export class AccountServiceProxy {
 }
 
 @Injectable()
+export class AssetServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getAll(): Observable<AssetDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Asset/GetAll";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<AssetDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AssetDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<AssetDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = AssetDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AssetDtoListResultDto>(<any>null);
+    }
+}
+
+@Injectable()
+export class AssetTypeServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getAll(): Observable<AssetTypeDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/AssetType/GetAll";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<AssetTypeDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AssetTypeDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<AssetTypeDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = AssetTypeDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AssetTypeDtoListResultDto>(<any>null);
+    }
+}
+
+@Injectable()
 export class ConfigurationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -201,69 +327,6 @@ export class ConfigurationServiceProxy {
             }));
         }
         return _observableOf<void>(<any>null);
-    }
-}
-
-@Injectable()
-export class PropertyTypeServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
-    }
-
-    /**
-     * @return Success
-     */
-    getAll(): Observable<PropertyTypeDtoListResultDto> {
-        let url_ = this.baseUrl + "/api/services/app/PropertyType/GetAll";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAll(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAll(<any>response_);
-                } catch (e) {
-                    return <Observable<PropertyTypeDtoListResultDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PropertyTypeDtoListResultDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAll(response: HttpResponseBase): Observable<PropertyTypeDtoListResultDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PropertyTypeDtoListResultDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PropertyTypeDtoListResultDto>(<any>null);
     }
 }
 
@@ -1961,6 +2024,274 @@ export interface IApplicationInfoDto {
     features: { [key: string]: boolean; } | undefined;
 }
 
+export class AssetDto implements IAssetDto {
+    id: number;
+    assetCode: string;
+    assetName: string | undefined;
+    increaseAssetDate: moment.Moment | undefined;
+    amortizationDate: moment.Moment | undefined;
+    numberOfDayUsedAsset: number | undefined;
+    numberOfDayRemaing: number | undefined;
+    orginalPrice: number;
+    amortizationValue: number | undefined;
+    depreciationOfAsset: number | undefined;
+    residualValue: number | undefined;
+    usageStatus: string | undefined;
+    reasonForReduction: string | undefined;
+    recoverableValue: number | undefined;
+    increaseAssetId: number | undefined;
+    creationTime: moment.Moment;
+
+    constructor(data?: IAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.assetCode = _data["assetCode"];
+            this.assetName = _data["assetName"];
+            this.increaseAssetDate = _data["increaseAssetDate"] ? moment(_data["increaseAssetDate"].toString()) : <any>undefined;
+            this.amortizationDate = _data["amortizationDate"] ? moment(_data["amortizationDate"].toString()) : <any>undefined;
+            this.numberOfDayUsedAsset = _data["numberOfDayUsedAsset"];
+            this.numberOfDayRemaing = _data["numberOfDayRemaing"];
+            this.orginalPrice = _data["orginalPrice"];
+            this.amortizationValue = _data["amortizationValue"];
+            this.depreciationOfAsset = _data["depreciationOfAsset"];
+            this.residualValue = _data["residualValue"];
+            this.usageStatus = _data["usageStatus"];
+            this.reasonForReduction = _data["reasonForReduction"];
+            this.recoverableValue = _data["recoverableValue"];
+            this.increaseAssetId = _data["increaseAssetId"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): AssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["assetCode"] = this.assetCode;
+        data["assetName"] = this.assetName;
+        data["increaseAssetDate"] = this.increaseAssetDate ? this.increaseAssetDate.toISOString() : <any>undefined;
+        data["amortizationDate"] = this.amortizationDate ? this.amortizationDate.toISOString() : <any>undefined;
+        data["numberOfDayUsedAsset"] = this.numberOfDayUsedAsset;
+        data["numberOfDayRemaing"] = this.numberOfDayRemaing;
+        data["orginalPrice"] = this.orginalPrice;
+        data["amortizationValue"] = this.amortizationValue;
+        data["depreciationOfAsset"] = this.depreciationOfAsset;
+        data["residualValue"] = this.residualValue;
+        data["usageStatus"] = this.usageStatus;
+        data["reasonForReduction"] = this.reasonForReduction;
+        data["recoverableValue"] = this.recoverableValue;
+        data["increaseAssetId"] = this.increaseAssetId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): AssetDto {
+        const json = this.toJSON();
+        let result = new AssetDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAssetDto {
+    id: number;
+    assetCode: string;
+    assetName: string | undefined;
+    increaseAssetDate: moment.Moment | undefined;
+    amortizationDate: moment.Moment | undefined;
+    numberOfDayUsedAsset: number | undefined;
+    numberOfDayRemaing: number | undefined;
+    orginalPrice: number;
+    amortizationValue: number | undefined;
+    depreciationOfAsset: number | undefined;
+    residualValue: number | undefined;
+    usageStatus: string | undefined;
+    reasonForReduction: string | undefined;
+    recoverableValue: number | undefined;
+    increaseAssetId: number | undefined;
+    creationTime: moment.Moment;
+}
+
+export class AssetDtoListResultDto implements IAssetDtoListResultDto {
+    items: AssetDto[] | undefined;
+
+    constructor(data?: IAssetDtoListResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(AssetDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): AssetDtoListResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AssetDtoListResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): AssetDtoListResultDto {
+        const json = this.toJSON();
+        let result = new AssetDtoListResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAssetDtoListResultDto {
+    items: AssetDto[] | undefined;
+}
+
+export class AssetTypeDto implements IAssetTypeDto {
+    id: string | undefined;
+    assetTypeCode: string;
+    assetTypeName: string;
+    note: string | undefined;
+    parentAssetTypeId: string | undefined;
+    creationTime: moment.Moment;
+
+    constructor(data?: IAssetTypeDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.assetTypeCode = _data["assetTypeCode"];
+            this.assetTypeName = _data["assetTypeName"];
+            this.note = _data["note"];
+            this.parentAssetTypeId = _data["parentAssetTypeId"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): AssetTypeDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AssetTypeDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["assetTypeCode"] = this.assetTypeCode;
+        data["assetTypeName"] = this.assetTypeName;
+        data["note"] = this.note;
+        data["parentAssetTypeId"] = this.parentAssetTypeId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): AssetTypeDto {
+        const json = this.toJSON();
+        let result = new AssetTypeDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAssetTypeDto {
+    id: string | undefined;
+    assetTypeCode: string;
+    assetTypeName: string;
+    note: string | undefined;
+    parentAssetTypeId: string | undefined;
+    creationTime: moment.Moment;
+}
+
+export class AssetTypeDtoListResultDto implements IAssetTypeDtoListResultDto {
+    items: AssetTypeDto[] | undefined;
+
+    constructor(data?: IAssetTypeDtoListResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(AssetTypeDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): AssetTypeDtoListResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AssetTypeDtoListResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): AssetTypeDtoListResultDto {
+        const json = this.toJSON();
+        let result = new AssetTypeDtoListResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAssetTypeDtoListResultDto {
+    items: AssetTypeDto[] | undefined;
+}
+
 export class AuthenticateModel implements IAuthenticateModel {
     userNameOrEmailAddress: string;
     password: string;
@@ -2960,120 +3291,6 @@ export class PermissionDtoListResultDto implements IPermissionDtoListResultDto {
 
 export interface IPermissionDtoListResultDto {
     items: PermissionDto[] | undefined;
-}
-
-export class PropertyTypeDto implements IPropertyTypeDto {
-    id: string | undefined;
-    propertyTypeCode: string;
-    propertyTypeName: string;
-    note: string | undefined;
-    parentPropertyTypeId: string | undefined;
-    creationTime: moment.Moment;
-
-    constructor(data?: IPropertyTypeDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.propertyTypeCode = _data["propertyTypeCode"];
-            this.propertyTypeName = _data["propertyTypeName"];
-            this.note = _data["note"];
-            this.parentPropertyTypeId = _data["parentPropertyTypeId"];
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): PropertyTypeDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PropertyTypeDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["propertyTypeCode"] = this.propertyTypeCode;
-        data["propertyTypeName"] = this.propertyTypeName;
-        data["note"] = this.note;
-        data["parentPropertyTypeId"] = this.parentPropertyTypeId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        return data; 
-    }
-
-    clone(): PropertyTypeDto {
-        const json = this.toJSON();
-        let result = new PropertyTypeDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPropertyTypeDto {
-    id: string | undefined;
-    propertyTypeCode: string;
-    propertyTypeName: string;
-    note: string | undefined;
-    parentPropertyTypeId: string | undefined;
-    creationTime: moment.Moment;
-}
-
-export class PropertyTypeDtoListResultDto implements IPropertyTypeDtoListResultDto {
-    items: PropertyTypeDto[] | undefined;
-
-    constructor(data?: IPropertyTypeDtoListResultDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items.push(PropertyTypeDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PropertyTypeDtoListResultDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PropertyTypeDtoListResultDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-
-    clone(): PropertyTypeDtoListResultDto {
-        const json = this.toJSON();
-        let result = new PropertyTypeDtoListResultDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPropertyTypeDtoListResultDto {
-    items: PropertyTypeDto[] | undefined;
 }
 
 export class RegisterInput implements IRegisterInput {

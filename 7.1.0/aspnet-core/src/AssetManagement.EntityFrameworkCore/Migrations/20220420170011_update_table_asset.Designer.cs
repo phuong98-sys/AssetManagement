@@ -4,6 +4,7 @@ using AssetManagement.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AssetManagement.Migrations
 {
     [DbContext(typeof(AssetManagementDbContext))]
-    partial class AssetManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220420170011_update_table_asset")]
+    partial class update_table_asset
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1407,7 +1409,7 @@ namespace AssetManagement.Migrations
                     b.Property<double?>("RecoverableValue")
                         .HasColumnType("float");
 
-                    b.Property<double?>("ResidualValue")
+                    b.Property<double>("ResidualValue")
                         .HasColumnType("float");
 
                     b.Property<string>("UsageStatus")
@@ -1418,38 +1420,6 @@ namespace AssetManagement.Migrations
                     b.HasIndex("IncreaseAssetId");
 
                     b.ToTable("Asset");
-                });
-
-            modelBuilder.Entity("AssetManagement.AssetTypes.AssetType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("AssetTypeCode")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("AssetTypeName")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ParentAssetTypeId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AssetType");
                 });
 
             modelBuilder.Entity("AssetManagement.Authorization.Roles.Role", b =>
