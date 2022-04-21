@@ -8,8 +8,9 @@ import { UsersComponent } from './users/users.component';
 import { TenantsComponent } from './tenants/tenants.component';
 import { RolesComponent } from 'app/roles/roles.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
-import { PropertyTypeComponent } from './contents/property-type/property-type.component';
 import { TestComponent } from './test/test.component';
+import { AssetTypeComponent } from './contents/asset-type/asset-type.component';
+import { AssetComponent } from './contents/asset/asset.component';
 
 
 @NgModule({
@@ -26,9 +27,11 @@ import { TestComponent } from './test/test.component';
                     { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
                     { path: 'contents', children:[
-                        {path: 'property-type', component: PropertyTypeComponent, canActivate: [AppRouteGuard] }
+                        {path: 'asset-type', component: AssetTypeComponent, canActivate: [AppRouteGuard] },
+                        {path: 'asset-statistic', component: TestComponent, canActivate: [AppRouteGuard] },
+                        {path: 'asset', component: AssetComponent, canActivate: [AppRouteGuard] },
                     ], canActivate: [AppRouteGuard] },
-                    { path: 'test', component: TestComponent, canActivate: [AppRouteGuard] },
+                    
                 ]
             }
         ])

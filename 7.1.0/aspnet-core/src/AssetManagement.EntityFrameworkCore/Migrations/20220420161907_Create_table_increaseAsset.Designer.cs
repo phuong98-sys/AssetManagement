@@ -4,6 +4,7 @@ using AssetManagement.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AssetManagement.Migrations
 {
     [DbContext(typeof(AssetManagementDbContext))]
-    partial class AssetManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220420161907_Create_table_increaseAsset")]
+    partial class Create_table_increaseAsset
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1358,100 +1360,6 @@ namespace AssetManagement.Migrations
                     b.ToTable("AbpWebhookSubscriptions");
                 });
 
-            modelBuilder.Entity("AssetManagement.Assets.Asset", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime?>("AmortizationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double?>("AmortizationValue")
-                        .HasColumnType("float");
-
-                    b.Property<string>("AssetCode")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("AssetName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double?>("DepreciationOfAsset")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime?>("IncreaseAssetDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("IncreaseAssetId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("NumberOfDayRemaing")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("NumberOfDayUsedAsset")
-                        .HasColumnType("int");
-
-                    b.Property<double>("OrginalPrice")
-                        .HasColumnType("float");
-
-                    b.Property<string>("ReasonForReduction")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double?>("RecoverableValue")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("ResidualValue")
-                        .HasColumnType("float");
-
-                    b.Property<string>("UsageStatus")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IncreaseAssetId");
-
-                    b.ToTable("Asset");
-                });
-
-            modelBuilder.Entity("AssetManagement.AssetTypes.AssetType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("AssetTypeCode")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("AssetTypeName")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ParentAssetTypeId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AssetType");
-                });
-
             modelBuilder.Entity("AssetManagement.Authorization.Roles.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -1952,15 +1860,6 @@ namespace AssetManagement.Migrations
                         .IsRequired();
 
                     b.Navigation("WebhookEvent");
-                });
-
-            modelBuilder.Entity("AssetManagement.Assets.Asset", b =>
-                {
-                    b.HasOne("AssetManagement.IncreaseAssets.IncreaseAsset", "IncreaseAsset")
-                        .WithMany()
-                        .HasForeignKey("IncreaseAssetId");
-
-                    b.Navigation("IncreaseAsset");
                 });
 
             modelBuilder.Entity("AssetManagement.Authorization.Roles.Role", b =>

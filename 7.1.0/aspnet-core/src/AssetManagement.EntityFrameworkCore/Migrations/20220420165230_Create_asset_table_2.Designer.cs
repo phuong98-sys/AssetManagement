@@ -4,6 +4,7 @@ using AssetManagement.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AssetManagement.Migrations
 {
     [DbContext(typeof(AssetManagementDbContext))]
-    partial class AssetManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220420165230_Create_asset_table_2")]
+    partial class Create_asset_table_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1366,10 +1368,10 @@ namespace AssetManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime?>("AmortizationDate")
+                    b.Property<DateTime>("AmortizationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<double?>("AmortizationValue")
+                    b.Property<double>("AmortizationValue")
                         .HasColumnType("float");
 
                     b.Property<string>("AssetCode")
@@ -1383,19 +1385,19 @@ namespace AssetManagement.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<double?>("DepreciationOfAsset")
+                    b.Property<double>("DepreciationOfAsset")
                         .HasColumnType("float");
 
-                    b.Property<DateTime?>("IncreaseAssetDate")
+                    b.Property<DateTime>("IncreaseAssetDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("IncreaseAssetId")
+                    b.Property<int>("IncreaseAssetId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("NumberOfDayRemaing")
+                    b.Property<int>("NumberOfDayRemaing")
                         .HasColumnType("int");
 
-                    b.Property<int?>("NumberOfDayUsedAsset")
+                    b.Property<int>("NumberOfDayUsedAsset")
                         .HasColumnType("int");
 
                     b.Property<double>("OrginalPrice")
@@ -1404,10 +1406,10 @@ namespace AssetManagement.Migrations
                     b.Property<string>("ReasonForReduction")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("RecoverableValue")
+                    b.Property<double>("RecoverableValue")
                         .HasColumnType("float");
 
-                    b.Property<double?>("ResidualValue")
+                    b.Property<double>("ResidualValue")
                         .HasColumnType("float");
 
                     b.Property<string>("UsageStatus")
@@ -1418,38 +1420,6 @@ namespace AssetManagement.Migrations
                     b.HasIndex("IncreaseAssetId");
 
                     b.ToTable("Asset");
-                });
-
-            modelBuilder.Entity("AssetManagement.AssetTypes.AssetType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("AssetTypeCode")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("AssetTypeName")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ParentAssetTypeId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AssetType");
                 });
 
             modelBuilder.Entity("AssetManagement.Authorization.Roles.Role", b =>
@@ -1958,7 +1928,9 @@ namespace AssetManagement.Migrations
                 {
                     b.HasOne("AssetManagement.IncreaseAssets.IncreaseAsset", "IncreaseAsset")
                         .WithMany()
-                        .HasForeignKey("IncreaseAssetId");
+                        .HasForeignKey("IncreaseAssetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("IncreaseAsset");
                 });

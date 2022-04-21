@@ -114,9 +114,13 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                     )
                 ])
             ]),
+            new MenuItem(this.l('Asset'),'','fas fa-circle','',[
+                new MenuItem('Asset','/app/contents/asset','fas fa-users'),
+                new MenuItem('IncreaseAsset','/app/contents/increase-asset','fas fa-users')
+            ]),
             new MenuItem(this.l('Categories'),'','fas fa-circle','',[
-                new MenuItem('Property Type','/app/contents/property-type','fas fa-users'),
-                new MenuItem('Test','/app/test','fas fa-users')
+                new MenuItem('Asset Type','/app/contents/asset-type','fas fa-users'),
+                new MenuItem('Asset Statistics','/app/contents/asset-statistic','fas fa-users')
             ]),
         ];
     }

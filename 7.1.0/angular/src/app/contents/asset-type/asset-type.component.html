@@ -1,0 +1,31 @@
+﻿<p-table 
+  [columns]="cols"
+  [value]="assetTypeList"
+  [lazy]="true"
+  [paginator]="true"
+  [rows]="1"
+  [totalRecords]="totalRecords"
+  [rowsPerPageOptions]="[1,2,3]"
+  [defaultSortOrder]="-1"
+  dataKey="assetTypeCode"
+  [resizableColumns]="true"
+  columnResizeMode="fit"
+>
+	<ng-template pTemplate="header" let-columns>
+		<tr>
+			<th *ngFor="let col of columns" pReorderableColumn [pSortableColumn]="col.field" pResizableColumn
+				[style.width]="col.width">
+				{{col.header}}
+				<p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+					ariaLabelDesc="Activate to sort in descending order"
+					ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+			</th>
+		</tr>
+	</ng-template>
+	<ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+		<tr [pReorderableRow]="index">
+			<td>{{rowData.assetTypeCode}}</td>
+			<td>{{rowData.assetTypeName}}</td>
+		</tr>
+	</ng-template>
+</p-table>
