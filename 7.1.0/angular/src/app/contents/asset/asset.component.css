@@ -29,3 +29,6 @@
 .add-new-asset .btn-add-new-asset-container .btn-add-new-asset{
 
 }
+::ng-deep .dropdown-menu li{
+    padding: 5px 10px;
+}
