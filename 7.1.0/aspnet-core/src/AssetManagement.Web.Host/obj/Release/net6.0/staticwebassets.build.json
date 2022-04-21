@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "Hash": "V+lEhWO0JluV1gEf7bGYznc3hyqyEpmzipdwEag8y14=",
+  "Source": "AssetManagement.Web.Host",
+  "BasePath": "_content/AssetManagement.Web.Host",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "AssetManagement.Web.Host\\wwwroot",
+      "Source": "AssetManagement.Web.Host",
+      "ContentRoot": "D:\\DoAnTotNghiep\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\wwwroot\\",
+      "BasePath": "_content/AssetManagement.Web.Host",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\DoAnTotNghiep\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\wwwroot\\swagger\\ui\\abp.js",
+      "SourceId": "AssetManagement.Web.Host",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\DoAnTotNghiep\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\wwwroot\\",
+      "BasePath": "_content/AssetManagement.Web.Host",
+      "RelativePath": "swagger/ui/abp.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\swagger\\ui\\abp.js"
+    },
+    {
+      "Identity": "D:\\DoAnTotNghiep\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\wwwroot\\swagger\\ui\\abp.swagger.js",
+      "SourceId": "AssetManagement.Web.Host",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\DoAnTotNghiep\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\wwwroot\\",
+      "BasePath": "_content/AssetManagement.Web.Host",
+      "RelativePath": "swagger/ui/abp.swagger.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\swagger\\ui\\abp.swagger.js"
+    }
+  ]
+}

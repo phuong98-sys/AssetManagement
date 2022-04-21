@@ -42,6 +42,8 @@ import {TableModule} from 'primeng/table';
 import { AssetTypeComponent } from './contents/asset-type/asset-type.component';
 import { TestComponent } from './test/test.component';
 import { AssetComponent } from './contents/asset/asset.component';
+import { CreatOrEditAssetComponent } from './asset/creat-or-edit-asset/creat-or-edit-asset.component';
+import { CreateOrEditAssetComponent } from './contents/asset/create-or-edit-asset/create-or-edit-asset.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +77,8 @@ import { AssetComponent } from './contents/asset/asset.component';
     AssetTypeComponent,
     TestComponent,
     AssetComponent,
+    CreatOrEditAssetComponent,
+    CreateOrEditAssetComponent,
   ],
   imports: [
     CommonModule,
