@@ -43,6 +43,7 @@ import { AssetTypeComponent } from './contents/asset-type/asset-type.component';
 import { TestComponent } from './test/test.component';
 import { AssetComponent } from './contents/asset/asset.component';
 import { CreateOrEditAssetComponent } from './contents/asset/create-or-edit-asset/create-or-edit-asset.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { CreateOrEditAssetComponent } from './contents/asset/create-or-edit-asse
     ServiceProxyModule,
     SharedModule,
     NgxPaginationModule,
-    TableModule
+    TableModule,
+    DropdownModule
   ],
   providers: [],
   entryComponents: [

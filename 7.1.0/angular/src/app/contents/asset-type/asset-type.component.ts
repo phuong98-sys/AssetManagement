@@ -43,7 +43,6 @@ export class AssetTypeComponent extends AppComponentBase implements OnInit{
       this.loading = true;
         this.assetTypeService.getAll()
         .subscribe(result => {
-          debugger
           this.loading = false;
             this.assetTypeList = result.items;
             this.totalRecords = this.assetTypeList?.length;

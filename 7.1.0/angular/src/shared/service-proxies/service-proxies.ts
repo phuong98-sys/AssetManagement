@@ -2256,6 +2256,7 @@ export class AssetDto implements IAssetDto {
     reasonForReduction: string | undefined;
     recoverableValue: number | undefined;
     increaseAssetId: number | undefined;
+    assetTypeId: number;
     creationTime: moment.Moment;
 
     constructor(data?: IAssetDto) {
@@ -2284,6 +2285,7 @@ export class AssetDto implements IAssetDto {
             this.reasonForReduction = _data["reasonForReduction"];
             this.recoverableValue = _data["recoverableValue"];
             this.increaseAssetId = _data["increaseAssetId"];
+            this.assetTypeId = _data["assetTypeId"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
         }
     }
@@ -2312,6 +2314,7 @@ export class AssetDto implements IAssetDto {
         data["reasonForReduction"] = this.reasonForReduction;
         data["recoverableValue"] = this.recoverableValue;
         data["increaseAssetId"] = this.increaseAssetId;
+        data["assetTypeId"] = this.assetTypeId;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         return data; 
     }
@@ -2340,6 +2343,7 @@ export interface IAssetDto {
     reasonForReduction: string | undefined;
     recoverableValue: number | undefined;
     increaseAssetId: number | undefined;
+    assetTypeId: number;
     creationTime: moment.Moment;
 }
 
@@ -2395,6 +2399,7 @@ export interface IAssetDtoListResultDto {
 }
 
 export class AssetInputDto implements IAssetInputDto {
+    id: number;
     assetCode: string;
     assetName: string | undefined;
     increaseAssetDate: moment.Moment | undefined;
@@ -2409,6 +2414,7 @@ export class AssetInputDto implements IAssetInputDto {
     reasonForReduction: string | undefined;
     recoverableValue: number | undefined;
     increaseAssetId: number | undefined;
+    assetTypeId: number;
     creationTime: moment.Moment;
 
     constructor(data?: IAssetInputDto) {
@@ -2422,6 +2428,7 @@ export class AssetInputDto implements IAssetInputDto {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
             this.assetCode = _data["assetCode"];
             this.assetName = _data["assetName"];
             this.increaseAssetDate = _data["increaseAssetDate"] ? moment(_data["increaseAssetDate"].toString()) : <any>undefined;
@@ -2436,6 +2443,7 @@ export class AssetInputDto implements IAssetInputDto {
             this.reasonForReduction = _data["reasonForReduction"];
             this.recoverableValue = _data["recoverableValue"];
             this.increaseAssetId = _data["increaseAssetId"];
+            this.assetTypeId = _data["assetTypeId"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
         }
     }
@@ -2449,6 +2457,7 @@ export class AssetInputDto implements IAssetInputDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
         data["assetCode"] = this.assetCode;
         data["assetName"] = this.assetName;
         data["increaseAssetDate"] = this.increaseAssetDate ? this.increaseAssetDate.toISOString() : <any>undefined;
@@ -2463,6 +2472,7 @@ export class AssetInputDto implements IAssetInputDto {
         data["reasonForReduction"] = this.reasonForReduction;
         data["recoverableValue"] = this.recoverableValue;
         data["increaseAssetId"] = this.increaseAssetId;
+        data["assetTypeId"] = this.assetTypeId;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         return data; 
     }
@@ -2476,6 +2486,7 @@ export class AssetInputDto implements IAssetInputDto {
 }
 
 export interface IAssetInputDto {
+    id: number;
     assetCode: string;
     assetName: string | undefined;
     increaseAssetDate: moment.Moment | undefined;
@@ -2490,6 +2501,7 @@ export interface IAssetInputDto {
     reasonForReduction: string | undefined;
     recoverableValue: number | undefined;
     increaseAssetId: number | undefined;
+    assetTypeId: number;
     creationTime: moment.Moment;
 }
 
@@ -2508,6 +2520,7 @@ export class AssetListDto implements IAssetListDto {
     reasonForReduction: string | undefined;
     recoverableValue: number | undefined;
     increaseAssetId: number | undefined;
+    assetTypeId: number;
     creationTime: moment.Moment;
 
     constructor(data?: IAssetListDto) {
@@ -2535,6 +2548,7 @@ export class AssetListDto implements IAssetListDto {
             this.reasonForReduction = _data["reasonForReduction"];
             this.recoverableValue = _data["recoverableValue"];
             this.increaseAssetId = _data["increaseAssetId"];
+            this.assetTypeId = _data["assetTypeId"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
         }
     }
@@ -2562,6 +2576,7 @@ export class AssetListDto implements IAssetListDto {
         data["reasonForReduction"] = this.reasonForReduction;
         data["recoverableValue"] = this.recoverableValue;
         data["increaseAssetId"] = this.increaseAssetId;
+        data["assetTypeId"] = this.assetTypeId;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         return data; 
     }
@@ -2589,11 +2604,12 @@ export interface IAssetListDto {
     reasonForReduction: string | undefined;
     recoverableValue: number | undefined;
     increaseAssetId: number | undefined;
+    assetTypeId: number;
     creationTime: moment.Moment;
 }
 
 export class AssetTypeDto implements IAssetTypeDto {
-    id: string | undefined;
+    id: number | undefined;
     assetTypeCode: string;
     assetTypeName: string;
     note: string | undefined;
@@ -2647,7 +2663,7 @@ export class AssetTypeDto implements IAssetTypeDto {
 }
 
 export interface IAssetTypeDto {
-    id: string | undefined;
+    id: number | undefined;
     assetTypeCode: string;
     assetTypeName: string;
     note: string | undefined;
@@ -4397,6 +4413,7 @@ export class UpdateAssetDto implements IUpdateAssetDto {
     reasonForReduction: string | undefined;
     recoverableValue: number | undefined;
     increaseAssetId: number | undefined;
+    assetTypeId: number;
     creationTime: moment.Moment;
 
     constructor(data?: IUpdateAssetDto) {
@@ -4425,6 +4442,7 @@ export class UpdateAssetDto implements IUpdateAssetDto {
             this.reasonForReduction = _data["reasonForReduction"];
             this.recoverableValue = _data["recoverableValue"];
             this.increaseAssetId = _data["increaseAssetId"];
+            this.assetTypeId = _data["assetTypeId"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
         }
     }
@@ -4453,6 +4471,7 @@ export class UpdateAssetDto implements IUpdateAssetDto {
         data["reasonForReduction"] = this.reasonForReduction;
         data["recoverableValue"] = this.recoverableValue;
         data["increaseAssetId"] = this.increaseAssetId;
+        data["assetTypeId"] = this.assetTypeId;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         return data; 
     }
@@ -4481,6 +4500,7 @@ export interface IUpdateAssetDto {
     reasonForReduction: string | undefined;
     recoverableValue: number | undefined;
     increaseAssetId: number | undefined;
+    assetTypeId: number;
     creationTime: moment.Moment;
 }
 

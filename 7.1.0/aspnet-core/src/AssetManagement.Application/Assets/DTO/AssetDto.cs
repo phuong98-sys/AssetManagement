@@ -30,6 +30,7 @@ namespace AssetManagement.Assets.DTO
         public string? ReasonForReduction { get; set; }
         public double? RecoverableValue { get; set; }
         public int? IncreaseAssetId { get; set; }
+        public int AssetTypeId { get; set; }
         public DateTime CreationTime { get; set; }
     }
     [AutoMapFrom(typeof(Asset))]
@@ -52,11 +53,12 @@ namespace AssetManagement.Assets.DTO
         public string? ReasonForReduction { get; set; }
         public double? RecoverableValue { get; set; }
         public int? IncreaseAssetId { get; set; }
+        public int AssetTypeId { get; set; }
         public DateTime CreationTime { get; set; }
     }
 
     [AutoMapTo(typeof(Asset))]
-    public class AssetInputDto
+    public class AssetInputDto: EntityDto
     {
         public const int maxLength = 32;
         [Required]
@@ -75,6 +77,7 @@ namespace AssetManagement.Assets.DTO
         public string? ReasonForReduction { get; set; }
         public double? RecoverableValue { get; set; }
         public int? IncreaseAssetId { get; set; }
+        public int AssetTypeId { get; set; }
         public DateTime CreationTime { get; set; }
     }
     public class GetAssetInput
@@ -102,6 +105,7 @@ namespace AssetManagement.Assets.DTO
         public string? ReasonForReduction { get; set; }
         public double? RecoverableValue { get; set; }
         public int? IncreaseAssetId { get; set; }
+        public int AssetTypeId { get; set; }
         public DateTime CreationTime { get; set; }
     }
     public class DeleteAssetInput

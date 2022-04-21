@@ -12,7 +12,7 @@ namespace WS.AssetTypes.DTO
     [AutoMapFrom(typeof(AssetType))]
     public class AssetTypeDto: EntityDto
     {
-        public string Id { get; set; }
+        public int? Id { get; set; }
         public const int maxLength = 32;
         [Required]
         [StringLength(maxLength)]

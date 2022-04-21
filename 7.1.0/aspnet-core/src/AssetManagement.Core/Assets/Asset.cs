@@ -1,5 +1,6 @@
 ﻿using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
+using AssetManagement.AssetTypes;
 using AssetManagement.IncreaseAssets;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,9 @@ namespace AssetManagement.Assets
         [ForeignKey(nameof(IncreaseAssetId))]
         public IncreaseAsset IncreaseAsset { get; set; } // them tu Increase table
         public int? IncreaseAssetId { get; set; }
+        [ForeignKey(nameof(AssetTypeId))]
+        public AssetType AssetType { get; set; } // them tu AssetType table
+        public int AssetTypeId { get; set; }
         public DateTime CreationTime { get; set; }
 
     }
