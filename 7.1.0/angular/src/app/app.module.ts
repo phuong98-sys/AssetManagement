@@ -44,6 +44,10 @@ import { TestComponent } from './test/test.component';
 import { AssetComponent } from './contents/asset/asset.component';
 import { CreateOrEditAssetComponent } from './contents/asset/create-or-edit-asset/create-or-edit-asset.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { IncreaseAssetComponent } from './contents/increase-asset/increase-asset.component';
+import { CreateOrEditIncreaseAssetComponent } from './contents/increase-asset/create-or-edit-increase-asset/create-or-edit-increase-asset.component';
+import { ReduceAssetComponent } from './contents/reduce-asset/reduce-asset.component';
+import { CreateOrEditReduceAssetComponent } from './contents/reduce-asset/create-or-edit-reduce-asset/create-or-edit-reduce-asset.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +82,10 @@ import { DropdownModule } from 'primeng/dropdown';
     TestComponent,
     AssetComponent,
     CreateOrEditAssetComponent,
+    IncreaseAssetComponent,
+    CreateOrEditIncreaseAssetComponent,
+    ReduceAssetComponent,
+    CreateOrEditReduceAssetComponent,
   ],
   imports: [
     CommonModule,

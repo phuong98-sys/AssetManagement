@@ -12,6 +12,7 @@ import { TestComponent } from './test/test.component';
 import { AssetTypeComponent } from './contents/asset-type/asset-type.component';
 import { AssetComponent } from './contents/asset/asset.component';
 import { CreateOrEditAssetComponent } from './contents/asset/create-or-edit-asset/create-or-edit-asset.component';
+import { IncreaseAssetComponent } from './contents/increase-asset/increase-asset.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { CreateOrEditAssetComponent } from './contents/asset/create-or-edit-asse
                         {path: 'asset', component: AssetComponent, canActivate: [AppRouteGuard], children: [
                             {path: 'create', component: CreateOrEditAssetComponent, canActivate: [AppRouteGuard]}
                         ] },
+                        {path: 'increase-asset', component: IncreaseAssetComponent, canActivate: [AppRouteGuard] },
                     ], canActivate: [AppRouteGuard] },
                     
                 ]

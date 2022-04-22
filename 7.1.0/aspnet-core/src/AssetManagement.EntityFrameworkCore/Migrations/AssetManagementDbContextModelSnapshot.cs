@@ -1682,6 +1682,9 @@ namespace AssetManagement.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("TotalAssetValue")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     b.ToTable("IncreaseAsset");
@@ -1998,7 +2001,7 @@ namespace AssetManagement.Migrations
                         .IsRequired();
 
                     b.HasOne("AssetManagement.IncreaseAssets.IncreaseAsset", "IncreaseAsset")
-                        .WithMany()
+                        .WithMany("Assets")
                         .HasForeignKey("IncreaseAssetId");
 
                     b.Navigation("AssetType");
@@ -2144,6 +2147,11 @@ namespace AssetManagement.Migrations
                     b.Navigation("Settings");
 
                     b.Navigation("Tokens");
+                });
+
+            modelBuilder.Entity("AssetManagement.IncreaseAssets.IncreaseAsset", b =>
+                {
+                    b.Navigation("Assets");
                 });
 #pragma warning restore 612, 618
         }

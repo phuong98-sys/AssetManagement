@@ -547,6 +547,177 @@ export class ConfigurationServiceProxy {
 }
 
 @Injectable()
+export class IncreaseAssetServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getIncreaseAssets(): Observable<IncreaseAssetDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/IncreaseAsset/GetIncreaseAssets";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetIncreaseAssets(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetIncreaseAssets(<any>response_);
+                } catch (e) {
+                    return <Observable<IncreaseAssetDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<IncreaseAssetDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetIncreaseAssets(response: HttpResponseBase): Observable<IncreaseAssetDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = IncreaseAssetDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<IncreaseAssetDtoListResultDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    insertOrUpdateIncreaseAsset(body: IncreaseAssetInputDto | undefined): Observable<IncreaseAssetDto> {
+        let url_ = this.baseUrl + "/api/services/app/IncreaseAsset/InsertOrUpdateIncreaseAsset";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertOrUpdateIncreaseAsset(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertOrUpdateIncreaseAsset(<any>response_);
+                } catch (e) {
+                    return <Observable<IncreaseAssetDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<IncreaseAssetDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processInsertOrUpdateIncreaseAsset(response: HttpResponseBase): Observable<IncreaseAssetDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = IncreaseAssetDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<IncreaseAssetDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    deleteIncreaseAsset(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/IncreaseAsset/DeleteIncreaseAsset?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteIncreaseAsset(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteIncreaseAsset(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteIncreaseAsset(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
 export class RoleServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -3482,6 +3653,183 @@ export interface IGetRoleForEditOutput {
     role: RoleEditDto;
     permissions: FlatPermissionDto[] | undefined;
     grantedPermissionNames: string[] | undefined;
+}
+
+export class IncreaseAssetDto implements IIncreaseAssetDto {
+    id: number;
+    increaseAssetCode: string;
+    creationTime: moment.Moment;
+    increaseAssetDate: moment.Moment;
+    note: string | undefined;
+    totalAssetValue: number;
+
+    constructor(data?: IIncreaseAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.increaseAssetCode = _data["increaseAssetCode"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.increaseAssetDate = _data["increaseAssetDate"] ? moment(_data["increaseAssetDate"].toString()) : <any>undefined;
+            this.note = _data["note"];
+            this.totalAssetValue = _data["totalAssetValue"];
+        }
+    }
+
+    static fromJS(data: any): IncreaseAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new IncreaseAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["increaseAssetCode"] = this.increaseAssetCode;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["increaseAssetDate"] = this.increaseAssetDate ? this.increaseAssetDate.toISOString() : <any>undefined;
+        data["note"] = this.note;
+        data["totalAssetValue"] = this.totalAssetValue;
+        return data; 
+    }
+
+    clone(): IncreaseAssetDto {
+        const json = this.toJSON();
+        let result = new IncreaseAssetDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IIncreaseAssetDto {
+    id: number;
+    increaseAssetCode: string;
+    creationTime: moment.Moment;
+    increaseAssetDate: moment.Moment;
+    note: string | undefined;
+    totalAssetValue: number;
+}
+
+export class IncreaseAssetDtoListResultDto implements IIncreaseAssetDtoListResultDto {
+    items: IncreaseAssetDto[] | undefined;
+
+    constructor(data?: IIncreaseAssetDtoListResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(IncreaseAssetDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): IncreaseAssetDtoListResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new IncreaseAssetDtoListResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): IncreaseAssetDtoListResultDto {
+        const json = this.toJSON();
+        let result = new IncreaseAssetDtoListResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IIncreaseAssetDtoListResultDto {
+    items: IncreaseAssetDto[] | undefined;
+}
+
+export class IncreaseAssetInputDto implements IIncreaseAssetInputDto {
+    id: number;
+    increaseAssetCode: string;
+    creationTime: moment.Moment;
+    increaseAssetDate: moment.Moment;
+    note: string | undefined;
+    totalAssetValue: number;
+
+    constructor(data?: IIncreaseAssetInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.increaseAssetCode = _data["increaseAssetCode"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.increaseAssetDate = _data["increaseAssetDate"] ? moment(_data["increaseAssetDate"].toString()) : <any>undefined;
+            this.note = _data["note"];
+            this.totalAssetValue = _data["totalAssetValue"];
+        }
+    }
+
+    static fromJS(data: any): IncreaseAssetInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new IncreaseAssetInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["increaseAssetCode"] = this.increaseAssetCode;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["increaseAssetDate"] = this.increaseAssetDate ? this.increaseAssetDate.toISOString() : <any>undefined;
+        data["note"] = this.note;
+        data["totalAssetValue"] = this.totalAssetValue;
+        return data; 
+    }
+
+    clone(): IncreaseAssetInputDto {
+        const json = this.toJSON();
+        let result = new IncreaseAssetInputDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IIncreaseAssetInputDto {
+    id: number;
+    increaseAssetCode: string;
+    creationTime: moment.Moment;
+    increaseAssetDate: moment.Moment;
+    note: string | undefined;
+    totalAssetValue: number;
 }
 
 export class Int64EntityDto implements IInt64EntityDto {

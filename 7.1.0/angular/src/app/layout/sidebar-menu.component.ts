@@ -116,11 +116,25 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
             ]),
             new MenuItem(this.l('Asset'),'','fas fa-circle','',[
                 new MenuItem('Asset','/app/contents/asset','fas fa-users'),
-                new MenuItem('IncreaseAsset','/app/contents/increase-asset','fas fa-users')
+                new MenuItem('Increase Asset','/app/contents/increase-asset','fas fa-users'),
+                new MenuItem('Change Information Asset','/app/contents/change-information','fas fa-users'),
+                new MenuItem('Transfer','/app/contents/transfer','fas fa-users'),
+                new MenuItem('Depreciation Asset','/app/contents/depreciation-asset','fas fa-users'),
+                new MenuItem('Reduce Asset','/app/contents/reduce-asset','fas fa-users'),
+                new MenuItem('Inventory Asset','/app/contents/inventory-asset','fas fa-users')
             ]),
             new MenuItem(this.l('Categories'),'','fas fa-circle','',[
                 new MenuItem('Asset Type','/app/contents/asset-type','fas fa-users'),
                 new MenuItem('Asset Statistics','/app/contents/asset-statistic','fas fa-users')
+            ]),
+            new MenuItem(this.l('Report'),'','fas fa-circle','',[
+                new MenuItem('Create Report','/app/contents/create-report','fas fa-users'),
+            ]),
+            new MenuItem(this.l('Other'),'','fas fa-circle','',[
+                new MenuItem('Create Offer','/app/contents/asset-type','fas fa-users'),
+                new MenuItem('Create Plane Shopping','/app/contents/asset-statistic','fas fa-users'),
+                new MenuItem('Create Plane Maintain','/app/contents/asset-statistic','fas fa-users'),
+                new MenuItem('Create Plane Reduce','/app/contents/asset-statistic','fas fa-users')
             ]),
         ];
     }

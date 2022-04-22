@@ -38,6 +38,10 @@ namespace AssetManagement.Assets
         public AssetType AssetType { get; set; } // them tu AssetType table
         public int AssetTypeId { get; set; }
         public DateTime CreationTime { get; set; }
+        //public Asset()
+        //{
+        //    IncreaseAssets = new List<IncreaseAsset>();
+        //}
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
+using AssetManagement.Assets;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,5 +21,11 @@ namespace AssetManagement.IncreaseAssets
         public DateTime CreationTime { get; set; }
         public DateTime IncreaseAssetDate { get; set; }
         public string Note { get; set; }
+        public double TotalAssetValue { get; set; }
+        public List<Asset> Assets { get; set; }
+        public IncreaseAsset()
+        {
+            Assets = new List<Asset>();
+        }
     }
 }
