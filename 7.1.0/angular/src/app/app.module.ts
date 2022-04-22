@@ -48,6 +48,7 @@ import { IncreaseAssetComponent } from './contents/increase-asset/increase-asset
 import { CreateOrEditIncreaseAssetComponent } from './contents/increase-asset/create-or-edit-increase-asset/create-or-edit-increase-asset.component';
 import { ReduceAssetComponent } from './contents/reduce-asset/reduce-asset.component';
 import { CreateOrEditReduceAssetComponent } from './contents/reduce-asset/create-or-edit-reduce-asset/create-or-edit-reduce-asset.component';
+import { DepartmentComponent } from './contents/department/department.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { CreateOrEditReduceAssetComponent } from './contents/reduce-asset/create
     CreateOrEditIncreaseAssetComponent,
     ReduceAssetComponent,
     CreateOrEditReduceAssetComponent,
+    DepartmentComponent,
   ],
   imports: [
     CommonModule,

@@ -125,7 +125,8 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
             ]),
             new MenuItem(this.l('Categories'),'','fas fa-circle','',[
                 new MenuItem('Asset Type','/app/contents/asset-type','fas fa-users'),
-                new MenuItem('Asset Statistics','/app/contents/asset-statistic','fas fa-users')
+                new MenuItem('Asset Statistics','/app/contents/asset-statistic','fas fa-users'),
+                new MenuItem('Department','/app/contents/department','fas fa-users')
             ]),
             new MenuItem(this.l('Report'),'','fas fa-circle','',[
                 new MenuItem('Create Report','/app/contents/create-report','fas fa-users'),
