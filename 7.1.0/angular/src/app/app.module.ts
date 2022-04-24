@@ -49,6 +49,7 @@ import { CreateOrEditIncreaseAssetComponent } from './contents/increase-asset/cr
 import { ReduceAssetComponent } from './contents/reduce-asset/reduce-asset.component';
 import { CreateOrEditReduceAssetComponent } from './contents/reduce-asset/create-or-edit-reduce-asset/create-or-edit-reduce-asset.component';
 import { DepartmentComponent } from './contents/department/department.component';
+import { PaginatorModule } from 'primeng/paginator';
 
 @NgModule({
   declarations: [
@@ -104,7 +105,8 @@ import { DepartmentComponent } from './contents/department/department.component'
     SharedModule,
     NgxPaginationModule,
     TableModule,
-    DropdownModule
+    DropdownModule,
+    PaginatorModule
   ],
   providers: [],
   entryComponents: [

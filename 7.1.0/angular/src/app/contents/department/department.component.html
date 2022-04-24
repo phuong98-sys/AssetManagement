@@ -5,21 +5,66 @@
     </div>
 </div>
 <div class="asset-component">
-    <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="assetList" [resizableColumns]="true" [autoLayout]="true">
+    <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="assetList" [resizableColumns]="true" [autoLayout]="true" >
     <ng-template pTemplate="header">
         <tr>
-            <th pResizableColumn pSortableColumn="assetCode" style="width:150px">
+            <th pResizableColumn pSortableColumn="assetCode" >
                 Chức năng
             </th>
-            <th pResizableColumn pSortableColumn="assetCode" style="width:120px">
+            <th pResizableColumn pSortableColumn="assetCode" >
                 Mã bộ phận
                 <p-sortIcon field="assetCode"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="assetName" style="width:120px">
+            <th pResizableColumn pSortableColumn="assetName">
                 Tên bộ phận
                 <p-sortIcon field="assetName"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="orginalPrice" style="width:120px">
+            <th pResizableColumn pSortableColumn="orginalPrice" >
+                Ghi chú 
+                <p-sortIcon field="orginalPrice"></p-sortIcon>
+            </th>
+            <th pResizableColumn pSortableColumn="assetCode" >
+                Chức năng
+            </th>
+            <th pResizableColumn pSortableColumn="assetCode" >
+                Mã bộ phận
+                <p-sortIcon field="assetCode"></p-sortIcon>
+            </th>
+            <th pResizableColumn pSortableColumn="assetName">
+                Tên bộ phận
+                <p-sortIcon field="assetName"></p-sortIcon>
+            </th>
+            <th pResizableColumn pSortableColumn="orginalPrice" >
+                Ghi chú 
+                <p-sortIcon field="orginalPrice"></p-sortIcon>
+            </th>
+             <th pResizableColumn pSortableColumn="assetCode" >
+                Chức năng
+            </th>
+            <th pResizableColumn pSortableColumn="assetCode" >
+                Mã bộ phận
+                <p-sortIcon field="assetCode"></p-sortIcon>
+            </th>
+            <th pResizableColumn pSortableColumn="assetName">
+                Tên bộ phận
+                <p-sortIcon field="assetName"></p-sortIcon>
+            </th>
+            <th pResizableColumn pSortableColumn="orginalPrice" >
+                Ghi chú 
+                <p-sortIcon field="orginalPrice"></p-sortIcon>
+            </th>
+            <th pResizableColumn pSortableColumn="assetCode" >
+                Chức năng
+            </th>
+            <th pResizableColumn pSortableColumn="assetCode" >
+                Mã bộ phận
+                <p-sortIcon field="assetCode"></p-sortIcon>
+            </th>
+            <th pResizableColumn pSortableColumn="assetName">
+                Tên bộ phận
+                <p-sortIcon field="assetName"></p-sortIcon>
+            </th>
+            <th pResizableColumn pSortableColumn="orginalPrice" >
                 Ghi chú 
                 <p-sortIcon field="orginalPrice"></p-sortIcon>
             </th>
@@ -28,7 +73,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-asset>
         <tr>
-            <td style="width:150px">
+            <td >
                 <div class="btn-group dropdown" dropdown container="body">
                     <button dropdownToggle class="dropdown-toggle btn btn-sm btn-primary">
                         <i class="fa fa-cog"></i><span class="caret"></span>
@@ -46,9 +91,20 @@
                     </ul>
                 </div>
             </td>
-            <td style="width:120px">{{ asset.assetCode }}</td>
-            <td style="width:120px">{{ asset.assetName}}</td>
-            <td style="width:120px">{{ asset.orginalPrice }}</td>
+            <td>{{ asset.assetCode }}</td>
+            <td>{{ asset.assetName}}</td>
+            <td>{{ asset.orginalPrice }}</td>
+            <td>{{ asset.assetCode }}</td>
+            <td>{{ asset.assetName}}</td>
+            <td>{{ asset.orginalPrice }}</td>
+            <td>{{ asset.orginalPrice }}</td>
+            <td>{{ asset.assetCode }}</td>
+            <td>{{ asset.assetName}}</td>
+            <td>{{ asset.orginalPrice }}</td>
+            <td>{{ asset.assetCode }}</td>
+            <td>{{ asset.assetName}}</td>
+            <td>{{ asset.orginalPrice }}</td>
+            <td>{{ asset.orginalPrice }}</td>
 
         </tr>
     </ng-template>

@@ -78,3 +78,31 @@ table-card-footer * {
   border: none;
   color: #fff;
 }
+ul.nav-treeview li.nav-item a.nav-link{
+  padding-left: 35px;
+} 
+/* table style */
+::ng-deep 
+.p-datatable {
+  table{
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: auto;
+  }
+}
+::ng-deep .asset-component table tr td{
+  white-space: break-spaces !important;
+}
+::ng-deep table tr td{
+  padding: 5px 10px;
+}
+::ng-deep table tr th{
+  padding: 10px;
+}
+::ng-deep table tbody tr{
+  background-color: #fff;
+}
+::ng-deep table tbody tr:nth-child(2n){
+  background-color: aliceblue;
+}
+/* table style */

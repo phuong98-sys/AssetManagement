@@ -38,7 +38,7 @@
     </div>
 </div>
 <div class="asset-component">
-    <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="assetList" [resizableColumns]="true" [autoLayout]="true">
+    <p-table (onLazyLoad)="getAll($event)" [paginator]="true" [lazy]="true" [rows]="3" [totalRecords]="totalRecords"  [scrollable]="true" scrollHeight="320px" scrollWidth="1100px" [value]="assetList" [resizableColumns]="true" [autoLayout]="true" [responsive]="primengTableHelper.isResponsive">
     <ng-template pTemplate="header">
         <tr>
             <th pResizableColumn pSortableColumn="assetCode" style="width:150px">
@@ -139,6 +139,17 @@
             <td style="width:130px">{{ asset.creationTime}}</td>
         </tr>
     </ng-template>
+    <!-- <div class="" *ngIf="totalRecords == 0">
+        {{ l("NoData") }}
+    </div>
+    <div class="order-history__paginator" id="my-order-paging">
+        <p-paginator [rows]="2" #paginator
+            (onPageChange)="getAll()"
+            [totalRecords]="totalRecords"
+            [rowsPerPageOptions]="2"
+            styleClass="history-table-paginator">
+        </p-paginator>
+    </div> -->
 </p-table>
 </div>
 <app-create-or-edit-asset #createOrEditAssetModal (modalSave)="getAll()"></app-create-or-edit-asset>
