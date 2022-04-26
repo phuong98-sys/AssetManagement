@@ -10,6 +10,8 @@ namespace WS.AssetTypes
 {
     public interface IAssetTypeAppService: IApplicationService
     {
-        Task<ListResultDto<AssetTypeDto>> GetAll();
+        Task<ListResultDto<AssetTypeDto>> GetAssetTypes();
+        Task<AssetTypeDto> InsertOrUpdateAssetType(AssetTypeInputDto input);
+        Task DeleteAssetType(DeleteAssetTypeDto input);
     }
 }

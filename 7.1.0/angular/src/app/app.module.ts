@@ -39,7 +39,6 @@ import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import {TableModule} from 'primeng/table';
-import { AssetTypeComponent } from './contents/asset-type/asset-type.component';
 import { TestComponent } from './test/test.component';
 import { AssetComponent } from './contents/asset/asset.component';
 import { CreateOrEditAssetComponent } from './contents/asset/create-or-edit-asset/create-or-edit-asset.component';
@@ -50,6 +49,7 @@ import { ReduceAssetComponent } from './contents/reduce-asset/reduce-asset.compo
 import { CreateOrEditReduceAssetComponent } from './contents/reduce-asset/create-or-edit-reduce-asset/create-or-edit-reduce-asset.component';
 import { DepartmentComponent } from './contents/department/department.component';
 import { PaginatorModule } from 'primeng/paginator';
+import { AssetTypeComponent } from './contents/asset-type/asset-type.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +80,6 @@ import { PaginatorModule } from 'primeng/paginator';
     SidebarLogoComponent,
     SidebarUserPanelComponent,
     SidebarMenuComponent,
-    AssetTypeComponent,
     TestComponent,
     AssetComponent,
     CreateOrEditAssetComponent,
@@ -89,6 +88,7 @@ import { PaginatorModule } from 'primeng/paginator';
     ReduceAssetComponent,
     CreateOrEditReduceAssetComponent,
     DepartmentComponent,
+    AssetTypeComponent,
   ],
   imports: [
     CommonModule,

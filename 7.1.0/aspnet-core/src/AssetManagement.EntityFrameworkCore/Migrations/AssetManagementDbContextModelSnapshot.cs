@@ -1380,7 +1380,7 @@ namespace AssetManagement.Migrations
                     b.Property<string>("AssetName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("AssetTypeId")
+                    b.Property<int?>("AssetTypeId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationTime")
@@ -2024,10 +2024,8 @@ namespace AssetManagement.Migrations
             modelBuilder.Entity("AssetManagement.Assets.Asset", b =>
                 {
                     b.HasOne("AssetManagement.AssetTypes.AssetType", "AssetType")
-                        .WithMany()
-                        .HasForeignKey("AssetTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Assets")
+                        .HasForeignKey("AssetTypeId");
 
                     b.HasOne("AssetManagement.IncreaseAssets.IncreaseAsset", "IncreaseAsset")
                         .WithMany("Assets")
@@ -2154,6 +2152,11 @@ namespace AssetManagement.Migrations
             modelBuilder.Entity("Abp.Organizations.OrganizationUnit", b =>
                 {
                     b.Navigation("Children");
+                });
+
+            modelBuilder.Entity("AssetManagement.AssetTypes.AssetType", b =>
+                {
+                    b.Navigation("Assets");
                 });
 
             modelBuilder.Entity("AssetManagement.Authorization.Roles.Role", b =>

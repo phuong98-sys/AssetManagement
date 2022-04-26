@@ -1,75 +1,35 @@
-﻿<div class="add-new-asset">
+<div class="header-title">
     <div class="title-page">Loại tài sản</div>
-    <div class="btn-add-new-asset-container">
-        <button class="btn btn-add-new-asset" (click)="createOrEditAsset()">Thêm</button>
+    <div class="btn-add-container">
+        <button class="btn btn-add" (click)="createOrEditAssetType()">Thêm</button>
     </div>
 </div>
-<div class="asset-component">
-    <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="assetList" [resizableColumns]="true" [autoLayout]="true">
+<div class="content-component">
+    <p-table (onLazyLoad)="getAll($event)" [paginator]="false" [lazy]="true" [rows]="3" [totalRecords]="totalRecords"  [scrollable]="true" scrollHeight="320px" scrollWidth="1100px" [value]="assetTypeList" [resizableColumns]="true" [autoLayout]="true" [responsive]="primengTableHelper.isResponsive">
     <ng-template pTemplate="header">
         <tr>
-            <th pResizableColumn pSortableColumn="assetCode" style="width:150px">
+            <th pResizableColumn pSortableColumn="assetTypeCode" style="width:150px">
                 Chức năng
             </th>
-            <th pResizableColumn pSortableColumn="assetCode" style="width:120px">
-                Mã tài sản
+            <th pResizableColumn pSortableColumn="assetTypeCode" style="width:120px">
+                Mã tài loại sản
                 <p-sortIcon field="assetCode"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="assetName" style="width:120px">
-                Tên tài sản
+            <th pResizableColumn pSortableColumn="assetTypeName" style="width:120px">
+                Tên loại tài sản
                 <p-sortIcon field="assetName"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="orginalPrice" style="width:120px">
-                Nguyên Giá 
-                <p-sortIcon field="orginalPrice"></p-sortIcon>
+            <th pResizableColumn pSortableColumn="note" style="width:120px">
+                Ghi chú
+                <p-sortIcon field="note"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="increaseAssetDate" style="width:140px">
-                Ngày ghi tăng
-                <p-sortIcon field="increaseAssetDate"></p-sortIcon>
+            <th pResizableColumn pSortableColumn="parentAssetTypeId" style="width:120px">
+                Mã loại tài sản cha
+                <p-sortIcon field="parentAssetTypeId"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="amortizationDate" style="width:150px">
-                Ngày khấu hao 
-                <p-sortIcon field="amortizationDate"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="numberOfDayUsedAsset" style="width:140px">
-                Ngày sử dụng 
-                <p-sortIcon field="numberOfDayUsedAsset"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="numberOfDayRemaing" style="width:130px">
-                Ngày còn lại
-                <p-sortIcon field="numberOfDayRemaing"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="amortizationValue" style="width:200px">
-                Giá trị tính khấu hao
-                <p-sortIcon field="amortizationValue"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="depreciationOfAsset" style="width:170px">
-                Khấu hao tài sản
-                <p-sortIcon field="depreciationOfAsset"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="residualValue" style="width:140px">
-                Giá trị còn lại
-                <p-sortIcon field="residualValue"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="usageStatus" style="width:180px">
-                Trạng thái sử dụng
-                <p-sortIcon field="usageStatus"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="reasonForReduction" style="width:140px">
-                Lí do ghi giảm
-                <p-sortIcon field="reasonForReduction"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="recoverableValue" style="width:140px">
-                Giá trị thu hồi
-                <p-sortIcon field="recoverableValue"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="creationTime" style="width:130px">
-                Ngày tạo
-                <p-sortIcon field="creationTime"></p-sortIcon>
-            </th>     
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-asset>
+    <ng-template pTemplate="body" let-assetType>
         <tr>
             <td style="width:150px">
                 <div class="btn-group dropdown" dropdown container="body">
@@ -89,22 +49,29 @@
                     </ul>
                 </div>
             </td>
-            <td style="width:120px">{{ asset.assetCode }}</td>
-            <td style="width:120px">{{ asset.assetName}}</td>
-            <td style="width:120px">{{ asset.orginalPrice }}</td>
-            <td style="width:140px">{{ asset.increaseAssetDate}}</td>
-            <td style="width:150px">{{ asset.amortizationDate }}</td>
-            <td style="width:140px">{{ asset.numberOfDayUsedAsset}}</td>
-            <td style="width:130px">{{ asset.numberOfDayRemaing }}</td>
-            <td style="width:200px">{{ asset.amortizationValue}}</td>
-            <td style="width:170px">{{ asset.depreciationOfAsset }}</td>
-            <td style="width:140px">{{ asset.residualValue}}</td>
-            <td style="width:180px">{{ asset.usageStatus }}</td>
-            <td style="width:140px">{{ asset.reasonForReduction}}</td>
-            <td style="width:140px">{{ asset.recoverableValue}}</td>
-            <!-- <td style="width:100px">{{ asset.increaseAssetId }}</td> -->
-            <td style="width:130px">{{ asset.creationTime}}</td>
+            <td style="width:120px">{{ assetType.assetTypeCode }}</td>
+            <td style="width:120px">{{ assetType.assetTypeName}}</td>
+            <td style="width:120px">{{ assetType.note}}</td>
+            <td style="width:120px">{{ assetType.parentAssetTypeId}}</td>
+          
         </tr>
     </ng-template>
+    <div class="" *ngIf="totalRecords == 0">
+        {{ l("NoData") }}
+    </div>
+    <div class="order-history__paginator" id="my-order-paging">
+        <!-- <p-paginator [rows]="2" #paginator
+            (onPageChange)="getAll()"
+            [totalRecords]="totalRecords"
+            [rowsPerPageOptions]="2"
+            styleClass="history-table-paginator">
+        </p-paginator> -->
+        <!-- <p-paginator [rows]="2" #paginator
+            (onPageChange)="getAll($event)"
+            [totalRecords]="totalRecords"
+            styleClass="history-table-paginator">
+        </p-paginator> -->
+    </div>
 </p-table>
 </div>
+<!-- <app-create-or-edit-asset #createOrEditAssetModal (modalSave)="getAll()"></app-create-or-edit-asset> -->

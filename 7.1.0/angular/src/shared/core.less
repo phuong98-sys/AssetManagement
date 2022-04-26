@@ -82,27 +82,47 @@ ul.nav-treeview li.nav-item a.nav-link{
   padding-left: 35px;
 } 
 /* table style */
-::ng-deep 
-.p-datatable {
-  table{
-  border-collapse: collapse;
-  width: 100%;
-  table-layout: auto;
-  }
-}
-::ng-deep .asset-component table tr td{
+
+// ::ng-deep 
+// .p-datatable {
+//   table{
+//   border-collapse: collapse;
+//   width: 100%;
+//   table-layout: auto;
+//   }
+// }
+.content-component table tr td{
   white-space: break-spaces !important;
 }
-::ng-deep table tr td{
+.content-component table tr td{
   padding: 5px 10px;
 }
-::ng-deep table tr th{
+.content-component table tr th{
   padding: 10px;
 }
-::ng-deep table tbody tr{
+.content-component table tr th{
+  padding: 10px;
+}
+.content-component table tbody tr{
   background-color: #fff;
 }
-::ng-deep table tbody tr:nth-child(2n){
+.content-component table tbody tr:nth-child(2n){
   background-color: aliceblue;
 }
-/* table style */
+
+/* common */
+.header-title{
+  display: flex;
+  padding: 10px 10px 20px 10px;
+}
+.header-title .btn-add-container{
+  position: absolute;
+  right: 10px;
+}
+.header-title .btn-add-container .btn-add{
+
+}
+::ng-deep .dropdown-menu li{
+  padding: 5px 10px;
+}
+/* common */

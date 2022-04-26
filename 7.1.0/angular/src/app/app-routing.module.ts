@@ -15,6 +15,7 @@ import { CreateOrEditAssetComponent } from './contents/asset/create-or-edit-asse
 import { IncreaseAssetComponent } from './contents/increase-asset/increase-asset.component';
 import { ReduceAssetComponent } from './contents/reduce-asset/reduce-asset.component';
 import { DepartmentComponent } from './contents/department/department.component';
+import { CreateOrEditIncreaseAssetComponent } from './contents/increase-asset/create-or-edit-increase-asset/create-or-edit-increase-asset.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { DepartmentComponent } from './contents/department/department.component'
                             {path: 'create', component: CreateOrEditAssetComponent, canActivate: [AppRouteGuard]}
                         ] },
                         {path: 'increase-asset', component: IncreaseAssetComponent, canActivate: [AppRouteGuard] },
+                        {path: 'increase-asset/create', component: CreateOrEditIncreaseAssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'reduce-asset', component: ReduceAssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'department', component: DepartmentComponent, canActivate: [AppRouteGuard] },
                     ], canActivate: [AppRouteGuard] },

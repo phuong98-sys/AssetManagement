@@ -1,5 +1,6 @@
 ﻿using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
+using AssetManagement.Assets;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -23,8 +24,10 @@ namespace AssetManagement.AssetTypes
         public string? Note { get; set; }
         public string? ParentAssetTypeId { get; set; }
         public DateTime CreationTime { get; set; }
+        public List<Asset> Assets { get; set; }
         public AssetType()
         {
+            Assets = new List<Asset>();
         }
     }
 }

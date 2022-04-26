@@ -35,7 +35,7 @@ export class CreateOrEditAssetComponent extends AppComponentBase implements OnIn
     this.getAssetTypeList();
   }
   getAssetTypeList(){
-    this.assetTypeService.getAll().subscribe((result)=>{
+    this.assetTypeService.getAssetTypes().subscribe((result)=>{
       this.assetTypeList = result.items;
     });
   }

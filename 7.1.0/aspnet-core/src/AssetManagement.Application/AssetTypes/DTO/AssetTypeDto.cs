@@ -25,4 +25,23 @@ namespace WS.AssetTypes.DTO
         public DateTime CreationTime { get; set; }
 
     }
+    [AutoMapTo(typeof(AssetType))]
+    public class AssetTypeInputDto : EntityDto
+    {
+        public const int maxLength = 32;
+        [Required]
+        [StringLength(maxLength)]
+        public string AssetTypeCode { get; set; }
+        [Required]
+        [StringLength(maxLength)]
+        public string AssetTypeName { get; set; }
+        public string Note { get; set; }
+        public string ParentAssetTypeId { get; set; }
+        public DateTime CreationTime { get; set; }
+
+    }
+    public class DeleteAssetTypeDto
+    {
+        public int Id { get; set; }
+    }
 }

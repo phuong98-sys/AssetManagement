@@ -18,17 +18,3 @@
 ::ng-deep .asset-component table tbody tr:nth-child(2n){
     background-color: aliceblue;
 }
-.add-new-asset{
-    display: flex;
-    padding: 10px 10px 20px 10px;
-}
-.add-new-asset .btn-add-new-asset-container{
-    position: absolute;
-    right: 10px;
-}
-.add-new-asset .btn-add-new-asset-container .btn-add-new-asset{
-
-}
-::ng-deep .dropdown-menu li{
-    padding: 5px 10px;
-}

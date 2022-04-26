@@ -38,7 +38,8 @@ export class IncreaseAssetComponent extends AppComponentBase implements OnInit {
   
     createOrEditINcreaseAsset(asset?: IncreaseAssetInputDto): void {
       debugger
-      this.createOrEditIncreaseAssetModal.show(asset);
+      // this.createOrEditIncreaseAssetModal.show(asset);
+      this._router.navigate(["/app/contents/increase-asset/create"]);
     }
     deleteAsset(asset: IncreaseAssetInputDto){
       this.message.confirm(

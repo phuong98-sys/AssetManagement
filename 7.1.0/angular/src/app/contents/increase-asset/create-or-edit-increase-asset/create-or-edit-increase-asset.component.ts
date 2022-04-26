@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
 import { AssetDto, AssetServiceProxy, IncreaseAssetDto, IncreaseAssetInputDto, IncreaseAssetServiceProxy } from '@shared/service-proxies/service-proxies';
 import { ModalDirective } from 'ngx-bootstrap/modal';
@@ -21,13 +22,14 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
   increaseAsset: IncreaseAssetInputDto = new IncreaseAssetInputDto();
   asset: AssetDto = new AssetDto();
   assetList: AssetDto[];
-  addAssetToIncreaseList: Array<AssetDto>= [];
+  addAssetToIncreaseList:  AssetDto[] = [];
   // assetTypeList: IncreaseAssetTypeDto[];
   // selectedAssetType: AssetTypeDto;
   constructor(
     injector: Injector,
     private assetService: AssetServiceProxy,
-    private increaseAssetService: IncreaseAssetServiceProxy) {
+    private increaseAssetService: IncreaseAssetServiceProxy,
+    private _router: Router) {
         super(injector);
   }
   // asset: IncreaseAssetDto;
@@ -70,10 +72,12 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
       }
   }
   close(): void {
+    
     this.active = false;
     // this.userPasswordRepeat = "";
     this.modal.hide();
     this.submitForm.form.reset();
+    this._router.navigate(['app/contents/increase-asset']);
   }
   searchAsset(){
     debugger
@@ -85,14 +89,17 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
     this.asset.amortizationValue = Number(((this.asset.orginalPrice)/(this.asset.numberOfDayUsedAsset*12)).toFixed(3));
   }
   getAssets(){
+    debugger
     this.assetService.getAll().subscribe((result)=>{
-      this.assetList = result.items.filter((item)=> item.amortizationValue <= 0);
+      this.assetList = result.items.filter((item)=> item.increaseAssetId <= 0);
     });
   }
   clickIncreaseAsset(){
     debugger
-    if(this.asset.numberOfDayUsedAsset > 0){
-      this.assetService.updateAsset(this.asset);
-    }
+    // this.assetService.updateAsset(this.asset).subscribe();
+    var a = this.asset;
+    let asset = new AssetDto();
+      asset = this.asset;
+   this.addAssetToIncreaseList.push(asset);
   }
 }

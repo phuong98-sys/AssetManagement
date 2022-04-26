@@ -36,7 +36,7 @@ namespace AssetManagement.Assets
         public int? IncreaseAssetId { get; set; }
         [ForeignKey(nameof(AssetTypeId))]
         public AssetType AssetType { get; set; } // them tu AssetType table
-        public int AssetTypeId { get; set; }
+        public int? AssetTypeId { get; set; }
         public DateTime CreationTime { get; set; }
         //public Asset()
         //{

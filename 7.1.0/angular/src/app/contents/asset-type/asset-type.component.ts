@@ -1,68 +1,70 @@
-import { Component, Injector, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
-import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AssetInputDto, AssetServiceProxy, AssetTypeServiceProxy } from '@shared/service-proxies/service-proxies';
-import { result } from 'lodash-es';
+import { LazyLoadEvent } from 'primeng/api/lazyloadevent';
+import { Paginator } from 'primeng/paginator';
+import { finalize } from 'rxjs/operators';
+import { PrimengTableHelper } from 'shared/helpers/PrimengTableHelper';
 @Component({
+  selector: 'app-asset-type',
   templateUrl: './asset-type.component.html',
-  animations: [appModuleAnimation()],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./asset-type.component.css']
 })
-export class AssetTypeComponent extends AppComponentBase implements OnInit{
+export class AssetTypeComponent extends AppComponentBase implements OnInit {
   assetTypeList;
-  cols: any[];
   loading =  false;
   totalRecords: number;
-  assetList;
-    constructor(
-        injector: Injector,
-        private assetTypeService: AssetTypeServiceProxy,
-        private assetService: AssetServiceProxy) {   
-            super(injector);
-      }
-    ngOnInit() {
-        this.getAll();
-        this.cols = [
-          { field: 'assetTypeCode', header: 'Asset Type Code', width: '20%' },
-          { field: 'assetTypeName', header: 'Asset Type Name' },
-        ];
-    }
-  
-    getAll(){
-      this.loading = true;
-      debugger
-        this.assetTypeService.getAll()
-        .subscribe(result => {
-          debugger
-          this.loading = false;
-            this.assetTypeList = result.items;
-            this.totalRecords = this.assetTypeList?.length;
-        });
-        this.assetService.getAll().subscribe( result =>{
-          debugger
-          this.assetList = result.items;
-        })
-    }
-    createOrEditAsset(asset?: AssetInputDto): void {
-      // this.createOrEditAssetModal.show(asset);
-    }
-    deleteAsset(asset: AssetInputDto){
-      this.message.confirm(
-        this.l('Tài sản tên "' + asset.assetName + '" này sẽ bị xóa'),
-        this.l('Bạn chắc chắn xóa tài sản này'),
-        (isConfirmed) => {
-            if (isConfirmed) {
-                this.loading = true;
-                // this.assetService
-                // .deleteAsset(asset.id)
-                // .pipe(finalize(() => this.loading = false))
-                // .subscribe(() => {
-                //     this.getAll();
-                //     this.notify.success(this.l('SuccessfullyDeleted'));
-                // });
-            }
-        }
-    );
-    }
+  primengTableHelper: PrimengTableHelper;
+  @ViewChild("paginator", { static: true }) paginator: Paginator;
+  constructor(
+    injector: Injector,
+    private assetTypeService: AssetTypeServiceProxy,
+    private _router: Router) {   
+        super(injector);
+        this.primengTableHelper = new PrimengTableHelper();
+  }
+
+  ngOnInit(): void {
+  this.getAll();
+  }
+  getAll(event?: LazyLoadEvent){
+    if (this.primengTableHelper.shouldResetPaging(event)) {
+      this.paginator?.changePage(0);
+      return;
+  }
+  this.primengTableHelper.showLoadingIndicator();
+    this.loading = true;
+    this.assetTypeService.getAssetTypes()
+    .subscribe(result => {
+      this.loading = false;
+        this.assetTypeList = result.items;
+        this.primengTableHelper.totalRecordsCount = result.items.length;
+        this.primengTableHelper.records = result.items;
+        this.totalRecords = this.assetTypeList?.length;
+        this.primengTableHelper.hideLoadingIndicator();
+    });
+  }
+
+  createOrEditAssetType(asset?: AssetInputDto): void {
+    // this.createOrEditAssetModal.show(asset);
+  }
+  deleteAsset(asset: AssetInputDto){
+  //   this.message.confirm(
+  //     this.l('Tài sản tên "' + asset.assetName + '" này sẽ bị xóa'),
+  //     this.l('Bạn chắc chắn xóa tài sản này'),
+  //     (isConfirmed) => {
+  //         if (isConfirmed) {
+  //             this.loading = true;
+  //             this.assetTypeServ
+  //             .deleteAssetType(asset.id)
+  //             .pipe(finalize(() => this.loading = false))
+  //             .subscribe(() => {
+  //                 this.getAll();
+  //                 this.notify.success(this.l('SuccessfullyDeleted'));
+  //             });
+  //         }
+  //     }
+  // );
+  }
 }

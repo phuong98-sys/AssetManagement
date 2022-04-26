@@ -13,15 +13,15 @@ namespace WS.AssetTypes
 {
     public class AssetTypeAppService: AssetManagementAppServiceBase, IAssetTypeAppService
     {
-        private readonly IRepository<AssetType> _assetType;
-        public AssetTypeAppService(IRepository<AssetType> assetType)
+        private readonly IRepository<AssetType> _assetTypeRepository;
+        public AssetTypeAppService(IRepository<AssetType> assetTypeRepository)
         {
-            _assetType = assetType;
+            _assetTypeRepository = assetTypeRepository;
         }
-        public async Task<ListResultDto<AssetTypeDto>> GetAll()
+        public async Task<ListResultDto<AssetTypeDto>> GetAssetTypes()
         {
             try {
-                var assetTypes = await _assetType.GetAll().ToListAsync();
+                var assetTypes = await _assetTypeRepository.GetAll().ToListAsync();
                 var assetTypeDtos = ObjectMapper.Map<List<AssetTypeDto>>(assetTypes);
                 return new ListResultDto<AssetTypeDto>(assetTypeDtos);
             }
@@ -29,6 +29,51 @@ namespace WS.AssetTypes
             {
                 throw (e);
 
+            }
+        }
+
+        public async Task<AssetTypeDto> InsertOrUpdateAssetType(AssetTypeInputDto input)
+        {
+            try
+            {
+                if (input.Id == 0)
+                {
+                    var increaseAsset = ObjectMapper.Map<AssetType>(input);
+                    await _assetTypeRepository.InsertAsync(increaseAsset);
+                    await CurrentUnitOfWork.SaveChangesAsync();
+                    return ObjectMapper.Map<AssetTypeDto>(increaseAsset);
+                }
+                if (input.Id > 0)
+                {
+                    var increaseAsset = await _assetTypeRepository.FirstOrDefaultAsync(x => x.Id == input.Id);
+                    ObjectMapper.Map(input, increaseAsset);
+                    return ObjectMapper.Map<AssetTypeDto>(increaseAsset);
+                }
+                return null;
+
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+
+        }
+
+        public async Task DeleteAssetType(DeleteAssetTypeDto input)
+        {
+            try
+            {
+                var assetType = _assetTypeRepository.FirstOrDefault(x => x.Id == input.Id);
+                if (assetType == null)
+                {
+                    throw new Abp.UI.UserFriendlyException("No Data Found");
+                }
+                assetType.Assets.ForEach(t => t.AssetTypeId = null);
+                await _assetTypeRepository.DeleteAsync(assetType);
+            }
+            catch (Exception e)
+            {
+                throw (e);
             }
         }
     }
