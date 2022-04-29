@@ -154,8 +154,8 @@ export class AssetServiceProxy {
     /**
      * @return Success
      */
-    getAll(): Observable<AssetDtoListResultDto> {
-        let url_ = this.baseUrl + "/api/services/app/Asset/GetAll";
+    getAssets(): Observable<AssetDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Asset/GetAssets";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -167,11 +167,11 @@ export class AssetServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAll(response_);
+            return this.processGetAssets(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAll(<any>response_);
+                    return this.processGetAssets(<any>response_);
                 } catch (e) {
                     return <Observable<AssetDtoListResultDto>><any>_observableThrow(e);
                 }
@@ -180,7 +180,7 @@ export class AssetServiceProxy {
         }));
     }
 
-    protected processGetAll(response: HttpResponseBase): Observable<AssetDtoListResultDto> {
+    protected processGetAssets(response: HttpResponseBase): Observable<AssetDtoListResultDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -206,8 +206,8 @@ export class AssetServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    insertAsset(body: AssetInputDto | undefined): Observable<AssetListDto> {
-        let url_ = this.baseUrl + "/api/services/app/Asset/InsertAsset";
+    insertOrUpdateAsset(body: AssetInputDto | undefined): Observable<AssetListDto> {
+        let url_ = this.baseUrl + "/api/services/app/Asset/InsertOrUpdateAsset";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -223,11 +223,11 @@ export class AssetServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processInsertAsset(response_);
+            return this.processInsertOrUpdateAsset(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processInsertAsset(<any>response_);
+                    return this.processInsertOrUpdateAsset(<any>response_);
                 } catch (e) {
                     return <Observable<AssetListDto>><any>_observableThrow(e);
                 }
@@ -236,7 +236,7 @@ export class AssetServiceProxy {
         }));
     }
 
-    protected processInsertAsset(response: HttpResponseBase): Observable<AssetListDto> {
+    protected processInsertOrUpdateAsset(response: HttpResponseBase): Observable<AssetListDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -312,58 +312,6 @@ export class AssetServiceProxy {
             }));
         }
         return _observableOf<AssetDto>(<any>null);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    updateAsset(body: UpdateAssetDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Asset/UpdateAsset";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-            })
-        };
-
-        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processUpdateAsset(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processUpdateAsset(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processUpdateAsset(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
     }
 
     /**
@@ -2521,6 +2469,7 @@ export interface IApplicationInfoDto {
 
 export class AssetDto implements IAssetDto {
     id: number;
+    creatorUserId: number | undefined;
     assetCode: string;
     assetName: string | undefined;
     increaseAssetDate: moment.Moment | undefined;
@@ -2535,7 +2484,9 @@ export class AssetDto implements IAssetDto {
     reasonForReduction: string | undefined;
     recoverableValue: number | undefined;
     increaseAssetId: number | undefined;
-    assetTypeId: number;
+    assetTypeId: number | undefined;
+    assetTypeName: string | undefined;
+    assetStatusId: number;
     creationTime: moment.Moment;
 
     constructor(data?: IAssetDto) {
@@ -2550,6 +2501,7 @@ export class AssetDto implements IAssetDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
             this.assetCode = _data["assetCode"];
             this.assetName = _data["assetName"];
             this.increaseAssetDate = _data["increaseAssetDate"] ? moment(_data["increaseAssetDate"].toString()) : <any>undefined;
@@ -2565,6 +2517,8 @@ export class AssetDto implements IAssetDto {
             this.recoverableValue = _data["recoverableValue"];
             this.increaseAssetId = _data["increaseAssetId"];
             this.assetTypeId = _data["assetTypeId"];
+            this.assetTypeName = _data["assetTypeName"];
+            this.assetStatusId = _data["assetStatusId"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
         }
     }
@@ -2579,6 +2533,7 @@ export class AssetDto implements IAssetDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
         data["assetCode"] = this.assetCode;
         data["assetName"] = this.assetName;
         data["increaseAssetDate"] = this.increaseAssetDate ? this.increaseAssetDate.toISOString() : <any>undefined;
@@ -2594,6 +2549,8 @@ export class AssetDto implements IAssetDto {
         data["recoverableValue"] = this.recoverableValue;
         data["increaseAssetId"] = this.increaseAssetId;
         data["assetTypeId"] = this.assetTypeId;
+        data["assetTypeName"] = this.assetTypeName;
+        data["assetStatusId"] = this.assetStatusId;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         return data; 
     }
@@ -2608,6 +2565,7 @@ export class AssetDto implements IAssetDto {
 
 export interface IAssetDto {
     id: number;
+    creatorUserId: number | undefined;
     assetCode: string;
     assetName: string | undefined;
     increaseAssetDate: moment.Moment | undefined;
@@ -2622,7 +2580,9 @@ export interface IAssetDto {
     reasonForReduction: string | undefined;
     recoverableValue: number | undefined;
     increaseAssetId: number | undefined;
-    assetTypeId: number;
+    assetTypeId: number | undefined;
+    assetTypeName: string | undefined;
+    assetStatusId: number;
     creationTime: moment.Moment;
 }
 
@@ -2678,7 +2638,8 @@ export interface IAssetDtoListResultDto {
 }
 
 export class AssetInputDto implements IAssetInputDto {
-    id: number;
+    id: number | undefined;
+    creatorUserId: number | undefined;
     assetCode: string;
     assetName: string | undefined;
     increaseAssetDate: moment.Moment | undefined;
@@ -2708,6 +2669,7 @@ export class AssetInputDto implements IAssetInputDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
             this.assetCode = _data["assetCode"];
             this.assetName = _data["assetName"];
             this.increaseAssetDate = _data["increaseAssetDate"] ? moment(_data["increaseAssetDate"].toString()) : <any>undefined;
@@ -2737,6 +2699,7 @@ export class AssetInputDto implements IAssetInputDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
         data["assetCode"] = this.assetCode;
         data["assetName"] = this.assetName;
         data["increaseAssetDate"] = this.increaseAssetDate ? this.increaseAssetDate.toISOString() : <any>undefined;
@@ -2765,7 +2728,8 @@ export class AssetInputDto implements IAssetInputDto {
 }
 
 export interface IAssetInputDto {
-    id: number;
+    id: number | undefined;
+    creatorUserId: number | undefined;
     assetCode: string;
     assetName: string | undefined;
     increaseAssetDate: moment.Moment | undefined;
@@ -2785,6 +2749,8 @@ export interface IAssetInputDto {
 }
 
 export class AssetListDto implements IAssetListDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
     assetCode: string;
     assetName: string | undefined;
     increaseAssetDate: moment.Moment | undefined;
@@ -2813,6 +2779,8 @@ export class AssetListDto implements IAssetListDto {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
             this.assetCode = _data["assetCode"];
             this.assetName = _data["assetName"];
             this.increaseAssetDate = _data["increaseAssetDate"] ? moment(_data["increaseAssetDate"].toString()) : <any>undefined;
@@ -2841,6 +2809,8 @@ export class AssetListDto implements IAssetListDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
         data["assetCode"] = this.assetCode;
         data["assetName"] = this.assetName;
         data["increaseAssetDate"] = this.increaseAssetDate ? this.increaseAssetDate.toISOString() : <any>undefined;
@@ -2869,6 +2839,8 @@ export class AssetListDto implements IAssetListDto {
 }
 
 export interface IAssetListDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
     assetCode: string;
     assetName: string | undefined;
     increaseAssetDate: moment.Moment | undefined;
@@ -4914,113 +4886,6 @@ export interface ITenantLoginInfoDto {
     id: number;
     tenancyName: string | undefined;
     name: string | undefined;
-}
-
-export class UpdateAssetDto implements IUpdateAssetDto {
-    id: number;
-    assetCode: string;
-    assetName: string | undefined;
-    increaseAssetDate: moment.Moment | undefined;
-    amortizationDate: moment.Moment | undefined;
-    numberOfDayUsedAsset: number | undefined;
-    numberOfDayRemaing: number | undefined;
-    orginalPrice: number;
-    amortizationValue: number | undefined;
-    depreciationOfAsset: number | undefined;
-    residualValue: number | undefined;
-    usageStatus: string | undefined;
-    reasonForReduction: string | undefined;
-    recoverableValue: number | undefined;
-    increaseAssetId: number | undefined;
-    assetTypeId: number;
-    creationTime: moment.Moment;
-
-    constructor(data?: IUpdateAssetDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.assetCode = _data["assetCode"];
-            this.assetName = _data["assetName"];
-            this.increaseAssetDate = _data["increaseAssetDate"] ? moment(_data["increaseAssetDate"].toString()) : <any>undefined;
-            this.amortizationDate = _data["amortizationDate"] ? moment(_data["amortizationDate"].toString()) : <any>undefined;
-            this.numberOfDayUsedAsset = _data["numberOfDayUsedAsset"];
-            this.numberOfDayRemaing = _data["numberOfDayRemaing"];
-            this.orginalPrice = _data["orginalPrice"];
-            this.amortizationValue = _data["amortizationValue"];
-            this.depreciationOfAsset = _data["depreciationOfAsset"];
-            this.residualValue = _data["residualValue"];
-            this.usageStatus = _data["usageStatus"];
-            this.reasonForReduction = _data["reasonForReduction"];
-            this.recoverableValue = _data["recoverableValue"];
-            this.increaseAssetId = _data["increaseAssetId"];
-            this.assetTypeId = _data["assetTypeId"];
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): UpdateAssetDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new UpdateAssetDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["assetCode"] = this.assetCode;
-        data["assetName"] = this.assetName;
-        data["increaseAssetDate"] = this.increaseAssetDate ? this.increaseAssetDate.toISOString() : <any>undefined;
-        data["amortizationDate"] = this.amortizationDate ? this.amortizationDate.toISOString() : <any>undefined;
-        data["numberOfDayUsedAsset"] = this.numberOfDayUsedAsset;
-        data["numberOfDayRemaing"] = this.numberOfDayRemaing;
-        data["orginalPrice"] = this.orginalPrice;
-        data["amortizationValue"] = this.amortizationValue;
-        data["depreciationOfAsset"] = this.depreciationOfAsset;
-        data["residualValue"] = this.residualValue;
-        data["usageStatus"] = this.usageStatus;
-        data["reasonForReduction"] = this.reasonForReduction;
-        data["recoverableValue"] = this.recoverableValue;
-        data["increaseAssetId"] = this.increaseAssetId;
-        data["assetTypeId"] = this.assetTypeId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        return data; 
-    }
-
-    clone(): UpdateAssetDto {
-        const json = this.toJSON();
-        let result = new UpdateAssetDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IUpdateAssetDto {
-    id: number;
-    assetCode: string;
-    assetName: string | undefined;
-    increaseAssetDate: moment.Moment | undefined;
-    amortizationDate: moment.Moment | undefined;
-    numberOfDayUsedAsset: number | undefined;
-    numberOfDayRemaing: number | undefined;
-    orginalPrice: number;
-    amortizationValue: number | undefined;
-    depreciationOfAsset: number | undefined;
-    residualValue: number | undefined;
-    usageStatus: string | undefined;
-    reasonForReduction: string | undefined;
-    recoverableValue: number | undefined;
-    increaseAssetId: number | undefined;
-    assetTypeId: number;
-    creationTime: moment.Moment;
 }
 
 export class UserDto implements IUserDto {

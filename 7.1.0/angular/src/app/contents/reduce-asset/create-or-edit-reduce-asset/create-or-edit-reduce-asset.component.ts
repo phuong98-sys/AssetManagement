@@ -85,14 +85,14 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
     this.asset.amortizationValue = Number(((this.asset.orginalPrice)/(this.asset.numberOfDayUsedAsset*12)).toFixed(3));
   }
   getAssets(){
-    this.assetService.getAll().subscribe((result)=>{
+    this.assetService.getAssets().subscribe((result)=>{
       this.assetList = result.items.filter((item)=> item.amortizationValue <= 0);
     });
   }
   clickIncreaseAsset(){
     debugger
     if(this.asset.numberOfDayUsedAsset > 0){
-      this.assetService.updateAsset(this.asset);
+      this.assetService.insertOrUpdateAsset(this.asset);
     }
   }
 }

@@ -1380,10 +1380,25 @@ namespace AssetManagement.Migrations
                     b.Property<string>("AssetName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("AssetStatusId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("AssetTypeId")
                         .HasColumnType("int");
 
+                    b.Property<string>("AssetTypeName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime2");
 
                     b.Property<double?>("DepreciationOfAsset")
@@ -1394,6 +1409,15 @@ namespace AssetManagement.Migrations
 
                     b.Property<int?>("IncreaseAssetId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
 
                     b.Property<int?>("NumberOfDayRemaing")
                         .HasColumnType("int");
@@ -1413,16 +1437,44 @@ namespace AssetManagement.Migrations
                     b.Property<double?>("ResidualValue")
                         .HasColumnType("float");
 
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UsageStatus")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AssetStatusId");
 
                     b.HasIndex("AssetTypeId");
 
                     b.HasIndex("IncreaseAssetId");
 
                     b.ToTable("Asset");
+                });
+
+            modelBuilder.Entity("AssetManagement.AssetStatuses.AssetStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AssetStatusCode")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("AssetStatusName")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AssetStatus");
                 });
 
             modelBuilder.Entity("AssetManagement.AssetTypes.AssetType", b =>
@@ -2023,6 +2075,12 @@ namespace AssetManagement.Migrations
 
             modelBuilder.Entity("AssetManagement.Assets.Asset", b =>
                 {
+                    b.HasOne("AssetManagement.AssetStatuses.AssetStatus", "AssetStatus")
+                        .WithMany()
+                        .HasForeignKey("AssetStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AssetManagement.AssetTypes.AssetType", "AssetType")
                         .WithMany("Assets")
                         .HasForeignKey("AssetTypeId");
@@ -2030,6 +2088,8 @@ namespace AssetManagement.Migrations
                     b.HasOne("AssetManagement.IncreaseAssets.IncreaseAsset", "IncreaseAsset")
                         .WithMany("Assets")
                         .HasForeignKey("IncreaseAssetId");
+
+                    b.Navigation("AssetStatus");
 
                     b.Navigation("AssetType");
 

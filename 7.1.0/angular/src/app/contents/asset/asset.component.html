@@ -38,7 +38,7 @@
     </div>
 </div>
 <div class="content-component">
-    <p-table (onLazyLoad)="getAll($event)" [paginator]="false" [lazy]="true" [rows]="3" [totalRecords]="totalRecords"  [scrollable]="true" scrollHeight="320px" scrollWidth="1100px" [value]="assetList" [resizableColumns]="true" [autoLayout]="true" [responsive]="primengTableHelper.isResponsive">
+    <p-table (onLazyLoad)="getAssets($event)" [paginator]="false" [lazy]="true" [rows]="3" [totalRecords]="totalRecords"  [scrollable]="true" scrollHeight="320px" scrollWidth="1100px" [value]="assetList" [resizableColumns]="true" [autoLayout]="true" [responsive]="primengTableHelper.isResponsive">
     <ng-template pTemplate="header">
         <tr>
             <th pResizableColumn pSortableColumn="assetCode" style="width:150px">
@@ -111,13 +111,13 @@
                         Hành động
                     </button>
                     <ul class="dropdown-menu" *dropdownMenu>
-                        <li>
+                        <li (click)="createOrEditAsset(asset)">
                             <a href="javascript:;"
-                                (click)="createOrEditAsset(asset)">Sửa</a>
+                                >Sửa</a>
                         </li>
-                        <li>
+                        <li (click)="deleteAsset(asset)">
                             <a href="javascript:;"
-                                (click)="deleteAsset(asset)">Xóa</a>
+                                >Xóa</a>
                         </li>
                     </ul>
                 </div>
@@ -157,4 +157,4 @@
     </div>
 </p-table>
 </div>
-<app-create-or-edit-asset #createOrEditAssetModal (modalSave)="getAll()"></app-create-or-edit-asset>
+<!-- <app-create-or-edit-asset #createOrEditAssetModal (modalSave)="getAll()"></app-create-or-edit-asset> -->

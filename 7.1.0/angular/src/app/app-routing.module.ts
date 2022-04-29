@@ -34,9 +34,9 @@ import { CreateOrEditIncreaseAssetComponent } from './contents/increase-asset/cr
                     { path: 'contents', children:[
                         {path: 'asset-type', component: AssetTypeComponent, canActivate: [AppRouteGuard] },
                         {path: 'asset-statistic', component: TestComponent, canActivate: [AppRouteGuard] },
-                        {path: 'asset', component: AssetComponent, canActivate: [AppRouteGuard], children: [
-                            {path: 'create', component: CreateOrEditAssetComponent, canActivate: [AppRouteGuard]}
-                        ] },
+                        {path: 'asset', component: AssetComponent, canActivate: [AppRouteGuard] },
+                        {path: 'asset/create', component: CreateOrEditAssetComponent, canActivate: [AppRouteGuard] },
+                        {path: 'asset/:id', component: CreateOrEditAssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'increase-asset', component: IncreaseAssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'increase-asset/create', component: CreateOrEditIncreaseAssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'reduce-asset', component: ReduceAssetComponent, canActivate: [AppRouteGuard] },

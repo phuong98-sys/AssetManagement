@@ -1,5 +1,6 @@
 ﻿using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
+using AssetManagement.AssetStatuses;
 using AssetManagement.AssetTypes;
 using AssetManagement.IncreaseAssets;
 using System;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 namespace AssetManagement.Assets
 {
     [Table("Asset")]
-    public class Asset: Entity, IHasCreationTime
+    public class Asset: FullAuditedEntity, IMayHaveTenant
     {
         public const int maxLength = 32;
         [Required]
@@ -36,12 +37,17 @@ namespace AssetManagement.Assets
         public int? IncreaseAssetId { get; set; }
         [ForeignKey(nameof(AssetTypeId))]
         public AssetType AssetType { get; set; } // them tu AssetType table
+        public string AssetTypeName { get; set; }
         public int? AssetTypeId { get; set; }
-        public DateTime CreationTime { get; set; }
-        //public Asset()
-        //{
-        //    IncreaseAssets = new List<IncreaseAsset>();
-        //}
+        [ForeignKey(nameof(AssetStatusId))]
+        public AssetStatus AssetStatus { get; set; } // them tu AssetStatus table
+        public int AssetStatusId { get; set; }
+        public int? TenantId { get; set; }
+        public Asset()
+        {
+            AssetStatusId = 1;
+            //Id = new Guid();
+        }
 
     }
 }

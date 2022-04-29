@@ -5,7 +5,8 @@
         </div>
     </div>
 </div>
-<form #assetForm="ngForm" novalidate (ngSubmit)="save()" (keydown.enter)="$event.preventDefault()">
+<div busyIf="loading">
+    <form #assetForm="ngForm" novalidate (ngSubmit)="save()" (keydown.enter)="$event.preventDefault()">
     <div class="modal-header">
         <h4 class="modal-title">
             <span *ngIf="increaseAsset?.id">{{"Sửa chứng từ" | localize}}</span>
@@ -139,4 +140,5 @@
         localize}}</button>
     <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')"><i class="fa fa-save" style="margin-right: 5px"></i>
         <span>{{"Lưu" | localize}}</span></button>
+</div>
 </div>

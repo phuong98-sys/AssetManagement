@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
 import { AssetDto, AssetInputDto, AssetServiceProxy, AssetTypeDto, AssetTypeServiceProxy } from '@shared/service-proxies/service-proxies';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 type NewType = EventEmitter<any>;
@@ -22,23 +24,44 @@ export class CreateOrEditAssetComponent extends AppComponentBase implements OnIn
   canChangeUserName = true;
   asset: AssetInputDto = new AssetInputDto();
   assetTypeList: AssetTypeDto[];
+  assetList: AssetDto [];
   selectedAssetType: AssetTypeDto;
+  assetCodeMessage: string;
+  assetId : number;
   constructor(
     injector: Injector,
     private assetService: AssetServiceProxy,
-    private assetTypeService: AssetTypeServiceProxy) {
+    private assetTypeService: AssetTypeServiceProxy,
+    private _activatedRoute: ActivatedRoute,
+    private _router: Router) {
         super(injector);
+        debugger
+        if (this._activatedRoute.snapshot.params['id']) {
+          this.assetId = Number(this._activatedRoute.snapshot.params['id']);
+          
+      }
   }
 
   ngOnInit(): void {
     // this.resetForm();
-    this.getAssetTypeList();
+    this.getAssetForEdit();
+    // this.getAssetTypeList();
+    this.getAssets();
+
   }
-  getAssetTypeList(){
-    this.assetTypeService.getAssetTypes().subscribe((result)=>{
-      this.assetTypeList = result.items;
+  getAssets(){
+    this.assetService.getAssets().subscribe((result)=>{
+      this.assetList = result.items;
+      
     });
   }
+  // getAssetTypeList(){
+  //   this.assetTypeService.getAssetTypes().subscribe((result)=>{
+  //     debugger
+  //     this.assetTypeList = result.items;
+  //     this.selectedAssetType = this.assetTypeList.find((item)=> item.id == this.asset.assetTypeId);
+  //   });
+  // }
   onSelectAssetType(){
     // this.asset.assetTypeId 
     this.asset.assetTypeId = this.selectedAssetType.id;
@@ -83,7 +106,7 @@ export class CreateOrEditAssetComponent extends AppComponentBase implements OnIn
       if(!this.asset.id){
         this.asset.usageStatus="Chưa sử dụng";
         this.assetService
-        .insertAsset(this.asset)
+        .insertOrUpdateAsset(this.asset)
         .pipe(
             finalize(() => {
                 this.saving = false;
@@ -98,7 +121,7 @@ export class CreateOrEditAssetComponent extends AppComponentBase implements OnIn
       }
       if(this.asset.id){
         this.assetService
-        .updateAsset(this.asset)
+        .insertOrUpdateAsset(this.asset)
         .pipe(
             finalize(() => {
                 this.saving = false;
@@ -119,9 +142,33 @@ export class CreateOrEditAssetComponent extends AppComponentBase implements OnIn
     this.asset.assetName=null;
   }
   close(): void {
+    debugger
     this.active = false;
     // this.userPasswordRepeat = "";
-    this.modal.hide();
+    // this.modal.hide();
     this.submitForm.form.reset();
+    this._router.navigate(['app/contents/asset']);
+  }
+  getAssetForEdit(){
+    forkJoin(
+      this.assetService.getAsset(this.assetId),
+      this.assetTypeService.getAssetTypes()
+  )
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(([res1, res2]) => {
+          this.asset = res1;
+          this.assetTypeList = res2.items;
+          this.selectedAssetType = this.assetTypeList.find((item)=> item.id == this.asset.assetTypeId);
+      });
+  }
+  setAssetCode(){
+    debugger
+    var asset = this.assetList.find(x=> x.assetCode == this.asset.assetCode);
+    if(asset){
+      this.assetCodeMessage ="Mã này đã tồn tại. Vui lòng nhập mã khác";
+    }
+    else{
+      this.assetCodeMessage = "";
+    }
   }
 }

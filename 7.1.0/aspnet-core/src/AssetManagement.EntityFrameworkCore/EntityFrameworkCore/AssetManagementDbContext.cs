@@ -9,6 +9,7 @@ using AssetManagement.Assets;
 using AssetManagement.AssetTypes;
 using AssetManagement.ReduceAssets;
 using AssetManagement.Departments;
+using AssetManagement.AssetStatuses;
 
 namespace AssetManagement.EntityFrameworkCore
 {
@@ -21,6 +22,7 @@ namespace AssetManagement.EntityFrameworkCore
         public DbSet<AssetType> AssetTypes { get; set; }
         public DbSet<ReduceAsset> ReduceAssets { get; set; }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<AssetStatus> AssetStatuses { get; set; }
         public AssetManagementDbContext(DbContextOptions<AssetManagementDbContext> options)
             : base(options)
         {

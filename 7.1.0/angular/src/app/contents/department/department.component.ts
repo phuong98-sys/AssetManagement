@@ -28,7 +28,7 @@ export class DepartmentComponent extends AppComponentBase implements OnInit {
   }
   getAll(){
     this.loading = true;
-    this.assetService.getAll()
+    this.assetService.getAssets()
     .subscribe(result => {
       this.loading = false;
         this.assetList = result.items;

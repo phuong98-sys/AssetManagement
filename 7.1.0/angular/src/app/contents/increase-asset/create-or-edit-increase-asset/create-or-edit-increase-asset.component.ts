@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
 import { AssetDto, AssetServiceProxy, IncreaseAssetDto, IncreaseAssetInputDto, IncreaseAssetServiceProxy } from '@shared/service-proxies/service-proxies';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { TRISTATECHECKBOX_VALUE_ACCESSOR } from 'primeng/tristatecheckbox';
 import { finalize } from 'rxjs/operators';
 
 @Component({
@@ -22,6 +23,7 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
   increaseAsset: IncreaseAssetInputDto = new IncreaseAssetInputDto();
   asset: AssetDto = new AssetDto();
   assetList: AssetDto[];
+  assetHaveNotIncreaseList: AssetDto[];
   addAssetToIncreaseList:  AssetDto[] = [];
   // assetTypeList: IncreaseAssetTypeDto[];
   // selectedAssetType: AssetTypeDto;
@@ -36,6 +38,7 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
   ngOnInit(): void {
     // this.resetForm();
     // this.getAssetTypeList();
+
     this.getAssets();
   }
   show(asset?: IncreaseAssetInputDto): void {
@@ -82,24 +85,32 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
   searchAsset(){
     debugger
     // this.asset = new AssetDto();
-      this.asset = this.assetList.find((item) => item.assetCode = this.asset.assetCode);
+    // this.assetList = this.assetHaveNotIncreaseList.filter(x => !this.addAssetToIncreaseList.map(y => y?.assetCode).includes(x?.assetCode));
+    debugger
+    var newAsset = new AssetDto;
+    newAsset =this.asset;
+      this.asset = this.assetList?.find((item) => item.assetCode == newAsset.assetCode);
   }
   renderAmortizationValue(){
-    debugger
     this.asset.amortizationValue = Number(((this.asset.orginalPrice)/(this.asset.numberOfDayUsedAsset*12)).toFixed(3));
   }
   getAssets(){
-    debugger
-    this.assetService.getAll().subscribe((result)=>{
-      this.assetList = result.items.filter((item)=> item.increaseAssetId <= 0);
+    this.assetService.getAssets().subscribe((result)=>{
+      debugger
+      this.assetHaveNotIncreaseList = result.items.filter((item)=> item.increaseAssetId == null);
+      this.assetList = this.assetHaveNotIncreaseList;
     });
+   
   }
+
   clickIncreaseAsset(){
     debugger
-    // this.assetService.updateAsset(this.asset).subscribe();
-    var a = this.asset;
-    let asset = new AssetDto();
-      asset = this.asset;
-   this.addAssetToIncreaseList.push(asset);
+    var newAsset = new AssetDto;
+    newAsset =this.asset;
+    this.addAssetToIncreaseList.push(newAsset);
+    this.asset = new AssetDto;
+    // debugger
+
+    // this.assetList = this.assetHaveNotIncreaseList.filter(x => !this.addAssetToIncreaseList.map(y => y?.assetCode).includes(x?.assetCode));
   }
 }

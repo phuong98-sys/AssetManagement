@@ -11,9 +11,8 @@ namespace AssetManagement.Assets
 {
     public interface IAssetAppService: IApplicationService
     {
-        Task<ListResultDto<AssetDto>> GetAll();
-        Task<AssetListDto> InsertAsset(AssetInputDto input);
+        Task<ListResultDto<AssetDto>> GetAssets();
         AssetDto GetAsset(GetAssetInput input);
-        Task UpdateAsset(UpdateAssetDto input);
+        Task<AssetListDto> InsertOrUpdateAsset(AssetInputDto input);
     }
 }

@@ -114,6 +114,7 @@ ul.nav-treeview li.nav-item a.nav-link{
 .header-title{
   display: flex;
   padding: 10px 10px 20px 10px;
+  line-height: 1;
 }
 .header-title .btn-add-container{
   position: absolute;
@@ -122,7 +123,50 @@ ul.nav-treeview li.nav-item a.nav-link{
 .header-title .btn-add-container .btn-add{
 
 }
-::ng-deep .dropdown-menu li{
-  padding: 5px 10px;
+.dropdown-menu li{
+  padding: 10px;
 }
-/* common */
+.dropdown-menu li:hover,
+.parent-title:hover {
+  cursor: pointer;
+}
+.btn:hover{
+  color: #fff;
+}
+.kt-subheader__separator.kt-subheader__separator--v{
+  width: 1px;
+  height: 22px;
+  border-radius: 2px;
+  background: black;
+  margin: 0 1rem 0 1rem;
+}
+.parent-title{
+  color: #007ad9;
+}
+.title-page.title-child{
+  color: #959cb6;
+}
+.header-title-container{
+  position: relative;
+    height: 40px;
+    position: sticky;
+    height: 54px;
+    align-items: baseline;
+    top: 0 !important; 
+    right: 0;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    z-index: 102;
+    background-color: #fff;
+    -webkit-box-shadow: 0 10px 30px 0 rgb(82 63 105 / 8%);
+    box-shadow: 0 10px 30px 0 rgb(82 63 105 / 8%);
+}
+.btn-primary.disabled, .btn-primary:disabled{
+   background-color: #5867dd;
+   border: #5867dd;
+   opacity: 0.5;
+}
+.btn-cancel{
+  background-color: red;
+  color: #fff;
+}

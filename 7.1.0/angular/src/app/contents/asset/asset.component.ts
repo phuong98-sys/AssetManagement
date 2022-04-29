@@ -1,5 +1,5 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
 import { AssetInputDto, AssetServiceProxy } from '@shared/service-proxies/service-proxies';
 import { LazyLoadEvent } from 'primeng/api/lazyloadevent';
@@ -25,20 +25,22 @@ export class AssetComponent extends AppComponentBase implements OnInit {
     private assetService: AssetServiceProxy,
     private _router: Router) {   
         super(injector);
+      
         this.primengTableHelper = new PrimengTableHelper();
   }
 
   ngOnInit(): void {
-  this.getAll();
+  this.getAssets();
   }
-  getAll(event?: LazyLoadEvent){
-    if (this.primengTableHelper.shouldResetPaging(event)) {
-      this.paginator?.changePage(0);
-      return;
-  }
+  getAssets(event?: LazyLoadEvent){
+    debugger
+  //   if (this.primengTableHelper.shouldResetPaging(event)) {
+  //     this.paginator?.changePage(0);
+  //     return;
+  // }
   this.primengTableHelper.showLoadingIndicator();
     this.loading = true;
-    this.assetService.getAll()
+    this.assetService.getAssets()
     .subscribe(result => {
       this.loading = false;
         this.assetList = result.items;
@@ -50,7 +52,11 @@ export class AssetComponent extends AppComponentBase implements OnInit {
   }
 
   createOrEditAsset(asset?: AssetInputDto): void {
-    this.createOrEditAssetModal.show(asset);
+    if(!asset)
+    this._router.navigate(["/app/contents/asset/create"]);
+    else
+    this._router.navigate(["/app/contents/asset/" + asset?.id]);
+    // this.createOrEditAssetModal.show(asset);
   }
   deleteAsset(asset: AssetInputDto){
     this.message.confirm(
@@ -63,7 +69,8 @@ export class AssetComponent extends AppComponentBase implements OnInit {
               .deleteAsset(asset.id)
               .pipe(finalize(() => this.loading = false))
               .subscribe(() => {
-                  this.getAll();
+                debugger
+                  this.getAssets();
                   this.notify.success(this.l('SuccessfullyDeleted'));
               });
           }

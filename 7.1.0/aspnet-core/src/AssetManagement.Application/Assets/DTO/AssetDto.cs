@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace AssetManagement.Assets.DTO
 {
     [AutoMapFrom(typeof(Asset))]
-    public class AssetDto: EntityDto
+    public class AssetDto: CreationAuditedEntityDto<int?>
     {
         public int Id { get; set; }
         public const int maxLength = 32;
@@ -30,11 +30,13 @@ namespace AssetManagement.Assets.DTO
         public string? ReasonForReduction { get; set; }
         public double? RecoverableValue { get; set; }
         public int? IncreaseAssetId { get; set; }
-        public int AssetTypeId { get; set; }
+        public int? AssetTypeId { get; set; }
+        public string AssetTypeName { get; set; }
+        public int AssetStatusId { get; set; }
         public DateTime CreationTime { get; set; }
     }
     [AutoMapFrom(typeof(Asset))]
-    public class AssetListDto
+    public class AssetListDto: CreationAuditedEntityDto<int?>
     { 
         public const int maxLength = 32;
         [Required]
@@ -58,7 +60,7 @@ namespace AssetManagement.Assets.DTO
     }
 
     [AutoMapTo(typeof(Asset))]
-    public class AssetInputDto: EntityDto
+    public class AssetInputDto: CreationAuditedEntityDto<int?>
     {
         public const int maxLength = 32;
         [Required]
@@ -85,7 +87,7 @@ namespace AssetManagement.Assets.DTO
         public int Id { get; set; }
     }
     [AutoMapTo(typeof(Asset))]
-    public class UpdateAssetDto : EntityDto
+    public class UpdateAssetDto : CreationAuditedEntityDto<int?>
     {
         public int Id { get; set; }
         public const int maxLength = 32;
@@ -105,7 +107,7 @@ namespace AssetManagement.Assets.DTO
         public string? ReasonForReduction { get; set; }
         public double? RecoverableValue { get; set; }
         public int? IncreaseAssetId { get; set; }
-        public int AssetTypeId { get; set; }
+        public int? AssetTypeId { get; set; }
         public DateTime CreationTime { get; set; }
     }
     public class DeleteAssetInput
