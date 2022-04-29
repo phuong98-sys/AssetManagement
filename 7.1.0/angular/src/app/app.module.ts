@@ -50,6 +50,10 @@ import { ReduceAssetComponent } from './contents/reduce-asset/reduce-asset.compo
 import { CreateOrEditReduceAssetComponent } from './contents/reduce-asset/create-or-edit-reduce-asset/create-or-edit-reduce-asset.component';
 import { DepartmentComponent } from './contents/department/department.component';
 import { PaginatorModule } from 'primeng/paginator';
+import { ProposeAssetComponent } from './contents/propose-asset/propose-asset.component';
+import { PlaneShopComponent } from './contents/plane-shop/plane-shop.component';
+import { CreateOrEditProposeComponent } from './contents/propose-asset/create-or-edit-propose/create-or-edit-propose.component';
+import { PlanMaintainComponent } from './contents/plan-maintain/plan-maintain.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +93,10 @@ import { PaginatorModule } from 'primeng/paginator';
     ReduceAssetComponent,
     CreateOrEditReduceAssetComponent,
     DepartmentComponent,
+    ProposeAssetComponent,
+    PlaneShopComponent,
+    CreateOrEditProposeComponent,
+    PlanMaintainComponent,
   ],
   imports: [
     CommonModule,
