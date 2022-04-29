@@ -50,6 +50,9 @@ import { CreateOrEditReduceAssetComponent } from './contents/reduce-asset/create
 import { DepartmentComponent } from './contents/department/department.component';
 import { PaginatorModule } from 'primeng/paginator';
 import { AssetTypeComponent } from './contents/asset-type/asset-type.component';
+import { ProposeAssetComponent } from './contents/propose-asset/propose-asset.component';
+import { PlaneShopComponent } from './contents/plane-shop/plane-shop.component';
+import { PlaneMaintainComponent } from './contents/plane-maintain/plane-maintain.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +92,9 @@ import { AssetTypeComponent } from './contents/asset-type/asset-type.component';
     CreateOrEditReduceAssetComponent,
     DepartmentComponent,
     AssetTypeComponent,
+    ProposeAssetComponent,
+    PlaneShopComponent,
+    PlaneMaintainComponent,
   ],
   imports: [
     CommonModule,
