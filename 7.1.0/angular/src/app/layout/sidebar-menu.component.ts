@@ -132,9 +132,9 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                 new MenuItem('Create Report','/app/contents/create-report','fas fa-users'),
             ]),
             new MenuItem(this.l('Other'),'','fas fa-circle','',[
-                new MenuItem('Create Offer','/app/contents/asset-type','fas fa-users'),
-                new MenuItem('Create Plane Shopping','/app/contents/asset-statistic','fas fa-users'),
-                new MenuItem('Create Plane Maintain','/app/contents/asset-statistic','fas fa-users'),
+                new MenuItem('Create Offer','/app/contents/propose-asset','fas fa-users'),
+                new MenuItem('Create Plane Shopping','/app/contents/plane-shop','fas fa-users'),
+                new MenuItem('Create Plane Maintain','/app/contents/plane-maintain','fas fa-users'),
                 new MenuItem('Create Plane Reduce','/app/contents/asset-statistic','fas fa-users')
             ]),
         ];
