@@ -49,6 +49,11 @@ F:\DA\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Rele
 F:\DA\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\ref\AssetManagement.Application.dll
 F:\DA\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.xml
 F:\DA\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.pdb
+D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.csproj.AssemblyReference.cache
+D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.AssemblyInfoInputs.cache
+D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.AssemblyInfo.cs
+D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.csproj.CoreCompileInputs.cache
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Application\bin\Release\net6.0\AssetManagement.Application.deps.json
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Application\bin\Release\net6.0\AssetManagement.Application.dll
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Application\bin\Release\net6.0\ref\AssetManagement.Application.dll
@@ -56,11 +61,6 @@ D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Application\bin\Release\ne
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Application\bin\Release\net6.0\AssetManagement.Application.xml
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Application\bin\Release\net6.0\AssetManagement.Core.dll
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Application\bin\Release\net6.0\AssetManagement.Core.pdb
-D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.csproj.AssemblyReference.cache
-D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.GeneratedMSBuildEditorConfig.editorconfig
-D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.AssemblyInfoInputs.cache
-D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.AssemblyInfo.cs
-D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.csproj.CoreCompileInputs.cache
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.csproj.CopyComplete
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.dll
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\ref\AssetManagement.Application.dll

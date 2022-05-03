@@ -367,6 +367,62 @@ export class AssetServiceProxy {
     }
 
     /**
+     * @param increaseId (optional) 
+     * @return Success
+     */
+    getAssetIncreased(increaseId: number | undefined): Observable<AssetDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Asset/GetAssetIncreased?";
+        if (increaseId === null)
+            throw new Error("The parameter 'increaseId' cannot be null.");
+        else if (increaseId !== undefined)
+            url_ += "increaseId=" + encodeURIComponent("" + increaseId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAssetIncreased(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAssetIncreased(<any>response_);
+                } catch (e) {
+                    return <Observable<AssetDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AssetDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAssetIncreased(response: HttpResponseBase): Observable<AssetDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = AssetDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AssetDtoListResultDto>(<any>null);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -878,6 +934,132 @@ export class IncreaseAssetServiceProxy {
             }));
         }
         return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
+export class PlaneShopServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getAll(): Observable<PlaneShopDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/PlaneShop/GetAll";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<PlaneShopDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PlaneShopDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PlaneShopDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PlaneShopDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PlaneShopDtoListResultDto>(<any>null);
+    }
+}
+
+@Injectable()
+export class ProposeAssetServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getAll(): Observable<ProposeAssetDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/ProposeAsset/GetAll";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<ProposeAssetDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProposeAssetDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<ProposeAssetDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProposeAssetDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProposeAssetDtoListResultDto>(<any>null);
     }
 }
 
@@ -4336,6 +4518,254 @@ export class PermissionDtoListResultDto implements IPermissionDtoListResultDto {
 
 export interface IPermissionDtoListResultDto {
     items: PermissionDto[] | undefined;
+}
+
+export class PlaneShopDto implements IPlaneShopDto {
+    id: number | undefined;
+    planPeriod: string;
+    dateFound: moment.Moment | undefined;
+    content: string | undefined;
+    approver: string | undefined;
+    approvalStatus: string | undefined;
+    userCode: string | undefined;
+    creationTime: moment.Moment;
+
+    constructor(data?: IPlaneShopDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.planPeriod = _data["planPeriod"];
+            this.dateFound = _data["dateFound"] ? moment(_data["dateFound"].toString()) : <any>undefined;
+            this.content = _data["content"];
+            this.approver = _data["approver"];
+            this.approvalStatus = _data["approvalStatus"];
+            this.userCode = _data["userCode"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): PlaneShopDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlaneShopDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["planPeriod"] = this.planPeriod;
+        data["dateFound"] = this.dateFound ? this.dateFound.toISOString() : <any>undefined;
+        data["content"] = this.content;
+        data["approver"] = this.approver;
+        data["approvalStatus"] = this.approvalStatus;
+        data["userCode"] = this.userCode;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): PlaneShopDto {
+        const json = this.toJSON();
+        let result = new PlaneShopDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlaneShopDto {
+    id: number | undefined;
+    planPeriod: string;
+    dateFound: moment.Moment | undefined;
+    content: string | undefined;
+    approver: string | undefined;
+    approvalStatus: string | undefined;
+    userCode: string | undefined;
+    creationTime: moment.Moment;
+}
+
+export class PlaneShopDtoListResultDto implements IPlaneShopDtoListResultDto {
+    items: PlaneShopDto[] | undefined;
+
+    constructor(data?: IPlaneShopDtoListResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(PlaneShopDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PlaneShopDtoListResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlaneShopDtoListResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): PlaneShopDtoListResultDto {
+        const json = this.toJSON();
+        let result = new PlaneShopDtoListResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlaneShopDtoListResultDto {
+    items: PlaneShopDto[] | undefined;
+}
+
+export class ProposeAssetDto implements IProposeAssetDto {
+    id: number | undefined;
+    numbersProposeAsset: string;
+    dateFound: moment.Moment | undefined;
+    proponent: string | undefined;
+    content: string | undefined;
+    approver: string | undefined;
+    approvalStatus: string | undefined;
+    userCode: string | undefined;
+    creationTime: moment.Moment;
+
+    constructor(data?: IProposeAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.numbersProposeAsset = _data["numbersProposeAsset"];
+            this.dateFound = _data["dateFound"] ? moment(_data["dateFound"].toString()) : <any>undefined;
+            this.proponent = _data["proponent"];
+            this.content = _data["content"];
+            this.approver = _data["approver"];
+            this.approvalStatus = _data["approvalStatus"];
+            this.userCode = _data["userCode"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): ProposeAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProposeAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["numbersProposeAsset"] = this.numbersProposeAsset;
+        data["dateFound"] = this.dateFound ? this.dateFound.toISOString() : <any>undefined;
+        data["proponent"] = this.proponent;
+        data["content"] = this.content;
+        data["approver"] = this.approver;
+        data["approvalStatus"] = this.approvalStatus;
+        data["userCode"] = this.userCode;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): ProposeAssetDto {
+        const json = this.toJSON();
+        let result = new ProposeAssetDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProposeAssetDto {
+    id: number | undefined;
+    numbersProposeAsset: string;
+    dateFound: moment.Moment | undefined;
+    proponent: string | undefined;
+    content: string | undefined;
+    approver: string | undefined;
+    approvalStatus: string | undefined;
+    userCode: string | undefined;
+    creationTime: moment.Moment;
+}
+
+export class ProposeAssetDtoListResultDto implements IProposeAssetDtoListResultDto {
+    items: ProposeAssetDto[] | undefined;
+
+    constructor(data?: IProposeAssetDtoListResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(ProposeAssetDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ProposeAssetDtoListResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProposeAssetDtoListResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ProposeAssetDtoListResultDto {
+        const json = this.toJSON();
+        let result = new ProposeAssetDtoListResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProposeAssetDtoListResultDto {
+    items: ProposeAssetDto[] | undefined;
 }
 
 export class RegisterInput implements IRegisterInput {

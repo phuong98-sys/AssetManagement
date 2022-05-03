@@ -10,8 +10,10 @@ using AssetManagement.AssetTypes;
 using AssetManagement.ReduceAssets;
 using AssetManagement.Departments;
 using AssetManagement.AssetStatuses;
-using AssetManagement.ProposeAssets;
 using AssetManagement.PlaneShops;
+using AssetManagement.SuggestionHandlings;
+using AssetManagement.ProposeAssets;
+using AssetManagement.SuggestionHandlingDetails;
 
 namespace AssetManagement.EntityFrameworkCore
 {
@@ -25,8 +27,10 @@ namespace AssetManagement.EntityFrameworkCore
         public DbSet<ReduceAsset> ReduceAssets { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<AssetStatus> AssetStatuses { get; set; }
-        public DbSet<ProposeAsset> ProposeAssets { get; set; }
         public DbSet<PlaneShop> PlaneShops { get; set; }
+        public DbSet<SuggestionHandling> SuggestionHandlings { get; set; }
+        public DbSet<ProposeAsset> ProposeAssets { get; set; }
+        public DbSet<SuggestionHandlingDetail> SuggestionHandlingDetails { get; set; }
         public AssetManagementDbContext(DbContextOptions<AssetManagementDbContext> options)
             : base(options)
         {

@@ -1309,6 +1309,12 @@ F:\DA\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release
 F:\DA\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.xml
 F:\DA\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.pdb
 F:\DA\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.genruntimeconfig.cache
+D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.dll.config
+D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.GeneratedMSBuildEditorConfig.editorconfig
+D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.AssemblyInfoInputs.cache
+D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.AssemblyInfo.cs
+D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.csproj.CoreCompileInputs.cache
+D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.MvcApplicationPartsAssemblyInfo.cache
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\bin\Release\net6.0\app.config
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\bin\Release\net6.0\log4net.config
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\bin\Release\net6.0\log4net.Production.config
@@ -1730,13 +1736,6 @@ D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\bin\Release\net6.
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\bin\Release\net6.0\AssetManagement.EntityFrameworkCore.pdb
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\bin\Release\net6.0\AssetManagement.EntityFrameworkCore.dll.config
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.csproj.AssemblyReference.cache
-D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.dll.config
-D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.GeneratedMSBuildEditorConfig.editorconfig
-D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.AssemblyInfoInputs.cache
-D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.AssemblyInfo.cs
-D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.csproj.CoreCompileInputs.cache
-D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.MvcApplicationPartsAssemblyInfo.cs
-D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.MvcApplicationPartsAssemblyInfo.cache
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\staticwebassets.build.json
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\staticwebassets.development.json
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\scopedcss\bundle\AssetManagement.Web.Host.styles.css
