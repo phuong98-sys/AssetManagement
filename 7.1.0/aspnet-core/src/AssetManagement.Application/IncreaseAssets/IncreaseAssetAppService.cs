@@ -38,14 +38,14 @@ namespace AssetManagement.IncreaseAssets
         {
             try
             {
-                if (input.Id == 0)
+                if (!input.Id.HasValue)
                 {
                     var increaseAsset = ObjectMapper.Map<IncreaseAsset>(input);
                     await _increaseAssetRepository.InsertAsync(increaseAsset);
                     await CurrentUnitOfWork.SaveChangesAsync();
                     return ObjectMapper.Map<IncreaseAssetDto>(increaseAsset);
                 }
-                if (input.Id > 0)
+                else
                 {
                     var increaseAsset = await _increaseAssetRepository.FirstOrDefaultAsync(x => x.Id == input.Id);
                     ObjectMapper.Map(input, increaseAsset);
@@ -64,8 +64,8 @@ namespace AssetManagement.IncreaseAssets
         {
             try
             {
-                var employee = _increaseAssetRepository.FirstOrDefault(x => x.Id == input.Id);
-                var output = ObjectMapper.Map<IncreaseAssetDto>(employee);
+                var increaseAsset = _increaseAssetRepository.FirstOrDefault(x => x.Id == input.Id);
+                var output = ObjectMapper.Map<IncreaseAssetDto>(increaseAsset);
                 return output;
             }
             catch (Exception e)
@@ -91,12 +91,28 @@ namespace AssetManagement.IncreaseAssets
         {
             try
             {
-                var increaseAsset = _increaseAssetRepository.FirstOrDefault(x => x.Id == input.Id);
+                var increaseAsset = _increaseAssetRepository.GetAll().Include(x => x.Assets).Where(x => x.Id == input.Id).FirstOrDefault();
                 if (increaseAsset == null)
                 {
                     throw new UserFriendlyException("No Data Found");
                 }
-                increaseAsset.Assets.ForEach(t => t.IncreaseAssetId = null);
+                //foreach (var asset in increaseAsset.Assets)
+                //{
+                //    asset.IncreaseAssetId = null;
+                //    asset.AmortizationValue = null;
+                //    asset.CreationTime = null;
+                //    asset.IncreaseAssetDate = null;
+                //}
+
+                increaseAsset.Assets.ForEach(asset =>
+                {
+                    asset.IncreaseAssetId = null;
+                    asset.AmortizationValue = null;
+                    asset.IncreaseAssetDate = null;
+                    asset.AmortizationValue = null;
+                    asset.NumberOfDayUsedAsset = null;
+                    asset.AssetStatusId = 1;
+                });
                 await _increaseAssetRepository.DeleteAsync(increaseAsset);
             }
             catch (Exception e)

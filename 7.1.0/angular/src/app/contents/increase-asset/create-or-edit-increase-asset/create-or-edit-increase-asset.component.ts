@@ -42,6 +42,10 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
         super(injector);
         if (this._activatedRoute.snapshot.params['id']) {
           this.increaseAssetId = Number(this._activatedRoute.snapshot.params['id']);
+          this.assetService.getAssetIncreased(this.increaseAssetId).subscribe((result)=>{
+            debugger
+              this.addAssetToIncreaseList = result.items;
+          });
         }
   }
   // asset: IncreaseAssetDto;
@@ -73,6 +77,7 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
   save(){
     if (this.validateForm(this.submitForm?.form)) {
       this.saving= true;
+      debugger
        this.increaseAsset.creationTime =  moment.utc(this.increaseAsset.creationTime.toString());
        this.increaseAsset.increaseAssetDate = moment.utc( this.increaseAsset.increaseAssetDate.toString());
           this.increaseAssetService.insertOrUpdateIncreaseAsset(this.increaseAsset)

@@ -31,7 +31,7 @@ namespace AssetManagement.Assets
                         AssetCode = a.AssetCode,
                         AssetName = a.AssetName,
                         IncreaseAssetDate = a.IncreaseAssetDate,
-                        NumberOfDayAmortization = (DateTime.Now - a.IncreaseAssetDate).Days,
+                        //NumberOfDayAmortization = 1,
                         NumberOfDayUsedAsset = a.NumberOfDayUsedAsset,
                         NumberOfDayRemaing = a.NumberOfDayRemaing,
                         OrginalPrice = a.OrginalPrice,

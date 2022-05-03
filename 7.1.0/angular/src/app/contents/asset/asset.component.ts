@@ -46,9 +46,9 @@ export class AssetComponent extends AppComponentBase implements OnInit {
         this.assetList = result.items;
         debugger
         this.assetList.map((item)=>{ 
-
-          item.creationTime = moment(item.creationTime).format("DD-MM-YYYY");
-          item.increaseAssetDate = moment(item.increaseAssetDate).format("DD-MM-YYYY")});
+          debugger
+          item.creationTime = item.creationTime? moment(item.creationTime).format("DD-MM-YYYY") : undefined;
+          item.increaseAssetDate = item.increaseAssetDate ? moment(item.increaseAssetDate).format("DD-MM-YYYY") : undefined});
         this.primengTableHelper.totalRecordsCount = result.items.length;
         this.primengTableHelper.records = result.items;
         this.totalRecords = this.assetList?.length;

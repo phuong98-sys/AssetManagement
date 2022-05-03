@@ -1401,7 +1401,7 @@ namespace AssetManagement.Migrations
                     b.Property<double?>("DepreciationOfAsset")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("IncreaseAssetDate")
+                    b.Property<DateTime?>("IncreaseAssetDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("IncreaseAssetId")

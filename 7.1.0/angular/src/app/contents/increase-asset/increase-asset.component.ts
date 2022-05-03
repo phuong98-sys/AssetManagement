@@ -42,16 +42,13 @@ export class IncreaseAssetComponent extends AppComponentBase implements OnInit {
       });
     }
   
-    createOrEditINcreaseAsset(increaseAsset?: IncreaseAssetInputDto): void {
-      debugger
-      // this.createOrEditIncreaseAssetModal.show(asset);
-      this._router.navigate(["/app/contents/increase-asset/create"]);
+    createOrEditIncreaseAsset(increaseAsset?: IncreaseAssetInputDto): void {
       if(!increaseAsset)
       this._router.navigate(["/app/contents/increase-asset/create"]);
       else
       this._router.navigate(["/app/contents/increase-asset/" + increaseAsset?.id]);
     }
-    deleteAsset(asset: IncreaseAssetInputDto){
+    deleteIncreaseAsset(increaseAsset: IncreaseAssetInputDto){
       this.message.confirm(
         this.l('Chứng từ này sẽ bị xóa'),
         this.l('Bạn chắc chắn xóa chứng từ này'),
@@ -59,7 +56,7 @@ export class IncreaseAssetComponent extends AppComponentBase implements OnInit {
             if (isConfirmed) {
                 this.loading = true;
                 this.assetService
-                .deleteIncreaseAsset(asset.id)
+                .deleteIncreaseAsset(increaseAsset.id)
                 .pipe(finalize(() => this.loading = false))
                 .subscribe(() => {
                     this.getAll();
