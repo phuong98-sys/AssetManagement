@@ -1309,8 +1309,11 @@ D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Debug\net6.0\
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Debug\net6.0\AssetManagement.Web.Host.pdb
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Debug\net6.0\AssetManagement.Web.Host.genruntimeconfig.cache
 <<<<<<< HEAD
+<<<<<<< HEAD
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Debug\net6.0\AssetManagement.Web.Host.MvcApplicationPartsAssemblyInfo.cs
 =======
+=======
+>>>>>>> 96cb0446cf51b65498ef6d1ee13e696c41ae2e33
 F:\DA\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Web.Host\bin\Debug\net6.0\app.config
 F:\DA\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Web.Host\bin\Debug\net6.0\log4net.config
 F:\DA\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Web.Host\bin\Debug\net6.0\log4net.Production.config
@@ -1748,4 +1751,7 @@ F:\DA\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Debug\n
 F:\DA\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Debug\net6.0\AssetManagement.Web.Host.xml
 F:\DA\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Debug\net6.0\AssetManagement.Web.Host.pdb
 F:\DA\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Debug\net6.0\AssetManagement.Web.Host.genruntimeconfig.cache
+<<<<<<< HEAD
+>>>>>>> 96cb0446cf51b65498ef6d1ee13e696c41ae2e33
+=======
 >>>>>>> 96cb0446cf51b65498ef6d1ee13e696c41ae2e33
