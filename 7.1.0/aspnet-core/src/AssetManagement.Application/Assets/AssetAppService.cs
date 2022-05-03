@@ -31,7 +31,7 @@ namespace AssetManagement.Assets
                         AssetCode = a.AssetCode,
                         AssetName = a.AssetName,
                         IncreaseAssetDate = a.IncreaseAssetDate,
-                        AmortizationDate = a.AmortizationDate,
+                        NumberOfDayAmortization = (DateTime.Now - a.IncreaseAssetDate).Days,
                         NumberOfDayUsedAsset = a.NumberOfDayUsedAsset,
                         NumberOfDayRemaing = a.NumberOfDayRemaing,
                         OrginalPrice = a.OrginalPrice,
@@ -70,8 +70,6 @@ namespace AssetManagement.Assets
                 }
                 else
                 {
-
-
                     var assetForEdit = await _assetRepository.FirstOrDefaultAsync(x => x.Id == input.Id);
                     ObjectMapper.Map(input, assetForEdit);
                     return ObjectMapper.Map<AssetListDto>(assetForEdit);
@@ -84,35 +82,26 @@ namespace AssetManagement.Assets
                 throw (e);
             }
 
+        }
+        public async Task IncreaseAssetList(List<AssetInputDto> inputList)
+        {
+            try
+            {
 
-            //try
-            //{
-            //    var asset = ObjectMapper.Map<Asset>(input);
-            //    await _assetRepository.InsertAsync(asset);
-            //    await CurrentUnitOfWork.SaveChangesAsync();
-            //    return ObjectMapper.Map<AssetListDto>(asset);
-            //}
-            //catch (Exception e)
-            //{
-            //    throw (e);
-            //}
+                foreach (var asset in inputList)
+                {
+                    asset.AssetStatusId = 2;
+                    var assetForEdit = await _assetRepository.FirstOrDefaultAsync(x => x.Id == asset.Id);
+                    ObjectMapper.Map(asset, assetForEdit);
+                }
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
 
         }
-        //public async Task<AssetListDto> InsertAsset(AssetInputDto input)
-        //{
-        //    try
-        //    {
-        //        var asset = ObjectMapper.Map<Asset>(input);
-        //        await _assetRepository.InsertAsync(asset);
-        //        await CurrentUnitOfWork.SaveChangesAsync();
-        //        return ObjectMapper.Map<AssetListDto>(asset);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw (e);
-        //    }
-
-        //}
+   
         public AssetDto GetAsset(GetAssetInput input)
         {
             try
@@ -127,18 +116,23 @@ namespace AssetManagement.Assets
             }
 
         }
-        //public async Task UpdateAsset(UpdateAssetDto input)
-        //{
-        //    try
-        //    {
-        //        var asset = await _assetRepository.FirstOrDefaultAsync(x => x.Id == input.Id);
-        //        ObjectMapper.Map(input, asset);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw (e);
-        //    }
-        //}
+        public async Task<ListResultDto<AssetDto>> GetAssetIncreased(int increaseId)
+        {
+            try
+            {
+                var assetDtos = await _assetRepository.GetAll().Where(x => x.IncreaseAssetId == increaseId).ToListAsync();
+                //var output = ObjectMapper.Map<List<AssetDto>>(assetDtos);
+                //return new ListResultDto<AssetDto>(assetDtos);
+
+                var assets = ObjectMapper.Map<List<AssetDto>>(assetDtos);
+                return new ListResultDto<AssetDto>(assets);
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+
+        }
 
         public async Task DeleteAsset(DeleteAssetInput input)
         {

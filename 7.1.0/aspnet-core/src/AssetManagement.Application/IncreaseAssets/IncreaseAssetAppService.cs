@@ -60,20 +60,20 @@ namespace AssetManagement.IncreaseAssets
             }
 
         }
-        //public AssetDto GetAsset(GetAssetInput input)
-        //{
-        //    try
-        //    {
-        //        var employee = _assetRepository.FirstOrDefault(x => x.Id == input.Id);
-        //        var output = ObjectMapper.Map<AssetDto>(employee);
-        //        return output;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw (e);
-        //    }
+        public IncreaseAssetDto GetIncreaseAsset(GetIncreaseAssetInput input)
+        {
+            try
+            {
+                var employee = _increaseAssetRepository.FirstOrDefault(x => x.Id == input.Id);
+                var output = ObjectMapper.Map<IncreaseAssetDto>(employee);
+                return output;
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
 
-        //}
+        }
         //public async Task UpdateAsset(UpdateAssetDto input)
         //{
         //    try

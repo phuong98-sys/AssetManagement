@@ -52,8 +52,8 @@
                         <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
                     </div>
                     <div class="form-group" *ngIf="assetId > 0 ">
-                        <label for="AmortizationDate">{{"Thời gian tính khấu hao" | localize}} </label>
-                        <input id="AmortizationDate" #amortizationDate="ngModel" type="date" name="AmortizationDate" class="form-control" [(ngModel)]="asset.amortizationDate" disabled/>
+                        <label for="NumberOfDayAmortization">{{"Thời gian tính khấu hao" | localize}} </label>
+                        <input id="NumberOfDayAmortization" #numberOfDayAmortization="ngModel" type="number" name="NumberOfDayAmortization" class="form-control" [(ngModel)]="asset.numberOfDayAmortization" disabled/>
                         <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
                     </div>
                     <div class="form-group" *ngIf="assetId > 0 ">
@@ -100,7 +100,7 @@
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-cancel" (click)="close()">{{"Hủy" |
                         localize}}</button>
-                    <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')" [disabled]="!assetForm.form.valid"><i class="fa fa-save" style="margin-right: 5px"></i>
+                    <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')" [disabled]="!assetForm.form.valid || ( assetCodeMessage != '') "><i class="fa fa-save" style="margin-right: 5px"></i>
                         <span>{{"Lưu" | localize}}</span></button>
                 </div>
             </form>

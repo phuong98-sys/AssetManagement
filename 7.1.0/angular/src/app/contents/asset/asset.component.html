@@ -60,9 +60,9 @@
                 Ngày ghi tăng
                 <p-sortIcon field="increaseAssetDate"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="amortizationDate" style="width:150px">
+            <th pResizableColumn pSortableColumn="numberOfDayAmortization" style="width:150px">
                 Ngày khấu hao 
-                <p-sortIcon field="amortizationDate"></p-sortIcon>
+                <p-sortIcon field="numberOfDayAmortization"></p-sortIcon>
             </th>
             <th pResizableColumn pSortableColumn="numberOfDayUsedAsset" style="width:140px">
                 Ngày sử dụng 
@@ -126,7 +126,7 @@
             <td style="width:120px">{{ asset.assetName}}</td>
             <td style="width:120px">{{ asset.orginalPrice }}</td>
             <td style="width:140px">{{ asset.increaseAssetDate}}</td>
-            <td style="width:150px">{{ asset.amortizationDate }}</td>
+            <td style="width:150px">{{ asset.numberOfDayAmortization }}</td>
             <td style="width:140px">{{ asset.numberOfDayUsedAsset}}</td>
             <td style="width:130px">{{ asset.numberOfDayRemaing }}</td>
             <td style="width:200px">{{ asset.amortizationValue}}</td>

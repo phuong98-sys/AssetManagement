@@ -14,5 +14,6 @@ namespace AssetManagement.Assets
         Task<ListResultDto<AssetDto>> GetAssets();
         AssetDto GetAsset(GetAssetInput input);
         Task<AssetListDto> InsertOrUpdateAsset(AssetInputDto input);
+        Task IncreaseAssetList(List<AssetInputDto> t);
     }
 }

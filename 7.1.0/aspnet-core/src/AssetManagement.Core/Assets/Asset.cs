@@ -21,8 +21,8 @@ namespace AssetManagement.Assets
         [StringLength(maxLength)]
         public string AssetCode { get; set; }
         public string AssetName { get; set; }
-        public DateTime? IncreaseAssetDate { get; set; }
-        public DateTime? AmortizationDate { get; set; }
+        public DateTime IncreaseAssetDate { get; set; }
+        public int? NumberOfDayAmortization { get; set; }
         public int? NumberOfDayUsedAsset { get; set; }
         public int? NumberOfDayRemaing { get; set; }
         public double OrginalPrice { get; set; }

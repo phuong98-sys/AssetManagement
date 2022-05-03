@@ -26,7 +26,7 @@ export class CreateOrEditAssetComponent extends AppComponentBase implements OnIn
   assetTypeList: AssetTypeDto[];
   assetList: AssetDto [];
   selectedAssetType: AssetTypeDto;
-  assetCodeMessage: string;
+  assetCodeMessage = '';
   assetId : number;
   constructor(
     injector: Injector,
@@ -83,28 +83,9 @@ export class CreateOrEditAssetComponent extends AppComponentBase implements OnIn
 }
   save(){
     if (this.validateForm(this.submitForm.form)) {
-      // let input = new AssetInputDto();
-
-      // input = this.asset;
-      // input.setRandomPassword = this.setRandomPassword;
-      // input.sendActivationEmail = this.sendActivationEmail;
-      // input.assignedRoleNames = _.map(
-      //     _.filter(this.roles, {
-      //         isAssigned: true,
-      //         inheritedFromOrganizationUnit: false,
-      //     }),
-      //     (role) => role.roleName
-      // );
-
-      // if (!input.assignedRoleNames.length) {
-      //     abp.message.error("Please select the user role(s).");
-      //     return;
-      // }
-
-      // this.saving = true;
       this.saving= true;
       if(!this.asset.id){
-        this.asset.usageStatus="Chưa sử dụng";
+        this.asset.assetStatusId = 1;
         this.assetService
         .insertOrUpdateAsset(this.asset)
         .pipe(
@@ -164,7 +145,7 @@ export class CreateOrEditAssetComponent extends AppComponentBase implements OnIn
   setAssetCode(){
     debugger
     var asset = this.assetList.find(x=> x.assetCode == this.asset.assetCode);
-    if(asset){
+    if(asset && asset.id != this.assetId){
       this.assetCodeMessage ="Mã này đã tồn tại. Vui lòng nhập mã khác";
     }
     else{

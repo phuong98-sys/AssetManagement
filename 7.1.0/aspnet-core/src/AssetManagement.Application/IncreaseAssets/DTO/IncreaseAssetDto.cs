@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace AssetManagement.IncreaseAssets.DTO
 {
     [AutoMapFrom(typeof(IncreaseAsset))]
-    public class IncreaseAssetDto: EntityDto
+    public class IncreaseAssetDto : CreationAuditedEntityDto<int?>
     {
         public int Id { get; set; }
         public const int maxLength = 32;
@@ -23,7 +23,7 @@ namespace AssetManagement.IncreaseAssets.DTO
         public double TotalAssetValue { get; set; }
     }
     [AutoMapTo(typeof(IncreaseAsset))]
-    public class IncreaseAssetInputDto : EntityDto
+    public class IncreaseAssetInputDto : CreationAuditedEntityDto<int?>
     {
         public const int maxLength = 32;
         [Required]
@@ -35,6 +35,10 @@ namespace AssetManagement.IncreaseAssets.DTO
         public double TotalAssetValue { get; set; }
     }
     public class DeleteIncreaseAssetInput
+    {
+        public int Id { get; set; }
+    }
+    public class GetIncreaseAssetInput
     {
         public int Id { get; set; }
     }

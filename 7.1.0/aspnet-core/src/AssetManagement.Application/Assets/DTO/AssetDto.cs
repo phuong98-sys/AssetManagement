@@ -19,7 +19,7 @@ namespace AssetManagement.Assets.DTO
         public string AssetCode { get; set; }
         public string AssetName { get; set; }
         public DateTime? IncreaseAssetDate { get; set; }
-        public DateTime? AmortizationDate { get; set; }
+        public int? NumberOfDayAmortization { get; set; }
         public int? NumberOfDayUsedAsset { get; set; }
         public int? NumberOfDayRemaing { get; set; }
         public double OrginalPrice { get; set; }
@@ -33,7 +33,6 @@ namespace AssetManagement.Assets.DTO
         public int? AssetTypeId { get; set; }
         public string AssetTypeName { get; set; }
         public int AssetStatusId { get; set; }
-        public DateTime CreationTime { get; set; }
     }
     [AutoMapFrom(typeof(Asset))]
     public class AssetListDto: CreationAuditedEntityDto<int?>
@@ -44,7 +43,7 @@ namespace AssetManagement.Assets.DTO
         public string AssetCode { get; set; }
         public string AssetName { get; set; }
         public DateTime? IncreaseAssetDate { get; set; }
-        public DateTime? AmortizationDate { get; set; }
+        public int? NumberOfDayAmortization { get; set; }
         public int? NumberOfDayUsedAsset { get; set; }
         public int? NumberOfDayRemaing { get; set; }
         public double OrginalPrice { get; set; }
@@ -56,7 +55,7 @@ namespace AssetManagement.Assets.DTO
         public double? RecoverableValue { get; set; }
         public int? IncreaseAssetId { get; set; }
         public int AssetTypeId { get; set; }
-        public DateTime CreationTime { get; set; }
+        public int AssetStatusId { get; set; }
     }
 
     [AutoMapTo(typeof(Asset))]
@@ -68,7 +67,7 @@ namespace AssetManagement.Assets.DTO
         public string AssetCode { get; set; }
         public string AssetName { get; set; }
         public DateTime? IncreaseAssetDate { get; set; }
-        public DateTime? AmortizationDate { get; set; }
+        public int? NumberOfDayAmortization { get; set; }
         public int? NumberOfDayUsedAsset { get; set; }
         public int? NumberOfDayRemaing { get; set; }
         public double OrginalPrice { get; set; }
@@ -80,7 +79,7 @@ namespace AssetManagement.Assets.DTO
         public double? RecoverableValue { get; set; }
         public int? IncreaseAssetId { get; set; }
         public int AssetTypeId { get; set; }
-        public DateTime CreationTime { get; set; }
+        public int AssetStatusId { get; set; }
     }
     public class GetAssetInput
     {
@@ -96,7 +95,7 @@ namespace AssetManagement.Assets.DTO
         public string AssetCode { get; set; }
         public string AssetName { get; set; }
         public DateTime? IncreaseAssetDate { get; set; }
-        public DateTime? AmortizationDate { get; set; }
+        public int? NumberOfDayAmortization { get; set; }
         public int? NumberOfDayUsedAsset { get; set; }
         public int? NumberOfDayRemaing { get; set; }
         public double OrginalPrice { get; set; }
@@ -108,7 +107,7 @@ namespace AssetManagement.Assets.DTO
         public double? RecoverableValue { get; set; }
         public int? IncreaseAssetId { get; set; }
         public int? AssetTypeId { get; set; }
-        public DateTime CreationTime { get; set; }
+        public int? AssetStatusId { get; set; }
     }
     public class DeleteAssetInput
     {

@@ -1,10 +1,10 @@
-<div class="add-new-asset">
+<div class="header-title">
     <div class="title-page">Chứng từ ghi tăng</div>
-    <div class="btn-add-new-asset-container">
-        <button class="btn btn-add-new-asset" (click)="createOrEditINcreaseAsset()">Thêm chứng từ</button>
+    <div class="btn-add-container">
+        <button class="btn btn-add" (click)="createOrEditINcreaseAsset()">Thêm chứng từ</button>
     </div>
 </div>
-<div class="increase-asset-component">
+<div class="content-component">
     <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="assetList" [resizableColumns]="true" [autoLayout]="true">
     <ng-template pTemplate="header">
         <tr>
@@ -15,10 +15,6 @@
                 Mã chứng từ
                 <p-sortIcon field="increaseAssetCode"></p-sortIcon>
             </th>
-            <!-- <th pResizableColumn pSortableColumn="assetName" style="width:130px">
-                Tên chứng từ
-                <p-sortIcon field="assetName"></p-sortIcon>
-            </th> -->
             <th pResizableColumn pSortableColumn="increaseAssetDate" style="width:120px">
                 Ngày chứng từ 
                 <p-sortIcon field="increaseAssetDate"></p-sortIcon>
@@ -58,7 +54,6 @@
                 </div>
             </td>
             <td style="width:120px">{{ asset.increaseAssetCode }}</td>
-            <!-- <td style="width:130px">{{ asset.assetName}}</td> -->
             <td style="width:120px">{{ asset.increaseAssetDate }}</td>
             <td style="width:150px">{{ asset.creationTime}}</td>
             <td style="width:120px">{{ asset.note }}</td>

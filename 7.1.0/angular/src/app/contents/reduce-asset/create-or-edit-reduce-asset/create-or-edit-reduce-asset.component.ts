@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
 import { AssetDto, AssetServiceProxy, IncreaseAssetInputDto, IncreaseAssetServiceProxy } from '@shared/service-proxies/service-proxies';
 import { ModalDirective } from 'ngx-bootstrap/modal';
@@ -22,18 +23,25 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
   asset: AssetDto = new AssetDto();
   assetList: AssetDto[];
   addAssetToIncreaseList: Array<AssetDto>= [];
+  increaseAssetId: number;
   // assetTypeList: IncreaseAssetTypeDto[];
   // selectedAssetType: AssetTypeDto;
+
   constructor(
     injector: Injector,
     private assetService: AssetServiceProxy,
-    private increaseAssetService: IncreaseAssetServiceProxy) {
+    private increaseAssetService: IncreaseAssetServiceProxy,
+    private _activatedRoute: ActivatedRoute,) {
         super(injector);
+        if (this._activatedRoute.snapshot.params['id']) {
+          this.increaseAssetId = Number(this._activatedRoute.snapshot.params['id']);
+        }
   }
   // asset: IncreaseAssetDto;
   ngOnInit(): void {
     // this.resetForm();
     // this.getAssetTypeList();
+    // getIncreaseForEdit();
     this.getAssets();
   }
   show(asset?: IncreaseAssetInputDto): void {
@@ -74,6 +82,7 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
     // this.userPasswordRepeat = "";
     this.modal.hide();
     this.submitForm.form.reset();
+
   }
   searchAsset(){
     debugger

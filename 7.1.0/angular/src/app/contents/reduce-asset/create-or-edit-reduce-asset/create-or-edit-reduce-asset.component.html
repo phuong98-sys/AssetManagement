@@ -37,8 +37,8 @@
                         <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
                     </div>
                     <div class="form-group">
-                        <label for="AmortizationDate">{{"Nội dung" | localize}} </label>
-                        <input id="AmortizationDate" #amortizationDate="ngModel" type="note" name="AmortizationDate" class="form-control" [(ngModel)]="increaseAsset.note" />
+                        <label for="ReduceAssetNote">{{"Nội dung" | localize}} </label>
+                        <input id="ReduceAssetNote" #reduceAssetNote="ngModel" type="note" name="ReduceAssetNote" class="form-control" [(ngModel)]="increaseAsset.note" />
                         <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
                     </div>
                 </div>                
@@ -115,7 +115,7 @@
                             <td style="width:120px"></td>
                             <td style="width:120px">{{ assetSelected.assetName}}</td>
                             <td style="width:120px">{{ assetSelected.orginalPrice }}</td>           
-                            <td style="width:150px">{{ assetSelected.amortizationDate }}</td>
+                            <td style="width:150px">{{ assetSelected.nsumberOfDayAmortization }}</td>
                             <td style="width:200px">{{ assetSelected.amortizationValue}}</td>
                         </tr>
                     </ng-template>

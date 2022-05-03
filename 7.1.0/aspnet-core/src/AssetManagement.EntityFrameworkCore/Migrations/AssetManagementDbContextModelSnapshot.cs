@@ -1366,9 +1366,6 @@ namespace AssetManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime?>("AmortizationDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<double?>("AmortizationValue")
                         .HasColumnType("float");
 
@@ -1418,6 +1415,9 @@ namespace AssetManagement.Migrations
 
                     b.Property<long?>("LastModifierUserId")
                         .HasColumnType("bigint");
+
+                    b.Property<double?>("NumberOfDayAmortization")
+                        .HasColumnType("float");
 
                     b.Property<int?>("NumberOfDayRemaing")
                         .HasColumnType("int");

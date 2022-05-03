@@ -7,6 +7,7 @@ import { Paginator } from 'primeng/paginator';
 import { finalize } from 'rxjs/operators';
 import { CreateOrEditAssetComponent } from './create-or-edit-asset/create-or-edit-asset.component';
 import { PrimengTableHelper } from 'shared/helpers/PrimengTableHelper';
+import * as moment from 'moment';
 @Component({
   selector: 'app-asset',
   templateUrl: './asset.component.html',
@@ -33,7 +34,6 @@ export class AssetComponent extends AppComponentBase implements OnInit {
   this.getAssets();
   }
   getAssets(event?: LazyLoadEvent){
-    debugger
   //   if (this.primengTableHelper.shouldResetPaging(event)) {
   //     this.paginator?.changePage(0);
   //     return;
@@ -44,6 +44,11 @@ export class AssetComponent extends AppComponentBase implements OnInit {
     .subscribe(result => {
       this.loading = false;
         this.assetList = result.items;
+        debugger
+        this.assetList.map((item)=>{ 
+
+          item.creationTime = moment(item.creationTime).format("DD-MM-YYYY");
+          item.increaseAssetDate = moment(item.increaseAssetDate).format("DD-MM-YYYY")});
         this.primengTableHelper.totalRecordsCount = result.items.length;
         this.primengTableHelper.records = result.items;
         this.totalRecords = this.assetList?.length;

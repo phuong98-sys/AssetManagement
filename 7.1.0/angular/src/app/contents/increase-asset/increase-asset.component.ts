@@ -1,7 +1,9 @@
+import { DatePipe } from '@angular/common';
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
 import { IncreaseAssetInputDto, IncreaseAssetServiceProxy } from '@shared/service-proxies/service-proxies';
+import * as moment from 'moment';
 import { finalize } from 'rxjs/operators';
 import { CreateOrEditIncreaseAssetComponent } from './create-or-edit-increase-asset/create-or-edit-increase-asset.component';
 
@@ -11,11 +13,11 @@ import { CreateOrEditIncreaseAssetComponent } from './create-or-edit-increase-as
   styleUrls: ['./increase-asset.component.css']
 })
 export class IncreaseAssetComponent extends AppComponentBase implements OnInit {
+  @ViewChild('createOrEditIncreaseAssetModal', { static: true }) createOrEditIncreaseAssetModal: CreateOrEditIncreaseAssetComponent;
   assetList;
   cols: any[];
   loading =  false;
   totalRecords: number;
-  @ViewChild('createOrEditIncreaseAssetModal', { static: true }) createOrEditIncreaseAssetModal: CreateOrEditIncreaseAssetComponent;
   constructor(
     injector: Injector,
     private assetService: IncreaseAssetServiceProxy,
@@ -32,19 +34,27 @@ export class IncreaseAssetComponent extends AppComponentBase implements OnInit {
       .subscribe(result => {
         this.loading = false;
           this.assetList = result.items;
+          debugger
+          this.assetList.map((item)=>{ 
+            item.creationTime = moment(item.creationTime).format("DD-MM-YYYY");
+            item.increaseAssetDate = moment(item.increaseAssetDate).format("DD-MM-YYYY")});
           this.totalRecords = this.assetList?.length;
       });
     }
   
-    createOrEditINcreaseAsset(asset?: IncreaseAssetInputDto): void {
+    createOrEditINcreaseAsset(increaseAsset?: IncreaseAssetInputDto): void {
       debugger
       // this.createOrEditIncreaseAssetModal.show(asset);
       this._router.navigate(["/app/contents/increase-asset/create"]);
+      if(!increaseAsset)
+      this._router.navigate(["/app/contents/increase-asset/create"]);
+      else
+      this._router.navigate(["/app/contents/increase-asset/" + increaseAsset?.id]);
     }
     deleteAsset(asset: IncreaseAssetInputDto){
       this.message.confirm(
         this.l('Chứng từ này sẽ bị xóa'),
-        this.l('Bạn chắc chắn xóa tài sản này'),
+        this.l('Bạn chắc chắn xóa chứng từ này'),
         (isConfirmed) => {
             if (isConfirmed) {
                 this.loading = true;
