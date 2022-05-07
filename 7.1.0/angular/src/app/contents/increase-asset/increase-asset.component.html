@@ -5,7 +5,7 @@
     </div>
 </div>
 <div class="content-component">
-    <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="assetList" [resizableColumns]="true" [autoLayout]="true">
+    <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="increaseAssetList" [resizableColumns]="true" [autoLayout]="true">
     <ng-template pTemplate="header">
         <tr>
             <th pResizableColumn pSortableColumn="assetCode" style="width:150px">
@@ -23,7 +23,7 @@
                 Ngày ghi tăng
                 <p-sortIcon field="creationTime"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="note" style="width:120px">
+            <th pResiazableColumn pSortableColumn="note" style="width:120px">
                 Nội dung 
                 <p-sortIcon field="note"></p-sortIcon>
             </th>

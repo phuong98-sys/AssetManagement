@@ -1,7 +1,8 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
-import { IncreaseAssetInputDto, IncreaseAssetServiceProxy } from '@shared/service-proxies/service-proxies';
+import { IncreaseAssetInputDto, IncreaseAssetServiceProxy, ReduceAssetInputDto, ReduceAssetServiceProxy } from '@shared/service-proxies/service-proxies';
+import * as moment from 'moment';
 import { finalize } from 'rxjs/operators';
 import { CreateOrEditReduceAssetComponent } from './create-or-edit-reduce-asset/create-or-edit-reduce-asset.component';
 
@@ -11,14 +12,13 @@ import { CreateOrEditReduceAssetComponent } from './create-or-edit-reduce-asset/
   styleUrls: ['./reduce-asset.component.css']
 })
 export class ReduceAssetComponent extends AppComponentBase implements OnInit {
-  assetList;
-  cols: any[];
+  reduceAssetList;
   loading =  false;
   totalRecords: number;
   @ViewChild('createOrEditIncreaseAssetModal', { static: true }) createOrEditIncreaseAssetModal: CreateOrEditReduceAssetComponent;
   constructor(
     injector: Injector,
-    private assetService: IncreaseAssetServiceProxy,
+    private reduceAssetService: ReduceAssetServiceProxy,
     private _router: Router) {   
         super(injector);
   }
@@ -28,27 +28,33 @@ export class ReduceAssetComponent extends AppComponentBase implements OnInit {
     }
     getAll(){
       this.loading = true;
-      this.assetService.getIncreaseAssets()
+      this.reduceAssetService.getReduceAssets()
       .subscribe(result => {
         this.loading = false;
-          this.assetList = result.items;
-          this.totalRecords = this.assetList?.length;
+          this.reduceAssetList = result.items;
+          this.reduceAssetList.map((item)=>{ 
+            item.creationTime = moment(item.creationTime).format("DD-MM-YYYY");
+            item.reduceAssetDate = moment(item.reduceAssetDate).format("DD-MM-YYYY")});
+          this.totalRecords = this.reduceAssetList?.length;
       });
     }
   
-    createOrEditINcreaseAsset(asset?: IncreaseAssetInputDto): void {
+    createOrEditReduceAsset(reduceAsset?: ReduceAssetInputDto): void {
       
-      this.createOrEditIncreaseAssetModal.show(asset);
+      if(!reduceAsset)
+      this._router.navigate(["/app/contents/reduce-asset/create"]);
+      else
+      this._router.navigate(["/app/contents/reduce-asset/" + reduceAsset?.id]);
     }
-    deleteAsset(asset: IncreaseAssetInputDto){
+    deleteReduceAsset(reduceAsset: ReduceAssetInputDto){
       this.message.confirm(
         this.l('Chứng từ này sẽ bị xóa'),
-        this.l('Bạn chắc chắn xóa tài sản này'),
+        this.l('Bạn chắc chắn xóa chứng từ này'),
         (isConfirmed) => {
             if (isConfirmed) {
                 this.loading = true;
-                this.assetService
-                .deleteIncreaseAsset(asset.id)
+                this.reduceAssetService
+                .deleteReduceAsset(reduceAsset.id)
                 .pipe(finalize(() => this.loading = false))
                 .subscribe(() => {
                     this.getAll();

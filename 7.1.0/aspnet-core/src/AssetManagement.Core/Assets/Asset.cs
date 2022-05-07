@@ -3,6 +3,7 @@ using Abp.Domain.Entities.Auditing;
 using AssetManagement.AssetStatuses;
 using AssetManagement.AssetTypes;
 using AssetManagement.IncreaseAssets;
+using AssetManagement.ReduceAssets;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -22,6 +23,7 @@ namespace AssetManagement.Assets
         public string AssetCode { get; set; }
         public string AssetName { get; set; }
         public DateTime? IncreaseAssetDate { get; set; }
+        public DateTime? ReduceAssetDate { get; set; }
         public int? NumberOfDayAmortization { get; set; }
         public int? NumberOfDayUsedAsset { get; set; }
         public int? NumberOfDayRemaing { get; set; }
@@ -35,6 +37,7 @@ namespace AssetManagement.Assets
         [ForeignKey(nameof(IncreaseAssetId))]
         public IncreaseAsset IncreaseAsset { get; set; } // them tu Increase table
         public int? IncreaseAssetId { get; set; }
+
         [ForeignKey(nameof(AssetTypeId))]
         public AssetType AssetType { get; set; } // them tu AssetType table
         public string AssetTypeName { get; set; }
@@ -42,6 +45,9 @@ namespace AssetManagement.Assets
         [ForeignKey(nameof(AssetStatusId))]
         public AssetStatus AssetStatus { get; set; } // them tu AssetStatus table
         public int AssetStatusId { get; set; }
+        [ForeignKey(nameof(ReduceAssetId))]
+        public ReduceAsset ReduceAsset { get; set; }
+        public int? ReduceAssetId { get; set; }
         public int? TenantId { get; set; }
         public Asset()
         {

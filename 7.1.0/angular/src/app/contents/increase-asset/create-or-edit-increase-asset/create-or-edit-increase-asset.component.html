@@ -34,9 +34,10 @@
                     <div class="form-group">
                         <label for="AssetCode">{{"Mã chứng từ" | localize}} *</label>
                         <input id="AssetCode" #assetCode="ngModel" type="text" name="AssetCode" class="form-control" [(ngModel)]="increaseAsset.increaseAssetCode" required maxlength="256" (change)="setIncreaseAssetCode()"/>
-                        <span *ngIf="!increaseAsset?.increaseAssetCode" class="error-message">Trường này không được để trống</span>
-                        <br>
-                        <span class="error-message">{{increaseAssetCodeMessage}}</span>
+                        <div style="display: grid;">
+                            <span *ngIf="!increaseAsset?.increaseAssetCode" class="error-message">Trường này không được để trống</span>
+                            <span class="error-message" *ngIf="increaseAsset.increaseAssetCode">{{increaseAssetCodeMessage}}</span>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="AssetName">{{"Ngày chứng từ" | localize}} </label>
@@ -63,9 +64,11 @@
                     <div class="col-6">
                         <label for="AssetCode">{{"Mã tài sản" | localize}} *</label>
                         <input id="AssetCode" #assetCode="ngModel" type="text" name="AssetCode" class="form-control" [(ngModel)]="asset.assetCode" required maxlength="256" />
-                        <span class="text-note">Nhập mã tài sản để tìm kiếm thông tin tài sản</span>
-                        <br>
-                        <span class="error-message">{{assetMessage}}</span>
+                        <div style="display: grid;">
+                            <span class="text-note">Nhập mã tài sản để tìm kiếm thông tin tài sản</span>
+                            <span class="error-message" *ngIf="asset.assetCode">{{assetMessage}}</span>
+                        </div>
+                        
                     </div>
                     <div class="col-3" >
                         <button class="btn btn-search-asset" (click)="searchAsset()">Kiểm tra</button>

@@ -12,13 +12,12 @@ using System.Threading.Tasks;
 namespace AssetManagement.IncreaseAssets
 {
     [Table("IncreaseAsset")]
-    public class IncreaseAsset: Entity, IHasCreationTime
+    public class IncreaseAsset: FullAuditedEntity
     {
         public const int maxLength = 32;
         [Required]
         [StringLength(maxLength)]
         public string IncreaseAssetCode { get; set; }
-        public DateTime CreationTime { get; set; }
         public DateTime IncreaseAssetDate { get; set; }
         public string Note { get; set; }
         public double TotalAssetValue { get; set; }

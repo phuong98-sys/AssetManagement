@@ -14,13 +14,12 @@ import { CreateOrEditIncreaseAssetComponent } from './create-or-edit-increase-as
 })
 export class IncreaseAssetComponent extends AppComponentBase implements OnInit {
   @ViewChild('createOrEditIncreaseAssetModal', { static: true }) createOrEditIncreaseAssetModal: CreateOrEditIncreaseAssetComponent;
-  assetList;
-  cols: any[];
+  increaseAssetList;
   loading =  false;
   totalRecords: number;
   constructor(
     injector: Injector,
-    private assetService: IncreaseAssetServiceProxy,
+    private increaseAssetService: IncreaseAssetServiceProxy,
     private _router: Router) {   
         super(injector);
   }
@@ -30,15 +29,15 @@ export class IncreaseAssetComponent extends AppComponentBase implements OnInit {
     }
     getAll(){
       this.loading = true;
-      this.assetService.getIncreaseAssets()
+      this.increaseAssetService.getIncreaseAssets()
       .subscribe(result => {
         this.loading = false;
-          this.assetList = result.items;
+          this.increaseAssetList = result.items;
           
-          this.assetList.map((item)=>{ 
+          this.increaseAssetList.map((item)=>{ 
             item.creationTime = moment(item.creationTime).format("DD-MM-YYYY");
             item.increaseAssetDate = moment(item.increaseAssetDate).format("DD-MM-YYYY")});
-          this.totalRecords = this.assetList?.length;
+          this.totalRecords = this.increaseAssetList?.length;
       });
     }
   
@@ -55,7 +54,7 @@ export class IncreaseAssetComponent extends AppComponentBase implements OnInit {
         (isConfirmed) => {
             if (isConfirmed) {
                 this.loading = true;
-                this.assetService
+                this.increaseAssetService
                 .deleteIncreaseAsset(increaseAsset.id)
                 .pipe(finalize(() => this.loading = false))
                 .subscribe(() => {

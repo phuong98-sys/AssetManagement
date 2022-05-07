@@ -101,7 +101,24 @@ namespace AssetManagement.Assets
             }
 
         }
+        public async Task ReduceAssetList(List<AssetInputDto> inputList)
+        {
+            try
+            {
 
+                foreach (var asset in inputList)
+                {
+                    asset.AssetStatusId = 3;
+                    var assetForEdit = await _assetRepository.FirstOrDefaultAsync(x => x.Id == asset.Id);
+                    ObjectMapper.Map(asset, assetForEdit);
+                }
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+
+        }
         public async Task test(List<AssetInputDto> inputList)
         {
             try
@@ -124,7 +141,27 @@ namespace AssetManagement.Assets
             }
 
         }
-        
+        public async Task DeleteListAssetReduced(List<AssetInputDto> inputList)
+        {
+            try
+            {
+
+                foreach (var asset in inputList)
+                {
+                    asset.ReduceAssetId = null;
+                    asset.ReduceAssetDate = null;
+                    asset.AssetStatusId = 1;
+                    var assetForEdit = await _assetRepository.FirstOrDefaultAsync(x => x.Id == asset.Id);
+                    ObjectMapper.Map(asset, assetForEdit);
+                }
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+
+        }
+
 
         public AssetDto GetAsset(GetAssetInput input)
         {
@@ -145,8 +182,21 @@ namespace AssetManagement.Assets
             try
             {
                 var assetDtos = await _assetRepository.GetAll().Where(x => x.IncreaseAssetId == increaseId).ToListAsync();
-                //var output = ObjectMapper.Map<List<AssetDto>>(assetDtos);
-                //return new ListResultDto<AssetDto>(assetDtos);
+
+                var assets = ObjectMapper.Map<List<AssetDto>>(assetDtos);
+                return new ListResultDto<AssetDto>(assets);
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+
+        }
+        public async Task<ListResultDto<AssetDto>> GetAssetReduced(int reduceId)
+        {
+            try
+            {
+                var assetDtos = await _assetRepository.GetAll().Where(x => x.ReduceAssetId == reduceId).ToListAsync();
 
                 var assets = ObjectMapper.Map<List<AssetDto>>(assetDtos);
                 return new ListResultDto<AssetDto>(assets);

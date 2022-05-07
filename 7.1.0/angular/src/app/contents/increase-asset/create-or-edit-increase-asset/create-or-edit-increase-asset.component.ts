@@ -196,13 +196,6 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
       (isConfirmed) => {
           if (isConfirmed) {
               this.loading = true;
-              //xóa ở bảng
-              // this.deleteAssetList.forEach(assetId => {
-              //   var index = this.addAssetToIncreaseList.indexOf(assetId);
-              //   if (index !== -1) {
-              //       this.deleteAssetList.splice(index, 1);
-              //   }   
-              // })
 
               this.addAssetToIncreaseList = this.addAssetToIncreaseList.filter(x => !this.deleteAssetList.map(y => y.id).includes(x?.id));
               
@@ -210,14 +203,6 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
               this.deleteAssetConfirmedList.push(item);
              });
               this.deleteAssetList = []; 
-              // this.assetService
-              // .deleteAsset(asset.id)
-              // .pipe(finalize(() => this.loading = false))
-              // .subscribe(() => {
-              //   
-              //     this.getAssets();
-              //     this.notify.success(this.l('SuccessfullyDeleted'));
-              // });
           }
       }
   );
@@ -263,14 +248,6 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
         var selector = 'input[name="selectedAsset"]:checked'  ;
         $(selector).click();
     }  
-    // var checkboxes = document.getElementsByName('selectedAsset');
-    // for(var checkbox in checkboxes){
-    //   checkbox = event.target.checked;
-    // }
-    // var checkboxes = document.getElementsByName('vehicle');
-    // for (var checkbox in checkboxes) {
-    //     checkbox.checked = this.checked;
-    // }
     }
   }
 }

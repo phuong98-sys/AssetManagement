@@ -19,6 +19,7 @@ namespace AssetManagement.Assets.DTO
         public string AssetCode { get; set; }
         public string AssetName { get; set; }
         public DateTime? IncreaseAssetDate { get; set; }
+        public DateTime? ReduceAssetDate { get; set; }
         public int? NumberOfDayAmortization { get; set; }
         public int? NumberOfDayUsedAsset { get; set; }
         public int? NumberOfDayRemaing { get; set; }
@@ -30,6 +31,7 @@ namespace AssetManagement.Assets.DTO
         public string? ReasonForReduction { get; set; }
         public double? RecoverableValue { get; set; }
         public int? IncreaseAssetId { get; set; }
+        public int? ReduceAssetId { get; set; }
         public int? AssetTypeId { get; set; }
         public string AssetTypeName { get; set; }
         public int AssetStatusId { get; set; }
@@ -43,6 +45,7 @@ namespace AssetManagement.Assets.DTO
         public string AssetCode { get; set; }
         public string AssetName { get; set; }
         public DateTime? IncreaseAssetDate { get; set; }
+        public DateTime? ReduceAssetDate { get; set; }
         public int? NumberOfDayAmortization { get; set; }
         public int? NumberOfDayUsedAsset { get; set; }
         public int? NumberOfDayRemaing { get; set; }
@@ -54,6 +57,7 @@ namespace AssetManagement.Assets.DTO
         public string? ReasonForReduction { get; set; }
         public double? RecoverableValue { get; set; }
         public int? IncreaseAssetId { get; set; }
+        public int? ReduceAssetId { get; set; }
         public int AssetTypeId { get; set; }
         public int AssetStatusId { get; set; }
     }
@@ -67,6 +71,7 @@ namespace AssetManagement.Assets.DTO
         public string AssetCode { get; set; }
         public string AssetName { get; set; }
         public DateTime? IncreaseAssetDate { get; set; }
+        public DateTime? ReduceAssetDate { get; set; }
         public int? NumberOfDayAmortization { get; set; }
         public int? NumberOfDayUsedAsset { get; set; }
         public int? NumberOfDayRemaing { get; set; }
@@ -78,6 +83,7 @@ namespace AssetManagement.Assets.DTO
         public string? ReasonForReduction { get; set; }
         public double? RecoverableValue { get; set; }
         public int? IncreaseAssetId { get; set; }
+        public int? ReduceAssetId { get; set; }
         public int AssetTypeId { get; set; }
         public int AssetStatusId { get; set; }
     }
@@ -95,6 +101,7 @@ namespace AssetManagement.Assets.DTO
         public string AssetCode { get; set; }
         public string AssetName { get; set; }
         public DateTime? IncreaseAssetDate { get; set; }
+        public DateTime? ReduceAssetDate { get; set; }
         public int? NumberOfDayAmortization { get; set; }
         public int? NumberOfDayUsedAsset { get; set; }
         public int? NumberOfDayRemaing { get; set; }
@@ -106,6 +113,7 @@ namespace AssetManagement.Assets.DTO
         public string? ReasonForReduction { get; set; }
         public double? RecoverableValue { get; set; }
         public int? IncreaseAssetId { get; set; }
+        public int? ReduceAssetId { get; set; }
         public int? AssetTypeId { get; set; }
         public int? AssetStatusId { get; set; }
     }

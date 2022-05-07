@@ -1,23 +1,38 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
-import { AssetInputDto, AssetServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AssetDto, AssetInputDto, AssetServiceProxy } from '@shared/service-proxies/service-proxies';
 import { LazyLoadEvent } from 'primeng/api/lazyloadevent';
 import { Paginator } from 'primeng/paginator';
 import { finalize } from 'rxjs/operators';
 import { CreateOrEditAssetComponent } from './create-or-edit-asset/create-or-edit-asset.component';
 import { PrimengTableHelper } from 'shared/helpers/PrimengTableHelper';
 import * as moment from 'moment';
+import {
+  PagedListingComponentBase,
+  PagedRequestDto
+} from '@shared/paged-listing-component-base';
+class PagedRolesRequestDto extends PagedRequestDto {
+  keyword: string;
+}
 @Component({
   selector: 'app-asset',
   templateUrl: './asset.component.html',
   styleUrls: ['./asset.component.css']
 })
-export class AssetComponent extends AppComponentBase implements OnInit {
+export class AssetComponent extends  PagedListingComponentBase<AssetDto> implements OnInit {
+  protected list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
+    throw new Error('Method not implemented.');
+  }
+  protected delete(entity: AssetDto): void {
+    throw new Error('Method not implemented.');
+  }
   assetList;
   loading =  false;
   totalRecords: number;
   primengTableHelper: PrimengTableHelper;
+  keyword = '';
+  advancedFiltersVisible = false;
   @ViewChild('createOrEditAssetModal', { static: true }) createOrEditAssetModal: CreateOrEditAssetComponent;
   @ViewChild("paginator", { static: true }) paginator: Paginator;
   constructor(
@@ -77,5 +92,10 @@ export class AssetComponent extends AppComponentBase implements OnInit {
           }
       }
   );
+  }
+  clearFilters(): void {
+    this.keyword = '';
+    // this.isActive = undefined;
+    this.getDataPage(1);
   }
 }

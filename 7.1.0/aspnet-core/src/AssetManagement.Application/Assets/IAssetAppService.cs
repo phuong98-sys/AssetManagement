@@ -17,5 +17,8 @@ namespace AssetManagement.Assets
         Task IncreaseAssetList(List<AssetInputDto> t);
         Task test(List<AssetInputDto> assetList);
         Task DeleteAsset(DeleteAssetInput input);
+        Task ReduceAssetList(List<AssetInputDto> inputList);
+        Task DeleteListAssetReduced(List<AssetInputDto> inputList);
+        Task<ListResultDto<AssetDto>> GetAssetReduced(int reduceId);
     }
 }

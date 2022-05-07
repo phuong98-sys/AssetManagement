@@ -1434,6 +1434,12 @@ namespace AssetManagement.Migrations
                     b.Property<double?>("RecoverableValue")
                         .HasColumnType("float");
 
+                    b.Property<DateTime?>("ReduceAssetDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ReduceAssetId")
+                        .HasColumnType("int");
+
                     b.Property<double?>("ResidualValue")
                         .HasColumnType("float");
 
@@ -1450,6 +1456,8 @@ namespace AssetManagement.Migrations
                     b.HasIndex("AssetTypeId");
 
                     b.HasIndex("IncreaseAssetId");
+
+                    b.HasIndex("ReduceAssetId");
 
                     b.ToTable("Asset");
                 });
@@ -1752,6 +1760,15 @@ namespace AssetManagement.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("IncreaseAssetCode")
                         .IsRequired()
                         .HasMaxLength(32)
@@ -1759,6 +1776,15 @@ namespace AssetManagement.Migrations
 
                     b.Property<DateTime>("IncreaseAssetDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
@@ -1956,6 +1982,24 @@ namespace AssetManagement.Migrations
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
@@ -2309,11 +2353,17 @@ namespace AssetManagement.Migrations
                         .WithMany("Assets")
                         .HasForeignKey("IncreaseAssetId");
 
+                    b.HasOne("AssetManagement.ReduceAssets.ReduceAsset", "ReduceAsset")
+                        .WithMany("Assets")
+                        .HasForeignKey("ReduceAssetId");
+
                     b.Navigation("AssetStatus");
 
                     b.Navigation("AssetType");
 
                     b.Navigation("IncreaseAsset");
+
+                    b.Navigation("ReduceAsset");
                 });
 
             modelBuilder.Entity("AssetManagement.Authorization.Roles.Role", b =>
@@ -2486,6 +2536,11 @@ namespace AssetManagement.Migrations
                 });
 
             modelBuilder.Entity("AssetManagement.IncreaseAssets.IncreaseAsset", b =>
+                {
+                    b.Navigation("Assets");
+                });
+
+            modelBuilder.Entity("AssetManagement.ReduceAssets.ReduceAsset", b =>
                 {
                     b.Navigation("Assets");
                 });

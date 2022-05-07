@@ -22,7 +22,7 @@ export class CreateOrEditAssetComponent extends AppComponentBase implements OnIn
   saving = false;
   loading = false;
   canChangeUserName = true;
-  asset: any;
+  asset: AssetDto = new AssetDto();
   assetTypeList: AssetTypeDto[];
   assetList: AssetDto [];
   selectedAssetType: AssetTypeDto;
@@ -64,7 +64,7 @@ export class CreateOrEditAssetComponent extends AppComponentBase implements OnIn
     // this.asset.assetTypeId 
     this.asset.assetTypeId = this.selectedAssetType.id;
   }
-  show(asset?: AssetInputDto): void {
+  show(asset?: AssetDto): void {
     if(asset?.id){
       this.asset = asset;
       this.selectedAssetType = this.assetTypeList.find((item)=> item.id == asset.assetTypeId);

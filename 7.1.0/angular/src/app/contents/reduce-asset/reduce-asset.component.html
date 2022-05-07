@@ -1,39 +1,35 @@
-<div class="add-new-asset">
+<div class="header-title">
     <div class="title-page">Chứng từ ghi giảm</div>
-    <div class="btn-add-new-asset-container">
-        <button class="btn btn-add-new-asset" (click)="createOrEditINcreaseAsset()">Thêm chứng từ</button>
+    <div class="btn-add-container">
+        <button class="btn btn-add" (click)="createOrEditReduceAsset()">Thêm chứng từ</button>
     </div>
 </div>
 <div class="content-component">
-    <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="assetList" [resizableColumns]="true" [autoLayout]="true">
+    <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="reduceAssetList" [resizableColumns]="true" [autoLayout]="true">
     <ng-template pTemplate="header">
         <tr>
-            <th pResizableColumn pSortableColumn="assetCode" style="width:150px">
+            <th pResizableColumn pSortableColumn="" style="width:150px">
                 Chức năng
             </th>
-            <th pResizableColumn pSortableColumn="increaseAssetCode" style="width:120px">
+            <th pResizableColumn pSortableColumn="reduceAssetCode" style="width:120px">
                 Mã chứng từ
-                <p-sortIcon field="increaseAssetCode"></p-sortIcon>
+                <p-sortIcon field="reduceAssetCode"></p-sortIcon>
             </th>
-            <!-- <th pResizableColumn pSortableColumn="assetName" style="width:130px">
-                Tên chứng từ
-                <p-sortIcon field="assetName"></p-sortIcon>
-            </th> -->
-            <th pResizableColumn pSortableColumn="increaseAssetDate" style="width:120px">
+            <th pResizableColumn pSortableColumn="reduceAssetDate" style="width:120px">
                 Ngày chứng từ 
-                <p-sortIcon field="increaseAssetDate"></p-sortIcon>
+                <p-sortIcon field="reduceAssetDate"></p-sortIcon>
             </th>
             <th pResizableColumn pSortableColumn="creationTime" style="width:150px">
-                Ngày ghi tăng
+                Ngày ghi giảm
                 <p-sortIcon field="creationTime"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="note" style="width:120px">
+            <th pResiazableColumn pSortableColumn="note" style="width:120px">
                 Nội dung 
                 <p-sortIcon field="note"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="totalAssetValue" style="width:150px">
+            <th pResizableColumn pSortableColumn="totalReduceAssetValue" style="width:150px">
                 Tổng giá trị thu hồi
-                <p-sortIcon field="totalAssetValue"></p-sortIcon>
+                <p-sortIcon field="totalReduceAssetValue"></p-sortIcon>
             </th>
         </tr>
     </ng-template>
@@ -48,23 +44,21 @@
                     <ul class="dropdown-menu" *dropdownMenu>
                         <li>
                             <a href="javascript:;"
-                                (click)="createOrEditINcreaseAsset(asset)">Sửa</a>
+                                (click)="createOrEditReduceAsset(asset)">Sửa</a>
                         </li>
                         <li>
                             <a href="javascript:;"
-                                (click)="deleteAsset(asset)">Xóa</a>
+                                (click)="deleteReduceAsset(asset)">Xóa</a>
                         </li>
                     </ul>
                 </div>
             </td>
-            <td style="width:120px">{{ asset.increaseAssetCode }}</td>
-            <!-- <td style="width:130px">{{ asset.assetName}}</td> -->
-            <td style="width:120px">{{ asset.increaseAssetDate }}</td>
+            <td style="width:120px">{{ asset.reduceAssetCode }}</td>
+            <td style="width:120px">{{ asset.reduceAssetDate }}</td>
             <td style="width:150px">{{ asset.creationTime}}</td>
             <td style="width:120px">{{ asset.note }}</td>
-            <td style="width:150px">{{ asset.totalAssetValue}}</td>
+            <td style="width:150px">{{ asset.totalReduceAssetValue}}</td>
         </tr>
     </ng-template>
 </p-table>
 </div>
-<app-create-or-edit-reduce-asset #createOrEditIncreaseAssetModal (modalSave)="getAll()"></app-create-or-edit-reduce-asset>

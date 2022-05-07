@@ -314,6 +314,58 @@ export class AssetServiceProxy {
      * @param body (optional) 
      * @return Success
      */
+    reduceAssetList(body: AssetInputDto[] | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Asset/ReduceAssetList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processReduceAssetList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processReduceAssetList(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processReduceAssetList(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
     test(body: AssetInputDto[] | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/Asset/test";
         url_ = url_.replace(/[?&]$/, "");
@@ -344,6 +396,63 @@ export class AssetServiceProxy {
     }
 
     protected processTest(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param inputList (optional) 
+     * @return Success
+     */
+    deleteListAssetReduced(inputList: AssetInputDto[] | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Asset/DeleteListAssetReduced?";
+        if (inputList === null)
+            throw new Error("The parameter 'inputList' cannot be null.");
+        else if (inputList !== undefined)
+            inputList && inputList.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "inputList[" + index + "]." + attr + "=" + encodeURIComponent("" + (<any>item)[attr]) + "&";
+        			}
+            });
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteListAssetReduced(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteListAssetReduced(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteListAssetReduced(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -453,6 +562,62 @@ export class AssetServiceProxy {
     }
 
     protected processGetAssetIncreased(response: HttpResponseBase): Observable<AssetDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = AssetDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AssetDtoListResultDto>(<any>null);
+    }
+
+    /**
+     * @param reduceId (optional) 
+     * @return Success
+     */
+    getAssetReduced(reduceId: number | undefined): Observable<AssetDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Asset/GetAssetReduced?";
+        if (reduceId === null)
+            throw new Error("The parameter 'reduceId' cannot be null.");
+        else if (reduceId !== undefined)
+            url_ += "reduceId=" + encodeURIComponent("" + reduceId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAssetReduced(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAssetReduced(<any>response_);
+                } catch (e) {
+                    return <Observable<AssetDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AssetDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAssetReduced(response: HttpResponseBase): Observable<AssetDtoListResultDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1112,6 +1277,233 @@ export class ProposeAssetServiceProxy {
             }));
         }
         return _observableOf<ProposeAssetDtoListResultDto>(<any>null);
+    }
+}
+
+@Injectable()
+export class ReduceAssetServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getReduceAssets(): Observable<ReduceAssetDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/ReduceAsset/GetReduceAssets";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetReduceAssets(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetReduceAssets(<any>response_);
+                } catch (e) {
+                    return <Observable<ReduceAssetDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ReduceAssetDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetReduceAssets(response: HttpResponseBase): Observable<ReduceAssetDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ReduceAssetDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ReduceAssetDtoListResultDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    insertOrUpdateReduceAsset(body: ReduceAssetInputDto | undefined): Observable<ReduceAssetDto> {
+        let url_ = this.baseUrl + "/api/services/app/ReduceAsset/InsertOrUpdateReduceAsset";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertOrUpdateReduceAsset(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertOrUpdateReduceAsset(<any>response_);
+                } catch (e) {
+                    return <Observable<ReduceAssetDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ReduceAssetDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processInsertOrUpdateReduceAsset(response: HttpResponseBase): Observable<ReduceAssetDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ReduceAssetDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ReduceAssetDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getReduceAsset(id: number | undefined): Observable<ReduceAssetDto> {
+        let url_ = this.baseUrl + "/api/services/app/ReduceAsset/GetReduceAsset?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetReduceAsset(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetReduceAsset(<any>response_);
+                } catch (e) {
+                    return <Observable<ReduceAssetDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ReduceAssetDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetReduceAsset(response: HttpResponseBase): Observable<ReduceAssetDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ReduceAssetDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ReduceAssetDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    deleteReduceAsset(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ReduceAsset/DeleteReduceAsset?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteReduceAsset(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteReduceAsset(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteReduceAsset(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
     }
 }
 
@@ -2816,6 +3208,7 @@ export class AssetDto implements IAssetDto {
     assetCode: string;
     assetName: string | undefined;
     increaseAssetDate: moment.Moment | undefined;
+    reduceAssetDate: moment.Moment | undefined;
     numberOfDayAmortization: number | undefined;
     numberOfDayUsedAsset: number | undefined;
     numberOfDayRemaing: number | undefined;
@@ -2827,6 +3220,7 @@ export class AssetDto implements IAssetDto {
     reasonForReduction: string | undefined;
     recoverableValue: number | undefined;
     increaseAssetId: number | undefined;
+    reduceAssetId: number | undefined;
     assetTypeId: number | undefined;
     assetTypeName: string | undefined;
     assetStatusId: number;
@@ -2848,6 +3242,7 @@ export class AssetDto implements IAssetDto {
             this.assetCode = _data["assetCode"];
             this.assetName = _data["assetName"];
             this.increaseAssetDate = _data["increaseAssetDate"] ? moment(_data["increaseAssetDate"].toString()) : <any>undefined;
+            this.reduceAssetDate = _data["reduceAssetDate"] ? moment(_data["reduceAssetDate"].toString()) : <any>undefined;
             this.numberOfDayAmortization = _data["numberOfDayAmortization"];
             this.numberOfDayUsedAsset = _data["numberOfDayUsedAsset"];
             this.numberOfDayRemaing = _data["numberOfDayRemaing"];
@@ -2859,6 +3254,7 @@ export class AssetDto implements IAssetDto {
             this.reasonForReduction = _data["reasonForReduction"];
             this.recoverableValue = _data["recoverableValue"];
             this.increaseAssetId = _data["increaseAssetId"];
+            this.reduceAssetId = _data["reduceAssetId"];
             this.assetTypeId = _data["assetTypeId"];
             this.assetTypeName = _data["assetTypeName"];
             this.assetStatusId = _data["assetStatusId"];
@@ -2880,6 +3276,7 @@ export class AssetDto implements IAssetDto {
         data["assetCode"] = this.assetCode;
         data["assetName"] = this.assetName;
         data["increaseAssetDate"] = this.increaseAssetDate ? this.increaseAssetDate.toISOString() : <any>undefined;
+        data["reduceAssetDate"] = this.reduceAssetDate ? this.reduceAssetDate.toISOString() : <any>undefined;
         data["numberOfDayAmortization"] = this.numberOfDayAmortization;
         data["numberOfDayUsedAsset"] = this.numberOfDayUsedAsset;
         data["numberOfDayRemaing"] = this.numberOfDayRemaing;
@@ -2891,6 +3288,7 @@ export class AssetDto implements IAssetDto {
         data["reasonForReduction"] = this.reasonForReduction;
         data["recoverableValue"] = this.recoverableValue;
         data["increaseAssetId"] = this.increaseAssetId;
+        data["reduceAssetId"] = this.reduceAssetId;
         data["assetTypeId"] = this.assetTypeId;
         data["assetTypeName"] = this.assetTypeName;
         data["assetStatusId"] = this.assetStatusId;
@@ -2912,6 +3310,7 @@ export interface IAssetDto {
     assetCode: string;
     assetName: string | undefined;
     increaseAssetDate: moment.Moment | undefined;
+    reduceAssetDate: moment.Moment | undefined;
     numberOfDayAmortization: number | undefined;
     numberOfDayUsedAsset: number | undefined;
     numberOfDayRemaing: number | undefined;
@@ -2923,6 +3322,7 @@ export interface IAssetDto {
     reasonForReduction: string | undefined;
     recoverableValue: number | undefined;
     increaseAssetId: number | undefined;
+    reduceAssetId: number | undefined;
     assetTypeId: number | undefined;
     assetTypeName: string | undefined;
     assetStatusId: number;
@@ -2986,6 +3386,7 @@ export class AssetInputDto implements IAssetInputDto {
     assetCode: string;
     assetName: string | undefined;
     increaseAssetDate: moment.Moment | undefined;
+    reduceAssetDate: moment.Moment | undefined;
     numberOfDayAmortization: number | undefined;
     numberOfDayUsedAsset: number | undefined;
     numberOfDayRemaing: number | undefined;
@@ -2997,6 +3398,7 @@ export class AssetInputDto implements IAssetInputDto {
     reasonForReduction: string | undefined;
     recoverableValue: number | undefined;
     increaseAssetId: number | undefined;
+    reduceAssetId: number | undefined;
     assetTypeId: number;
     assetStatusId: number;
 
@@ -3017,6 +3419,7 @@ export class AssetInputDto implements IAssetInputDto {
             this.assetCode = _data["assetCode"];
             this.assetName = _data["assetName"];
             this.increaseAssetDate = _data["increaseAssetDate"] ? moment(_data["increaseAssetDate"].toString()) : <any>undefined;
+            this.reduceAssetDate = _data["reduceAssetDate"] ? moment(_data["reduceAssetDate"].toString()) : <any>undefined;
             this.numberOfDayAmortization = _data["numberOfDayAmortization"];
             this.numberOfDayUsedAsset = _data["numberOfDayUsedAsset"];
             this.numberOfDayRemaing = _data["numberOfDayRemaing"];
@@ -3028,6 +3431,7 @@ export class AssetInputDto implements IAssetInputDto {
             this.reasonForReduction = _data["reasonForReduction"];
             this.recoverableValue = _data["recoverableValue"];
             this.increaseAssetId = _data["increaseAssetId"];
+            this.reduceAssetId = _data["reduceAssetId"];
             this.assetTypeId = _data["assetTypeId"];
             this.assetStatusId = _data["assetStatusId"];
         }
@@ -3048,6 +3452,7 @@ export class AssetInputDto implements IAssetInputDto {
         data["assetCode"] = this.assetCode;
         data["assetName"] = this.assetName;
         data["increaseAssetDate"] = this.increaseAssetDate ? this.increaseAssetDate.toISOString() : <any>undefined;
+        data["reduceAssetDate"] = this.reduceAssetDate ? this.reduceAssetDate.toISOString() : <any>undefined;
         data["numberOfDayAmortization"] = this.numberOfDayAmortization;
         data["numberOfDayUsedAsset"] = this.numberOfDayUsedAsset;
         data["numberOfDayRemaing"] = this.numberOfDayRemaing;
@@ -3059,6 +3464,7 @@ export class AssetInputDto implements IAssetInputDto {
         data["reasonForReduction"] = this.reasonForReduction;
         data["recoverableValue"] = this.recoverableValue;
         data["increaseAssetId"] = this.increaseAssetId;
+        data["reduceAssetId"] = this.reduceAssetId;
         data["assetTypeId"] = this.assetTypeId;
         data["assetStatusId"] = this.assetStatusId;
         return data; 
@@ -3079,6 +3485,7 @@ export interface IAssetInputDto {
     assetCode: string;
     assetName: string | undefined;
     increaseAssetDate: moment.Moment | undefined;
+    reduceAssetDate: moment.Moment | undefined;
     numberOfDayAmortization: number | undefined;
     numberOfDayUsedAsset: number | undefined;
     numberOfDayRemaing: number | undefined;
@@ -3090,6 +3497,7 @@ export interface IAssetInputDto {
     reasonForReduction: string | undefined;
     recoverableValue: number | undefined;
     increaseAssetId: number | undefined;
+    reduceAssetId: number | undefined;
     assetTypeId: number;
     assetStatusId: number;
 }
@@ -3101,6 +3509,7 @@ export class AssetListDto implements IAssetListDto {
     assetCode: string;
     assetName: string | undefined;
     increaseAssetDate: moment.Moment | undefined;
+    reduceAssetDate: moment.Moment | undefined;
     numberOfDayAmortization: number | undefined;
     numberOfDayUsedAsset: number | undefined;
     numberOfDayRemaing: number | undefined;
@@ -3112,6 +3521,7 @@ export class AssetListDto implements IAssetListDto {
     reasonForReduction: string | undefined;
     recoverableValue: number | undefined;
     increaseAssetId: number | undefined;
+    reduceAssetId: number | undefined;
     assetTypeId: number;
     assetStatusId: number;
 
@@ -3132,6 +3542,7 @@ export class AssetListDto implements IAssetListDto {
             this.assetCode = _data["assetCode"];
             this.assetName = _data["assetName"];
             this.increaseAssetDate = _data["increaseAssetDate"] ? moment(_data["increaseAssetDate"].toString()) : <any>undefined;
+            this.reduceAssetDate = _data["reduceAssetDate"] ? moment(_data["reduceAssetDate"].toString()) : <any>undefined;
             this.numberOfDayAmortization = _data["numberOfDayAmortization"];
             this.numberOfDayUsedAsset = _data["numberOfDayUsedAsset"];
             this.numberOfDayRemaing = _data["numberOfDayRemaing"];
@@ -3143,6 +3554,7 @@ export class AssetListDto implements IAssetListDto {
             this.reasonForReduction = _data["reasonForReduction"];
             this.recoverableValue = _data["recoverableValue"];
             this.increaseAssetId = _data["increaseAssetId"];
+            this.reduceAssetId = _data["reduceAssetId"];
             this.assetTypeId = _data["assetTypeId"];
             this.assetStatusId = _data["assetStatusId"];
         }
@@ -3163,6 +3575,7 @@ export class AssetListDto implements IAssetListDto {
         data["assetCode"] = this.assetCode;
         data["assetName"] = this.assetName;
         data["increaseAssetDate"] = this.increaseAssetDate ? this.increaseAssetDate.toISOString() : <any>undefined;
+        data["reduceAssetDate"] = this.reduceAssetDate ? this.reduceAssetDate.toISOString() : <any>undefined;
         data["numberOfDayAmortization"] = this.numberOfDayAmortization;
         data["numberOfDayUsedAsset"] = this.numberOfDayUsedAsset;
         data["numberOfDayRemaing"] = this.numberOfDayRemaing;
@@ -3174,6 +3587,7 @@ export class AssetListDto implements IAssetListDto {
         data["reasonForReduction"] = this.reasonForReduction;
         data["recoverableValue"] = this.recoverableValue;
         data["increaseAssetId"] = this.increaseAssetId;
+        data["reduceAssetId"] = this.reduceAssetId;
         data["assetTypeId"] = this.assetTypeId;
         data["assetStatusId"] = this.assetStatusId;
         return data; 
@@ -3194,6 +3608,7 @@ export interface IAssetListDto {
     assetCode: string;
     assetName: string | undefined;
     increaseAssetDate: moment.Moment | undefined;
+    reduceAssetDate: moment.Moment | undefined;
     numberOfDayAmortization: number | undefined;
     numberOfDayUsedAsset: number | undefined;
     numberOfDayRemaing: number | undefined;
@@ -3205,6 +3620,7 @@ export interface IAssetListDto {
     reasonForReduction: string | undefined;
     recoverableValue: number | undefined;
     increaseAssetId: number | undefined;
+    reduceAssetId: number | undefined;
     assetTypeId: number;
     assetStatusId: number;
 }
@@ -4818,6 +5234,191 @@ export class ProposeAssetDtoListResultDto implements IProposeAssetDtoListResultD
 
 export interface IProposeAssetDtoListResultDto {
     items: ProposeAssetDto[] | undefined;
+}
+
+export class ReduceAssetDto implements IReduceAssetDto {
+    id: number;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    reduceAssetCode: string;
+    reduceAssetDate: moment.Moment;
+    note: string | undefined;
+    totalRecovery: number;
+
+    constructor(data?: IReduceAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.reduceAssetCode = _data["reduceAssetCode"];
+            this.reduceAssetDate = _data["reduceAssetDate"] ? moment(_data["reduceAssetDate"].toString()) : <any>undefined;
+            this.note = _data["note"];
+            this.totalRecovery = _data["totalRecovery"];
+        }
+    }
+
+    static fromJS(data: any): ReduceAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ReduceAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["reduceAssetCode"] = this.reduceAssetCode;
+        data["reduceAssetDate"] = this.reduceAssetDate ? this.reduceAssetDate.toISOString() : <any>undefined;
+        data["note"] = this.note;
+        data["totalRecovery"] = this.totalRecovery;
+        return data; 
+    }
+
+    clone(): ReduceAssetDto {
+        const json = this.toJSON();
+        let result = new ReduceAssetDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IReduceAssetDto {
+    id: number;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    reduceAssetCode: string;
+    reduceAssetDate: moment.Moment;
+    note: string | undefined;
+    totalRecovery: number;
+}
+
+export class ReduceAssetDtoListResultDto implements IReduceAssetDtoListResultDto {
+    items: ReduceAssetDto[] | undefined;
+
+    constructor(data?: IReduceAssetDtoListResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(ReduceAssetDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ReduceAssetDtoListResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ReduceAssetDtoListResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ReduceAssetDtoListResultDto {
+        const json = this.toJSON();
+        let result = new ReduceAssetDtoListResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IReduceAssetDtoListResultDto {
+    items: ReduceAssetDto[] | undefined;
+}
+
+export class ReduceAssetInputDto implements IReduceAssetInputDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
+    reduceAssetCode: string;
+    creationTime: moment.Moment;
+    reduceAssetDate: moment.Moment;
+    note: string | undefined;
+    totalRecovery: number;
+
+    constructor(data?: IReduceAssetInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
+            this.reduceAssetCode = _data["reduceAssetCode"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.reduceAssetDate = _data["reduceAssetDate"] ? moment(_data["reduceAssetDate"].toString()) : <any>undefined;
+            this.note = _data["note"];
+            this.totalRecovery = _data["totalRecovery"];
+        }
+    }
+
+    static fromJS(data: any): ReduceAssetInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ReduceAssetInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
+        data["reduceAssetCode"] = this.reduceAssetCode;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["reduceAssetDate"] = this.reduceAssetDate ? this.reduceAssetDate.toISOString() : <any>undefined;
+        data["note"] = this.note;
+        data["totalRecovery"] = this.totalRecovery;
+        return data; 
+    }
+
+    clone(): ReduceAssetInputDto {
+        const json = this.toJSON();
+        let result = new ReduceAssetInputDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IReduceAssetInputDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
+    reduceAssetCode: string;
+    creationTime: moment.Moment;
+    reduceAssetDate: moment.Moment;
+    note: string | undefined;
+    totalRecovery: number;
 }
 
 export class RegisterInput implements IRegisterInput {
