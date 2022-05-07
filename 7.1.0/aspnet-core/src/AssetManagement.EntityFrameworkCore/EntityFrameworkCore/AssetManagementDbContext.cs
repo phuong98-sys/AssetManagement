@@ -14,6 +14,9 @@ using AssetManagement.PlaneShops;
 using AssetManagement.SuggestionHandlings;
 using AssetManagement.ProposeAssets;
 using AssetManagement.SuggestionHandlingDetails;
+using AssetManagement.PlaneMaintains;
+using AssetManagement.ProposeAssetDetails;
+using AssetManagement.Transfers;
 
 namespace AssetManagement.EntityFrameworkCore
 {
@@ -29,8 +32,11 @@ namespace AssetManagement.EntityFrameworkCore
         public DbSet<AssetStatus> AssetStatuses { get; set; }
         public DbSet<PlaneShop> PlaneShops { get; set; }
         public DbSet<SuggestionHandling> SuggestionHandlings { get; set; }
-        public DbSet<ProposeAsset> ProposeAssets { get; set; }
         public DbSet<SuggestionHandlingDetail> SuggestionHandlingDetails { get; set; }
+        public DbSet<PlaneMaintain> PlaneMaintains { get; set; }
+        public DbSet<ProposeAsset> ProposeAssets { get; set; }
+        public DbSet<ProposeAssetDetail> ProposeAssetDetails { get; set; }
+        public DbSet<Transfer> Tranfers { get; set; }
         public AssetManagementDbContext(DbContextOptions<AssetManagementDbContext> options)
             : base(options)
         {

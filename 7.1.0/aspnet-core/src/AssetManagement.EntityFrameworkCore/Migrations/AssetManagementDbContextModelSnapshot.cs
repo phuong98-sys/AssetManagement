@@ -1398,6 +1398,12 @@ namespace AssetManagement.Migrations
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DepartmentName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double?>("DepreciationOfAsset")
                         .HasColumnType("float");
 
@@ -1428,6 +1434,9 @@ namespace AssetManagement.Migrations
                     b.Property<double>("OrginalPrice")
                         .HasColumnType("float");
 
+                    b.Property<int?>("ProposeAssetDetailId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ReasonForReduction")
                         .HasColumnType("nvarchar(max)");
 
@@ -1449,7 +1458,11 @@ namespace AssetManagement.Migrations
 
                     b.HasIndex("AssetTypeId");
 
+                    b.HasIndex("DepartmentId");
+
                     b.HasIndex("IncreaseAssetId");
+
+                    b.HasIndex("ProposeAssetDetailId");
 
                     b.ToTable("Asset");
                 });
@@ -1835,6 +1848,60 @@ namespace AssetManagement.Migrations
                     b.ToTable("AbpTenants");
                 });
 
+            modelBuilder.Entity("AssetManagement.PlaneMaintains.PlaneMaintain", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("AssetId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DepartmentName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Describe")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Estimates")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime?>("ExpectedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MaintenanceType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetId");
+
+                    b.ToTable("PlaneMaintain");
+                });
+
             modelBuilder.Entity("AssetManagement.PlaneShops.PlaneShop", b =>
                 {
                     b.Property<int>("Id")
@@ -1887,6 +1954,73 @@ namespace AssetManagement.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PlaneShop");
+                });
+
+            modelBuilder.Entity("AssetManagement.ProposeAssetDetails.ProposeAssetDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("AssetId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DateFound")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DepartmentName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Describe")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Estimates")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Formality")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("ProposeAssetId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("ProposeAssetId");
+
+                    b.ToTable("ProposeAssetDetail");
                 });
 
             modelBuilder.Entity("AssetManagement.ProposeAssets.ProposeAsset", b =>
@@ -2083,6 +2217,63 @@ namespace AssetManagement.Migrations
                     b.HasIndex("DepartmentId");
 
                     b.ToTable("SuggestionHandling");
+                });
+
+            modelBuilder.Entity("AssetManagement.Transfers.Transfer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ApprovalStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Approver")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DateFound")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DepartmentName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("NumbersTransfer")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UserCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Transfer");
                 });
 
             modelBuilder.Entity("WS.PropertyTypes.PropertyType", b =>
@@ -2305,13 +2496,23 @@ namespace AssetManagement.Migrations
                         .WithMany("Assets")
                         .HasForeignKey("AssetTypeId");
 
+                    b.HasOne("AssetManagement.Departments.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId");
+
                     b.HasOne("AssetManagement.IncreaseAssets.IncreaseAsset", "IncreaseAsset")
                         .WithMany("Assets")
                         .HasForeignKey("IncreaseAssetId");
 
+                    b.HasOne("AssetManagement.ProposeAssetDetails.ProposeAssetDetail", null)
+                        .WithMany("Assets")
+                        .HasForeignKey("ProposeAssetDetailId");
+
                     b.Navigation("AssetStatus");
 
                     b.Navigation("AssetType");
+
+                    b.Navigation("Department");
 
                     b.Navigation("IncreaseAsset");
                 });
@@ -2383,6 +2584,36 @@ namespace AssetManagement.Migrations
                     b.Navigation("Edition");
 
                     b.Navigation("LastModifierUser");
+                });
+
+            modelBuilder.Entity("AssetManagement.PlaneMaintains.PlaneMaintain", b =>
+                {
+                    b.HasOne("AssetManagement.Assets.Asset", "Asset")
+                        .WithMany()
+                        .HasForeignKey("AssetId");
+
+                    b.Navigation("Asset");
+                });
+
+            modelBuilder.Entity("AssetManagement.ProposeAssetDetails.ProposeAssetDetail", b =>
+                {
+                    b.HasOne("AssetManagement.Assets.Asset", "Asset")
+                        .WithMany()
+                        .HasForeignKey("AssetId");
+
+                    b.HasOne("AssetManagement.Departments.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId");
+
+                    b.HasOne("AssetManagement.ProposeAssets.ProposeAsset", "ProposeAsset")
+                        .WithMany()
+                        .HasForeignKey("ProposeAssetId");
+
+                    b.Navigation("Asset");
+
+                    b.Navigation("Department");
+
+                    b.Navigation("ProposeAsset");
                 });
 
             modelBuilder.Entity("AssetManagement.SuggestionHandlingDetails.SuggestionHandlingDetail", b =>
@@ -2486,6 +2717,11 @@ namespace AssetManagement.Migrations
                 });
 
             modelBuilder.Entity("AssetManagement.IncreaseAssets.IncreaseAsset", b =>
+                {
+                    b.Navigation("Assets");
+                });
+
+            modelBuilder.Entity("AssetManagement.ProposeAssetDetails.ProposeAssetDetail", b =>
                 {
                     b.Navigation("Assets");
                 });

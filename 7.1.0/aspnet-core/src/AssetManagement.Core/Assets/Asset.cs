@@ -2,6 +2,7 @@
 using Abp.Domain.Entities.Auditing;
 using AssetManagement.AssetStatuses;
 using AssetManagement.AssetTypes;
+using AssetManagement.Departments;
 using AssetManagement.IncreaseAssets;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,10 @@ namespace AssetManagement.Assets
         [ForeignKey(nameof(AssetStatusId))]
         public AssetStatus AssetStatus { get; set; } // them tu AssetStatus table
         public int AssetStatusId { get; set; }
+        [ForeignKey(nameof(DepartmentId))]
+        public Department Department { get; set; } // them tu Department table
+        public string DepartmentName { get; set; }
+        public int? DepartmentId { get; set; }
         public int? TenantId { get; set; }
         public Asset()
         {

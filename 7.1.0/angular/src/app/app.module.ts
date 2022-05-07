@@ -53,6 +53,10 @@ import { AssetTypeComponent } from './contents/asset-type/asset-type.component';
 import { ProposeAssetComponent } from './contents/propose-asset/propose-asset.component';
 import { PlaneShopComponent } from './contents/plane-shop/plane-shop.component';
 import { PlaneMaintainComponent } from './contents/plane-maintain/plane-maintain.component';
+import { CreateOrEditPlaneMaintainComponent } from './contents/plane-maintain/create-or-edit-plane-maintain/create-or-edit-plane-maintain.component';
+import { CreateOrEditProposeAssetComponent } from './contents/propose-asset/create-or-edit-propose-asset/create-or-edit-propose-asset.component';
+import { CreateOrEditPlaneShopComponent } from './contents/plane-shop/create-or-edit-plane-shop/create-or-edit-plane-shop.component';
+import { TransferComponent } from './contents/transfer/transfer.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +99,10 @@ import { PlaneMaintainComponent } from './contents/plane-maintain/plane-maintain
     ProposeAssetComponent,
     PlaneShopComponent,
     PlaneMaintainComponent,
+    CreateOrEditPlaneMaintainComponent,
+    CreateOrEditProposeAssetComponent,
+    CreateOrEditPlaneShopComponent,
+    TransferComponent,
   ],
   imports: [
     CommonModule,

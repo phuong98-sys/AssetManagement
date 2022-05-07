@@ -16,6 +16,10 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.AssetTypeServiceProxy,
         ApiServiceProxies.AssetServiceProxy,
         ApiServiceProxies.IncreaseAssetServiceProxy,
+        ApiServiceProxies.PlaneMaintainServiceProxy,
+        ApiServiceProxies.ProposeAssetServiceProxy,
+        ApiServiceProxies.PlaneShopServiceProxy,
+        ApiServiceProxies.TransferServiceProxy,
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }
     ]
 })

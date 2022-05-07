@@ -33,6 +33,8 @@ namespace AssetManagement.Assets.DTO
         public int? AssetTypeId { get; set; }
         public string AssetTypeName { get; set; }
         public int AssetStatusId { get; set; }
+        public int? DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
     }
     [AutoMapFrom(typeof(Asset))]
     public class AssetListDto: CreationAuditedEntityDto<int?>
