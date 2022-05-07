@@ -1,0 +1,49 @@
+<p>edit-increase-asset-modal works!</p>
+<div bsModal #EditAssetIncreaseModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" >
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" busyIf="loading">
+            <form #assetForm="ngForm" novalidate (ngSubmit)="save()" (keydown.enter)="$event.preventDefault()">
+                <div class="modal-header">
+                    <h4 class="modal-title title-page">
+                        <span >{{"Sửa tài sản ghi tăng" | localize}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="AssetCode">{{"Mã tài sản" | localize}} *</label>
+                        <input id="AssetCode" #assetCode="ngModel" type="text" name="AssetCode" class="form-control" [(ngModel)]="asset.assetCode" disabled maxlength="256" />
+                    </div>
+                    <div class="form-group">
+                        <label for="AssetName">{{"Tên tài sản" | localize}} </label>
+                        <input id="AssetName" #assetName="ngModel" type="text" name="AssetName" class="form-control" [(ngModel)]="asset.assetName" disabled maxlength="256" />   
+                    </div>
+                    <div class="form-group">
+                        <label for="OrginalPrice">{{"Nguyên giá" | localize}}( đồng)</label>
+                        <input id="OrginalPrice" #orginalPrice="ngModel" type="number" name="OrginalPrice" class="form-control" [(ngModel)]="asset.orginalPrice" disabled/>
+            
+                    </div>
+                    <div class="form-group">
+                        <label for="NumberOfDayUsedAsset">{{"Thời gian sử dụng" | localize}}(năm) *</label>
+                        <input id="NumberOfDayUsedAsset" #numberOfDayUsedAsset="ngModel" type="number" name="NumberOfDayUsedAsset" class="form-control" [(ngModel)]="asset.numberOfDayUsedAsset" (change)="renderAmortizationValue()" min="1" required/>
+                        <span class="text-note">Nhập thời gian sử dụng của tài sản để tính giá trị khấu hao của tài sản</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="AmortizationValue">{{"Giá trị khấu hao" | localize}} (đồng)</label>
+                        <input id="AmortizationValue" #amortizationValue="ngModel" type="number" name="AmortizationValue" class="form-control" [(ngModel)]="asset.amortizationValue" disabled/>
+                        
+                    </div>
+                </div>   
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-cancel" (click)="close()">{{"Hủy" |
+                        localize}}</button>
+                    <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')" [disabled]="!asset.numberOfDayUsedAsset"><i class="fa fa-save" style="margin-right: 5px" ></i>
+                        <span>{{"Lưu" | localize}}</span></button>
+                </div>             
+            </form>
+            
+        </div>
+    </div>
+</div>

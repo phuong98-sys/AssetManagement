@@ -15,7 +15,6 @@ import * as moment from 'moment';
 })
 export class AssetComponent extends AppComponentBase implements OnInit {
   assetList;
-  cols: any[];
   loading =  false;
   totalRecords: number;
   primengTableHelper: PrimengTableHelper;
@@ -44,9 +43,7 @@ export class AssetComponent extends AppComponentBase implements OnInit {
     .subscribe(result => {
       this.loading = false;
         this.assetList = result.items;
-        debugger
         this.assetList.map((item)=>{ 
-          debugger
           item.creationTime = item.creationTime? moment(item.creationTime).format("DD-MM-YYYY") : undefined;
           item.increaseAssetDate = item.increaseAssetDate ? moment(item.increaseAssetDate).format("DD-MM-YYYY") : undefined});
         this.primengTableHelper.totalRecordsCount = result.items.length;
@@ -74,7 +71,6 @@ export class AssetComponent extends AppComponentBase implements OnInit {
               .deleteAsset(asset.id)
               .pipe(finalize(() => this.loading = false))
               .subscribe(() => {
-                debugger
                   this.getAssets();
                   this.notify.success(this.l('SuccessfullyDeleted'));
               });

@@ -19,6 +19,7 @@ import { CreateOrEditIncreaseAssetComponent } from './contents/increase-asset/cr
 import { ProposeAssetComponent } from './contents/propose-asset/propose-asset.component';
 import { PlaneShopComponent } from './contents/plane-shop/plane-shop.component';
 import { PlaneMaintainComponent } from './contents/plane-maintain/plane-maintain.component';
+import { EditIncreaseAssetModalComponent } from './contents/increase-asset/edit-increase-asset-modal/edit-increase-asset-modal.component';
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import { PlaneMaintainComponent } from './contents/plane-maintain/plane-maintain
                         {path: 'increase-asset', component: IncreaseAssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'increase-asset/create', component: CreateOrEditIncreaseAssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'increase-asset/:id', component: CreateOrEditIncreaseAssetComponent, canActivate: [AppRouteGuard] },
+                        {path: 'increase-asset-detail/editAsset', component: EditIncreaseAssetModalComponent, canActivate: [AppRouteGuard] },
                         {path: 'reduce-asset', component: ReduceAssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'department', component: DepartmentComponent, canActivate: [AppRouteGuard] },
                         {path: 'propose-asset', component: ProposeAssetComponent, canActivate: [AppRouteGuard] },

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Injector, OnInit, Output, ViewChild } from '@a
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
-import { AssetDto, AssetServiceProxy, IncreaseAssetInputDto, IncreaseAssetServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AssetDto, AssetServiceProxy, IncreaseAssetInputDto, IncreaseAssetServiceProxy, AssetInputDto } from '@shared/service-proxies/service-proxies';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 
@@ -85,12 +85,12 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
 
   }
   searchAsset(){
-    debugger
+    
     // this.asset = new AssetDto();
       this.asset = this.assetList.find((item) => item.assetCode = this.asset.assetCode);
   }
   renderAmortizationValue(){
-    debugger
+    
     this.asset.amortizationValue = Number(((this.asset.orginalPrice)/(this.asset.numberOfDayUsedAsset*12)).toFixed(3));
   }
   getAssets(){
@@ -99,9 +99,9 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
     });
   }
   clickIncreaseAsset(){
-    debugger
+    
     if(this.asset.numberOfDayUsedAsset > 0){
-      this.assetService.insertOrUpdateAsset(this.asset);
+      // this.assetService.insertOrUpdateAsset(this.asset);
     }
   }
 }

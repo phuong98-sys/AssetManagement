@@ -101,7 +101,31 @@ namespace AssetManagement.Assets
             }
 
         }
-   
+
+        public async Task test(List<AssetInputDto> inputList)
+        {
+            try
+            {
+
+                foreach (var asset in inputList)
+                {
+                    asset.IncreaseAssetId = null;
+                    asset.AmortizationValue = null;
+                    asset.IncreaseAssetDate = null;
+                    asset.NumberOfDayUsedAsset = null;
+                    asset.AssetStatusId = 1;
+                    var assetForEdit = await _assetRepository.FirstOrDefaultAsync(x => x.Id == asset.Id);
+                    ObjectMapper.Map(asset, assetForEdit);
+                }
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+
+        }
+        
+
         public AssetDto GetAsset(GetAssetInput input)
         {
             try

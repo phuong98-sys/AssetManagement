@@ -37,7 +37,7 @@ export class ReduceAssetComponent extends AppComponentBase implements OnInit {
     }
   
     createOrEditINcreaseAsset(asset?: IncreaseAssetInputDto): void {
-      debugger
+      
       this.createOrEditIncreaseAssetModal.show(asset);
     }
     deleteAsset(asset: IncreaseAssetInputDto){

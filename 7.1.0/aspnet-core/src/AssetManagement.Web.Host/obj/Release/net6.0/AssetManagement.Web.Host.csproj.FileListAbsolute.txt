@@ -424,7 +424,6 @@ D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.AssemblyInfoInputs.cache
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.AssemblyInfo.cs
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.csproj.CoreCompileInputs.cache
-D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.MvcApplicationPartsAssemblyInfo.cs
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\AssetManagement.Web.Host.MvcApplicationPartsAssemblyInfo.cache
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\staticwebassets.build.json
 D:\QuanliTaiSan\7.1.0\aspnet-core\src\AssetManagement.Web.Host\obj\Release\net6.0\staticwebassets.development.json

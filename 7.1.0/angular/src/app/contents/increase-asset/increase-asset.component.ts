@@ -34,7 +34,7 @@ export class IncreaseAssetComponent extends AppComponentBase implements OnInit {
       .subscribe(result => {
         this.loading = false;
           this.assetList = result.items;
-          debugger
+          
           this.assetList.map((item)=>{ 
             item.creationTime = moment(item.creationTime).format("DD-MM-YYYY");
             item.increaseAssetDate = moment(item.increaseAssetDate).format("DD-MM-YYYY")});

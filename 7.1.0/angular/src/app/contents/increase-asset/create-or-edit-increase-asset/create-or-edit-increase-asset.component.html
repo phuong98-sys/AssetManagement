@@ -73,21 +73,21 @@
                 </div>
                 <div class="form-group">
                     <label for="AssetName">{{"Tên tài sản" | localize}} </label>
-                    <input id="AssetName" #assetName="ngModel" type="text" name="AssetName" class="form-control" [(ngModel)]="asset.assetName" required maxlength="256" />   
+                    <input id="AssetName" #assetName="ngModel" type="text" name="AssetName" class="form-control" [(ngModel)]="asset.assetName" disabled maxlength="256" />   
                 </div>
                 <div class="form-group">
                     <label for="OrginalPrice">{{"Nguyên giá" | localize}}( đồng)</label>
-                    <input id="OrginalPrice" #orginalPrice="ngModel" type="number" name="OrginalPrice" class="form-control" [(ngModel)]="asset.orginalPrice" required/>
+                    <input id="OrginalPrice" #orginalPrice="ngModel" type="number" name="OrginalPrice" class="form-control" [(ngModel)]="asset.orginalPrice" disabled/>
         
                 </div>
                 <div class="form-group">
                     <label for="NumberOfDayUsedAsset">{{"Thời gian sử dụng" | localize}}(năm) *</label>
-                    <input id="NumberOfDayUsedAsset" #numberOfDayUsedAsset="ngModel" type="number" name="NumberOfDayUsedAsset" class="form-control" [(ngModel)]="asset.numberOfDayUsedAsset" (change)="renderAmortizationValue()" min="1"/>
+                    <input id="NumberOfDayUsedAsset" #numberOfDayUsedAsset="ngModel" type="number" name="NumberOfDayUsedAsset" class="form-control" [(ngModel)]="asset.numberOfDayUsedAsset" (change)="renderAmortizationValue()" min="1" required/>
                     <span class="text-note">Nhập thời gian sử dụng của tài sản để tính giá trị khấu hao của tài sản</span>
                 </div>
                 <div class="form-group">
                     <label for="AmortizationValue">{{"Giá trị khấu hao" | localize}} (đồng)</label>
-                    <input id="AmortizationValue" #amortizationValue="ngModel" type="number" name="AmortizationValue" class="form-control" [(ngModel)]="asset.amortizationValue"/>
+                    <input id="AmortizationValue" #amortizationValue="ngModel" type="number" name="AmortizationValue" class="form-control" [(ngModel)]="asset.amortizationValue" disabled/>
                     
                 </div>
                 <div>
@@ -98,10 +98,14 @@
     </div>
     <div class="increase-asset-table">
         <div class="title-page text-title">Các tài sản đã chọn để ghi tăng</div>
+        <button class="btn btn-increase-asset ml-1" (click)="onDeleteAssetListFromTable()">Xóa tài sản</button>
         <div class="content-component">
             <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="addAssetToIncreaseList" [resizableColumns]="true" [autoLayout]="true">
                 <ng-template pTemplate="header">
                     <tr>
+                        <th style="width:50px" class="pl-1">
+                            <input type="checkbox" name="selectedAllAsset" [(ngModel)]="isSelectedAllAsset" (click)="onSelectedAllAsset($event)"/>
+                        </th>
                         <th pResizableColumn pSortableColumn="assetCode" style="width:120px">
                             Mã tài sản
                             <p-sortIcon field="assetCode"></p-sortIcon>
@@ -123,15 +127,21 @@
                             Giá trị tính khấu hao
                             <p-sortIcon field="amortizationValue"></p-sortIcon>
                         </th>
+                        <th style="width:100px">
+                        </th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-assetSelected>
                     <tr>
+                        <td style="width:50px" class="pl-1"><input type="checkbox" name="selectedAsset" (change)="onSelectedAsset(assetSelected, $event)"></td>
                         <td style="width:120px">{{ assetSelected.assetCode}}</td>
                         <td style="width:120px">{{ assetSelected.assetName}}</td>
                         <td style="width:120px">{{ assetSelected.orginalPrice }}</td>           
-                        <td style="width:150px">{{ assetSelected.numberOfDayAmortization }}</td>
+                        <td style="width:150px"><input type="number" class="input-number" [(ngModel)]= "assetSelected.numberOfDayUsedAsset" (change)="renderAmortizationValueOfAssetFromTable(assetSelected)" min="1" required/></td>
                         <td style="width:200px">{{ assetSelected.amortizationValue}}</td>
+                        <!-- <td style="width:100px" (click) = "editAssetItemFromTable(assetSelected)" class="text-link">Sửa</td> -->
+                        <!-- <td style="width:100px"  class="text-link">Xóa</td> -->
+                        <td style="width:100px"><button type="button" class="btn btn-sm bg-danger mx-2 ng-tns-c137-2" (click) = "deleteAssetItemFromTable(assetSelected)"><i class="fas fa-trash ng-tns-c137-2"></i> Xóa </button></td>
                     </tr>
                 </ng-template>
             </p-table>
@@ -144,6 +154,6 @@
             <span>{{"Lưu" | localize}}</span></button>
     </div>
 </div>
-    
+<!-- <app-edit-increase-asset-modal #editIncreaseAssetModal (modalSave)="editIncreaseAsset($event)"></app-edit-increase-asset-modal> -->
 
 

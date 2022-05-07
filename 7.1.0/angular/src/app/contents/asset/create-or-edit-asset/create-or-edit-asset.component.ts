@@ -22,7 +22,7 @@ export class CreateOrEditAssetComponent extends AppComponentBase implements OnIn
   saving = false;
   loading = false;
   canChangeUserName = true;
-  asset: AssetInputDto = new AssetInputDto();
+  asset: any;
   assetTypeList: AssetTypeDto[];
   assetList: AssetDto [];
   selectedAssetType: AssetTypeDto;
@@ -35,7 +35,6 @@ export class CreateOrEditAssetComponent extends AppComponentBase implements OnIn
     private _activatedRoute: ActivatedRoute,
     private _router: Router) {
         super(injector);
-        debugger
         if (this._activatedRoute.snapshot.params['id']) {
           this.assetId = Number(this._activatedRoute.snapshot.params['id']);
           
@@ -57,7 +56,6 @@ export class CreateOrEditAssetComponent extends AppComponentBase implements OnIn
   }
   // getAssetTypeList(){
   //   this.assetTypeService.getAssetTypes().subscribe((result)=>{
-  //     debugger
   //     this.assetTypeList = result.items;
   //     this.selectedAssetType = this.assetTypeList.find((item)=> item.id == this.asset.assetTypeId);
   //   });
@@ -123,7 +121,7 @@ export class CreateOrEditAssetComponent extends AppComponentBase implements OnIn
     this.asset.assetName=null;
   }
   close(): void {
-    debugger
+    
     this.active = false;
     // this.userPasswordRepeat = "";
     // this.modal.hide();
@@ -143,7 +141,7 @@ export class CreateOrEditAssetComponent extends AppComponentBase implements OnIn
       });
   }
   setAssetCode(){
-    debugger
+    
     var asset = this.assetList.find(x=> x.assetCode == this.asset.assetCode);
     if(asset && asset.id != this.assetId){
       this.assetCodeMessage ="Mã này đã tồn tại. Vui lòng nhập mã khác";
