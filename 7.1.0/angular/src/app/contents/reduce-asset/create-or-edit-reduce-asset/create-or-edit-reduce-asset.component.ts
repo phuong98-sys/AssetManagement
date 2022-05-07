@@ -2,9 +2,10 @@ import { Component, EventEmitter, Injector, OnInit, Output, ViewChild } from '@a
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
-import { AssetDto, AssetServiceProxy, ReduceAssetInputDto, ReduceAssetServiceProxy, AssetInputDto } from '@shared/service-proxies/service-proxies';
+import { AssetDto, AssetServiceProxy, ReduceAssetInputDto, ReduceAssetServiceProxy, ReasonReduceDto, ReasonReduceServiceProxy } from '@shared/service-proxies/service-proxies';
 import * as moment from 'moment';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 @Component({
@@ -31,16 +32,20 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
   reduceAssetCodeMessage = "";
   deleteAssetList : AssetDto[] = [];
   deleteAssetConfirmedList : any[] = [];
-  // assetTypeList: ReduceAssetTypeDto[];
+  reasonReduceList: ReasonReduceDto[];
   // selectedAssetType: AssetTypeDto;
   isSelectedAsset = false;
   isSelectedAllAsset = false;
-  
+  selectedReasonReduce : ReasonReduceDto;
+  selectedReasonReduceFromTable : ReasonReduceDto;
+  assetId : number;
+  selectedTest : ReasonReduceDto;
   constructor(
     injector: Injector,
     private assetService: AssetServiceProxy,
     private reduceAssetService: ReduceAssetServiceProxy,
     private _router: Router,
+    private reasonReduceService: ReasonReduceServiceProxy,
     private _activatedRoute: ActivatedRoute) {
         super(injector);
         if (this._activatedRoute.snapshot.params['id']) {
@@ -56,6 +61,7 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
     this.getAssets();
     this.getReduceAssetForEdit();
     this.getReduceAssets();
+    this.getReasonReduces();
   }
   getReduceAssets(){
     this.reduceAssetService.getReduceAssets().subscribe((result) => {
@@ -86,6 +92,7 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
           this.reduceAssetService.insertOrUpdateReduceAsset(this.reduceAsset)
           .pipe(finalize(() => (this.loading = false)))
           .subscribe((result) => {
+            debugger
               this.reduceAsset = result;
               this.addAssetToReduceList.map((item) => { 
                 item.reduceAssetId = this.reduceAsset.id;
@@ -95,7 +102,7 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
               // xóa tài sản ghi tăng
               
               if(this.deleteAssetConfirmedList.length > 0 ){
-                this.assetService.test(this.deleteAssetConfirmedList).subscribe();
+                this.assetService.test(2, this.deleteAssetConfirmedList).subscribe();
               }
               this.notify.info(this.l("SavedSuccessfully"));
               this.close();
@@ -111,17 +118,27 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
     this._router.navigate(['app/contents/reduce-asset']);
   }
   searchAsset(){
+    debugger
+    var t =  this.addAssetToReduceList;
     var newAsset = new AssetDto;
     newAsset =this.asset;
+    this.assetList = this.assetHaveNotReduceList.filter(x => !this.addAssetToReduceList.map(y => y?.assetCode).includes(x?.assetCode));
     newAsset = this.assetList?.find((item) => item.assetCode == newAsset?.assetCode);
+    
     if(!newAsset){
-      
-      this.assetMessage = "Mã tài sản không tồn tại hoặc đã được ghi tăng";
+      this.resetAsset();
+      this.assetMessage = "Mã tài sản không tồn tại hoặc đã được chọn ghi giảm";
     }
     else{
       this.asset = newAsset;
       this.assetMessage = "";
     }
+  }
+  resetAsset(){
+    this.asset.amortizationValue = null;
+    this.asset.assetName = null;
+    this.asset.orginalPrice = null;
+    this.asset.reasonReduceId = null;
   }
   renderAmortizationValue(){
     this.asset.amortizationValue = Number(((this.asset.orginalPrice)/(this.asset.numberOfDayUsedAsset*12)).toFixed(3));
@@ -137,18 +154,29 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
     this.assetService.getAssets().subscribe((result)=>{
       
       this.assetHaveNotReduceList = result.items.filter((item)=> item.reduceAssetId == null);
+      debugger
       this.assetList = this.assetHaveNotReduceList;
     });
    
   }
 
   clickReduceAsset(){
-    var newAsset = new AssetDto;
-    newAsset =this.asset;
-    this.addAssetToReduceList.push(newAsset);
-    this.asset = new AssetDto;
-    // 
-     this.assetList = this.assetHaveNotReduceList.filter(x => !this.addAssetToReduceList.map(y => y?.assetCode).includes(x?.assetCode));
+    this.searchAsset();
+    if(this.assetMessage  != ""){
+      this.message.warn(this.l('Không hợp lệ vui lòng kiểm tra lại'));
+    }
+    else{
+      var newAsset = new AssetDto;
+      newAsset = this.asset;
+      debugger
+      this.addAssetToReduceList.push(newAsset);
+      this.asset = new AssetDto;
+      this.selectedReasonReduce = new ReasonReduceDto();
+      // 
+      this.assetList = [];
+      //  this.assetList = this.assetHaveNotReduceList.filter(x => !this.addAssetToReduceList.map(y => y?.assetCode).includes(x?.assetCode));
+    }
+   
   }
   setReduceAssetCode(){
     var reduceAsset = this.reduceAssetList.find(x=> x.reduceAssetCode == this.reduceAsset.reduceAssetCode);
@@ -162,7 +190,7 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
   getReduceAssetForEdit(){
     this.reduceAssetService.getReduceAsset(this.reduceAssetId)
       .subscribe((result) =>{
-        
+        debugger
         this.reduceAsset = result;
         this.reduceAsset.creationTime = result["creationTime"]? result["creationTime"].format("YYYY-MM-DD"):<any>undefined;
         this.reduceAsset.reduceAssetDate = result["reduceAssetDate"]? result["reduceAssetDate"].format("YYYY-MM-DD"):<any>undefined;
@@ -186,7 +214,7 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
   }
   onDeleteAssetListFromTable(){
     this.message.confirm(
-      this.l('Tất cả tài sản đã chọn sẽ bị xóa khỏi bảng tài sản ghi tăng'),
+      this.l('Tất cả tài sản đã chọn sẽ bị xóa khỏi bảng tài sản ghi giảm'),
       this.l('Bạn chắc chắn thực hiện chức năng này?'),
       (isConfirmed) => {
           if (isConfirmed) {
@@ -244,5 +272,37 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
         $(selector).click();
     }  
     }
+  }
+  onSelectReasonReduce(){
+    debugger
+    this.asset.reasonReduceId = this.selectedReasonReduce.id;
+  }
+  onSelectReasonReduceFromTable(asset: AssetDto){
+    debugger
+    var index = this.addAssetToReduceList.findIndex(c => c.id == asset.id);
+    this.addAssetToReduceList[index] = asset;
+    if(asset.reasonReduceId != 1){
+      this.addAssetToReduceList[index].recoverableValue = null;
+    }else{
+      this.addAssetToReduceList[index].recoverableValue = asset.recoverableValue;
+    }
+    
+  }
+  // getAssetForEdit(){
+  //   forkJoin(
+  //     this.assetService.getAsset(this.assetId),
+  //     this.reasonReduceService.getReasonReduces()
+  // )
+  //     .pipe(finalize(() => (this.loading = false)))
+  //     .subscribe(([res1, res2]) => {
+  //         this.asset = res1;
+  //         this.reasonReduceList = res2.items;
+  //         this.selectedReasonReduce = this.reasonReduceList.find((item)=> item.id == this.asset.reasonReduceId);
+  //     });
+  // }
+  getReasonReduces(){
+    this.reasonReduceService.getReasonReduces().subscribe((result) => {
+      this.reasonReduceList = result.items;
+    });
   }
 }

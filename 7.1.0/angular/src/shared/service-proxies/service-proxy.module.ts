@@ -17,6 +17,7 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.AssetServiceProxy,
         ApiServiceProxies.IncreaseAssetServiceProxy,
         ApiServiceProxies.ReduceAssetServiceProxy,
+        ApiServiceProxies.ReasonReduceServiceProxy,
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }
     ]
 })

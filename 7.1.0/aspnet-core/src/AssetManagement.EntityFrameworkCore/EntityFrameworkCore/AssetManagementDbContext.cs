@@ -14,6 +14,7 @@ using AssetManagement.PlaneShops;
 using AssetManagement.SuggestionHandlings;
 using AssetManagement.ProposeAssets;
 using AssetManagement.SuggestionHandlingDetails;
+using AssetManagement.ReasonRuduces;
 
 namespace AssetManagement.EntityFrameworkCore
 {
@@ -31,6 +32,7 @@ namespace AssetManagement.EntityFrameworkCore
         public DbSet<SuggestionHandling> SuggestionHandlings { get; set; }
         public DbSet<ProposeAsset> ProposeAssets { get; set; }
         public DbSet<SuggestionHandlingDetail> SuggestionHandlingDetails { get; set; }
+        public DbSet<ReasonReduce> ReasonReduces { get; set; }
         public AssetManagementDbContext(DbContextOptions<AssetManagementDbContext> options)
             : base(options)
         {

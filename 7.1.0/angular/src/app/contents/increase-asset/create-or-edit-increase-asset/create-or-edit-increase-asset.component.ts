@@ -100,7 +100,7 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
               // xóa tài sản ghi tăng
               
               if(this.deleteAssetConfirmedList.length > 0 ){
-                this.assetService.test(this.deleteAssetConfirmedList).subscribe();
+                this.assetService.test(1,this.deleteAssetConfirmedList).subscribe();
               }
               this.notify.info(this.l("SavedSuccessfully"));
               this.close();
@@ -118,15 +118,21 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
   searchAsset(){
     var newAsset = new AssetDto;
     newAsset =this.asset;
+    this.assetList = this.assetHaveNotIncreaseList.filter(x => !this.addAssetToIncreaseList.map(y => y?.assetCode).includes(x?.assetCode));
     newAsset = this.assetList?.find((item) => item.assetCode == newAsset?.assetCode);
     if(!newAsset){
-      
+      this.resetAsset();
       this.assetMessage = "Mã tài sản không tồn tại hoặc đã được ghi tăng";
     }
     else{
       this.asset = newAsset;
       this.assetMessage = "";
     }
+  }
+  resetAsset(){
+    this.asset.amortizationValue = null;
+    this.asset.assetName = null;
+    this.asset.orginalPrice = null;
   }
   renderAmortizationValue(){
     this.asset.amortizationValue = Number(((this.asset.orginalPrice)/(this.asset.numberOfDayUsedAsset*12)).toFixed(3));
@@ -148,12 +154,20 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
   }
 
   clickIncreaseAsset(){
-    var newAsset = new AssetDto;
-    newAsset =this.asset;
-    this.addAssetToIncreaseList.push(newAsset);
-    this.asset = new AssetDto;
-    // 
-     this.assetList = this.assetHaveNotIncreaseList.filter(x => !this.addAssetToIncreaseList.map(y => y?.assetCode).includes(x?.assetCode));
+    this.searchAsset();
+    if(this.assetMessage  != ""){
+      this.message.warn(this.l('Không hợp lệ vui lòng kiểm tra lại'));
+    }
+    else{
+      var newAsset = new AssetDto;
+      newAsset =this.asset;
+      this.addAssetToIncreaseList.push(newAsset);
+      this.asset = new AssetDto;
+      // 
+      this.assetList = [];
+      //  this.assetList = this.assetHaveNotIncreaseList.filter(x => !this.addAssetToIncreaseList.map(y => y?.assetCode).includes(x?.assetCode));
+    }
+   
   }
   setIncreaseAssetCode(){
     var increaseAsset = this.increaseAssetList.find(x=> x.increaseAssetCode == this.increaseAsset.increaseAssetCode);

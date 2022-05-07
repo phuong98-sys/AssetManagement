@@ -778,11 +778,11 @@ F:\DA\AssetManagement\7.1.0\aspnet-core\test\AssetManagement.Tests\obj\Release\n
 F:\DA\AssetManagement\7.1.0\aspnet-core\test\AssetManagement.Tests\obj\Release\net6.0\AssetManagement.Tests.dll
 F:\DA\AssetManagement\7.1.0\aspnet-core\test\AssetManagement.Tests\obj\Release\net6.0\ref\AssetManagement.Tests.dll
 F:\DA\AssetManagement\7.1.0\aspnet-core\test\AssetManagement.Tests\obj\Release\net6.0\AssetManagement.Tests.genruntimeconfig.cache
-D:\QuanliTaiSan\7.1.0\aspnet-core\test\AssetManagement.Tests\obj\Release\net6.0\AssetManagement.Tests.csproj.AssemblyReference.cache
 D:\QuanliTaiSan\7.1.0\aspnet-core\test\AssetManagement.Tests\obj\Release\net6.0\AssetManagement.Tests.GeneratedMSBuildEditorConfig.editorconfig
 D:\QuanliTaiSan\7.1.0\aspnet-core\test\AssetManagement.Tests\obj\Release\net6.0\AssetManagement.Tests.AssemblyInfoInputs.cache
 D:\QuanliTaiSan\7.1.0\aspnet-core\test\AssetManagement.Tests\obj\Release\net6.0\AssetManagement.Tests.AssemblyInfo.cs
 D:\QuanliTaiSan\7.1.0\aspnet-core\test\AssetManagement.Tests\obj\Release\net6.0\AssetManagement.Tests.csproj.CoreCompileInputs.cache
+D:\QuanliTaiSan\7.1.0\aspnet-core\test\AssetManagement.Tests\obj\Release\net6.0\AssetManagement.Tests.csproj.AssemblyReference.cache
 D:\QuanliTaiSan\7.1.0\aspnet-core\test\AssetManagement.Tests\bin\Release\net6.0\EmptyFiles\archive\empty.7z
 D:\QuanliTaiSan\7.1.0\aspnet-core\test\AssetManagement.Tests\bin\Release\net6.0\EmptyFiles\archive\empty.bz2
 D:\QuanliTaiSan\7.1.0\aspnet-core\test\AssetManagement.Tests\bin\Release\net6.0\EmptyFiles\archive\empty.gz

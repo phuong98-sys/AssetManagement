@@ -43,7 +43,7 @@
             <div class="title-page text-title">Chọn tài sản</div>
             <div class="choose-asset-container">
                 <div class="form-group row">
-                    <div class="col-6">
+                    <div class="col-6 pd-0">
                         <label for="AssetCode">{{"Mã tài sản" | localize}} *</label>
                         <input id="AssetCode" #assetCode="ngModel" type="text" name="AssetCode" class="form-control" [(ngModel)]="asset.assetCode" required maxlength="256" />
                         <div style="display: grid;">
@@ -64,18 +64,26 @@
                     <input id="OrginalPrice" #orginalPrice="ngModel" type="number" name="OrginalPrice" class="form-control" [(ngModel)]="asset.orginalPrice" disabled/>
         
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="NumberOfDayUsedAsset">{{"Thời gian sử dụng" | localize}}(năm) *</label>
                     <input id="NumberOfDayUsedAsset" #numberOfDayUsedAsset="ngModel" type="number" name="NumberOfDayUsedAsset" class="form-control" [(ngModel)]="asset.numberOfDayUsedAsset" (change)="renderAmortizationValue()" min="1" required/>
                     <span class="text-note">Nhập thời gian sử dụng của tài sản để tính giá trị khấu hao của tài sản</span>
-                </div>
+                </div> -->
                 <div class="form-group">
-                    <label for="AmortizationValue">{{"Giá trị khấu hao" | localize}} (đồng)</label>
-                    <input id="AmortizationValue" #amortizationValue="ngModel" type="number" name="AmortizationValue" class="form-control" [(ngModel)]="asset.amortizationValue" disabled/>
-                    
+                    <label for="ReasonReduce">{{"Lí do ghi giảm" | localize}} *</label>
+                    <p-dropdown id="reasonReduce" #reasonReduce="ngModel" name="reasonReduceAsset" [options]="reasonReduceList"
+                    [(ngModel)]="selectedReasonReduce" placeholder="{{ l('Chọn lí do ghi giảm') }}" optionLabel="reasonReduceName"
+                    styleClass="form-control brandSelection-dropdown" (onChange)="onSelectReasonReduce()" required>
+                    </p-dropdown>
+                    <span *ngIf="!selectedReasonReduce" class="error-message">Trường này không được để trống</span>
+                </div>
+                <div class="form-group" *ngIf="asset.reasonReduceId == 1">
+                    <label for="RecoverableValue">{{"Giá trị thu hồi" | localize}} (đồng)</label>
+                    <input id="RecoverableValue" #recoverableValue="ngModel" type="number" name="RecoverableValue" class="form-control" [(ngModel)]="asset.recoverableValue" required/>
+                    <span *ngIf="!selectedReasonReduce" class="error-message">Trường này không được để trống</span>
                 </div>
                 <div>
-                    <button class="btn btn-reduce-asset" (click)="clickReduceAsset()" [disabled]="!asset.assetCode || !asset.numberOfDayUsedAsset || assetMessage != ''">Ghi giảm</button>
+                    <button class="btn btn-reduce-asset" (click)="clickReduceAsset()" [disabled]="!asset.assetCode || !asset.reasonReduceId || assetMessage != '' || (asset.reasonReduceId == 1 && !asset.recoverableValue)">Ghi giảm</button>
                 </div>
             </div>
         </div>
@@ -103,13 +111,13 @@
                             <p-sortIcon field="orginalPrice"></p-sortIcon>
                         </th>
                     
-                        <th pResizableColumn pSortableColumn="numberOfDayUsedAsset" style="width:150px">
-                            Thời gian sử dụng
-                            <p-sortIcon field="numberOfDayUsedAsset"></p-sortIcon>
+                        <th pResizableColumn pSortableColumn="reasonReduceId" style="width:150px">
+                            Lí do ghi giảm
+                            <p-sortIcon field="reasonReduceId"></p-sortIcon>
                         </th>
-                        <th pResizableColumn pSortableColumn="amortizationValue" style="width:200px">
-                            Giá trị tính khấu hao
-                            <p-sortIcon field="amortizationValue"></p-sortIcon>
+                        <th pResizableColumn pSortableColumn="recoverableValue" style="width:200px">
+                            Giá trị thu hồi
+                            <p-sortIcon field="recoverableValue"></p-sortIcon>
                         </th>
                         <th style="width:100px">
                         </th>
@@ -121,8 +129,19 @@
                         <td style="width:120px">{{ assetSelected.assetCode}}</td>
                         <td style="width:120px">{{ assetSelected.assetName}}</td>
                         <td style="width:120px">{{ assetSelected.orginalPrice }}</td>           
-                        <td style="width:150px"><input type="number" class="input-number" [(ngModel)]= "assetSelected.numberOfDayUsedAsset" (change)="renderAmortizationValueOfAssetFromTable(assetSelected)" min="1" required/></td>
-                        <td style="width:200px">{{ assetSelected.amortizationValue}}</td>
+                        <td style="width:150px">
+                                <!-- <p-dropdown id="reasonReduceFromTable" #reasonReduceFromTable="ngModel" name="reasonReduceAsset" [options]="reasonReduceList"
+                                [(ngModel)]="assetSelected.reasonReduceId" optionLabel="reasonReduceName" optionValue = "id"
+                                styleClass="form-control brandSelection-dropdown" (onChange)="onSelectReasonReduceFromTable(assetSelected)" required>
+                                </p-dropdown> -->
+                                <select name="duration" [(ngModel)]="assetSelected.reasonReduceId" class="form-control" (change)="onSelectReasonReduceFromTable(assetSelected)"> 
+                                    <option *ngFor="let reasonReduce of reasonReduceList" [value]="reasonReduce.id" >{{reasonReduce.reasonReduceName}}</option> 
+                                </select> 
+                                <!-- <span *ngIf="assetSelected.reasonReduceId" class="error-message">Trường này không được để trống</span> -->
+                            <!-- <input type="number" class="input-number" [(ngModel)]= "assetSelected.numberOfDayUsedAsset" (change)="renderAmortizationValueOfAssetFromTable(assetSelected)" min="1" required/> -->
+                        </td>
+                        <td style="width:200px">
+                            <input class="form-control" [disabled]="assetSelected.reasonReduceId != 1" type="number" class="input-number" [(ngModel)]= "assetSelected.recoverableValue" min="1" required/></td>
                         <td style="width:100px"><button type="button" class="btn btn-sm bg-danger mx-2 ng-tns-c137-2" (click) = "deleteAssetItemFromTable(assetSelected)"><i class="fas fa-trash ng-tns-c137-2"></i> Xóa </button></td>
                     </tr>
                 </ng-template>

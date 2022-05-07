@@ -35,6 +35,7 @@ namespace AssetManagement.Assets.DTO
         public int? AssetTypeId { get; set; }
         public string AssetTypeName { get; set; }
         public int AssetStatusId { get; set; }
+        public int? ReasonReduceId { get; set; }
     }
     [AutoMapFrom(typeof(Asset))]
     public class AssetListDto: CreationAuditedEntityDto<int?>
@@ -60,6 +61,7 @@ namespace AssetManagement.Assets.DTO
         public int? ReduceAssetId { get; set; }
         public int AssetTypeId { get; set; }
         public int AssetStatusId { get; set; }
+        public int? ReasonReduceId { get; set; }
     }
 
     [AutoMapTo(typeof(Asset))]
@@ -86,6 +88,7 @@ namespace AssetManagement.Assets.DTO
         public int? ReduceAssetId { get; set; }
         public int AssetTypeId { get; set; }
         public int AssetStatusId { get; set; }
+        public int? ReasonReduceId { get; set; }
     }
     public class GetAssetInput
     {

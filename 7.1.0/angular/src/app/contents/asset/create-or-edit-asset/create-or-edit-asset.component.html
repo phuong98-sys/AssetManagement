@@ -44,7 +44,7 @@
                         [(ngModel)]="selectedAssetType" placeholder="{{ l('Chọn loại tài sản') }}" optionLabel="assetTypeName"
                         styleClass="form-control brandSelection-dropdown" (onChange)="onSelectAssetType()" required>
                         </p-dropdown>
-                        <span *ngIf="!selectedAssetType" style="color:red; font-size: 12px;">Trường này không được để trống</span>
+                        <span *ngIf="!selectedAssetType" class="error-message">Trường này không được để trống</span>
                     </div>
                     <div class="form-group" *ngIf="assetId > 0 ">
                         <label for="IncreaseAssetDate">{{"Ngày ghi tăng" | localize}} </label>

@@ -22,6 +22,7 @@ namespace AssetManagement.IncreaseAssets
         public string Note { get; set; }
         public double TotalAssetValue { get; set; }
         public List<Asset> Assets { get; set; }
+
         public IncreaseAsset()
         {
             Assets = new List<Asset>();

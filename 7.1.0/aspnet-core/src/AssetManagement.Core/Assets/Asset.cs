@@ -3,6 +3,7 @@ using Abp.Domain.Entities.Auditing;
 using AssetManagement.AssetStatuses;
 using AssetManagement.AssetTypes;
 using AssetManagement.IncreaseAssets;
+using AssetManagement.ReasonRuduces;
 using AssetManagement.ReduceAssets;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,9 @@ namespace AssetManagement.Assets
         [ForeignKey(nameof(ReduceAssetId))]
         public ReduceAsset ReduceAsset { get; set; }
         public int? ReduceAssetId { get; set; }
+        [ForeignKey(nameof(ReasonReduceId))]
+        public ReasonReduce ReasonReduce { get; set; }
+        public int? ReasonReduceId { get; set; }
         public int? TenantId { get; set; }
         public Asset()
         {

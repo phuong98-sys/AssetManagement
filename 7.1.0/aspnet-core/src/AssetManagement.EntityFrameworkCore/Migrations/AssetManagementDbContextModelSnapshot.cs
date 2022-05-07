@@ -1431,6 +1431,9 @@ namespace AssetManagement.Migrations
                     b.Property<string>("ReasonForReduction")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ReasonReduceId")
+                        .HasColumnType("int");
+
                     b.Property<double?>("RecoverableValue")
                         .HasColumnType("float");
 
@@ -1456,6 +1459,8 @@ namespace AssetManagement.Migrations
                     b.HasIndex("AssetTypeId");
 
                     b.HasIndex("IncreaseAssetId");
+
+                    b.HasIndex("ReasonReduceId");
 
                     b.HasIndex("ReduceAssetId");
 
@@ -1972,6 +1977,29 @@ namespace AssetManagement.Migrations
                     b.ToTable("ProposeAsset");
                 });
 
+            modelBuilder.Entity("AssetManagement.ReasonRuduces.ReasonReduce", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ReasonReduceCode")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("ReasonReduceName")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ReasonReduce");
+                });
+
             modelBuilder.Entity("AssetManagement.ReduceAssets.ReduceAsset", b =>
                 {
                     b.Property<int>("Id")
@@ -2353,6 +2381,10 @@ namespace AssetManagement.Migrations
                         .WithMany("Assets")
                         .HasForeignKey("IncreaseAssetId");
 
+                    b.HasOne("AssetManagement.ReasonRuduces.ReasonReduce", "ReasonReduce")
+                        .WithMany()
+                        .HasForeignKey("ReasonReduceId");
+
                     b.HasOne("AssetManagement.ReduceAssets.ReduceAsset", "ReduceAsset")
                         .WithMany("Assets")
                         .HasForeignKey("ReduceAssetId");
@@ -2362,6 +2394,8 @@ namespace AssetManagement.Migrations
                     b.Navigation("AssetType");
 
                     b.Navigation("IncreaseAsset");
+
+                    b.Navigation("ReasonReduce");
 
                     b.Navigation("ReduceAsset");
                 });
