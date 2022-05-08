@@ -1,5 +1,6 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
+using Abp.Runtime.Session;
 using Abp.UI;
 using AssetManagement.ReduceAssets;
 using AssetManagement.ReduceAssets.DTO;
@@ -40,6 +41,7 @@ namespace AssetManagement.ReduceAssetsH
                 if (!input.Id.HasValue)
                 {
                     var reduceAsset = ObjectMapper.Map<ReduceAsset>(input);
+                    reduceAsset.CreatorUserId = AbpSession.GetUserId();
                     await _reduceAssetRepository.InsertAsync(reduceAsset);
                     await CurrentUnitOfWork.SaveChangesAsync();
                     return ObjectMapper.Map<ReduceAssetDto>(reduceAsset);

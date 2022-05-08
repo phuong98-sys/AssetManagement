@@ -15,7 +15,7 @@
                 Mã chứng từ
                 <p-sortIcon field="increaseAssetCode"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="increaseAssetDate" style="width:120px">
+            <th pResizableColumn pSortableColumn="increaseAssetDate" style="width:140px">
                 Ngày chứng từ 
                 <p-sortIcon field="increaseAssetDate"></p-sortIcon>
             </th>
@@ -31,6 +31,22 @@
                 Tổng nguyên giá 
                 <p-sortIcon field="totalAssetValue"></p-sortIcon>
             </th>
+            <th pResizableColumn pSortableColumn="creatorUserId" style="width:150px">
+                Tổng nguyên giá 
+                <p-sortIcon field="totalAssetValue"></p-sortIcon>
+            </th>
+            <th pResizableColumn pSortableColumn="creatorUserName" style="width:130px">
+                Người tạo
+                <p-sortIcon field="creatorUserName"></p-sortIcon>
+            </th>     
+            <th pResizableColumn pSortableColumn="lastModificationTime" style="width:130px">
+                Ngày sửa
+                <p-sortIcon field="lastModificationTime"></p-sortIcon>
+            </th>     
+            <th pResizableColumn pSortableColumn="lastModificationName" style="width:130px">
+                Người sửa
+                <p-sortIcon field="lastModificationName"></p-sortIcon>
+            </th>  
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-asset>
@@ -54,10 +70,13 @@
                 </div>
             </td>
             <td style="width:120px">{{ asset.increaseAssetCode }}</td>
-            <td style="width:120px">{{ asset.increaseAssetDate }}</td>
+            <td style="width:140px">{{ asset.increaseAssetDate }}</td>
             <td style="width:150px">{{ asset.creationTime}}</td>
             <td style="width:120px">{{ asset.note }}</td>
             <td style="width:150px">{{ asset.totalAssetValue}}</td>
+            <td style="width:130px">{{ asset.creatorUserName}}</td>
+            <td style="width:130px">{{ asset.lastModificationTime}}</td>
+            <td style="width:130px">{{ asset.lastModificationName}}</td>
         </tr>
     </ng-template>
 </p-table>

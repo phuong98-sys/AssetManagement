@@ -75,6 +75,10 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="AssetTypeName">{{"Loại tài sản" | localize}} </label>
+                    <input id="AssetTypeName" #assetTypeName="ngModel" type="text" name="AssetTypeName" class="form-control" [(ngModel)]="asset.assetTypeName" disabled maxlength="256" />   
+                </div>
+                <div class="form-group">
                     <label for="AssetName">{{"Tên tài sản" | localize}} </label>
                     <input id="AssetName" #assetName="ngModel" type="text" name="AssetName" class="form-control" [(ngModel)]="asset.assetName" disabled maxlength="256" />   
                 </div>
@@ -82,6 +86,14 @@
                     <label for="OrginalPrice">{{"Nguyên giá" | localize}}( đồng)</label>
                     <input id="OrginalPrice" #orginalPrice="ngModel" type="number" name="OrginalPrice" class="form-control" [(ngModel)]="asset.orginalPrice" disabled/>
         
+                </div>
+                <div class="form-group">
+                    <label for="department">{{"Bộ phận sử dụng" | localize}} *</label>
+                    <p-dropdown id="department" #department="ngModel" name="department" [options]="departmentList"
+                    [(ngModel)]="selectedDepartment" placeholder="{{ l('Chọn bộ phận sử dụng') }}" optionLabel="departmentName"
+                    styleClass="form-control brandSelection-dropdown" (onChange)="onSelectDepartmet()" required>
+                    </p-dropdown>
+                    <span *ngIf="!selectedDepartment" class="error-message">Trường này không được để trống</span>
                 </div>
                 <div class="form-group">
                     <label for="NumberOfDayUsedAsset">{{"Thời gian sử dụng" | localize}}(năm) *</label>
@@ -113,6 +125,10 @@
                             Mã tài sản
                             <p-sortIcon field="assetCode"></p-sortIcon>
                         </th>
+                        <th pResizableColumn pSortableColumn="assetTypeName" style="width:120px">
+                            Loại tài sản
+                            <p-sortIcon field="assetTypeName"></p-sortIcon>
+                        </th>
                         <th pResizableColumn pSortableColumn="assetName" style="width:120px">
                             Tên tài sản
                             <p-sortIcon field="assetName"></p-sortIcon>
@@ -121,7 +137,10 @@
                             Nguyên Giá 
                             <p-sortIcon field="orginalPrice"></p-sortIcon>
                         </th>
-                    
+                        <th pResizableColumn pSortableColumn="departmentName" style="width:150px">
+                            Bộ phận sử dụng
+                            <p-sortIcon field="departmentName"></p-sortIcon>
+                        </th>
                         <th pResizableColumn pSortableColumn="numberOfDayUsedAsset" style="width:150px">
                             Thời gian sử dụng
                             <p-sortIcon field="numberOfDayUsedAsset"></p-sortIcon>
@@ -138,20 +157,24 @@
                     <tr>
                         <td style="width:50px" class="pl-1"><input type="checkbox" name="selectedAsset" (change)="onSelectedAsset(assetSelected, $event)"></td>
                         <td style="width:120px">{{ assetSelected.assetCode}}</td>
+                        <td style="width:120px">{{ assetSelected.assetTypeName}}</td>
                         <td style="width:120px">{{ assetSelected.assetName}}</td>
-                        <td style="width:120px">{{ assetSelected.orginalPrice }}</td>           
-                        <td style="width:150px"><input type="number" class="input-number" [(ngModel)]= "assetSelected.numberOfDayUsedAsset" (change)="renderAmortizationValueOfAssetFromTable(assetSelected)" min="1" required/></td>
+                        <td style="width:120px">{{ assetSelected.orginalPrice }}</td>   
+                        <td style="width:150px">
+                            <select name="department" [(ngModel)]="assetSelected.departmentId" class="form-control" (change)="onSelectDepartmentFromTable(assetSelected)"> 
+                                <option *ngFor="let department of departmentList" [value]="department.id" >{{department.departmentName}}</option> 
+                            </select> 
+                        </td>        
+                        <td style="width:150px"><input type="number" class="input-number form-control" [(ngModel)]= "assetSelected.numberOfDayUsedAsset" (change)="renderAmortizationValueOfAssetFromTable(assetSelected)" min="1" required/></td>
                         <td style="width:200px">{{ assetSelected.amortizationValue}}</td>
-                        <!-- <td style="width:100px" (click) = "editAssetItemFromTable(assetSelected)" class="text-link">Sửa</td> -->
-                        <!-- <td style="width:100px"  class="text-link">Xóa</td> -->
-                        <td style="width:100px"><button type="button" class="btn btn-sm bg-danger mx-2 ng-tns-c137-2" (click) = "deleteAssetItemFromTable(assetSelected)"><i class="fas fa-trash ng-tns-c137-2"></i> Xóa </button></td>
+                        <td style="width:100px"><button type="button" class="btn btn-sm bg-danger ng-tns-c137-2" (click) = "deleteAssetItemFromTable(assetSelected)"><i class="fas fa-trash ng-tns-c137-2"></i> Xóa </button></td>
                     </tr>
                 </ng-template>
             </p-table>
         </div>
     </div>
     <div class="modal-footer">
-        <button [disabled]="saving" type="button" class="btn btn-cancel" (click)="close()">{{"Hủy" |
+        <button [disabled]="saving" type="button" class="btn bg-danger" (click)="close()">{{"Hủy" |
             localize}}</button> 
         <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')" [disabled]="!increaseAssetForm.form.valid" (click)="save()"><i class="fa fa-save" style="margin-right: 5px"></i>
             <span>{{"Lưu" | localize}}</span></button>

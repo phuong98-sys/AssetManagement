@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace AssetManagement.Departments
 {
     [Table("Department")]
-    public class Department : Entity, IHasCreationTime
+    public class Department : FullAuditedEntity
     {
         public const int maxLength = 32;
         [Required]
@@ -20,8 +20,8 @@ namespace AssetManagement.Departments
         public string DepartmentCode { get; set; }
         [Required]
         [StringLength(maxLength)]
-        public string DeartmentName { get; set; }
+        public string DepartmentName { get; set; }
+        public string? Description { get; set; }
         public string? Note { get; set; }
-        public DateTime CreationTime { get; set; }
     }
 }

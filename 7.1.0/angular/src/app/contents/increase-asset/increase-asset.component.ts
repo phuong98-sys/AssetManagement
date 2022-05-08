@@ -17,6 +17,7 @@ export class IncreaseAssetComponent extends AppComponentBase implements OnInit {
   increaseAssetList;
   loading =  false;
   totalRecords: number;
+  userId : number;
   constructor(
     injector: Injector,
     private increaseAssetService: IncreaseAssetServiceProxy,
@@ -26,6 +27,8 @@ export class IncreaseAssetComponent extends AppComponentBase implements OnInit {
 
   ngOnInit(): void {
     this.getAll();
+    this.userId = this.appSession.user.id;
+    
     }
     getAll(){
       this.loading = true;

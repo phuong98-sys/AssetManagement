@@ -55,6 +55,7 @@ import { PlaneShopComponent } from './contents/plane-shop/plane-shop.component';
 import { PlaneMaintainComponent } from './contents/plane-maintain/plane-maintain.component';
 import { EditIncreaseAssetModalComponent } from './contents/increase-asset/edit-increase-asset-modal/edit-increase-asset-modal.component';
 import * as $ from "jquery";
+import { CreateOrEditDepartmentComponent } from './contents/department/create-or-edit-department/create-or-edit-department.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -97,6 +98,7 @@ import * as $ from "jquery";
     PlaneShopComponent,
     PlaneMaintainComponent,
     EditIncreaseAssetModalComponent,
+    CreateOrEditDepartmentComponent,
   ],
   imports: [
     CommonModule,

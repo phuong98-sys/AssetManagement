@@ -21,6 +21,7 @@ import { PlaneShopComponent } from './contents/plane-shop/plane-shop.component';
 import { PlaneMaintainComponent } from './contents/plane-maintain/plane-maintain.component';
 import { EditIncreaseAssetModalComponent } from './contents/increase-asset/edit-increase-asset-modal/edit-increase-asset-modal.component';
 import { CreateOrEditReduceAssetComponent } from './contents/reduce-asset/create-or-edit-reduce-asset/create-or-edit-reduce-asset.component';
+import { CreateOrEditDepartmentComponent } from './contents/department/create-or-edit-department/create-or-edit-department.component';
 
 @NgModule({
     imports: [
@@ -49,6 +50,8 @@ import { CreateOrEditReduceAssetComponent } from './contents/reduce-asset/create
                         {path: 'reduce-asset/create', component: CreateOrEditReduceAssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'reduce-asset/:id', component: CreateOrEditReduceAssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'department', component: DepartmentComponent, canActivate: [AppRouteGuard] },
+                        {path: 'department/create', component: CreateOrEditDepartmentComponent, canActivate: [AppRouteGuard] },
+                        {path: 'department/:id', component: CreateOrEditDepartmentComponent, canActivate: [AppRouteGuard] },
                         {path: 'propose-asset', component: ProposeAssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'plane-shop', component: PlaneShopComponent, canActivate: [AppRouteGuard] },
                         {path: 'plane-maintain', component: PlaneMaintainComponent, canActivate: [AppRouteGuard] },

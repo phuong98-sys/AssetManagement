@@ -876,6 +876,125 @@ export class ConfigurationServiceProxy {
 }
 
 @Injectable()
+export class DepartmentServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getDepartments(): Observable<DepartmentDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Department/GetDepartments";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDepartments(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDepartments(<any>response_);
+                } catch (e) {
+                    return <Observable<DepartmentDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DepartmentDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetDepartments(response: HttpResponseBase): Observable<DepartmentDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = DepartmentDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DepartmentDtoListResultDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    insertOrUpdateDepartment(body: DepartmentInputDto | undefined): Observable<DepartmentDto> {
+        let url_ = this.baseUrl + "/api/services/app/Department/InsertOrUpdateDepartment";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertOrUpdateDepartment(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertOrUpdateDepartment(<any>response_);
+                } catch (e) {
+                    return <Observable<DepartmentDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DepartmentDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processInsertOrUpdateDepartment(response: HttpResponseBase): Observable<DepartmentDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = DepartmentDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DepartmentDto>(<any>null);
+    }
+}
+
+@Injectable()
 export class IncreaseAssetServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -3236,6 +3355,9 @@ export class AssetDto implements IAssetDto {
     assetTypeName: string | undefined;
     assetStatusId: number;
     reasonReduceId: number | undefined;
+    lastModifierUserName: string | undefined;
+    creatorUserName: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
 
     constructor(data?: IAssetDto) {
         if (data) {
@@ -3271,6 +3393,9 @@ export class AssetDto implements IAssetDto {
             this.assetTypeName = _data["assetTypeName"];
             this.assetStatusId = _data["assetStatusId"];
             this.reasonReduceId = _data["reasonReduceId"];
+            this.lastModifierUserName = _data["lastModifierUserName"];
+            this.creatorUserName = _data["creatorUserName"];
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
         }
     }
 
@@ -3306,6 +3431,9 @@ export class AssetDto implements IAssetDto {
         data["assetTypeName"] = this.assetTypeName;
         data["assetStatusId"] = this.assetStatusId;
         data["reasonReduceId"] = this.reasonReduceId;
+        data["lastModifierUserName"] = this.lastModifierUserName;
+        data["creatorUserName"] = this.creatorUserName;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
         return data; 
     }
 
@@ -3341,6 +3469,9 @@ export interface IAssetDto {
     assetTypeName: string | undefined;
     assetStatusId: number;
     reasonReduceId: number | undefined;
+    lastModifierUserName: string | undefined;
+    creatorUserName: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
 }
 
 export class AssetDtoListResultDto implements IAssetDtoListResultDto {
@@ -4265,6 +4396,215 @@ export interface ICreateUserDto {
     password: string;
 }
 
+export class DepartmentDto implements IDepartmentDto {
+    id: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    departmentCode: string;
+    departmentName: string;
+    description: string | undefined;
+    note: string | undefined;
+    lastModifierUserName: string | undefined;
+    creatorUserName: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
+
+    constructor(data?: IDepartmentDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.departmentCode = _data["departmentCode"];
+            this.departmentName = _data["departmentName"];
+            this.description = _data["description"];
+            this.note = _data["note"];
+            this.lastModifierUserName = _data["lastModifierUserName"];
+            this.creatorUserName = _data["creatorUserName"];
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): DepartmentDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DepartmentDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["departmentCode"] = this.departmentCode;
+        data["departmentName"] = this.departmentName;
+        data["description"] = this.description;
+        data["note"] = this.note;
+        data["lastModifierUserName"] = this.lastModifierUserName;
+        data["creatorUserName"] = this.creatorUserName;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): DepartmentDto {
+        const json = this.toJSON();
+        let result = new DepartmentDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IDepartmentDto {
+    id: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    departmentCode: string;
+    departmentName: string;
+    description: string | undefined;
+    note: string | undefined;
+    lastModifierUserName: string | undefined;
+    creatorUserName: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
+}
+
+export class DepartmentDtoListResultDto implements IDepartmentDtoListResultDto {
+    items: DepartmentDto[] | undefined;
+
+    constructor(data?: IDepartmentDtoListResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(DepartmentDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): DepartmentDtoListResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DepartmentDtoListResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): DepartmentDtoListResultDto {
+        const json = this.toJSON();
+        let result = new DepartmentDtoListResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IDepartmentDtoListResultDto {
+    items: DepartmentDto[] | undefined;
+}
+
+export class DepartmentInputDto implements IDepartmentInputDto {
+    id: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    departmentCode: string;
+    departmentName: string;
+    description: string | undefined;
+    note: string | undefined;
+    lastModifierUserName: string | undefined;
+    creatorUserName: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
+
+    constructor(data?: IDepartmentInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.departmentCode = _data["departmentCode"];
+            this.departmentName = _data["departmentName"];
+            this.description = _data["description"];
+            this.note = _data["note"];
+            this.lastModifierUserName = _data["lastModifierUserName"];
+            this.creatorUserName = _data["creatorUserName"];
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): DepartmentInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DepartmentInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["departmentCode"] = this.departmentCode;
+        data["departmentName"] = this.departmentName;
+        data["description"] = this.description;
+        data["note"] = this.note;
+        data["lastModifierUserName"] = this.lastModifierUserName;
+        data["creatorUserName"] = this.creatorUserName;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): DepartmentInputDto {
+        const json = this.toJSON();
+        let result = new DepartmentInputDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IDepartmentInputDto {
+    id: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    departmentCode: string;
+    departmentName: string;
+    description: string | undefined;
+    note: string | undefined;
+    lastModifierUserName: string | undefined;
+    creatorUserName: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
+}
+
 export class ExternalAuthenticateModel implements IExternalAuthenticateModel {
     authProvider: string;
     providerKey: string;
@@ -4595,6 +4935,9 @@ export class IncreaseAssetDto implements IIncreaseAssetDto {
     increaseAssetDate: moment.Moment;
     note: string | undefined;
     totalAssetValue: number;
+    lastModifierUserName: string | undefined;
+    creatorUserName: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
 
     constructor(data?: IIncreaseAssetDto) {
         if (data) {
@@ -4614,6 +4957,9 @@ export class IncreaseAssetDto implements IIncreaseAssetDto {
             this.increaseAssetDate = _data["increaseAssetDate"] ? moment(_data["increaseAssetDate"].toString()) : <any>undefined;
             this.note = _data["note"];
             this.totalAssetValue = _data["totalAssetValue"];
+            this.lastModifierUserName = _data["lastModifierUserName"];
+            this.creatorUserName = _data["creatorUserName"];
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
         }
     }
 
@@ -4633,6 +4979,9 @@ export class IncreaseAssetDto implements IIncreaseAssetDto {
         data["increaseAssetDate"] = this.increaseAssetDate ? this.increaseAssetDate.toISOString() : <any>undefined;
         data["note"] = this.note;
         data["totalAssetValue"] = this.totalAssetValue;
+        data["lastModifierUserName"] = this.lastModifierUserName;
+        data["creatorUserName"] = this.creatorUserName;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
         return data; 
     }
 
@@ -4652,6 +5001,9 @@ export interface IIncreaseAssetDto {
     increaseAssetDate: moment.Moment;
     note: string | undefined;
     totalAssetValue: number;
+    lastModifierUserName: string | undefined;
+    creatorUserName: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
 }
 
 export class IncreaseAssetDtoListResultDto implements IIncreaseAssetDtoListResultDto {
@@ -4713,6 +5065,9 @@ export class IncreaseAssetInputDto implements IIncreaseAssetInputDto {
     increaseAssetDate: moment.Moment;
     note: string | undefined;
     totalAssetValue: number;
+    lastModifierUserName: string | undefined;
+    creatorUserName: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
 
     constructor(data?: IIncreaseAssetInputDto) {
         if (data) {
@@ -4732,6 +5087,9 @@ export class IncreaseAssetInputDto implements IIncreaseAssetInputDto {
             this.increaseAssetDate = _data["increaseAssetDate"] ? moment(_data["increaseAssetDate"].toString()) : <any>undefined;
             this.note = _data["note"];
             this.totalAssetValue = _data["totalAssetValue"];
+            this.lastModifierUserName = _data["lastModifierUserName"];
+            this.creatorUserName = _data["creatorUserName"];
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
         }
     }
 
@@ -4751,6 +5109,9 @@ export class IncreaseAssetInputDto implements IIncreaseAssetInputDto {
         data["increaseAssetDate"] = this.increaseAssetDate ? this.increaseAssetDate.toISOString() : <any>undefined;
         data["note"] = this.note;
         data["totalAssetValue"] = this.totalAssetValue;
+        data["lastModifierUserName"] = this.lastModifierUserName;
+        data["creatorUserName"] = this.creatorUserName;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
         return data; 
     }
 
@@ -4770,6 +5131,9 @@ export interface IIncreaseAssetInputDto {
     increaseAssetDate: moment.Moment;
     note: string | undefined;
     totalAssetValue: number;
+    lastModifierUserName: string | undefined;
+    creatorUserName: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
 }
 
 export class Int64EntityDto implements IInt64EntityDto {
@@ -5369,6 +5733,9 @@ export class ReduceAssetDto implements IReduceAssetDto {
     reduceAssetDate: moment.Moment;
     note: string | undefined;
     totalRecovery: number;
+    lastModifierUserName: string | undefined;
+    creatorUserName: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
 
     constructor(data?: IReduceAssetDto) {
         if (data) {
@@ -5388,6 +5755,9 @@ export class ReduceAssetDto implements IReduceAssetDto {
             this.reduceAssetDate = _data["reduceAssetDate"] ? moment(_data["reduceAssetDate"].toString()) : <any>undefined;
             this.note = _data["note"];
             this.totalRecovery = _data["totalRecovery"];
+            this.lastModifierUserName = _data["lastModifierUserName"];
+            this.creatorUserName = _data["creatorUserName"];
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
         }
     }
 
@@ -5407,6 +5777,9 @@ export class ReduceAssetDto implements IReduceAssetDto {
         data["reduceAssetDate"] = this.reduceAssetDate ? this.reduceAssetDate.toISOString() : <any>undefined;
         data["note"] = this.note;
         data["totalRecovery"] = this.totalRecovery;
+        data["lastModifierUserName"] = this.lastModifierUserName;
+        data["creatorUserName"] = this.creatorUserName;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
         return data; 
     }
 
@@ -5426,6 +5799,9 @@ export interface IReduceAssetDto {
     reduceAssetDate: moment.Moment;
     note: string | undefined;
     totalRecovery: number;
+    lastModifierUserName: string | undefined;
+    creatorUserName: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
 }
 
 export class ReduceAssetDtoListResultDto implements IReduceAssetDtoListResultDto {
@@ -5487,6 +5863,9 @@ export class ReduceAssetInputDto implements IReduceAssetInputDto {
     reduceAssetDate: moment.Moment;
     note: string | undefined;
     totalRecovery: number;
+    lastModifierUserName: string | undefined;
+    creatorUserName: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
 
     constructor(data?: IReduceAssetInputDto) {
         if (data) {
@@ -5506,6 +5885,9 @@ export class ReduceAssetInputDto implements IReduceAssetInputDto {
             this.reduceAssetDate = _data["reduceAssetDate"] ? moment(_data["reduceAssetDate"].toString()) : <any>undefined;
             this.note = _data["note"];
             this.totalRecovery = _data["totalRecovery"];
+            this.lastModifierUserName = _data["lastModifierUserName"];
+            this.creatorUserName = _data["creatorUserName"];
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
         }
     }
 
@@ -5525,6 +5907,9 @@ export class ReduceAssetInputDto implements IReduceAssetInputDto {
         data["reduceAssetDate"] = this.reduceAssetDate ? this.reduceAssetDate.toISOString() : <any>undefined;
         data["note"] = this.note;
         data["totalRecovery"] = this.totalRecovery;
+        data["lastModifierUserName"] = this.lastModifierUserName;
+        data["creatorUserName"] = this.creatorUserName;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
         return data; 
     }
 
@@ -5544,6 +5929,9 @@ export interface IReduceAssetInputDto {
     reduceAssetDate: moment.Moment;
     note: string | undefined;
     totalRecovery: number;
+    lastModifierUserName: string | undefined;
+    creatorUserName: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
 }
 
 export class RegisterInput implements IRegisterInput {

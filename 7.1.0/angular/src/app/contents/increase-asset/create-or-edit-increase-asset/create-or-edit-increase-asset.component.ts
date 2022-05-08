@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DepartmentComponent } from '@app/contents/department/department.component';
 import { AppComponentBase } from '@shared/app-component-base';
-import { AssetDto, AssetInputDto, AssetServiceProxy, IncreaseAssetDto, IncreaseAssetInputDto, IncreaseAssetServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AssetDto, AssetInputDto, AssetServiceProxy, IncreaseAssetDto, IncreaseAssetInputDto, IncreaseAssetServiceProxy, DepartmentDto } from '@shared/service-proxies/service-proxies';
 import * as moment from 'moment';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { LazyLoadEvent } from 'primeng/api/lazyloadevent';
@@ -36,6 +37,8 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
   increaseAssetCodeMessage = "";
   deleteAssetList : AssetDto[] = [];
   deleteAssetConfirmedList : any[] = [];
+  departmentList : DepartmentDto[] = [];
+  selectedDepartment: DepartmentDto;
   // assetTypeList: IncreaseAssetTypeDto[];
   // selectedAssetType: AssetTypeDto;
   isSelectedAsset = false;
@@ -263,5 +266,11 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
         $(selector).click();
     }  
     }
+  }
+  onSelectDepartmet(){
+
+  }
+  onSelectDepartmentFromTable(asset : AssetDto){
+
   }
 }

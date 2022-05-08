@@ -98,7 +98,7 @@
                     </div>  
                 </div>       
                 <div class="modal-footer">
-                    <button [disabled]="saving" type="button" class="btn btn-cancel" (click)="close()">{{"Hủy" |
+                    <button [disabled]="saving" type="button" class="btn bg-danger" (click)="close()">{{"Hủy" |
                         localize}}</button>
                     <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')" [disabled]="!assetForm.form.valid || ( assetCodeMessage != '') "><i class="fa fa-save" style="margin-right: 5px"></i>
                         <span>{{"Lưu" | localize}}</span></button>

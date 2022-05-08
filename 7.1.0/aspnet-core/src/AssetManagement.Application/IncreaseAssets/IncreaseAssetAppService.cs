@@ -1,5 +1,6 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
+using Abp.Runtime.Session;
 using Abp.UI;
 using AssetManagement.Assets.DTO;
 using AssetManagement.IncreaseAssets.DTO;
@@ -41,6 +42,7 @@ namespace AssetManagement.IncreaseAssets
                 if (!input.Id.HasValue)
                 {
                     var increaseAsset = ObjectMapper.Map<IncreaseAsset>(input);
+                    increaseAsset.CreatorUserId = AbpSession.GetUserId();
                     await _increaseAssetRepository.InsertAsync(increaseAsset);
                     await CurrentUnitOfWork.SaveChangesAsync();
                     return ObjectMapper.Map<IncreaseAssetDto>(increaseAsset);

@@ -1,5 +1,6 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
+using Abp.Runtime.Session;
 using Abp.UI;
 using AssetManagement.Assets.DTO;
 using Microsoft.EntityFrameworkCore;
@@ -48,7 +49,8 @@ namespace AssetManagement.Assets
                         AssetStatusId = a.AssetStatusId,
                         CreationTime = a.CreationTime,
                         ReduceAssetId = a.ReasonReduceId,
-                        ReasonReduceId = a.ReasonReduceId
+                        ReasonReduceId = a.ReasonReduceId,
+                        CreatorUserId = a.CreatorUserId
                     }).ToListAsync();
                 var assetDtos = ObjectMapper.Map<List<AssetDto>>(assets);
                 return new ListResultDto<AssetDto>(assetDtos);
@@ -67,6 +69,7 @@ namespace AssetManagement.Assets
                 {
 
                     var asset = ObjectMapper.Map<Asset>(input);
+                    asset.CreatorUserId = AbpSession.GetUserId();
                     await _assetRepository.InsertAsync(asset);
                     await CurrentUnitOfWork.SaveChangesAsync();
                     return ObjectMapper.Map<AssetListDto>(asset);

@@ -21,6 +21,10 @@ namespace AssetManagement.IncreaseAssets.DTO
         public DateTime IncreaseAssetDate { get; set; }
         public string Note { get; set; }
         public double TotalAssetValue { get; set; }
+        public string? LastModifierUserName { get; set; }
+        public int? CreatorUserId { get; set; }
+        public string? CreatorUserName { get; set; }
+        public DateTime? LastModificationTime { get; set; }
     }
     [AutoMapTo(typeof(IncreaseAsset))]
     public class IncreaseAssetInputDto : CreationAuditedEntityDto<int?>
@@ -33,6 +37,10 @@ namespace AssetManagement.IncreaseAssets.DTO
         public DateTime IncreaseAssetDate { get; set; }
         public string Note { get; set; }
         public double TotalAssetValue { get; set; }
+        public string? LastModifierUserName { get; set; }
+        public int? CreatorUserId { get; set; }
+        public string? CreatorUserName { get; set; }
+        public DateTime? LastModificationTime { get; set; }
     }
     public class DeleteIncreaseAssetInput
     {

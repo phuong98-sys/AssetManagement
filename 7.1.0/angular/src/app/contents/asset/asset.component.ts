@@ -30,7 +30,7 @@ export class AssetComponent extends  PagedListingComponentBase<AssetDto> impleme
   assetList;
   loading =  false;
   totalRecords: number;
-  primengTableHelper: PrimengTableHelper;
+  // primengTableHelper: PrimengTableHelper;
   keyword = '';
   advancedFiltersVisible = false;
   @ViewChild('createOrEditAssetModal', { static: true }) createOrEditAssetModal: CreateOrEditAssetComponent;

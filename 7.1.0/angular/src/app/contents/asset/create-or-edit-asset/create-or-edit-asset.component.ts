@@ -54,12 +54,6 @@ export class CreateOrEditAssetComponent extends AppComponentBase implements OnIn
       
     });
   }
-  // getAssetTypeList(){
-  //   this.assetTypeService.getAssetTypes().subscribe((result)=>{
-  //     this.assetTypeList = result.items;
-  //     this.selectedAssetType = this.assetTypeList.find((item)=> item.id == this.asset.assetTypeId);
-  //   });
-  // }
   onSelectAssetType(){
     // this.asset.assetTypeId 
     this.asset.assetTypeId = this.selectedAssetType.id;

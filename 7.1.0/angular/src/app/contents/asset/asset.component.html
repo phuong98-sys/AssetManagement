@@ -1,36 +1,3 @@
-<!-- <p-table 
-  [columns]="cols"
-  [value]="assetList"
-  [lazy]="true"
-  (onLazyLoad)="loadCarsLazy($event)"
-  [paginator]="true"
-  [rows]="10"
-  [totalRecords]="totalRecords"
-  [loading]="loading"
-  [rowsPerPageOptions]="[10,20,30]"
-  [defaultSortOrder]="-1"
-  dataKey="assetCode"
-  [resizableColumns]="true"
-  columnResizeMode="fit"
->
-	<ng-template pTemplate="header" let-columns>
-		<tr>
-			<th *ngFor="let col of columns" pReorderableColumn [pSortableColumn]="col.field" pResizableColumn
-				[style.width]="col.width">
-				{{col.header}}
-				<p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
-					ariaLabelDesc="Activate to sort in descending order"
-					ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-			</th>
-		</tr>
-	</ng-template>
-	<ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-		<tr [pReorderableRow]="index">
-			<td>{{rowData.assetCode}}</td>
-			<td>{{rowData.assetName}}</td>
-		</tr>
-	</ng-template>
-</p-table> -->
 <div class="header-title">
     <div class="title-page">Sổ tài sản</div>
     <div class="btn-add-container">
@@ -166,6 +133,10 @@
                 Mã tài sản
                 <p-sortIcon field="assetCode"></p-sortIcon>
             </th>
+            <th pResizableColumn pSortableColumn="assetTypeName" style="width:120px">
+                Loại tài sản
+                <p-sortIcon field="assetTypeName"></p-sortIcon>
+            </th>
             <th pResizableColumn pSortableColumn="assetName" style="width:120px">
                 Tên tài sản
                 <p-sortIcon field="assetName"></p-sortIcon>
@@ -218,6 +189,18 @@
                 Ngày tạo
                 <p-sortIcon field="creationTime"></p-sortIcon>
             </th>     
+            <th pResizableColumn pSortableColumn="creatorUserName" style="width:130px">
+                Người tạo
+                <p-sortIcon field="creatorUserName"></p-sortIcon>
+            </th>     
+            <th pResizableColumn pSortableColumn="lastModificationTime" style="width:130px">
+                Ngày sửa
+                <p-sortIcon field="lastModificationTime"></p-sortIcon>
+            </th>     
+            <th pResizableColumn pSortableColumn="lastModificationName" style="width:130px">
+                Người sửa
+                <p-sortIcon field="lastModificationName"></p-sortIcon>
+            </th>     
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-asset>
@@ -241,6 +224,7 @@
                 </div>
             </td>
             <td style="width:120px">{{ asset.assetCode }}</td>
+            <td style="width:120px">{{ asset.assetTypeName}}</td>
             <td style="width:120px">{{ asset.assetName}}</td>
             <td style="width:120px">{{ asset.orginalPrice }}</td>
             <td style="width:140px">{{ asset.increaseAssetDate}}</td>
@@ -253,8 +237,11 @@
             <td style="width:180px">{{ asset.usageStatus }}</td>
             <td style="width:140px">{{ asset.reasonForReduction}}</td>
             <td style="width:140px">{{ asset.recoverableValue}}</td>
-            <!-- <td style="width:100px">{{ asset.increaseAssetId }}</td> -->
             <td style="width:130px">{{ asset.creationTime}}</td>
+            <td style="width:130px">{{ asset.creatorUserName}}</td>
+            <td style="width:130px">{{ asset.lastModificationTime}}</td>
+            <td style="width:130px">{{ asset.lastModificationName}}</td>
+          
         </tr>
     </ng-template>
     <div class="" *ngIf="totalRecords == 0">

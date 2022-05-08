@@ -36,6 +36,9 @@
                         <textarea id="reduceAssetNote" #reduceAssetNote="ngModel" rows="4" cols="50" name="ReduceAssetNote" class="form-control" [(ngModel)]="reduceAsset.note">
                         </textarea>
                     </div>
+                    <div class="form-group">
+                        <div style="font-weight: bold; font-size: 20px">Tổng thu hồi: 123 (đồng)</div>
+                    </div>
                 </div>                
             </form>
         </div>
@@ -54,6 +57,10 @@
                     <div class="col-3" >
                         <button class="btn btn-search-asset" (click)="searchAsset()">Kiểm tra</button>
                     </div>
+                </div>
+                <div class="form-group">
+                    <label for="AssetTypeName">{{"Loại tài sản" | localize}} </label>
+                    <input id="AssetTypeName" #assetTypeName="ngModel" type="text" name="AssetTypeName" class="form-control" [(ngModel)]="asset.assetTypeName" disabled maxlength="256" />   
                 </div>
                 <div class="form-group">
                     <label for="AssetName">{{"Tên tài sản" | localize}} </label>
@@ -102,6 +109,10 @@
                             Mã tài sản
                             <p-sortIcon field="assetCode"></p-sortIcon>
                         </th>
+                        <th pResizableColumn pSortableColumn="assetTypeName" style="width:120px">
+                            Loại tài sản
+                            <p-sortIcon field="assetTypeName"></p-sortIcon>
+                        </th>
                         <th pResizableColumn pSortableColumn="assetName" style="width:120px">
                             Tên tài sản
                             <p-sortIcon field="assetName"></p-sortIcon>
@@ -110,7 +121,14 @@
                             Nguyên Giá 
                             <p-sortIcon field="orginalPrice"></p-sortIcon>
                         </th>
-                    
+                        <th pResizableColumn pSortableColumn="depreciationOfAsset" style="width:150px">
+                            Hao mòn lũy kế
+                            <p-sortIcon field="depreciationOfAsset"></p-sortIcon>
+                        </th>
+                        <th pResizableColumn pSortableColumn="residualValue" style="width:130px">
+                            Giá trị còn lại
+                            <p-sortIcon field="residualValue"></p-sortIcon>
+                        </th>
                         <th pResizableColumn pSortableColumn="reasonReduceId" style="width:150px">
                             Lí do ghi giảm
                             <p-sortIcon field="reasonReduceId"></p-sortIcon>
@@ -127,29 +145,26 @@
                     <tr>
                         <td style="width:50px" class="pl-1"><input type="checkbox" name="selectedAsset" (change)="onSelectedAsset(assetSelected, $event)"></td>
                         <td style="width:120px">{{ assetSelected.assetCode}}</td>
+                        <td style="width:120px">{{ assetSelected.assetTypeName}}</td>
                         <td style="width:120px">{{ assetSelected.assetName}}</td>
-                        <td style="width:120px">{{ assetSelected.orginalPrice }}</td>           
+                        <td style="width:120px">{{ assetSelected.orginalPrice }}</td>    
+                        <td style="width:150px">{{ assetSelected.depreciationOfAsset }}</td>     
+                        <td style="width:130px">{{ assetSelected.residualValue }}</td>            
                         <td style="width:150px">
-                                <!-- <p-dropdown id="reasonReduceFromTable" #reasonReduceFromTable="ngModel" name="reasonReduceAsset" [options]="reasonReduceList"
-                                [(ngModel)]="assetSelected.reasonReduceId" optionLabel="reasonReduceName" optionValue = "id"
-                                styleClass="form-control brandSelection-dropdown" (onChange)="onSelectReasonReduceFromTable(assetSelected)" required>
-                                </p-dropdown> -->
-                                <select name="duration" [(ngModel)]="assetSelected.reasonReduceId" class="form-control" (change)="onSelectReasonReduceFromTable(assetSelected)"> 
-                                    <option *ngFor="let reasonReduce of reasonReduceList" [value]="reasonReduce.id" >{{reasonReduce.reasonReduceName}}</option> 
-                                </select> 
-                                <!-- <span *ngIf="assetSelected.reasonReduceId" class="error-message">Trường này không được để trống</span> -->
-                            <!-- <input type="number" class="input-number" [(ngModel)]= "assetSelected.numberOfDayUsedAsset" (change)="renderAmortizationValueOfAssetFromTable(assetSelected)" min="1" required/> -->
+                            <select name="duration" [(ngModel)]="assetSelected.reasonReduceId" class="form-control" (change)="onSelectReasonReduceFromTable(assetSelected)"> 
+                                <option *ngFor="let reasonReduce of reasonReduceList" [value]="reasonReduce.id" >{{reasonReduce.reasonReduceName}}</option> 
+                            </select> 
                         </td>
                         <td style="width:200px">
                             <input class="form-control" [disabled]="assetSelected.reasonReduceId != 1" type="number" class="input-number" [(ngModel)]= "assetSelected.recoverableValue" min="1" required/></td>
-                        <td style="width:100px"><button type="button" class="btn btn-sm bg-danger mx-2 ng-tns-c137-2" (click) = "deleteAssetItemFromTable(assetSelected)"><i class="fas fa-trash ng-tns-c137-2"></i> Xóa </button></td>
+                        <td style="width:100px"><button type="button" class="btn btn-sm bg-danger ng-tns-c137-2" (click) = "deleteAssetItemFromTable(assetSelected)"><i class="fas fa-trash ng-tns-c137-2"></i> Xóa </button></td>
                     </tr>
                 </ng-template>
             </p-table>
         </div>
     </div>
     <div class="modal-footer">
-        <button [disabled]="saving" type="button" class="btn btn-cancel" (click)="close()">{{"Hủy" |
+        <button [disabled]="saving" type="button" class="btn bg-danger" (click)="close()">{{"Hủy" |
             localize}}</button> 
         <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')" [disabled]="!reduceAssetForm.form.valid" (click)="save()"><i class="fa fa-save" style="margin-right: 5px"></i>
             <span>{{"Lưu" | localize}}</span></button>

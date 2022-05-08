@@ -20,6 +20,10 @@ namespace AssetManagement.ReduceAssets.DTO
         public DateTime ReduceAssetDate { get; set; }
         public string Note { get; set; }
         public double TotalRecovery { get; set; }
+        public string? LastModifierUserName { get; set; }
+        public int? CreatorUserId { get; set; }
+        public string? CreatorUserName { get; set; }
+        public DateTime? LastModificationTime { get; set; }
     }
     [AutoMapTo(typeof(ReduceAsset))]
     public class ReduceAssetInputDto : CreationAuditedEntityDto<int?>
@@ -32,6 +36,10 @@ namespace AssetManagement.ReduceAssets.DTO
         public DateTime ReduceAssetDate { get; set; }
         public string Note { get; set; }
         public double TotalRecovery { get; set; }
+        public string? LastModifierUserName { get; set; }
+        public int? CreatorUserId { get; set; }
+        public string? CreatorUserName { get; set; }
+        public DateTime? LastModificationTime { get; set; }
     }
     public class DeleteReduceAssetInput
     {

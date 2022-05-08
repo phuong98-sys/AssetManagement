@@ -1,79 +1,53 @@
-<div class="add-new-asset">
+<div class="header-title">
     <div class="title-page">Bộ phận</div>
-    <div class="btn-add-new-asset-container">
-        <button class="btn btn-add-new-asset" (click)="createOrEditAsset()">Thêm</button>
+    <div class="btn-add-container">
+        <button class="btn btn-add" (click)="createOrEditDepartment()">Thêm</button>
     </div>
 </div>
 <div class="content-component">
-    <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="assetList" [resizableColumns]="true" [autoLayout]="true" >
+    <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="departmentList" [resizableColumns]="true" [autoLayout]="true" >
     <ng-template pTemplate="header">
         <tr>
-            <th pResizableColumn pSortableColumn="assetCode" >
+            <th pResizableColumn pSortableColumn="departmentCode" style="width:150px">
                 Chức năng
             </th>
-            <th pResizableColumn pSortableColumn="assetCode" >
+            <th pResizableColumn pSortableColumn="departmentCode" style="width:150px">
                 Mã bộ phận
-                <p-sortIcon field="assetCode"></p-sortIcon>
+                <p-sortIcon field="departmentCode"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="assetName">
+            <th pResizableColumn pSortableColumn="departmentName" style="width:150px">
                 Tên bộ phận
-                <p-sortIcon field="assetName"></p-sortIcon>
+                <p-sortIcon field="departmentName"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="orginalPrice" >
+            <th pResizableColumn pSortableColumn="description" style="width:150px">
+                Mô tả
+                <p-sortIcon field="description"></p-sortIcon>
+            </th>
+            <th pResizableColumn pSortableColumn="note" style="width:150px">
                 Ghi chú 
-                <p-sortIcon field="orginalPrice"></p-sortIcon>
+                <p-sortIcon field="note"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="assetCode" >
-                Chức năng
-            </th>
-            <th pResizableColumn pSortableColumn="assetCode" >
-                Mã bộ phận
-                <p-sortIcon field="assetCode"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="assetName">
-                Tên bộ phận
-                <p-sortIcon field="assetName"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="orginalPrice" >
-                Ghi chú 
-                <p-sortIcon field="orginalPrice"></p-sortIcon>
-            </th>
-             <th pResizableColumn pSortableColumn="assetCode" >
-                Chức năng
-            </th>
-            <th pResizableColumn pSortableColumn="assetCode" >
-                Mã bộ phận
-                <p-sortIcon field="assetCode"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="assetName">
-                Tên bộ phận
-                <p-sortIcon field="assetName"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="orginalPrice" >
-                Ghi chú 
-                <p-sortIcon field="orginalPrice"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="assetCode" >
-                Chức năng
-            </th>
-            <th pResizableColumn pSortableColumn="assetCode" >
-                Mã bộ phận
-                <p-sortIcon field="assetCode"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="assetName">
-                Tên bộ phận
-                <p-sortIcon field="assetName"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="orginalPrice" >
-                Ghi chú 
-                <p-sortIcon field="orginalPrice"></p-sortIcon>
-            </th>
-            
+            <th pResizableColumn pSortableColumn="creationTime" style="width:130px">
+                Ngày tạo
+                <p-sortIcon field="creationTime"></p-sortIcon>
+            </th>     
+            <th pResizableColumn pSortableColumn="creatorUserName" style="width:130px">
+                Người tạo
+                <p-sortIcon field="creatorUserName"></p-sortIcon>
+            </th>     
+            <th pResizableColumn pSortableColumn="lastModificationTime" style="width:130px">
+                Ngày sửa
+                <p-sortIcon field="lastModificationTime"></p-sortIcon>
+            </th>     
+            <th pResizableColumn pSortableColumn="lastModificationName" style="width:130px">
+                Người sửa
+                <p-sortIcon field="lastModificationName"></p-sortIcon>
+            </th>     
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-asset>
+    <ng-template pTemplate="body" let-department>
         <tr>
-            <td >
+            <td style="width:150px">
                 <div class="btn-group dropdown" dropdown container="body">
                     <button dropdownToggle class="dropdown-toggle btn btn-sm btn-primary">
                         <i class="fa fa-cog"></i><span class="caret"></span>
@@ -82,30 +56,23 @@
                     <ul class="dropdown-menu" *dropdownMenu>
                         <li>
                             <a href="javascript:;"
-                                (click)="createOrEditAsset(asset)">Sửa</a>
+                                (click)="createOrEditDepartment(department)">Sửa</a>
                         </li>
                         <li>
                             <a href="javascript:;"
-                                (click)="deleteAsset(asset)">Xóa</a>
+                                (click)="deleteDepartment(department)">Xóa</a>
                         </li>
                     </ul>
                 </div>
             </td>
-            <td>{{ asset.assetCode }}</td>
-            <td>{{ asset.assetName}}</td>
-            <td>{{ asset.orginalPrice }}</td>
-            <td>{{ asset.assetCode }}</td>
-            <td>{{ asset.assetName}}</td>
-            <td>{{ asset.orginalPrice }}</td>
-            <td>{{ asset.orginalPrice }}</td>
-            <td>{{ asset.assetCode }}</td>
-            <td>{{ asset.assetName}}</td>
-            <td>{{ asset.orginalPrice }}</td>
-            <td>{{ asset.assetCode }}</td>
-            <td>{{ asset.assetName}}</td>
-            <td>{{ asset.orginalPrice }}</td>
-            <td>{{ asset.orginalPrice }}</td>
-
+            <td style="width:150px">{{ department.departmentCode }}</td>
+            <td style="width:150px">{{ department.departmentName}}</td>
+            <td style="width:150px">{{ department.description}}</td>
+            <td style="width:150px">{{ department.note }}</td>
+            <td style="width:130px">{{ department.creationTime }}</td>
+            <td style="width:130px">{{ department.creatorUserName}}</td>
+            <td style="width:130px">{{ department.lastModificationTime}}</td>
+            <td style="width:130px">{{ department.lastModificationName}}</td>
         </tr>
     </ng-template>
 </p-table>

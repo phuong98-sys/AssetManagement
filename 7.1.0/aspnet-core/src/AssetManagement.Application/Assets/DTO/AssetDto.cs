@@ -36,6 +36,9 @@ namespace AssetManagement.Assets.DTO
         public string AssetTypeName { get; set; }
         public int AssetStatusId { get; set; }
         public int? ReasonReduceId { get; set; }
+        public string? LastModifierUserName { get; set; }
+        public string? CreatorUserName { get; set; }
+        public DateTime? LastModificationTime { get; set; }
     }
     [AutoMapFrom(typeof(Asset))]
     public class AssetListDto: CreationAuditedEntityDto<int?>
