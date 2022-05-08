@@ -43,7 +43,9 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
   // selectedAssetType: AssetTypeDto;
   isSelectedAsset = false;
   isSelectedAllAsset = false;
-  
+    //
+    advancedFiltersVisible = false;
+    keyword ='';
   constructor(
     injector: Injector,
     private assetService: AssetServiceProxy,
@@ -193,7 +195,7 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
   onSelectedAsset(assetForEdit : AssetDto, event ){
     
     console.log(event.target.checked);
-    debugger
+    
     if(event.target.checked)
     {
       this.deleteAssetList.push(assetForEdit);
@@ -254,14 +256,14 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
   onSelectedAllAsset(event){
     if(event.target.checked){
       for( let i = this.addAssetToIncreaseList.length-1; i>= 0; i-- ){
-        debugger
+        
         var selector = 'input[name="selectedAsset"]:not(:checked)'  ;
         $(selector).click();
     } 
   }   
     else{
       for( let i = this.addAssetToIncreaseList.length-1; i>= 0; i-- ){
-        debugger
+        
         var selector = 'input[name="selectedAsset"]:checked'  ;
         $(selector).click();
     }  

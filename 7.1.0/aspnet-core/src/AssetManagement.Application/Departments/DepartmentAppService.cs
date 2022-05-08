@@ -1,7 +1,6 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
 using Abp.Runtime.Session;
-using Abp.Timing;
 using AssetManagement.Departments.DTO;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -37,9 +36,9 @@ namespace AssetManagement.Departments
         {
             try
             {
-               
+                
+                if (input.Id == 0)
                 {
-                    input.CreationTime = Clock.Now.ToUniversalTime();
                     input.CreatorUserId = AbpSession.GetUserId();
                     var department = ObjectMapper.Map<Department>(input);
                     await _departmentRepository.InsertAsync(department);
@@ -48,7 +47,6 @@ namespace AssetManagement.Departments
                 }
                 if (input.Id > 0)
                 {
-                    input.LastModificationTime = Clock.Now.ToUniversalTime();
                     var department = await _departmentRepository.FirstOrDefaultAsync(x => x.Id == input.Id);
                     ObjectMapper.Map(input, department);
                     return ObjectMapper.Map<DepartmentDto>(department);

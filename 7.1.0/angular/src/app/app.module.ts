@@ -56,6 +56,11 @@ import { PlaneMaintainComponent } from './contents/plane-maintain/plane-maintain
 import { EditIncreaseAssetModalComponent } from './contents/increase-asset/edit-increase-asset-modal/edit-increase-asset-modal.component';
 import * as $ from "jquery";
 import { CreateOrEditDepartmentComponent } from './contents/department/create-or-edit-department/create-or-edit-department.component';
+import { BsDatepickerConfig, BsDatepickerModule } from "ngx-bootstrap/datepicker";
+import { SuggestionHandlingComponent } from './contents/suggestion-handling/suggestion-handling.component';
+import { CreateOrEditSuggestionHandlingComponent } from './contents/suggestion-handling/create-or-edit-suggestion-handling/create-or-edit-suggestion-handling.component';
+import { AddAssetSuggestionHandlingComponent } from './contents/suggestion-handling/add-asset-suggestion-handling/add-asset-suggestion-handling.component';
+import { CreateOrEditAssetTypeComponent } from './contents/asset-type/create-or-edit-asset-type/create-or-edit-asset-type.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -99,6 +104,10 @@ import { CreateOrEditDepartmentComponent } from './contents/department/create-or
     PlaneMaintainComponent,
     EditIncreaseAssetModalComponent,
     CreateOrEditDepartmentComponent,
+    SuggestionHandlingComponent,
+    CreateOrEditSuggestionHandlingComponent,
+    AddAssetSuggestionHandlingComponent,
+    CreateOrEditAssetTypeComponent,
   ],
   imports: [
     CommonModule,
@@ -116,9 +125,10 @@ import { CreateOrEditDepartmentComponent } from './contents/department/create-or
     NgxPaginationModule,
     TableModule,
     DropdownModule,
-    PaginatorModule
+    PaginatorModule,
+    BsDatepickerModule.forRoot() ,
   ],
-  providers: [],
+  providers: [ BsDatepickerConfig],
   entryComponents: [
     // tenants
     CreateTenantDialogComponent,

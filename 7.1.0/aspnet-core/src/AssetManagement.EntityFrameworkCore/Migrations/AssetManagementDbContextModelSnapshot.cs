@@ -2139,6 +2139,9 @@ namespace AssetManagement.Migrations
                     b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
+                    b.Property<string>("DepartmentName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -2154,6 +2157,9 @@ namespace AssetManagement.Migrations
                     b.Property<long?>("LastModifierUserId")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("PetitionerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SuggestionHandlingCode")
                         .IsRequired()
                         .HasMaxLength(32)
@@ -2167,6 +2173,9 @@ namespace AssetManagement.Migrations
 
                     b.Property<int>("SuggestionHandlingStatus")
                         .HasColumnType("int");
+
+                    b.Property<string>("SuggestionHandlingStatusName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");

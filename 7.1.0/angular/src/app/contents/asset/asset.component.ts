@@ -1,7 +1,7 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
-import { AssetDto, AssetInputDto, AssetServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AssetDto, AssetInputDto, AssetServiceProxy, AssetTypeDto } from '@shared/service-proxies/service-proxies';
 import { LazyLoadEvent } from 'primeng/api/lazyloadevent';
 import { Paginator } from 'primeng/paginator';
 import { finalize } from 'rxjs/operators';
@@ -33,6 +33,15 @@ export class AssetComponent extends  PagedListingComponentBase<AssetDto> impleme
   // primengTableHelper: PrimengTableHelper;
   keyword = '';
   advancedFiltersVisible = false;
+  advancedFiltersAreShown = false;
+  maxDateFilter: moment.Moment;
+  minDateFilter: moment.Moment;
+  selectedAssetType : AssetTypeDto;
+  selectedAssetStatus: any;
+  selectedReasonReduce: any;
+  assetTypeList : AssetInputDto[] = [];
+  filterText = '';
+
   @ViewChild('createOrEditAssetModal', { static: true }) createOrEditAssetModal: CreateOrEditAssetComponent;
   @ViewChild("paginator", { static: true }) paginator: Paginator;
   constructor(

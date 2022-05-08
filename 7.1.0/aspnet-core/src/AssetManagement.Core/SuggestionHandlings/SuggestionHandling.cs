@@ -22,11 +22,14 @@ namespace AssetManagement.SuggestionHandlings
         public DateTime ImplementationDate { get; set; }
         public string? Description { get; set; }
         public int SuggestionHandlingStatus { get; set; }
+        public String SuggestionHandlingStatusName { get; set; }
         public int? ApproverId { get; set; }
+        public int? PetitionerId { get; set; }
         public int? UserId { get; set; }
        
         [ForeignKey(nameof(DepartmentId))]
         public Department Department { get; set; } // them tu department table
         public int? DepartmentId { get; set; }
+        public string? DepartmentName { get; set; }
     }
 }

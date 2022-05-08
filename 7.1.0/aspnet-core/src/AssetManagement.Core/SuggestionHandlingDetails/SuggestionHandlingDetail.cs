@@ -19,5 +19,6 @@ namespace AssetManagement.SuggestionHandlingDetails
         [ForeignKey(nameof(AssetId))]
         public Asset Asset { get; set; }
         public int? AssetId { get; set; }
+        public string? HandlingMethod { get; set; }
     }
 }

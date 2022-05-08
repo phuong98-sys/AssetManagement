@@ -1,7 +1,7 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
-import { AssetInputDto, AssetServiceProxy, AssetTypeServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AssetInputDto, AssetServiceProxy, AssetTypeInputDto, AssetTypeServiceProxy } from '@shared/service-proxies/service-proxies';
 import { LazyLoadEvent } from 'primeng/api/lazyloadevent';
 import { Paginator } from 'primeng/paginator';
 import { finalize } from 'rxjs/operators';
@@ -46,8 +46,11 @@ export class AssetTypeComponent extends AppComponentBase implements OnInit {
     });
   }
 
-  createOrEditAssetType(asset?: AssetInputDto): void {
-    // this.createOrEditAssetModal.show(asset);
+  createOrEditAssetType(assetType?: AssetTypeInputDto): void {
+    if(!assetType)
+    this._router.navigate(["/app/contents/asset-type/create"]);
+    else
+    this._router.navigate(["/app/contents/asset-type/" + assetType?.id]);
   }
   deleteAsset(asset: AssetInputDto){
   //   this.message.confirm(

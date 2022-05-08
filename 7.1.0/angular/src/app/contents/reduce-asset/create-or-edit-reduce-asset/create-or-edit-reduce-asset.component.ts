@@ -40,6 +40,9 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
   selectedReasonReduceFromTable : ReasonReduceDto;
   assetId : number;
   selectedTest : ReasonReduceDto;
+      //
+      advancedFiltersVisible = false;
+      keyword ='';
   constructor(
     injector: Injector,
     private assetService: AssetServiceProxy,
@@ -92,7 +95,7 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
           this.reduceAssetService.insertOrUpdateReduceAsset(this.reduceAsset)
           .pipe(finalize(() => (this.loading = false)))
           .subscribe((result) => {
-            debugger
+            
               this.reduceAsset = result;
               this.addAssetToReduceList.map((item) => { 
                 item.reduceAssetId = this.reduceAsset.id;
@@ -118,7 +121,7 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
     this._router.navigate(['app/contents/reduce-asset']);
   }
   searchAsset(){
-    debugger
+    
     var t =  this.addAssetToReduceList;
     var newAsset = new AssetDto;
     newAsset =this.asset;
@@ -154,7 +157,7 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
     this.assetService.getAssets().subscribe((result)=>{
       
       this.assetHaveNotReduceList = result.items.filter((item)=> item.reduceAssetId == null);
-      debugger
+      
       this.assetList = this.assetHaveNotReduceList;
     });
    
@@ -168,7 +171,7 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
     else{
       var newAsset = new AssetDto;
       newAsset = this.asset;
-      debugger
+      
       this.addAssetToReduceList.push(newAsset);
       this.asset = new AssetDto;
       this.selectedReasonReduce = new ReasonReduceDto();
@@ -190,7 +193,7 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
   getReduceAssetForEdit(){
     this.reduceAssetService.getReduceAsset(this.reduceAssetId)
       .subscribe((result) =>{
-        debugger
+        
         this.reduceAsset = result;
         this.reduceAsset.creationTime = result["creationTime"]? result["creationTime"].format("YYYY-MM-DD"):<any>undefined;
         this.reduceAsset.reduceAssetDate = result["reduceAssetDate"]? result["reduceAssetDate"].format("YYYY-MM-DD"):<any>undefined;
@@ -199,7 +202,7 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
   onSelectedAsset(assetForEdit : AssetDto, event ){
     
     console.log(event.target.checked);
-    debugger
+    
     if(event.target.checked)
     {
       this.deleteAssetList.push(assetForEdit);
@@ -260,25 +263,25 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
   onSelectedAllAsset(event){
     if(event.target.checked){
       for( let i = this.addAssetToReduceList.length-1; i>= 0; i-- ){
-        debugger
+        
         var selector = 'input[name="selectedAsset"]:not(:checked)'  ;
         $(selector).click();
     } 
   }   
     else{
       for( let i = this.addAssetToReduceList.length-1; i>= 0; i-- ){
-        debugger
+        
         var selector = 'input[name="selectedAsset"]:checked'  ;
         $(selector).click();
     }  
     }
   }
   onSelectReasonReduce(){
-    debugger
+    
     this.asset.reasonReduceId = this.selectedReasonReduce.id;
   }
   onSelectReasonReduceFromTable(asset: AssetDto){
-    debugger
+    
     var index = this.addAssetToReduceList.findIndex(c => c.id == asset.id);
     this.addAssetToReduceList[index] = asset;
     if(asset.reasonReduceId != 1){

@@ -2162,6 +2162,125 @@ export class SessionServiceProxy {
 }
 
 @Injectable()
+export class SuggestionHandlingServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getSuggestionHandlings(): Observable<SuggestionHandlingDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/SuggestionHandling/GetSuggestionHandlings";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSuggestionHandlings(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSuggestionHandlings(<any>response_);
+                } catch (e) {
+                    return <Observable<SuggestionHandlingDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<SuggestionHandlingDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetSuggestionHandlings(response: HttpResponseBase): Observable<SuggestionHandlingDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = SuggestionHandlingDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SuggestionHandlingDtoListResultDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    insertOrUpdateSuggestionHandling(body: SuggestionHandlingInputDto | undefined): Observable<SuggestionHandlingDto> {
+        let url_ = this.baseUrl + "/api/services/app/SuggestionHandling/InsertOrUpdateSuggestionHandling";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertOrUpdateSuggestionHandling(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertOrUpdateSuggestionHandling(<any>response_);
+                } catch (e) {
+                    return <Observable<SuggestionHandlingDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<SuggestionHandlingDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processInsertOrUpdateSuggestionHandling(response: HttpResponseBase): Observable<SuggestionHandlingDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = SuggestionHandlingDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SuggestionHandlingDto>(<any>null);
+    }
+}
+
+@Injectable()
 export class TenantServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -6439,6 +6558,255 @@ export class RoleListDtoListResultDto implements IRoleListDtoListResultDto {
 
 export interface IRoleListDtoListResultDto {
     items: RoleListDto[] | undefined;
+}
+
+export class SuggestionHandlingDto implements ISuggestionHandlingDto {
+    id: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    suggestionHandlingCode: string;
+    suggestionHandlingName: string | undefined;
+    suggestionHandlingDate: moment.Moment;
+    implementationDate: moment.Moment;
+    description: string | undefined;
+    suggestionHandlingStatus: number;
+    suggestionHandlingStatusName: string | undefined;
+    approverId: number | undefined;
+    petitionerId: number | undefined;
+    userId: number | undefined;
+    departmentId: number | undefined;
+    departmentName: string | undefined;
+
+    constructor(data?: ISuggestionHandlingDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.suggestionHandlingCode = _data["suggestionHandlingCode"];
+            this.suggestionHandlingName = _data["suggestionHandlingName"];
+            this.suggestionHandlingDate = _data["suggestionHandlingDate"] ? moment(_data["suggestionHandlingDate"].toString()) : <any>undefined;
+            this.implementationDate = _data["implementationDate"] ? moment(_data["implementationDate"].toString()) : <any>undefined;
+            this.description = _data["description"];
+            this.suggestionHandlingStatus = _data["suggestionHandlingStatus"];
+            this.suggestionHandlingStatusName = _data["suggestionHandlingStatusName"];
+            this.approverId = _data["approverId"];
+            this.petitionerId = _data["petitionerId"];
+            this.userId = _data["userId"];
+            this.departmentId = _data["departmentId"];
+            this.departmentName = _data["departmentName"];
+        }
+    }
+
+    static fromJS(data: any): SuggestionHandlingDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SuggestionHandlingDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["suggestionHandlingCode"] = this.suggestionHandlingCode;
+        data["suggestionHandlingName"] = this.suggestionHandlingName;
+        data["suggestionHandlingDate"] = this.suggestionHandlingDate ? this.suggestionHandlingDate.toISOString() : <any>undefined;
+        data["implementationDate"] = this.implementationDate ? this.implementationDate.toISOString() : <any>undefined;
+        data["description"] = this.description;
+        data["suggestionHandlingStatus"] = this.suggestionHandlingStatus;
+        data["suggestionHandlingStatusName"] = this.suggestionHandlingStatusName;
+        data["approverId"] = this.approverId;
+        data["petitionerId"] = this.petitionerId;
+        data["userId"] = this.userId;
+        data["departmentId"] = this.departmentId;
+        data["departmentName"] = this.departmentName;
+        return data; 
+    }
+
+    clone(): SuggestionHandlingDto {
+        const json = this.toJSON();
+        let result = new SuggestionHandlingDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISuggestionHandlingDto {
+    id: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    suggestionHandlingCode: string;
+    suggestionHandlingName: string | undefined;
+    suggestionHandlingDate: moment.Moment;
+    implementationDate: moment.Moment;
+    description: string | undefined;
+    suggestionHandlingStatus: number;
+    suggestionHandlingStatusName: string | undefined;
+    approverId: number | undefined;
+    petitionerId: number | undefined;
+    userId: number | undefined;
+    departmentId: number | undefined;
+    departmentName: string | undefined;
+}
+
+export class SuggestionHandlingDtoListResultDto implements ISuggestionHandlingDtoListResultDto {
+    items: SuggestionHandlingDto[] | undefined;
+
+    constructor(data?: ISuggestionHandlingDtoListResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(SuggestionHandlingDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): SuggestionHandlingDtoListResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SuggestionHandlingDtoListResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): SuggestionHandlingDtoListResultDto {
+        const json = this.toJSON();
+        let result = new SuggestionHandlingDtoListResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISuggestionHandlingDtoListResultDto {
+    items: SuggestionHandlingDto[] | undefined;
+}
+
+export class SuggestionHandlingInputDto implements ISuggestionHandlingInputDto {
+    id: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    suggestionHandlingCode: string;
+    suggestionHandlingName: string | undefined;
+    suggestionHandlingDate: moment.Moment;
+    implementationDate: moment.Moment;
+    description: string | undefined;
+    suggestionHandlingStatus: number;
+    suggestionHandlingStatusName: string | undefined;
+    approverId: number | undefined;
+    petitionerId: number | undefined;
+    userId: number | undefined;
+    departmentId: number | undefined;
+    departmentName: string | undefined;
+
+    constructor(data?: ISuggestionHandlingInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.suggestionHandlingCode = _data["suggestionHandlingCode"];
+            this.suggestionHandlingName = _data["suggestionHandlingName"];
+            this.suggestionHandlingDate = _data["suggestionHandlingDate"] ? moment(_data["suggestionHandlingDate"].toString()) : <any>undefined;
+            this.implementationDate = _data["implementationDate"] ? moment(_data["implementationDate"].toString()) : <any>undefined;
+            this.description = _data["description"];
+            this.suggestionHandlingStatus = _data["suggestionHandlingStatus"];
+            this.suggestionHandlingStatusName = _data["suggestionHandlingStatusName"];
+            this.approverId = _data["approverId"];
+            this.petitionerId = _data["petitionerId"];
+            this.userId = _data["userId"];
+            this.departmentId = _data["departmentId"];
+            this.departmentName = _data["departmentName"];
+        }
+    }
+
+    static fromJS(data: any): SuggestionHandlingInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SuggestionHandlingInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["suggestionHandlingCode"] = this.suggestionHandlingCode;
+        data["suggestionHandlingName"] = this.suggestionHandlingName;
+        data["suggestionHandlingDate"] = this.suggestionHandlingDate ? this.suggestionHandlingDate.toISOString() : <any>undefined;
+        data["implementationDate"] = this.implementationDate ? this.implementationDate.toISOString() : <any>undefined;
+        data["description"] = this.description;
+        data["suggestionHandlingStatus"] = this.suggestionHandlingStatus;
+        data["suggestionHandlingStatusName"] = this.suggestionHandlingStatusName;
+        data["approverId"] = this.approverId;
+        data["petitionerId"] = this.petitionerId;
+        data["userId"] = this.userId;
+        data["departmentId"] = this.departmentId;
+        data["departmentName"] = this.departmentName;
+        return data; 
+    }
+
+    clone(): SuggestionHandlingInputDto {
+        const json = this.toJSON();
+        let result = new SuggestionHandlingInputDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISuggestionHandlingInputDto {
+    id: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    suggestionHandlingCode: string;
+    suggestionHandlingName: string | undefined;
+    suggestionHandlingDate: moment.Moment;
+    implementationDate: moment.Moment;
+    description: string | undefined;
+    suggestionHandlingStatus: number;
+    suggestionHandlingStatusName: string | undefined;
+    approverId: number | undefined;
+    petitionerId: number | undefined;
+    userId: number | undefined;
+    departmentId: number | undefined;
+    departmentName: string | undefined;
 }
 
 export enum TenantAvailabilityState {

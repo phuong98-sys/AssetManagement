@@ -22,6 +22,10 @@ import { PlaneMaintainComponent } from './contents/plane-maintain/plane-maintain
 import { EditIncreaseAssetModalComponent } from './contents/increase-asset/edit-increase-asset-modal/edit-increase-asset-modal.component';
 import { CreateOrEditReduceAssetComponent } from './contents/reduce-asset/create-or-edit-reduce-asset/create-or-edit-reduce-asset.component';
 import { CreateOrEditDepartmentComponent } from './contents/department/create-or-edit-department/create-or-edit-department.component';
+import { SuggestionHandlingComponent } from './contents/suggestion-handling/suggestion-handling.component';
+import { CreateOrEditSuggestionHandlingComponent } from './contents/suggestion-handling/create-or-edit-suggestion-handling/create-or-edit-suggestion-handling.component';
+import { AddAssetSuggestionHandlingComponent } from './contents/suggestion-handling/add-asset-suggestion-handling/add-asset-suggestion-handling.component';
+import { CreateOrEditAssetTypeComponent } from './contents/asset-type/create-or-edit-asset-type/create-or-edit-asset-type.component';
 
 @NgModule({
     imports: [
@@ -38,6 +42,8 @@ import { CreateOrEditDepartmentComponent } from './contents/department/create-or
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
                     { path: 'contents', children:[
                         {path: 'asset-type', component: AssetTypeComponent, canActivate: [AppRouteGuard] },
+                        {path: 'asset-type/create', component: CreateOrEditAssetTypeComponent, canActivate: [AppRouteGuard] },
+                        {path: 'asset-type/:id', component: CreateOrEditAssetTypeComponent, canActivate: [AppRouteGuard] },
                         {path: 'asset-statistic', component: TestComponent, canActivate: [AppRouteGuard] },
                         {path: 'asset', component: AssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'asset/create', component: CreateOrEditAssetComponent, canActivate: [AppRouteGuard] },
@@ -55,6 +61,11 @@ import { CreateOrEditDepartmentComponent } from './contents/department/create-or
                         {path: 'propose-asset', component: ProposeAssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'plane-shop', component: PlaneShopComponent, canActivate: [AppRouteGuard] },
                         {path: 'plane-maintain', component: PlaneMaintainComponent, canActivate: [AppRouteGuard] },
+                        {path: 'suggestion-handling', component: SuggestionHandlingComponent, canActivate: [AppRouteGuard] },
+                        {path: 'suggestion-handling/create', component: CreateOrEditSuggestionHandlingComponent, canActivate: [AppRouteGuard] },
+                        {path: 'suggestion-handling/:id', component: CreateOrEditSuggestionHandlingComponent, canActivate: [AppRouteGuard] },
+                        {path: 'suggestion-handling/addAsset', component: AddAssetSuggestionHandlingComponent, canActivate: [AppRouteGuard] },
+                        
                     ], canActivate: [AppRouteGuard] },
                     
                 ]

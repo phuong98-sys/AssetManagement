@@ -15,6 +15,9 @@ export class ReduceAssetComponent extends AppComponentBase implements OnInit {
   reduceAssetList;
   loading =  false;
   totalRecords: number;
+  //
+  advancedFiltersVisible = false;
+  keyword ='';
   @ViewChild('createOrEditIncreaseAssetModal', { static: true }) createOrEditIncreaseAssetModal: CreateOrEditReduceAssetComponent;
   constructor(
     injector: Injector,

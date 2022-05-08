@@ -18,6 +18,9 @@ export class IncreaseAssetComponent extends AppComponentBase implements OnInit {
   loading =  false;
   totalRecords: number;
   userId : number;
+  //
+  advancedFiltersVisible = false;
+  keyword ='';
   constructor(
     injector: Injector,
     private increaseAssetService: IncreaseAssetServiceProxy,
