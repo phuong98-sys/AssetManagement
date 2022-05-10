@@ -43,22 +43,22 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
 
     getMenuItems(): MenuItem[] {
         return [
-            new MenuItem(this.l('About'), '/app/about', 'fas fa-info-circle'),
-            new MenuItem(this.l('HomePage'), '/app/home', 'fas fa-home'),
+            // new MenuItem(this.l('About'), '/app/about', 'fas fa-info-circle'),
+            new MenuItem(this.l('Trang chủ'), '/app/home', 'fas fa-home'),
             new MenuItem(
-                this.l('Roles'),
+                this.l('Quản lí vai trò người dùng'),
                 '/app/roles',
                 'fas fa-theater-masks',
                 'Pages.Roles'
             ),
+            // new MenuItem(
+            //     this.l('Tenants'),
+            //     '/app/tenants',
+            //     'fas fa-building',
+            //     'Pages.Tenants'
+            // ),
             new MenuItem(
-                this.l('Tenants'),
-                '/app/tenants',
-                'fas fa-building',
-                'Pages.Tenants'
-            ),
-            new MenuItem(
-                this.l('Users'),
+                this.l('Người dùng'),
                 '/app/users',
                 'fas fa-users',
                 'Pages.Users'
@@ -114,31 +114,32 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
             //         )
             //     ])
             // ]),
-            new MenuItem(this.l('Asset Management'),'','fas fa-th-list','',[
-                new MenuItem('Asset','/app/contents/asset','fas fa-users'),
-                new MenuItem('Increase Asset','/app/contents/increase-asset','fas fa-users'),
-                new MenuItem('Change Information Asset','/app/contents/change-information','fas fa-users'),
-                new MenuItem('Transfer','/app/contents/transfer','fas fa-users'),
-                new MenuItem('Depreciation Asset','/app/contents/depreciation-asset','fas fa-users'),
-                new MenuItem('Reduce Asset','/app/contents/reduce-asset','fas fa-users'),
-                new MenuItem('Inventory Asset','/app/contents/inventory-asset','fas fa-users')
+            new MenuItem(this.l('Quản lí tài sản'),'','fas fa-th-list','',[
+                new MenuItem('Tài sản','/app/contents/asset','fas fa-users'),
+                new MenuItem('Ghi tăng','/app/contents/increase-asset','fas fa-users'),
+                new MenuItem('Thay đổi thông tin','/app/contents/change-information','fas fa-users'),
+                new MenuItem('Chuyển đổi','/app/contents/transfer','fas fa-users'),
+                new MenuItem('Khấu hao tài sản','/app/contents/depreciation-asset','fas fa-users'),
+                new MenuItem('Ghi giảm tài sản','/app/contents/reduce-asset','fas fa-users'),
+                new MenuItem('Kiểm kê tài sản','/app/contents/inventory-asset','fas fa-users')
             ]),
-            new MenuItem(this.l('Categories'),'','fas fa-circle','',[
-                new MenuItem('Asset Type','/app/contents/asset-type','fas fa-users',''),
-                new MenuItem('Asset Statistics','/app/contents/asset-statistic','fas fa-users'),
-                new MenuItem('Department','/app/contents/department','fas fa-users')
+            new MenuItem(this.l('Danh mục'),'','fas fa-list-alt','',[
+                new MenuItem('Loại tài sản','/app/contents/asset-type','fas fa-users',''),
+                new MenuItem('Thống kê','/app/contents/asset-statistic','fas fa-users'),
+                new MenuItem('Bộ phận','/app/contents/department','fas fa-users')
             ]),
-            new MenuItem(this.l('Report'),'','fas fa-circle','',[
-                new MenuItem('Create Report','/app/contents/create-report','fas fa-users'),
+            new MenuItem(this.l('Báo cáo'),'','fas fa-file','',[
+                new MenuItem('Tạo báo cáo','/app/contents/create-report','fas fa-users'),
             ]),
-            new MenuItem(this.l('Other'),'','fas fa-circle','',[
-                new MenuItem('Create Offer','/app/contents/propose-asset','fas fa-users'),
-                new MenuItem('Create Plane Shopping','/app/contents/plane-shop','fas fa-users'),
-                new MenuItem('Create Plane Maintain','/app/contents/plane-maintain','fas fa-users'),
-                new MenuItem('Create Plane Reduce','/app/contents/asset-statistic','fas fa-users')
+            new MenuItem(this.l('Khác'),'','fas fa-tasks','',[
+                new MenuItem('Lập phiếu đề nghị trang cấp','/app/contents/propose-asset','fas fa-users'),
+                new MenuItem('Lập kế hoạch mua sắm','/app/contents/plane-shop','fas fa-users'),
+                new MenuItem('Lập kế hoạch bảo dưỡng','/app/contents/plane-maintain','fas fa-users'),
+                new MenuItem('Lập phiếu yêu cầu xử lí','/app/contents/suggestion-handling','fas fa-users')
             ]),
         ];
     }
+
 
     patchMenuItems(items: MenuItem[], parentId?: number): void {
         items.forEach((item: MenuItem, index: number) => {

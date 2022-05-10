@@ -55,6 +55,11 @@ import { PlaneShopComponent } from './contents/plane-shop/plane-shop.component';
 import { PlaneMaintainComponent } from './contents/plane-maintain/plane-maintain.component';
 import { EditIncreaseAssetModalComponent } from './contents/increase-asset/edit-increase-asset-modal/edit-increase-asset-modal.component';
 import * as $ from "jquery";
+import { CreateOrEditPlaneMaintainComponent } from './contents/plane-maintain/create-or-edit-plane-maintain/create-or-edit-plane-maintain.component';
+import { CreateOrEditProposeAssetComponent } from './contents/propose-asset/create-or-edit-propose-asset/create-or-edit-propose-asset.component';
+import { CreateOrEditPlaneShopComponent } from './contents/plane-shop/create-or-edit-plane-shop/create-or-edit-plane-shop.component';
+import { TransferComponent } from './contents/transfer/transfer.component';
+import { CreateOrEditTransferComponent } from './contents/transfer/create-or-edit-transfer/create-or-edit-transfer.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -97,6 +102,11 @@ import * as $ from "jquery";
     PlaneShopComponent,
     PlaneMaintainComponent,
     EditIncreaseAssetModalComponent,
+    CreateOrEditPlaneMaintainComponent,
+    CreateOrEditProposeAssetComponent,
+    CreateOrEditPlaneShopComponent,
+    TransferComponent,
+    CreateOrEditTransferComponent,
   ],
   imports: [
     CommonModule,

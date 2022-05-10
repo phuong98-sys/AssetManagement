@@ -2,6 +2,7 @@
 using Abp.Domain.Entities.Auditing;
 using AssetManagement.AssetStatuses;
 using AssetManagement.AssetTypes;
+using AssetManagement.Departments;
 using AssetManagement.IncreaseAssets;
 using AssetManagement.ReasonRuduces;
 using AssetManagement.ReduceAssets;
@@ -52,6 +53,10 @@ namespace AssetManagement.Assets
         [ForeignKey(nameof(ReasonReduceId))]
         public ReasonReduce ReasonReduce { get; set; }
         public int? ReasonReduceId { get; set; }
+        [ForeignKey(nameof(DepartmentId))]
+        public Department Department { get; set; } // them tu Department table
+        public string DepartmentName { get; set; }
+        public int? DepartmentId { get; set; }
         public int? TenantId { get; set; }
         public Asset()
         {

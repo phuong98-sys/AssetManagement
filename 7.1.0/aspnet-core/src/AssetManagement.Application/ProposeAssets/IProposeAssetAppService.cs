@@ -1,36 +1,19 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
-using AssetManagement;
-using AssetManagement.ProposeAssets;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using AssetManagement.ProposeAssets.DTO;
+using Abp.Application.Services;
 
 namespace AssetManagement.ProposeAssets
 {
-    public class ProposeAssetAppService : AssetManagementAppServiceBase, IProposeAssetAppService
+    public interface IProposeAssetAppService : IApplicationService
     {
-        private readonly IRepository<ProposeAsset> _proposeAsset;
-        public ProposeAssetAppService(IRepository<ProposeAsset> proposeAsset)
-        {
-            _proposeAsset = proposeAsset;
-        }
-        public async Task<ListResultDto<ProposeAssetDto>> GetAll()
-        {
-            try
-            {
-                var proposeAssets = await _proposeAsset.GetAll().ToListAsync();
-                var proposeAssetDtos = ObjectMapper.Map<List<ProposeAssetDto>>(proposeAssets);
-                return new ListResultDto<ProposeAssetDto>(proposeAssetDtos);
-            }
-            catch (Exception e)
-            {
-                throw (e);
-
-            }
-        }
+        Task<ListResultDto<ProposeAssetDto>> GetProposeAssets();
+        ProposeAssetDto GetProposeAsset(GetProposeAssetInput input);
+        Task<ProposeAssetListDto> InsertOrUpdateProposeAsset(ProposeAssetInputDto input);
     }
 }

@@ -1,0 +1,69 @@
+<div class="header-title">
+    <div class="title-page">Yêu cầu điều chuyển tài sản</div>
+    <div class="btn-add-container">
+        <button class="btn btn-add" (click)="createOrEditTransfer()">Thêm</button>
+    </div>
+</div>
+<div class="content-component">
+    <p-table (onLazyLoad)="getTransfers($event)" [paginator]="false" [lazy]="true" [rows]="3" [totalRecords]="totalRecords"  [scrollable]="true" scrollHeight="320px" scrollWidth="1100px" [value]="transferList" [resizableColumns]="true" [autoLayout]="true" [responsive]="primengTableHelper.isResponsive">
+    <ng-template pTemplate="header">
+        <tr>
+            <th pResizableColumn pSortableColumn="assetCode" style="width:150px">
+                Chức năng
+            </th>
+            <th pResizableColumn pSortableColumn="numbersTransfer" style="width:100px">
+                Số chứng từ
+            </th>
+            <th pResizableColumn pSortableColumn="dateFound" style="width:100px">
+                Ngày tạo yêu cầu 
+            </th>
+            <th pResizableColumn pSortableColumn="departmentName" style="width:120px">
+                Bộ phận yêu cầu
+            </th>
+            <th pResizableColumn pSortableColumn="content" style="width:140px">
+                Nội dung 
+            </th>
+            <th pResizableColumn pSortableColumn="approvalStatus" style="width:150px">
+                Trạng thái
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-transfer>
+        <tr>
+            <td style="width:150px">
+                <div class="btn-group dropdown" dropdown container="body">
+                    <button dropdownToggle class="dropdown-toggle btn btn-sm btn-primary">
+                        <i class="fa fa-cog"></i><span class="caret"></span>
+                        Hành động
+                    </button>
+                    <ul class="dropdown-menu" *dropdownMenu>
+                        <li >
+                            <a href="javascript:;"
+                                >Xem chi tiết</a>
+                        </li>
+                        <li >
+                            <a href="javascript:;"
+                                >Sửa</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;"
+                                >Xóa</a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+            <td style="width:100px">{{ transfer.numbersTransfer }}</td>
+            <td style="width:100px">{{ transfer.dateFound}}</td>
+            <td style="width:120px">{{ transfer.departmentName }}</td>
+            <td style="width:140px">{{ transfer.content}}</td>
+            <td style="width:150px">{{ transfer.approvalStatus }}</td>
+        </tr>
+    </ng-template>
+    <div class="" *ngIf="totalRecords == 0">
+        {{ l("NoData") }}
+    </div>
+    <div class="order-history__paginator" id="my-order-paging">
+    </div>
+</p-table>
+</div>
+

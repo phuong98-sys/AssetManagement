@@ -21,7 +21,11 @@ import { PlaneShopComponent } from './contents/plane-shop/plane-shop.component';
 import { PlaneMaintainComponent } from './contents/plane-maintain/plane-maintain.component';
 import { EditIncreaseAssetModalComponent } from './contents/increase-asset/edit-increase-asset-modal/edit-increase-asset-modal.component';
 import { CreateOrEditReduceAssetComponent } from './contents/reduce-asset/create-or-edit-reduce-asset/create-or-edit-reduce-asset.component';
-
+import { CreateOrEditPlaneMaintainComponent } from './contents/plane-maintain/create-or-edit-plane-maintain/create-or-edit-plane-maintain.component';
+import { CreateOrEditProposeAssetComponent } from './contents/propose-asset/create-or-edit-propose-asset/create-or-edit-propose-asset.component';
+import { CreateOrEditPlaneShopComponent } from './contents/plane-shop/create-or-edit-plane-shop/create-or-edit-plane-shop.component';
+import { TransferComponent } from './contents/transfer/transfer.component';
+import { CreateOrEditTransferComponent } from './contents/transfer/create-or-edit-transfer/create-or-edit-transfer.component';
 @NgModule({
     imports: [
         RouterModule.forChild([
@@ -50,8 +54,17 @@ import { CreateOrEditReduceAssetComponent } from './contents/reduce-asset/create
                         {path: 'reduce-asset/:id', component: CreateOrEditReduceAssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'department', component: DepartmentComponent, canActivate: [AppRouteGuard] },
                         {path: 'propose-asset', component: ProposeAssetComponent, canActivate: [AppRouteGuard] },
+                        {path: 'propose-asset/create', component: CreateOrEditProposeAssetComponent, canActivate: [AppRouteGuard] },
+                        {path: 'propose-asset/:id', component: CreateOrEditProposeAssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'plane-shop', component: PlaneShopComponent, canActivate: [AppRouteGuard] },
+                        {path: 'plane-shop/create', component: CreateOrEditPlaneShopComponent, canActivate: [AppRouteGuard] },
+                        {path: 'plane-shop/:id', component: CreateOrEditPlaneShopComponent, canActivate: [AppRouteGuard] },
                         {path: 'plane-maintain', component: PlaneMaintainComponent, canActivate: [AppRouteGuard] },
+                        {path: 'plane-maintain/create', component: CreateOrEditPlaneMaintainComponent, canActivate: [AppRouteGuard] },
+                        {path: 'plane-maintain/:id', component: CreateOrEditPlaneMaintainComponent, canActivate: [AppRouteGuard] },
+                        {path: 'transfer', component: TransferComponent, canActivate: [AppRouteGuard] },
+                        {path: 'transfer/create', component: CreateOrEditTransferComponent, canActivate: [AppRouteGuard] },
+                        {path: 'transfer/:id', component: CreateOrEditTransferComponent, canActivate: [AppRouteGuard] },
                     ], canActivate: [AppRouteGuard] },
                     
                 ]
