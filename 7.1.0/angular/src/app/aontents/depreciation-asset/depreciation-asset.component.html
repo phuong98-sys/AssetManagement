@@ -1,0 +1,200 @@
+<div class="header-title">
+    <div class="title-page">Chứng từ tính khấu hao</div>
+    <div class="btn-add-container">
+        <button class="btn btn-add" (click)="createOrEditIncreaseAsset()">Thêm chứng từ</button>
+    </div>
+</div>
+<form class="kt-form" autocomplete="off">
+    <div class="row align-items-center">
+        <div class="col-xl-12">
+            <div class="form-group m-form__group align-items-center">
+                <div class="input-group">
+                    <input [(ngModel)]="filterText" name="filterText" autoFocus
+                        class="form-control m-input"
+                        placeholder="Tìm kiếm theo mã chứng từ, tên người tạo" type="text" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-search" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" [hidden]="!advancedFiltersAreShown">
+        <div class="col-md-12">
+            <div class="kt-separator kt-separator--border-dashed"></div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="MinDateFilter">Tìm kiếm theo ngày tạo</label>
+                <div class="input-group">
+                    <input class="form-control m-input" id="MinDateFilter"
+                        name="MinDateFilter" type="datetime" bsDatepicker
+                        placeholder="From" [(ngModel)]="minDateFilter"
+                        [bsConfig]="{ customTodayClass: 'custom-today-class' }" />
+                    <span style="
+                            line-height: 40px;
+                            padding: 0 15px 0 15px;
+                        ">
+                        &mdash;
+                    </span>
+                    <input class="form-control m-input" id="MaxDateFilter"
+                        name="MaxDateFilter" type="datetime" bsDatepicker placeholder="To"
+                        [(ngModel)]="maxDateFilter"
+                        [bsConfig]="{ customTodayClass: 'custom-today-class' }" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="MinDateFilter">Tìm kiếm theo ngày chứng từ</label>
+                <div class="input-group">
+                    <input class="form-control m-input" id="MinDateFilter"
+                        name="MinDateFilter" type="datetime" bsDatepicker
+                        placeholder="From" [(ngModel)]="minDateFilter"
+                        [bsConfig]="{ customTodayClass: 'custom-today-class' }" />
+                    <span style="
+                            line-height: 40px;
+                            padding: 0 15px 0 15px;
+                        ">
+                        &mdash;
+                    </span>
+                    <input class="form-control m-input" id="MaxDateFilter"
+                        name="MaxDateFilter" type="datetime" bsDatepicker placeholder="To"
+                        [(ngModel)]="maxDateFilter"
+                        [bsConfig]="{ customTodayClass: 'custom-today-class' }" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="MinDateFilter">Tìm kiếm theo ngày tính khấu hao</label>
+                <div class="input-group">
+                    <input class="form-control m-input" id="MinDateFilter"
+                        name="MinDateFilter" type="datetime" bsDatepicker
+                        placeholder="From" [(ngModel)]="minDateFilter"
+                        [bsConfig]="{ customTodayClass: 'custom-today-class' }" />
+                    <span style="
+                            line-height: 40px;
+                            padding: 0 15px 0 15px;
+                        ">
+                        &mdash;
+                    </span>
+                    <input class="form-control m-input" id="MaxDateFilter"
+                        name="MaxDateFilter" type="datetime" bsDatepicker placeholder="To"
+                        [(ngModel)]="maxDateFilter"
+                        [bsConfig]="{ customTodayClass: 'custom-today-class' }" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="form-group">
+                <label class="form-label-no-content" style="height: 1rem; width: 100%;"></label>
+                <button class="btn btn-primary form-control" type="submit" style="width: 100px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" [style]="{'min-width':'15px'}" width="17.592" height="16" viewBox="0 0 17.592 16">
+                        <g id="filter-tool" transform="translate(0.601 1)">
+                          <path id="Path" d="M15.1.308A.583.583,0,0,0,14.583,0h-14A.583.583,0,0,0,.1.907L5.25,7.76v5.657A.583.583,0,0,0,5.833,14h3.5a.583.583,0,0,0,.583-.583V7.76L15.554.6C15.673.42,15.2.5,15.1.308Z" transform="translate(0.417 0)" fill="none" stroke="#ffffff" stroke-miterlimit="10" stroke-width="2"/>
+                        </g>
+                    </svg>
+                    Áp dụng</button>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-sm-12">
+            <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="
+                    advancedFiltersAreShown = !advancedFiltersAreShown
+                "><i class="fa fa-angle-down"></i>
+                {{ l("Hiện bộ lọc nâng cao") }}</span>
+            <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="
+                    advancedFiltersAreShown = !advancedFiltersAreShown
+                "><i class="fa fa-angle-up"></i>
+                {{ l("Ẩn bộ lọc nâng cao") }}</span>
+        </div>
+    </div>
+</form>
+<div class="content-component">
+    <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="increaseAssetList" [resizableColumns]="true" [autoLayout]="true">
+    <ng-template pTemplate="header">
+        <tr>
+            <th pResizableColumn pSortableColumn="assetCode" style="width:150px">
+                Chức năng
+            </th>
+            <th pResizableColumn pSortableColumn="increaseAssetCode" style="width:120px">
+                Mã chứng từ
+                <p-sortIcon field="increaseAssetCode"></p-sortIcon>
+            </th>
+            <th pResizableColumn pSortableColumn="increaseAssetDate" style="width:140px">
+                Ngày chứng từ 
+                <p-sortIcon field="increaseAssetDate"></p-sortIcon>
+            </th>
+            <th pResizableColumn pSortableColumn="creationTime" style="width:150px">
+                Ngày tính khấu hao
+                <p-sortIcon field="creationTime"></p-sortIcon>
+            </th>
+            <th pResiazableColumn pSortableColumn="note" style="width:120px">
+                Ghi chú
+                <p-sortIcon field="note"></p-sortIcon>
+            </th>
+            <th pResizableColumn pSortableColumn="totalAssetValue" style="width:150px">
+                Tổng khấu hao
+                <p-sortIcon field="totalAssetValue"></p-sortIcon>
+            </th>
+            <!-- <th pResizableColumn pSortableColumn="creatorUserId" style="width:150px">
+                Tổng nguyên giá 
+                <p-sortIcon field="totalAssetValue"></p-sortIcon>
+            </th> -->
+            <th pResizableColumn pSortableColumn="creatorUserName" style="width:130px">
+                Người tạo
+                <p-sortIcon field="creatorUserName"></p-sortIcon>
+            </th>    
+            <th pResizableColumn pSortableColumn="creationTime" style="width:130px">
+                Ngày tạo
+                <p-sortIcon field="creationTime"></p-sortIcon>
+            </th>  
+            <!-- <th pResizableColumn pSortableColumn="lastModificationTime" style="width:130px">
+                Ngày sửa
+                <p-sortIcon field="lastModificationTime"></p-sortIcon>
+            </th>     
+            <th pResizableColumn pSortableColumn="lastModificationName" style="width:130px">
+                Người sửa
+                <p-sortIcon field="lastModificationName"></p-sortIcon>
+            </th>   -->
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-asset>
+        <tr>
+            <td style="width:150px">
+                <div class="btn-group dropdown" dropdown container="body">
+                    <button dropdownToggle class="dropdown-toggle btn btn-sm btn-primary">
+                        <i class="fa fa-cog"></i><span class="caret"></span>
+                        Hành động
+                    </button>
+                    <ul class="dropdown-menu" *dropdownMenu>
+                        <li>
+                            <a href="javascript:;"
+                                (click)="createOrEditIncreaseAsset(asset)">Sửa</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;"
+                                (click)="deleteIncreaseAsset(asset)">Xóa</a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+            <td style="width:120px">{{ asset.increaseAssetCode }}</td>
+            <td style="width:140px">{{ asset.increaseAssetDate }}</td>
+            <td style="width:150px">{{ asset.creationTime}}</td>
+            <td style="width:120px">{{ asset.note }}</td>
+            <td style="width:150px">{{ asset.totalAssetValue}}</td>
+            <td style="width:130px">{{ asset.creatorUserName}}</td>
+            <td style="width:130px">{{ asset.creationTime}}</td>
+            <!-- <td style="width:130px">{{ asset.lastModificationTime}}</td>
+            <td style="width:130px">{{ asset.lastModificationName}}</td> -->
+        </tr>
+    </ng-template>
+</p-table>
+</div>
+<!-- <app-edit-increase-asset-modal #editIncreaseAssetModal ></app-edit-increase-asset-modal> -->

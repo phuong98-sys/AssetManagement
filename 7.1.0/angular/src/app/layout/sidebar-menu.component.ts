@@ -19,7 +19,7 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
     menuItemsMap: { [key: number]: MenuItem } = {};
     activatedMenuItems: MenuItem[] = [];
     routerEvents: BehaviorSubject<RouterEvent> = new BehaviorSubject(undefined);
-    homeRoute = '/app/about';
+    homeRoute = '/app/contents/asset';
 
     constructor(injector: Injector, private router: Router) {
         super(injector);
@@ -117,9 +117,9 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
             new MenuItem(this.l('Quản lí tài sản'),'','fas fa-th-list','',[
                 new MenuItem('Tài sản','/app/contents/asset','fas fa-users'),
                 new MenuItem('Ghi tăng','/app/contents/increase-asset','fas fa-users'),
+                new MenuItem('Khấu hao tài sản','/app/contents/depreciation-asset','fas fa-users'),
                 new MenuItem('Thay đổi thông tin','/app/contents/change-information','fas fa-users'),
                 new MenuItem('Chuyển đổi','/app/contents/transfer','fas fa-users'),
-                new MenuItem('Khấu hao tài sản','/app/contents/depreciation-asset','fas fa-users'),
                 new MenuItem('Ghi giảm tài sản','/app/contents/reduce-asset','fas fa-users'),
                 new MenuItem('Kiểm kê tài sản','/app/contents/inventory-asset','fas fa-users')
             ]),

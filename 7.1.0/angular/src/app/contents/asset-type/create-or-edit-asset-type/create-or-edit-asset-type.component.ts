@@ -15,9 +15,9 @@ export class CreateOrEditAssetTypeComponent extends AppComponentBase implements 
   saving = false;
   loading = false;
   canChangeUserName = true;
-  department:DepartmentDto = new DepartmentDto();
-  departmentCodeMessage = '';
-  departmentId : number;
+  assetType:AssetTypeDto = new AssetTypeDto();
+  assetTypeCodeMessage = '';
+  assetTypeId : number;
   selectedassetTypeParent: AssetTypeDto;
   assetTypeParentList: AssetTypeDto[] = [];
   constructor(
@@ -27,7 +27,7 @@ export class CreateOrEditAssetTypeComponent extends AppComponentBase implements 
     private _router: Router) {
         super(injector);
         if (this._activatedRoute.snapshot.params['id']) {
-          this.departmentId = Number(this._activatedRoute.snapshot.params['id']);
+          this.assetTypeId = Number(this._activatedRoute.snapshot.params['id']);
           
       }
   }
@@ -55,10 +55,10 @@ export class CreateOrEditAssetTypeComponent extends AppComponentBase implements 
   save(){
   //   if (this.validateForm(this.submitForm.form)) {
   //     this.saving= true;
-  //     if(!this.department.id){
-  //       this.department.assetStatusId = 1;
+  //     if(!this.assetType.id){
+  //       this.assetType.assetStatusId = 1;
   //       this.assetService
-  //       .insertOrUpdateAsset(this.department)
+  //       .insertOrUpdateAsset(this.assetType)
   //       .pipe(
   //           finalize(() => {
   //               this.saving = false;
@@ -71,9 +71,9 @@ export class CreateOrEditAssetTypeComponent extends AppComponentBase implements 
   //           this.modalSave.emit(null);
   //       });
   //     }
-  //     if(this.department.id){
+  //     if(this.assetType.id){
   //       this.assetService
-  //       .insertOrUpdateAsset(this.department)
+  //       .insertOrUpdateAsset(this.assetType)
   //       .pipe(
   //           finalize(() => {
   //               this.saving = false;
@@ -89,9 +89,9 @@ export class CreateOrEditAssetTypeComponent extends AppComponentBase implements 
   // }
   }
   resetForm(){
-    this.department.id=null;
-    this.department.departmentCode=null;
-    this.department.departmentName=null;
+    this.assetType.id=null;
+    this.assetType.assetTypeCode=null;
+    this.assetType.assetTypeName=null;
   }
   close(): void {
     
@@ -99,7 +99,7 @@ export class CreateOrEditAssetTypeComponent extends AppComponentBase implements 
     // // this.userPasswordRepeat = "";
     // // this.modal.hide();
     // this.submitForm.form.reset();
-    // this._router.navigate(['app/contents/department']);
+    // this._router.navigate(['app/contents/assetType']);
   }
   getAssetForEdit(){
   //   forkJoin(
@@ -108,15 +108,15 @@ export class CreateOrEditAssetTypeComponent extends AppComponentBase implements 
   // )
   //     .pipe(finalize(() => (this.loading = false)))
   //     .subscribe(([res1, res2]) => {
-  //         this.department = res1;
-  //         this.assetTypeList = res2.items;
-  //         this.selectedAssetType = this.assetTypeList.find((item)=> item.id == this.department.assetTypeId);
+  //         this.assetType = res1;
+  //         this.assetTypeList = res2.items;f
+  //         this.selectedAssetType = this.assetTypeList.find((item)=> item.id == this.assetType.assetTypeId);
   //     });
   }
-  setDepartmentCode(){
+  setAssetTypeCode(){
     
-    // var department = this.assetList.find(x=> x.assetCode == this.department.assetCode);
-    // if(department && department.id != this.assetId){
+    // var assetType = this.assetList.find(x=> x.assetCode == this.assetType.assetCode);
+    // if(assetType && assetType.id != this.assetId){
     //   this.assetCodeMessage ="Mã này đã tồn tại. Vui lòng nhập mã khác";
     // }
     // else{

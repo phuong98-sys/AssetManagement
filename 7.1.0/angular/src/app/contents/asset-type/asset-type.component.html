@@ -27,6 +27,10 @@
                 Mã loại tài sản cha
                 <p-sortIcon field="parentAssetTypeId"></p-sortIcon>
             </th>
+            <th pResizableColumn pSortableColumn="numberOfYearDepreciation" style="width:120px">
+                Thời gian trích khấu hao( năm)
+                <p-sortIcon field="numberOfYearDepreciation"></p-sortIcon>
+            </th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-assetType>
@@ -53,6 +57,7 @@
             <td style="width:120px">{{ assetType.assetTypeName}}</td>
             <td style="width:120px">{{ assetType.note}}</td>
             <td style="width:120px">{{ assetType.parentAssetTypeId}}</td>
+            <td style="width:120px">{{ assetType.numberOfYearDepreciation}}</td>
           
         </tr>
     </ng-template>
@@ -75,3 +80,22 @@
 </p-table>
 </div>
 <!-- <app-create-or-edit-asset #createOrEditAssetModal (modalSave)="getAll()"></app-create-or-edit-asset> -->
+<p-treeTable [value]="data">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Name</th>
+            <th>Size</th>
+            <th>Type</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+        <tr>
+            <td>
+                <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                {{rowData.name}}
+            </td>
+            <td>{{rowData.size}}</td>
+            <td>{{rowData.type}}</td>
+        </tr>
+    </ng-template>
+</p-treeTable>

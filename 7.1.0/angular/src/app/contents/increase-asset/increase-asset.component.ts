@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
-import { IncreaseAssetInputDto, IncreaseAssetServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AssetInputDto, AssetTypeDto, IncreaseAssetInputDto, IncreaseAssetServiceProxy } from '@shared/service-proxies/service-proxies';
 import * as moment from 'moment';
 import { finalize } from 'rxjs/operators';
 import { CreateOrEditIncreaseAssetComponent } from './create-or-edit-increase-asset/create-or-edit-increase-asset.component';
@@ -19,8 +19,17 @@ export class IncreaseAssetComponent extends AppComponentBase implements OnInit {
   totalRecords: number;
   userId : number;
   //
+  keyword = '';
   advancedFiltersVisible = false;
-  keyword ='';
+  advancedFiltersAreShown = false;
+  maxDateFilter: moment.Moment;
+  minDateFilter: moment.Moment;
+  selectedAssetType : AssetTypeDto;
+  selectedAssetStatus: any;
+  selectedReasonReduce: any;
+  assetTypeList : AssetInputDto[] = [];
+  filterText = '';
+ //
   constructor(
     injector: Injector,
     private increaseAssetService: IncreaseAssetServiceProxy,

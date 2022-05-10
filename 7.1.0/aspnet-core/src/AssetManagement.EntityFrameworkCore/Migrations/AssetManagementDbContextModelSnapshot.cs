@@ -1386,6 +1386,9 @@ namespace AssetManagement.Migrations
                     b.Property<string>("AssetTypeName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("AssetUnit")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
@@ -1398,8 +1401,14 @@ namespace AssetManagement.Migrations
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("DepartmentId")
+                        .HasColumnType("int");
+
                     b.Property<double?>("DepreciationOfAsset")
                         .HasColumnType("float");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("IncreaseAssetDate")
                         .HasColumnType("datetime2");
@@ -1428,6 +1437,9 @@ namespace AssetManagement.Migrations
                     b.Property<double>("OrginalPrice")
                         .HasColumnType("float");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.Property<string>("ReasonForReduction")
                         .HasColumnType("nvarchar(max)");
 
@@ -1446,11 +1458,17 @@ namespace AssetManagement.Migrations
                     b.Property<double?>("ResidualValue")
                         .HasColumnType("float");
 
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("TenantId")
                         .HasColumnType("int");
 
                     b.Property<string>("UsageStatus")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -1458,11 +1476,15 @@ namespace AssetManagement.Migrations
 
                     b.HasIndex("AssetTypeId");
 
+                    b.HasIndex("DepartmentId");
+
                     b.HasIndex("IncreaseAssetId");
 
                     b.HasIndex("ReasonReduceId");
 
                     b.HasIndex("ReduceAssetId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Asset");
                 });
@@ -1513,6 +1535,9 @@ namespace AssetManagement.Migrations
 
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NumberOfYearDepreciation")
+                        .HasColumnType("int");
 
                     b.Property<string>("ParentAssetTypeId")
                         .HasColumnType("nvarchar(max)");
@@ -2092,6 +2117,9 @@ namespace AssetManagement.Migrations
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("HandlingMethod")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -2407,6 +2435,10 @@ namespace AssetManagement.Migrations
                         .WithMany("Assets")
                         .HasForeignKey("AssetTypeId");
 
+                    b.HasOne("AssetManagement.Departments.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId");
+
                     b.HasOne("AssetManagement.IncreaseAssets.IncreaseAsset", "IncreaseAsset")
                         .WithMany("Assets")
                         .HasForeignKey("IncreaseAssetId");
@@ -2419,15 +2451,23 @@ namespace AssetManagement.Migrations
                         .WithMany("Assets")
                         .HasForeignKey("ReduceAssetId");
 
+                    b.HasOne("AssetManagement.Authorization.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.Navigation("AssetStatus");
 
                     b.Navigation("AssetType");
+
+                    b.Navigation("Department");
 
                     b.Navigation("IncreaseAsset");
 
                     b.Navigation("ReasonReduce");
 
                     b.Navigation("ReduceAsset");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AssetManagement.Authorization.Roles.Role", b =>

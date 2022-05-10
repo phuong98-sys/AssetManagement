@@ -61,6 +61,12 @@ import { SuggestionHandlingComponent } from './contents/suggestion-handling/sugg
 import { CreateOrEditSuggestionHandlingComponent } from './contents/suggestion-handling/create-or-edit-suggestion-handling/create-or-edit-suggestion-handling.component';
 import { AddAssetSuggestionHandlingComponent } from './contents/suggestion-handling/add-asset-suggestion-handling/add-asset-suggestion-handling.component';
 import { CreateOrEditAssetTypeComponent } from './contents/asset-type/create-or-edit-asset-type/create-or-edit-asset-type.component';
+import { DepreciationAssetComponent } from './aontents/depreciation-asset/depreciation-asset.component';
+import { CreateOrEditDepreciationAssetComponent } from './aontents/depreciation-asset/create-or-edit-depreciation-asset/create-or-edit-depreciation-asset.component';
+
+import {TreeModule} from 'primeng/tree';
+import {TreeTableModule} from 'primeng/treetable';
+import {TreeNode} from 'primeng/api';
 @NgModule({
   declarations: [
     AppComponent,
@@ -108,6 +114,8 @@ import { CreateOrEditAssetTypeComponent } from './contents/asset-type/create-or-
     CreateOrEditSuggestionHandlingComponent,
     AddAssetSuggestionHandlingComponent,
     CreateOrEditAssetTypeComponent,
+    DepreciationAssetComponent,
+    CreateOrEditDepreciationAssetComponent,
   ],
   imports: [
     CommonModule,
@@ -127,6 +135,8 @@ import { CreateOrEditAssetTypeComponent } from './contents/asset-type/create-or-
     DropdownModule,
     PaginatorModule,
     BsDatepickerModule.forRoot() ,
+    TreeModule,
+    TreeTableModule
   ],
   providers: [ BsDatepickerConfig],
   entryComponents: [

@@ -39,6 +39,12 @@ namespace AssetManagement.Assets.DTO
         public string? LastModifierUserName { get; set; }
         public string? CreatorUserName { get; set; }
         public DateTime? LastModificationTime { get; set; }
+        public string? AssetUnit { get; set; }
+        public int? Quantity { get; set; }
+        public string DepartmentName { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public string? UserName { get; set; }
     }
     [AutoMapFrom(typeof(Asset))]
     public class AssetListDto: CreationAuditedEntityDto<int?>
@@ -65,6 +71,12 @@ namespace AssetManagement.Assets.DTO
         public int AssetTypeId { get; set; }
         public int AssetStatusId { get; set; }
         public int? ReasonReduceId { get; set; }
+        public string? AssetUnit { get; set; }
+        public int? Quantity { get; set; }
+        public string DepartmentName { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public string? UserName { get; set; }
     }
 
     [AutoMapTo(typeof(Asset))]
@@ -92,6 +104,12 @@ namespace AssetManagement.Assets.DTO
         public int AssetTypeId { get; set; }
         public int AssetStatusId { get; set; }
         public int? ReasonReduceId { get; set; }
+        public string? AssetUnit { get; set; }
+        public int? Quantity { get; set; }
+        public string DepartmentName { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public string? UserName { get; set; }
     }
     public class GetAssetInput
     {
@@ -122,6 +140,9 @@ namespace AssetManagement.Assets.DTO
         public int? ReduceAssetId { get; set; }
         public int? AssetTypeId { get; set; }
         public int? AssetStatusId { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public string? UserName { get; set; }
     }
     public class DeleteAssetInput
     {

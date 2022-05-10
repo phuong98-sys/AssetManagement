@@ -153,14 +153,14 @@
                 Người tạo
                 <p-sortIcon field="creatorUserName"></p-sortIcon>
             </th>     
-            <th pResizableColumn pSortableColumn="lastModificationTime" style="width:130px">
+            <!-- <th pResizableColumn pSortableColumn="lastModificationTime" style="width:130px">
                 Ngày sửa
                 <p-sortIcon field="lastModificationTime"></p-sortIcon>
             </th>     
             <th pResizableColumn pSortableColumn="lastModificationName" style="width:130px">
                 Người sửa
                 <p-sortIcon field="lastModificationName"></p-sortIcon>
-            </th>  
+            </th>   -->
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-asset>
@@ -189,8 +189,8 @@
             <td style="width:120px">{{ asset.note }}</td>
             <td style="width:150px">{{ asset.totalReduceAssetValue}}</td>
             <td style="width:130px">{{ asset.creatorUserName}}</td>
-            <td style="width:130px">{{ asset.lastModificationTime}}</td>
-            <td style="width:130px">{{ asset.lastModificationName}}</td>
+            <!-- <td style="width:130px">{{ asset.lastModificationTime}}</td>
+            <td style="width:130px">{{ asset.lastModificationName}}</td> -->
         </tr>
     </ng-template>
 </p-table>

@@ -18,10 +18,10 @@ declare var $:any;
   styleUrls: ['./create-or-edit-increase-asset.component.css']
 })
 export class CreateOrEditIncreaseAssetComponent extends AppComponentBase implements OnInit {
-  // @ViewChild("createOrEditModal", { static: true }) modal: ModalDirective;
+  @ViewChild("createOrEditModal", { static: true }) modal: ModalDirective;
   @ViewChild("increaseAssetForm", { static: true }) private submitForm: NgForm;
   @ViewChild('editIncreaseAssetModal', { static: true }) editIncreaseAssetModal: EditIncreaseAssetModalComponent;
-  // @Output() modalSave = new EventEmitter<any>();
+  @Output() modalSave = new EventEmitter<any>();
   active = false;
   saving = false;
   loading = false;
@@ -77,7 +77,7 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
       this.increaseAsset = increaseAsset;
       // this.selectedAssetType = this.assetTypeList.find((item)=> item.id == asset.assetTypeId);
     }
-    // this.modal.show();
+    this.editIncreaseAssetModal.show();
     
   }
   validateForm(form) {

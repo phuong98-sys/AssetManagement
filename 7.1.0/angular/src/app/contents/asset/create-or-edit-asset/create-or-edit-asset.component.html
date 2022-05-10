@@ -46,56 +46,6 @@
                         </p-dropdown>
                         <span *ngIf="!selectedAssetType" class="error-message">Trường này không được để trống</span>
                     </div>
-                    <div class="form-group" *ngIf="assetId > 0 ">
-                        <label for="IncreaseAssetDate">{{"Ngày ghi tăng" | localize}} </label>
-                        <input id="IncreaseAssetDate" #increaseAssetDate="ngModel" type="date" name="IncreaseAssetDate" class="form-control" [(ngModel)]="asset.increaseAssetDate" disabled/>
-                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
-                    </div>
-                    <div class="form-group" *ngIf="assetId > 0 ">
-                        <label for="NumberOfDayAmortization">{{"Thời gian tính khấu hao" | localize}} </label>
-                        <input id="NumberOfDayAmortization" #numberOfDayAmortization="ngModel" type="number" name="NumberOfDayAmortization" class="form-control" [(ngModel)]="asset.numberOfDayAmortization" disabled/>
-                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
-                    </div>
-                    <div class="form-group" *ngIf="assetId > 0 ">
-                        <label for="NumberOfDayUsedAsset">{{"Thời gian sử dụng" | localize}} </label>
-                        <input id="NumberOfDayUsedAsset" #numberOfDayUsedAsset="ngModel" type="number" name="NumberOfDayUsedAsset" class="form-control" [(ngModel)]="asset.numberOfDayUsedAsset" disabled />
-                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
-                    </div>
-                    <div class="form-group" *ngIf="assetId > 0 ">
-                        <label for="NumberOfDayRemaing">{{"Thời gian còn lại" | localize}} </label>
-                        <input id="NumberOfDayRemaing" #numberOfDayRemaing="ngModel" type="number" name="NumberOfDayRemaing" class="form-control" [(ngModel)]="asset.numberOfDayRemaing" disabled/>
-                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
-                    </div>
-                    <div class="form-group" *ngIf="assetId > 0 ">
-                        <label for="AmortizationValue">{{"Giá trị khấu hao" | localize}} </label>
-                        <input id="AmortizationValue" #amortizationValue="ngModel" type="number" name="AmortizationValue" class="form-control" [(ngModel)]="asset.amortizationValue" disabled/>
-                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
-                    </div>
-                    <div class="form-group" *ngIf="assetId > 0 ">
-                        <label for="DepreciationOfAsset">{{"Hao mòn lũy kế" | localize}} </label>
-                        <input id="DepreciationOfAsset" #depreciationOfAsset="ngModel" type="number" name="DepreciationOfAsset" class="form-control" [(ngModel)]="asset.depreciationOfAsset" disabled/>
-                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
-                    </div>
-                    <div class="form-group" *ngIf="assetId > 0 ">
-                        <label for="ResidualValue">{{"Giá trị còn lại" | localize}} </label>
-                        <input id="ResidualValue" #residualValue="ngModel" type="number" name="ResidualValue" class="form-control" [(ngModel)]="asset.residualValue" disabled/>
-                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
-                    </div>
-                    <div class="form-group" *ngIf="assetId > 0 ">
-                        <label for="UsageStatus">{{"Trạng thái sử dụng" | localize}} </label>
-                        <input id="UsageStatus" #usageStatus="ngModel" type="text" name="UsageStatus" class="form-control" [(ngModel)]="asset.usageStatus" disabled/>
-                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
-                    </div>
-                    <div class="form-group" *ngIf="assetId > 0 ">
-                        <label for="ReasonForReduction">{{"Lí do ghi giảm" | localize}} </label>
-                        <input id="ReasonForReduction" #reasonForReduction="ngModel" type="text" name="ReasonForReduction" class="form-control" [(ngModel)]="asset.reasonForReduction" disabled/>
-                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
-                    </div>
-                    <div class="form-group" *ngIf="assetId > 0 ">
-                        <label for="RecoverableValue">{{"Giá trị thu hồi" | localize}} </label>
-                        <input id="RecoverableValue" #recoverableValue="ngModel" type="number" name="RecoverableValue" class="form-control" [(ngModel)]="asset.recoverableValue" disabled/>
-                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
-                    </div>  
                 </div>       
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn bg-danger" (click)="close()">{{"Hủy" |

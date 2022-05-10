@@ -1,7 +1,7 @@
 <div class="header-title">
     <div class="title-page">Sổ tài sản</div>
     <div class="btn-add-container">
-        <button class="btn btn-add" (click)="createOrEditAsset()">Thêm</button>
+        <button class="btn btn-add" (click)="createOrEditAsset()">Thêm tài sản</button>
     </div>
 </div>
 <form class="kt-form" autocomplete="off">
@@ -11,7 +11,7 @@
                 <div class="input-group">
                     <input [(ngModel)]="filterText" name="filterText" autoFocus
                         class="form-control m-input"
-                        placeholder="Tìm kiếm theo mã tài sản, tên tài sản, người tạo" type="text" />
+                        placeholder="Tìm kiếm theo mã tài sản, tên tài sản, tên loại tài sản người tạo" type="text" />
                     <span class="input-group-btn">
                         <button (click)="getAssets()" class="btn btn-search" type="submit">
                             <i class="fa fa-search"></i>
@@ -304,28 +304,36 @@
                 Nguyên Giá 
                 <p-sortIcon field="orginalPrice"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="increaseAssetDate" style="width:140px">
+            <th pResizableColumn pSortableColumn="department" style="width:140px">
+                Bộ phận sử dụng
+                <p-sortIcon field="department"></p-sortIcon>
+            </th>
+            <th pResizableColumn pSortableColumn="userName" style="width:140px">
+                Người sử dụng
+                <p-sortIcon field="userName"></p-sortIcon>
+            </th>
+            <!-- <th pResizableColumn pSortableColumn="increaseAssetDate" style="width:140px">
                 Ngày ghi tăng
                 <p-sortIcon field="increaseAssetDate"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="numberOfDayAmortization" style="width:150px">
+            </th> -->
+            <!-- <th pResizableColumn pSortableColumn="numberOfDayAmortization" style="width:150px">
                 Ngày khấu hao 
                 <p-sortIcon field="numberOfDayAmortization"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="numberOfDayUsedAsset" style="width:140px">
-                Ngày sử dụng 
+            </th> -->
+            <th pResizableColumn pSortableColumn="numberOfDayUsedAsset" style="width:200px">
+                Ngày bắt đầu sử dụng 
                 <p-sortIcon field="numberOfDayUsedAsset"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="numberOfDayRemaing" style="width:130px">
+            <!-- <th pResizableColumn pSortableColumn="numberOfDayRemaing" style="width:130px">
                 Ngày còn lại
                 <p-sortIcon field="numberOfDayRemaing"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="amortizationValue" style="width:200px">
-                Giá trị tính khấu hao
+            </th> -->
+            <th pResizableColumn pSortableColumn="amortizationValue" style="width:120px">
+                HM/KH năm
                 <p-sortIcon field="amortizationValue"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="depreciationOfAsset" style="width:170px">
-                Khấu hao tài sản
+            <th pResizableColumn pSortableColumn="depreciationOfAsset" style="width:150px">
+                HM/KH lũy kế
                 <p-sortIcon field="depreciationOfAsset"></p-sortIcon>
             </th>
             <th pResizableColumn pSortableColumn="residualValue" style="width:140px">
@@ -336,8 +344,8 @@
                 Trạng thái sử dụng
                 <p-sortIcon field="usageStatus"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="reduceAssetDate" style="width:140px">
-                Ngày ghi giảm
+            <th pResizableColumn pSortableColumn="reduceAssetDate" style="width:170px">
+                Ngày ngừng sử dụng
                 <p-sortIcon field="reduceAssetDate"></p-sortIcon>
             </th>
             <th pResizableColumn pSortableColumn="reasonForReduction" style="width:140px">
@@ -356,14 +364,14 @@
                 Người tạo
                 <p-sortIcon field="creatorUserName"></p-sortIcon>
             </th>     
-            <th pResizableColumn pSortableColumn="lastModificationTime" style="width:130px">
+            <!-- <th pResizableColumn pSortableColumn="lastModificationTime" style="width:130px">
                 Ngày sửa
                 <p-sortIcon field="lastModificationTime"></p-sortIcon>
-            </th>     
-            <th pResizableColumn pSortableColumn="lastModificationName" style="width:130px">
+            </th>      -->
+            <!-- <th pResizableColumn pSortableColumn="lastModificationName" style="width:130px">
                 Người sửa
                 <p-sortIcon field="lastModificationName"></p-sortIcon>
-            </th>     
+            </th>      -->
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-asset>
@@ -390,21 +398,25 @@
             <td style="width:120px">{{ asset.assetTypeName}}</td>
             <td style="width:120px">{{ asset.assetName}}</td>
             <td style="width:120px">{{ asset.orginalPrice }}</td>
-            <td style="width:140px">{{ asset.increaseAssetDate}}</td>
-            <td style="width:150px">{{ asset.numberOfDayAmortization }}</td>
-            <td style="width:140px">{{ asset.numberOfDayUsedAsset}}</td>
-            <td style="width:130px">{{ asset.numberOfDayRemaing }}</td>
-            <td style="width:200px">{{ asset.amortizationValue}}</td>
-            <td style="width:170px">{{ asset.depreciationOfAsset }}</td>
+            <td style="width:140px">{{ asset.departmentName }}</td>
+            <td style="width:140x">{{ asset.userName }}</td>
+            <!-- <td style="width:140px">{{ asset.increaseAssetDate}}</td>
+            <td style="width:150px">{{ asset.numberOfDayAmortization }}</td> -->
+            <td style="width:200px">{{ asset.startDate }}</td>
+            <!-- <td style="width:140px">{{ asset.numberOfDayUsedAsset}}</td> -->
+            <!-- <td style="width:130px">{{ asset.numberOfDayRemaing }}</td> -->
+            <td style="width:120px">{{ asset.amortizationValue}}</td>
+            <td style="width:150px">{{ asset.depreciationOfAsset }}</td>
             <td style="width:140px">{{ asset.residualValue}}</td>
             <td style="width:180px">{{ asset.usageStatus }}</td>
-            <td style="width:140px">{{ asset.reduceAssetDate}}</td>
+            <td style="width:170px">{{ asset.endDate}}</td>
             <td style="width:140px">{{ asset.reasonForReduction}}</td>
             <td style="width:140px">{{ asset.recoverableValue}}</td>
             <td style="width:130px">{{ asset.creationTime}}</td>
+
             <td style="width:130px">{{ asset.creatorUserName}}</td>
-            <td style="width:130px">{{ asset.lastModificationTime}}</td>
-            <td style="width:130px">{{ asset.lastModificationName}}</td>
+            <!-- <td style="width:130px">{{ asset.lastModificationTime}}</td>
+            <td style="width:130px">{{ asset.lastModificationName}}</td> -->
           
         </tr>
     </ng-template>

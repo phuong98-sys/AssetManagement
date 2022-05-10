@@ -26,6 +26,8 @@ import { SuggestionHandlingComponent } from './contents/suggestion-handling/sugg
 import { CreateOrEditSuggestionHandlingComponent } from './contents/suggestion-handling/create-or-edit-suggestion-handling/create-or-edit-suggestion-handling.component';
 import { AddAssetSuggestionHandlingComponent } from './contents/suggestion-handling/add-asset-suggestion-handling/add-asset-suggestion-handling.component';
 import { CreateOrEditAssetTypeComponent } from './contents/asset-type/create-or-edit-asset-type/create-or-edit-asset-type.component';
+import { DepreciationAssetComponent } from './aontents/depreciation-asset/depreciation-asset.component';
+import { CreateOrEditDepreciationAssetComponent } from './aontents/depreciation-asset/create-or-edit-depreciation-asset/create-or-edit-depreciation-asset.component';
 
 @NgModule({
     imports: [
@@ -65,6 +67,9 @@ import { CreateOrEditAssetTypeComponent } from './contents/asset-type/create-or-
                         {path: 'suggestion-handling/create', component: CreateOrEditSuggestionHandlingComponent, canActivate: [AppRouteGuard] },
                         {path: 'suggestion-handling/:id', component: CreateOrEditSuggestionHandlingComponent, canActivate: [AppRouteGuard] },
                         {path: 'suggestion-handling/addAsset', component: AddAssetSuggestionHandlingComponent, canActivate: [AppRouteGuard] },
+                        {path: 'depreciation-asset', component: DepreciationAssetComponent, canActivate: [AppRouteGuard] },
+                        {path: 'depreciation-asset/create', component: CreateOrEditDepreciationAssetComponent, canActivate: [AppRouteGuard] },
+                        {path: 'depreciation-asset/:id', component: CreateOrEditDepreciationAssetComponent, canActivate: [AppRouteGuard] },
                         
                     ], canActivate: [AppRouteGuard] },
                     

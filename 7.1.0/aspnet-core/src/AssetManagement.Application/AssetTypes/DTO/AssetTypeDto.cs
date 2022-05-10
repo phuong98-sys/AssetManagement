@@ -23,6 +23,7 @@ namespace WS.AssetTypes.DTO
         public string Note { get; set; }
         public string ParentAssetTypeId { get; set; }
         public DateTime CreationTime { get; set; }
+        public int NumberOfYearDepreciation { get; set; }
 
     }
     [AutoMapTo(typeof(AssetType))]
@@ -38,6 +39,7 @@ namespace WS.AssetTypes.DTO
         public string Note { get; set; }
         public string ParentAssetTypeId { get; set; }
         public DateTime CreationTime { get; set; }
+        public int NumberOfYearDepreciation { get; set; }
 
     }
     public class DeleteAssetTypeDto

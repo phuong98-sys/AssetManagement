@@ -3477,6 +3477,12 @@ export class AssetDto implements IAssetDto {
     lastModifierUserName: string | undefined;
     creatorUserName: string | undefined;
     lastModificationTime: moment.Moment | undefined;
+    assetUnit: string | undefined;
+    quantity: number | undefined;
+    departmentName: string | undefined;
+    startDate: moment.Moment | undefined;
+    endDate: moment.Moment | undefined;
+    userName: string | undefined;
 
     constructor(data?: IAssetDto) {
         if (data) {
@@ -3515,6 +3521,12 @@ export class AssetDto implements IAssetDto {
             this.lastModifierUserName = _data["lastModifierUserName"];
             this.creatorUserName = _data["creatorUserName"];
             this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.assetUnit = _data["assetUnit"];
+            this.quantity = _data["quantity"];
+            this.departmentName = _data["departmentName"];
+            this.startDate = _data["startDate"] ? moment(_data["startDate"].toString()) : <any>undefined;
+            this.endDate = _data["endDate"] ? moment(_data["endDate"].toString()) : <any>undefined;
+            this.userName = _data["userName"];
         }
     }
 
@@ -3553,6 +3565,12 @@ export class AssetDto implements IAssetDto {
         data["lastModifierUserName"] = this.lastModifierUserName;
         data["creatorUserName"] = this.creatorUserName;
         data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["assetUnit"] = this.assetUnit;
+        data["quantity"] = this.quantity;
+        data["departmentName"] = this.departmentName;
+        data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
+        data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
+        data["userName"] = this.userName;
         return data; 
     }
 
@@ -3591,6 +3609,12 @@ export interface IAssetDto {
     lastModifierUserName: string | undefined;
     creatorUserName: string | undefined;
     lastModificationTime: moment.Moment | undefined;
+    assetUnit: string | undefined;
+    quantity: number | undefined;
+    departmentName: string | undefined;
+    startDate: moment.Moment | undefined;
+    endDate: moment.Moment | undefined;
+    userName: string | undefined;
 }
 
 export class AssetDtoListResultDto implements IAssetDtoListResultDto {
@@ -3667,6 +3691,12 @@ export class AssetInputDto implements IAssetInputDto {
     assetTypeId: number;
     assetStatusId: number;
     reasonReduceId: number | undefined;
+    assetUnit: string | undefined;
+    quantity: number | undefined;
+    departmentName: string | undefined;
+    startDate: moment.Moment | undefined;
+    endDate: moment.Moment | undefined;
+    userName: string | undefined;
 
     constructor(data?: IAssetInputDto) {
         if (data) {
@@ -3701,6 +3731,12 @@ export class AssetInputDto implements IAssetInputDto {
             this.assetTypeId = _data["assetTypeId"];
             this.assetStatusId = _data["assetStatusId"];
             this.reasonReduceId = _data["reasonReduceId"];
+            this.assetUnit = _data["assetUnit"];
+            this.quantity = _data["quantity"];
+            this.departmentName = _data["departmentName"];
+            this.startDate = _data["startDate"] ? moment(_data["startDate"].toString()) : <any>undefined;
+            this.endDate = _data["endDate"] ? moment(_data["endDate"].toString()) : <any>undefined;
+            this.userName = _data["userName"];
         }
     }
 
@@ -3735,6 +3771,12 @@ export class AssetInputDto implements IAssetInputDto {
         data["assetTypeId"] = this.assetTypeId;
         data["assetStatusId"] = this.assetStatusId;
         data["reasonReduceId"] = this.reasonReduceId;
+        data["assetUnit"] = this.assetUnit;
+        data["quantity"] = this.quantity;
+        data["departmentName"] = this.departmentName;
+        data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
+        data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
+        data["userName"] = this.userName;
         return data; 
     }
 
@@ -3769,6 +3811,12 @@ export interface IAssetInputDto {
     assetTypeId: number;
     assetStatusId: number;
     reasonReduceId: number | undefined;
+    assetUnit: string | undefined;
+    quantity: number | undefined;
+    departmentName: string | undefined;
+    startDate: moment.Moment | undefined;
+    endDate: moment.Moment | undefined;
+    userName: string | undefined;
 }
 
 export class AssetListDto implements IAssetListDto {
@@ -3794,6 +3842,12 @@ export class AssetListDto implements IAssetListDto {
     assetTypeId: number;
     assetStatusId: number;
     reasonReduceId: number | undefined;
+    assetUnit: string | undefined;
+    quantity: number | undefined;
+    departmentName: string | undefined;
+    startDate: moment.Moment | undefined;
+    endDate: moment.Moment | undefined;
+    userName: string | undefined;
 
     constructor(data?: IAssetListDto) {
         if (data) {
@@ -3828,6 +3882,12 @@ export class AssetListDto implements IAssetListDto {
             this.assetTypeId = _data["assetTypeId"];
             this.assetStatusId = _data["assetStatusId"];
             this.reasonReduceId = _data["reasonReduceId"];
+            this.assetUnit = _data["assetUnit"];
+            this.quantity = _data["quantity"];
+            this.departmentName = _data["departmentName"];
+            this.startDate = _data["startDate"] ? moment(_data["startDate"].toString()) : <any>undefined;
+            this.endDate = _data["endDate"] ? moment(_data["endDate"].toString()) : <any>undefined;
+            this.userName = _data["userName"];
         }
     }
 
@@ -3862,6 +3922,12 @@ export class AssetListDto implements IAssetListDto {
         data["assetTypeId"] = this.assetTypeId;
         data["assetStatusId"] = this.assetStatusId;
         data["reasonReduceId"] = this.reasonReduceId;
+        data["assetUnit"] = this.assetUnit;
+        data["quantity"] = this.quantity;
+        data["departmentName"] = this.departmentName;
+        data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
+        data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
+        data["userName"] = this.userName;
         return data; 
     }
 
@@ -3896,6 +3962,12 @@ export interface IAssetListDto {
     assetTypeId: number;
     assetStatusId: number;
     reasonReduceId: number | undefined;
+    assetUnit: string | undefined;
+    quantity: number | undefined;
+    departmentName: string | undefined;
+    startDate: moment.Moment | undefined;
+    endDate: moment.Moment | undefined;
+    userName: string | undefined;
 }
 
 export class AssetTypeDto implements IAssetTypeDto {
@@ -3905,6 +3977,7 @@ export class AssetTypeDto implements IAssetTypeDto {
     note: string | undefined;
     parentAssetTypeId: string | undefined;
     creationTime: moment.Moment;
+    numberOfYearDepreciation: number;
 
     constructor(data?: IAssetTypeDto) {
         if (data) {
@@ -3923,6 +3996,7 @@ export class AssetTypeDto implements IAssetTypeDto {
             this.note = _data["note"];
             this.parentAssetTypeId = _data["parentAssetTypeId"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.numberOfYearDepreciation = _data["numberOfYearDepreciation"];
         }
     }
 
@@ -3941,6 +4015,7 @@ export class AssetTypeDto implements IAssetTypeDto {
         data["note"] = this.note;
         data["parentAssetTypeId"] = this.parentAssetTypeId;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["numberOfYearDepreciation"] = this.numberOfYearDepreciation;
         return data; 
     }
 
@@ -3959,6 +4034,7 @@ export interface IAssetTypeDto {
     note: string | undefined;
     parentAssetTypeId: string | undefined;
     creationTime: moment.Moment;
+    numberOfYearDepreciation: number;
 }
 
 export class AssetTypeDtoListResultDto implements IAssetTypeDtoListResultDto {
@@ -4019,6 +4095,7 @@ export class AssetTypeInputDto implements IAssetTypeInputDto {
     note: string | undefined;
     parentAssetTypeId: string | undefined;
     creationTime: moment.Moment;
+    numberOfYearDepreciation: number;
 
     constructor(data?: IAssetTypeInputDto) {
         if (data) {
@@ -4037,6 +4114,7 @@ export class AssetTypeInputDto implements IAssetTypeInputDto {
             this.note = _data["note"];
             this.parentAssetTypeId = _data["parentAssetTypeId"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.numberOfYearDepreciation = _data["numberOfYearDepreciation"];
         }
     }
 
@@ -4055,6 +4133,7 @@ export class AssetTypeInputDto implements IAssetTypeInputDto {
         data["note"] = this.note;
         data["parentAssetTypeId"] = this.parentAssetTypeId;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["numberOfYearDepreciation"] = this.numberOfYearDepreciation;
         return data; 
     }
 
@@ -4073,6 +4152,7 @@ export interface IAssetTypeInputDto {
     note: string | undefined;
     parentAssetTypeId: string | undefined;
     creationTime: moment.Moment;
+    numberOfYearDepreciation: number;
 }
 
 export class AuthenticateModel implements IAuthenticateModel {
@@ -6573,6 +6653,7 @@ export class SuggestionHandlingDto implements ISuggestionHandlingDto {
     suggestionHandlingStatusName: string | undefined;
     approverId: number | undefined;
     petitionerId: number | undefined;
+    petitionerName: string | undefined;
     userId: number | undefined;
     departmentId: number | undefined;
     departmentName: string | undefined;
@@ -6600,6 +6681,7 @@ export class SuggestionHandlingDto implements ISuggestionHandlingDto {
             this.suggestionHandlingStatusName = _data["suggestionHandlingStatusName"];
             this.approverId = _data["approverId"];
             this.petitionerId = _data["petitionerId"];
+            this.petitionerName = _data["petitionerName"];
             this.userId = _data["userId"];
             this.departmentId = _data["departmentId"];
             this.departmentName = _data["departmentName"];
@@ -6627,6 +6709,7 @@ export class SuggestionHandlingDto implements ISuggestionHandlingDto {
         data["suggestionHandlingStatusName"] = this.suggestionHandlingStatusName;
         data["approverId"] = this.approverId;
         data["petitionerId"] = this.petitionerId;
+        data["petitionerName"] = this.petitionerName;
         data["userId"] = this.userId;
         data["departmentId"] = this.departmentId;
         data["departmentName"] = this.departmentName;
@@ -6654,6 +6737,7 @@ export interface ISuggestionHandlingDto {
     suggestionHandlingStatusName: string | undefined;
     approverId: number | undefined;
     petitionerId: number | undefined;
+    petitionerName: string | undefined;
     userId: number | undefined;
     departmentId: number | undefined;
     departmentName: string | undefined;
@@ -6723,6 +6807,7 @@ export class SuggestionHandlingInputDto implements ISuggestionHandlingInputDto {
     suggestionHandlingStatusName: string | undefined;
     approverId: number | undefined;
     petitionerId: number | undefined;
+    petitionerName: string | undefined;
     userId: number | undefined;
     departmentId: number | undefined;
     departmentName: string | undefined;
@@ -6750,6 +6835,7 @@ export class SuggestionHandlingInputDto implements ISuggestionHandlingInputDto {
             this.suggestionHandlingStatusName = _data["suggestionHandlingStatusName"];
             this.approverId = _data["approverId"];
             this.petitionerId = _data["petitionerId"];
+            this.petitionerName = _data["petitionerName"];
             this.userId = _data["userId"];
             this.departmentId = _data["departmentId"];
             this.departmentName = _data["departmentName"];
@@ -6777,6 +6863,7 @@ export class SuggestionHandlingInputDto implements ISuggestionHandlingInputDto {
         data["suggestionHandlingStatusName"] = this.suggestionHandlingStatusName;
         data["approverId"] = this.approverId;
         data["petitionerId"] = this.petitionerId;
+        data["petitionerName"] = this.petitionerName;
         data["userId"] = this.userId;
         data["departmentId"] = this.departmentId;
         data["departmentName"] = this.departmentName;
@@ -6804,6 +6891,7 @@ export interface ISuggestionHandlingInputDto {
     suggestionHandlingStatusName: string | undefined;
     approverId: number | undefined;
     petitionerId: number | undefined;
+    petitionerName: string | undefined;
     userId: number | undefined;
     departmentId: number | undefined;
     departmentName: string | undefined;

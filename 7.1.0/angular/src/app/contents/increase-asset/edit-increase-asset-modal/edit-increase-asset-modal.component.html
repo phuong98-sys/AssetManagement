@@ -1,20 +1,54 @@
-<p>edit-increase-asset-modal works!</p>
 <div bsModal #EditAssetIncreaseModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" >
     <div class="modal-dialog modal-lg">
         <div class="modal-content" busyIf="loading">
             <form #assetForm="ngForm" novalidate (ngSubmit)="save()" (keydown.enter)="$event.preventDefault()">
                 <div class="modal-header">
                     <h4 class="modal-title title-page">
-                        <span >{{"Sửa tài sản ghi tăng" | localize}}</span>
+                        <span >{{"Chọn tài sản ghi tăng" | localize}}</span>
                     </h4>
                     <button type="button" class="close" (click)="close()" [disabled]="saving">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="col-6 pd-0">
+                            <label for="AssetCode">{{"Mã tài sản" | localize}} *</label>
+                            <input id="AssetCode" #assetCode="ngModel" type="text" name="AssetCode" class="form-control" [(ngModel)]="asset.assetCode" required maxlength="256" />
+                            <div style="display: grid;">
+                                <span class="text-note">Nhập mã tài sản để tìm kiếm thông tin tài sản</span>
+                                <span class="error-message" *ngIf="asset.assetCode">{{assetMessage}}</span>
+                            </div>
+                            
+                        </div>
+                        <div class="col-3" >
+                            <button class="btn btn-search-asset" (click)="searchAsset()">Kiểm tra</button>
+                        </div>
+                    </div>
                     <div class="form-group">
-                        <label for="AssetCode">{{"Mã tài sản" | localize}} *</label>
-                        <input id="AssetCode" #assetCode="ngModel" type="text" name="AssetCode" class="form-control" [(ngModel)]="asset.assetCode" disabled maxlength="256" />
+                        <label for="startDate">{{"Ngày bắt đầu sử dụng" | localize}} </label>
+                        <input id="startDate" #startDate="ngModel" type="date" name="startDate" class="form-control" [(ngModel)]="asset.startDate" required maxlength="256" />
+                        <span *ngIf="!asset?.startDate" class="error-message">Trường này không được để trống</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="department">{{"Bộ phận sử dụng" | localize}} *</label>
+                        <p-dropdown id="department" #department="ngModel" name="department" [options]="departmentList"
+                        [(ngModel)]="selectedDepartment" placeholder="{{ l('Chọn bộ phận sử dụng') }}" optionLabel="departmentName"
+                        styleClass="form-control brandSelection-dropdown" (onChange)="onSelectDepartmet()" required>
+                        </p-dropdown>
+                        <span *ngIf="!selectedDepartment" class="error-message">Trường này không được để trống</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="department">{{"Người sử dụng" | localize}}</label>
+                        <p-dropdown id="department" #department="ngModel" name="department" [options]="departmentList"
+                        [(ngModel)]="selectedDepartment" placeholder="{{ l('Chọn người sử dụng') }}" optionLabel="departmentName"
+                        styleClass="form-control brandSelection-dropdown" (onChange)="onSelectDepartmet()" required>
+                        </p-dropdown>
+                        <!-- <span *ngIf="!selectedDepartment" class="error-message">Trường này không được để trống</span> -->
+                    </div>
+                    <div class="form-group">
+                        <label for="AssetTypeName">{{"Loại tài sản" | localize}} </label>
+                        <input id="AssetTypeName" #assetTypeName="ngModel" type="text" name="AssetTypeName" class="form-control" [(ngModel)]="asset.assetTypeName" disabled maxlength="256" />   
                     </div>
                     <div class="form-group">
                         <label for="AssetName">{{"Tên tài sản" | localize}} </label>
@@ -26,12 +60,12 @@
             
                     </div>
                     <div class="form-group">
-                        <label for="NumberOfDayUsedAsset">{{"Thời gian sử dụng" | localize}}(năm) *</label>
-                        <input id="NumberOfDayUsedAsset" #numberOfDayUsedAsset="ngModel" type="number" name="NumberOfDayUsedAsset" class="form-control" [(ngModel)]="asset.numberOfDayUsedAsset" (change)="renderAmortizationValue()" min="1" required/>
-                        <span class="text-note">Nhập thời gian sử dụng của tài sản để tính giá trị khấu hao của tài sản</span>
+                        <label for="NumberOfDayUsedAsset">{{"Thời gian sử dụng" | localize}}(năm)</label>
+                        <input id="NumberOfDayUsedAsset" #numberOfDayUsedAsset="ngModel" type="number" name="NumberOfDayUsedAsset" class="form-control" [(ngModel)]="asset.numberOfDayUsedAsset" (change)="renderAmortizationValue()" min="1" required disabled/>
+                        <!-- <span class="text-note">note</span> -->
                     </div>
                     <div class="form-group">
-                        <label for="AmortizationValue">{{"Giá trị khấu hao" | localize}} (đồng)</label>
+                        <label for="AmortizationValue">{{"Giá trị khấu hao năm" | localize}} (đồng)</label>
                         <input id="AmortizationValue" #amortizationValue="ngModel" type="number" name="AmortizationValue" class="form-control" [(ngModel)]="asset.amortizationValue" disabled/>
                         
                     </div>
@@ -39,8 +73,12 @@
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-cancel" (click)="close()">{{"Hủy" |
                         localize}}</button>
-                    <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')" [disabled]="!asset.numberOfDayUsedAsset"><i class="fa fa-save" style="margin-right: 5px" ></i>
+                    <!-- <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')" [disabled]="!asset.numberOfDayUsedAsset"><i class="fa fa-save" style="margin-right: 5px" ></i>
                         <span>{{"Lưu" | localize}}</span></button>
+                    <div> -->
+                        <button type="submit" class="btn btn-increase-asset" buttonBusy="saving" busyText="l('SavingWithThreeDot')" (click)="clickIncreaseAsset()" >Ghi tăng</button>
+                        <!-- [disabled]="!asset.assetCode || !asset.numberOfDayUsedAsset || assetMessage != ''" -->
+                    <!-- </div> -->
                 </div>             
             </form>
             
