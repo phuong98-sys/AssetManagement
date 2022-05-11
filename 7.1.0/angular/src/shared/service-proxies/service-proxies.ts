@@ -1637,6 +1637,233 @@ export class ReduceAssetServiceProxy {
     }
 }
 
+//Transfer
+@Injectable()
+export class TransferServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getTransfers(): Observable<TransferDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Transfer/GetTransfers";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTransfers(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTransfers(<any>response_);
+                } catch (e) {
+                    return <Observable<TransferDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TransferDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetTransfers(response: HttpResponseBase): Observable<TransferDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = TransferDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TransferDtoListResultDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    insertOrUpdateTransfer(body: TransferInputDto | undefined): Observable<TransferListDto> {
+        let url_ = this.baseUrl + "/api/services/app/Transfer/InsertOrUpdateTransfer";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertOrUpdateTransfer(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertOrUpdateTransfer(<any>response_);
+                } catch (e) {
+                    return <Observable<TransferListDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TransferListDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processInsertOrUpdateTransfer(response: HttpResponseBase): Observable<TransferListDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = TransferListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TransferListDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getTransfer(id: number | undefined): Observable<TransferDto> {
+        let url_ = this.baseUrl + "/api/services/app/Transfer/GetTransfer?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTransfer(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTransfer(<any>response_);
+                } catch (e) {
+                    return <Observable<TransferDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TransferDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetTransfer(response: HttpResponseBase): Observable<TransferDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = TransferDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TransferDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    deleteTransfer(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Transfer/DeleteTransfer?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteTransfer(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteTransfer(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteTransfer(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
 @Injectable()
 export class RoleServiceProxy {
     private http: HttpClient;
@@ -6053,6 +6280,294 @@ export interface IReduceAssetInputDto {
     lastModificationTime: moment.Moment | undefined;
 }
 
+//TransferDto
+export class TransferDto implements ITransferDto {
+    id: number;
+    creatorUserId: number | undefined;
+    numbersTransfer: string|undefined;
+    dateFound: moment.Moment;
+    departmentName: string;
+    content: string;
+    approver: string;
+    approvalStatus: string;
+    userCode: string;
+    creationTime: moment.Moment;
+
+    constructor(data?: ITransferDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
+            this.numbersTransfer = _data["numbersTransfer"];
+            this.dateFound = _data["dateFound"] ? moment(_data["dateFound"].toString()) : <any>undefined;
+            this.departmentName = _data["departmentName"];
+            this.content = _data["content"];
+            this.approver = _data["approver"];
+            this.approvalStatus = _data["approvalStatus"];
+            this.userCode = _data["userCode"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): TransferDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TransferDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
+        data["numbersTransfer"] = this.numbersTransfer;
+        data["dateFound"] = this.dateFound ? this.dateFound.toISOString() : <any>undefined;
+        data["departmentName"] = this.departmentName;
+        data["content"] = this.content;
+        data["approver"] = this.approver;
+        data["approvalStatus"] = this.approvalStatus;
+        data["userCode"] = this.userCode;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): TransferDto {
+        const json = this.toJSON();
+        let result = new TransferDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITransferDto {
+    id: number;
+    creatorUserId: number | undefined;
+    numbersTransfer: string|undefined;
+    dateFound: moment.Moment;
+    departmentName: string;
+    content: string;
+    approver: string;
+    approvalStatus: string;
+    userCode: string;
+    creationTime: moment.Moment;
+}
+export class TransferDtoListResultDto implements ITransferDtoListResultDto {
+    items: TransferDto[] | undefined;
+
+    constructor(data?: ITransferDtoListResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(TransferDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): TransferDtoListResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TransferDtoListResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): TransferDtoListResultDto {
+        const json = this.toJSON();
+        let result = new TransferDtoListResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITransferDtoListResultDto {
+    items: TransferDto[] | undefined;
+}
+
+export class TransferInputDto implements ITransferInputDto {
+    id: number;
+    creatorUserId: number | undefined;
+    numbersTransfer: string|undefined;
+    dateFound: moment.Moment;
+    departmentName: string;
+    content: string;
+    approver: string;
+    approvalStatus: string;
+    userCode: string;
+    creationTime: moment.Moment;
+
+    constructor(data?: ITransferInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
+            this.numbersTransfer = _data["numbersTransfer"];
+            this.dateFound = _data["dateFound"] ? moment(_data["dateFound"].toString()) : <any>undefined;
+            this.departmentName = _data["departmentName"];
+            this.content = _data["content"];
+            this.approver = _data["approver"];
+            this.approvalStatus = _data["approvalStatus"];
+            this.userCode = _data["userCode"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): TransferInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TransferInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
+        data["numbersTransfer"] = this.numbersTransfer;
+        data["dateFound"] = this.dateFound ? this.dateFound.toISOString() : <any>undefined;
+        data["departmentName"] = this.departmentName;
+        data["content"] = this.content;
+        data["approver"] = this.approver;
+        data["approvalStatus"] = this.approvalStatus;
+        data["userCode"] = this.userCode;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): TransferInputDto {
+        const json = this.toJSON();
+        let result = new TransferInputDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITransferInputDto {
+    id: number;
+    creatorUserId: number | undefined;
+    numbersTransfer: string|undefined;
+    dateFound: moment.Moment;
+    departmentName: string;
+    content: string;
+    approver: string;
+    approvalStatus: string;
+    userCode: string;
+    creationTime: moment.Moment;
+}
+
+export class TransferListDto implements ITransferListDto {
+    id: number;
+    creatorUserId: number | undefined;
+    numbersTransfer: string|undefined;
+    dateFound: moment.Moment;
+    departmentName: string;
+    content: string;
+    approver: string;
+    approvalStatus: string;
+    userCode: string;
+    creationTime: moment.Moment;
+
+    constructor(data?: ITransferListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
+            this.numbersTransfer = _data["numbersTransfer"];
+            this.dateFound = _data["dateFound"] ? moment(_data["dateFound"].toString()) : <any>undefined;
+            this.departmentName = _data["departmentName"];
+            this.content = _data["content"];
+            this.approver = _data["approver"];
+            this.approvalStatus = _data["approvalStatus"];
+            this.userCode = _data["userCode"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): TransferListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TransferListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
+        data["numbersTransfer"] = this.numbersTransfer;
+        data["dateFound"] = this.dateFound ? this.dateFound.toISOString() : <any>undefined;
+        data["departmentName"] = this.departmentName;
+        data["content"] = this.content;
+        data["approver"] = this.approver;
+        data["approvalStatus"] = this.approvalStatus;
+        data["userCode"] = this.userCode;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): TransferListDto {
+        const json = this.toJSON();
+        let result = new TransferListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITransferListDto {
+    id: number;
+    creatorUserId: number | undefined;
+    numbersTransfer: string|undefined;
+    dateFound: moment.Moment;
+    departmentName: string;
+    content: string;
+    approver: string;
+    approvalStatus: string;
+    userCode: string;
+    creationTime: moment.Moment;
+}
+//
 export class RegisterInput implements IRegisterInput {
     name: string;
     surname: string;

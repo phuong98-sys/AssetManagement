@@ -1,0 +1,93 @@
+<div bsModal #EditAssetIncreaseModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" >
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" busyIf="loading">
+            <form #assetForm="ngForm" novalidate (ngSubmit)="save()" (keydown.enter)="$event.preventDefault()">
+                <div class="modal-header">
+                    <h4 class="modal-title title-page">
+                        <span >{{"Chọn tài sản" | localize}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+               
+                <div class="content-component" style="padding: 10px">
+                    <div> 
+                        <button class="btn" style="margin-left: 10px">Bỏ chọn</button>
+                    </div>
+                    <p-table (onLazyLoad)="getAssets($event)" [paginator]="false" [lazy]="true" [rows]="3" [totalRecords]="totalRecords"  [scrollable]="true" scrollHeight="320px" scrollWidth="1100px" [value]="assetList" [resizableColumns]="true" [autoLayout]="true" [responsive]="primengTableHelper.isResponsive">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width:50px" class="pl-1">
+                                    <input type="checkbox" />
+                                </th>
+                                <th pResizableColumn pSortableColumn="assetCode" style="width:120px">
+                                    Mã tài sản
+                                    <p-sortIcon field="assetCode"></p-sortIcon>
+                                </th>
+                                <th pResizableColumn pSortableColumn="assetTypeName" style="width:120px">
+                                    Loại tài sản
+                                    <p-sortIcon field="assetTypeName"></p-sortIcon>
+                                </th>
+                                <th pResizableColumn pSortableColumn="assetName" style="width:120px">
+                                    Tên tài sản
+                                    <p-sortIcon field="assetName"></p-sortIcon>
+                                </th>
+                                <th pResizableColumn pSortableColumn="orginalPrice" style="width:120px">
+                                    Nguyên Giá 
+                                    <p-sortIcon field="orginalPrice"></p-sortIcon>
+                                </th>
+                                <th pResizableColumn pSortableColumn="increaseAssetDate" style="width:140px">
+                                    Ngày ghi tăng
+                                    <p-sortIcon field="increaseAssetDate"></p-sortIcon>
+                                </th>
+                                <th pResizableColumn pSortableColumn="residualValue" style="width:140px">
+                                    Giá trị còn lại
+                                    <p-sortIcon field="residualValue"></p-sortIcon>
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-asset>
+                            <tr>
+                                <td style="width:50px" class="pl-1"><input type ="checkbox"></td>
+                                <td style="width:120px">{{ asset.assetCode }}</td>
+                                <td style="width:120px">{{ asset.assetTypeName}}</td>
+                                <td style="width:120px">{{ asset.assetName}}</td>
+                                <td style="width:120px">{{ asset.orginalPrice }}</td>
+                                <td style="width:140px">{{ asset.increaseAssetDate}}</td>
+                                <td style="width:140px">{{ asset.residualValue}}</td>
+                            </tr>
+                        </ng-template>
+                        <div class="" *ngIf="totalRecords == 0">
+                            {{ l("NoData") }}
+                        </div>
+                        <div class="order-history__paginator" id="my-order-paging">
+                        </div>      
+                    </p-table>
+                </div>
+                
+                <div class="modal-body row">
+                    <div class="form-group col-4">
+                        <label for="handlingMethod">{{"Bộ phận sử dụng mới" | localize}} *</label>
+                        <p-dropdown id="handlingMethod" #handlingMethod="ngModel" name="handlingMethod" [options]="handlingMethodList"
+                        [(ngModel)]="selectedHandlingMethod" placeholder="{{ l('Chọn hình thức xử lí') }}" optionLabel="handlingMethodName"
+                        styleClass="form-control brandSelection-dropdown" required>
+                        </p-dropdown>
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="OrginalPrice">{{"Ghi chú" | localize}}</label>
+                        <input id="OrginalPrice" #orginalPrice="ngModel" type="number" name="OrginalPrice" class="form-control" [(ngModel)]="asset.orginalPrice" />
+            
+                    </div>
+                </div>   
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-cancel" (click)="close()">{{"Hủy" |
+                        localize}}</button>
+                    <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')" [disabled]="!asset.numberOfDayUsedAsset"><i class="fa fa-save" style="margin-right: 5px" ></i>
+                        <span>{{"Lưu" | localize}}</span></button>
+                </div>             
+            </form>
+            
+        </div>
+    </div>
+</div>

@@ -26,7 +26,9 @@ import { SuggestionHandlingComponent } from './contents/suggestion-handling/sugg
 import { CreateOrEditSuggestionHandlingComponent } from './contents/suggestion-handling/create-or-edit-suggestion-handling/create-or-edit-suggestion-handling.component';
 import { AddAssetSuggestionHandlingComponent } from './contents/suggestion-handling/add-asset-suggestion-handling/add-asset-suggestion-handling.component';
 import { CreateOrEditAssetTypeComponent } from './contents/asset-type/create-or-edit-asset-type/create-or-edit-asset-type.component';
-
+import { TransferComponent } from './contents/transfer/transfer.component';
+import { CreateOrEditTransferComponent } from './contents/transfer/create-or-edit-transfer/create-or-edit-transfer.component';
+import { AddAssetTransferComponent } from './contents/transfer/add-asset-transfer/add-asset-transfer.component';
 @NgModule({
     imports: [
         RouterModule.forChild([
@@ -65,7 +67,10 @@ import { CreateOrEditAssetTypeComponent } from './contents/asset-type/create-or-
                         {path: 'suggestion-handling/create', component: CreateOrEditSuggestionHandlingComponent, canActivate: [AppRouteGuard] },
                         {path: 'suggestion-handling/:id', component: CreateOrEditSuggestionHandlingComponent, canActivate: [AppRouteGuard] },
                         {path: 'suggestion-handling/addAsset', component: AddAssetSuggestionHandlingComponent, canActivate: [AppRouteGuard] },
-                        
+                        {path: 'transfer', component: TransferComponent, canActivate: [AppRouteGuard] },
+                        {path: 'transfer/create', component: CreateOrEditTransferComponent, canActivate: [AppRouteGuard] },
+                        {path: 'transfer/:id', component: CreateOrEditTransferComponent, canActivate: [AppRouteGuard] },
+                        {path: 'transfer/addAsset', component: AddAssetTransferComponent, canActivate: [AppRouteGuard] },
                     ], canActivate: [AppRouteGuard] },
                     
                 ]
