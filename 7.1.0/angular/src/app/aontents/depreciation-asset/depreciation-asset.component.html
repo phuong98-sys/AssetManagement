@@ -2,6 +2,7 @@
     <div class="title-page">Chứng từ tính khấu hao</div>
     <div class="btn-add-container">
         <button class="btn btn-add" (click)="createOrEditIncreaseAsset()">Thêm chứng từ</button>
+        
     </div>
 </div>
 <form class="kt-form" autocomplete="off">
@@ -115,10 +116,17 @@
         </div>
     </div>
 </form>
+<div _ngcontent-olq-c180="" class="form-group m-form__group align-items-center"><div _ngcontent-olq-c180="" class="input-group" style="justify-content: stretch">
+    <button class="btn btn-increase-asset ml-1" >Xóa chứng từ</button>
+    <button class="btn btn-increase-asset ml-1" style="margin-left: 10px"> <i class="fa fa-save" style="margin-right: 5px"></i>In chứng từ</button>
+</div>
 <div class="content-component">
     <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="increaseAssetList" [resizableColumns]="true" [autoLayout]="true">
     <ng-template pTemplate="header">
         <tr>
+            <th style="width:50px" class="pl-1">
+                <input type="checkbox" name="selectedAllAsset" [(ngModel)]="isSelectedAllAsset" (click)="onSelectedAllAsset($event)"/>
+            </th>
             <th pResizableColumn pSortableColumn="assetCode" style="width:150px">
                 Chức năng
             </th>
@@ -166,6 +174,9 @@
     </ng-template>
     <ng-template pTemplate="body" let-asset>
         <tr>
+            <th style="width:50px" class="pl-1">
+                <input type="checkbox" name="selectedAllAsset" [(ngModel)]="isSelectedAllAsset" (click)="onSelectedAllAsset($event)"/>
+            </th>
             <td style="width:150px">
                 <div class="btn-group dropdown" dropdown container="body">
                     <button dropdownToggle class="dropdown-toggle btn btn-sm btn-primary">

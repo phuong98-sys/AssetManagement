@@ -1,10 +1,10 @@
-<div class="header-title">
+ <div class="header-title">
     <div class="title-page">Loại tài sản</div>
     <div class="btn-add-container">
         <button class="btn btn-add" (click)="createOrEditAssetType()">Thêm</button>
     </div>
 </div>
-<div class="content-component">
+<!--<div class="content-component">
     <p-table (onLazyLoad)="getAll($event)" [paginator]="false" [lazy]="true" [rows]="3" [totalRecords]="totalRecords"  [scrollable]="true" scrollHeight="320px" scrollWidth="1100px" [value]="assetTypeList" [resizableColumns]="true" [autoLayout]="true" [responsive]="primengTableHelper.isResponsive">
     <ng-template pTemplate="header">
         <tr>
@@ -28,7 +28,11 @@
                 <p-sortIcon field="parentAssetTypeId"></p-sortIcon>
             </th>
             <th pResizableColumn pSortableColumn="numberOfYearDepreciation" style="width:120px">
-                Thời gian trích khấu hao( năm)
+                Thời gian tối thiếu trích khấu hao( năm)
+                <p-sortIcon field="numberOfYearDepreciation"></p-sortIcon>
+            </th>
+            <th pResizableColumn pSortableColumn="numberOfYearDepreciation" style="width:120px">
+                Thời gian tối đa trích khấu hao( năm)
                 <p-sortIcon field="numberOfYearDepreciation"></p-sortIcon>
             </th>
         </tr>
@@ -65,37 +69,72 @@
         {{ l("NoData") }}
     </div>
     <div class="order-history__paginator" id="my-order-paging">
-        <!-- <p-paginator [rows]="2" #paginator
-            (onPageChange)="getAll()"
-            [totalRecords]="totalRecords"
-            [rowsPerPageOptions]="2"
-            styleClass="history-table-paginator">
-        </p-paginator> -->
-        <!-- <p-paginator [rows]="2" #paginator
-            (onPageChange)="getAll($event)"
-            [totalRecords]="totalRecords"
-            styleClass="history-table-paginator">
-        </p-paginator> -->
+
     </div>
 </p-table>
-</div>
+</div> -->
 <!-- <app-create-or-edit-asset #createOrEditAssetModal (modalSave)="getAll()"></app-create-or-edit-asset> -->
 <p-treeTable [value]="data">
     <ng-template pTemplate="header">
         <tr>
-            <th>Name</th>
-            <th>Size</th>
-            <th>Type</th>
+            <th  style="width:150px">
+                Chức năng
+            </th>
+            <th  style="width:120px">
+                Tên loại tài sản
+              
+            </th>
+            <th style="width:120px">
+                Mã tài loại sản
+              
+            </th>
+            <th style="width:80px">
+                Ghi chú
+               
+            </th>
+            <!-- <th pResizableColumn pSortableColumn="parentAssetTypeId" style="width:120px">
+                Mã loại tài sản cha
+                <p-sortIcon field="parentAssetTypeId"></p-sortIcon>
+            </th> -->
+            <th  style="width:150px">
+                Thời gian tối thiếu trích khấu hao( năm)
+               
+            </th>
+            <th style="width:150px">
+                Thời gian tối đa trích khấu hao( năm)
+               
+            </th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
         <tr>
+            <td style="width:150px">
+                <div class="btn-group dropdown" dropdown container="body">
+                    <button dropdownToggle class="dropdown-toggle btn btn-sm btn-primary">
+                        <i class="fa fa-cog"></i><span class="caret"></span>
+                        Hành động
+                    </button>
+                    <ul class="dropdown-menu" *dropdownMenu>
+                        <li>
+                            <a href="javascript:;"
+                                (click)="createOrEditIncreaseAsset(asset)">Sửa</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;"
+                                (click)="deleteIncreaseAsset(asset)">Xóa</a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
             <td>
                 <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
-                {{rowData.name}}
+                {{rowData.assetTypeName}}
             </td>
-            <td>{{rowData.size}}</td>
-            <td>{{rowData.type}}</td>
+            <!-- <td style="width:120px">{{ rowData.assetTypeCode }}</td> -->
+            <td style="width:120px">{{ rowData.note}}</td>
+            <td style="width:180px">{{ rowData.parentAssetTypeId}}</td>
+            <td style="width:150px">{{ rowData.numberOfYearDepreciation}}</td>
+            <td style="width:150px">{{ rowData.numberOfYearDepreciation}}</td>
         </tr>
     </ng-template>
 </p-treeTable>

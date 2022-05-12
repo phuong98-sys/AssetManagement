@@ -18,48 +18,53 @@ export class AssetTypeComponent extends AppComponentBase implements OnInit {
   primengTableHelper: PrimengTableHelper;
   data =
   [
+    // <td style="width:120px">{{ rowNode.assetTypeCode }}</td>
+    // <td style="width:120px">{{ rowNode.note}}</td>
+    // <td style="width:120px">{{ rowNode.parentAssetTypeId}}</td>
+    // <td style="width:120px">{{ rowNode.numberOfYearDepreciation}}</td>
+    // <td style="width:120px">{{ rowNode.numberOfYearDepreciation}}</td>
       {
           "data":{
-              "name":"Documents",
-              "size":"75kb",
-              "type":"Folder"
+              "assetTypeName":"Máy móc",
+              "note":"",
+              "numberOfYearDepreciation":""
           },
           "children":[
               {
                   "data":{
-                      "name":"Work",
-                      "size":"55kb",
-                      "type":"Folder"
+                      "assetTypeName":"thiết bị",
+                      "note":"",
+                      "numberOfYearDepreciation":""
                   },
                   "children":[
                       {
-                          "data":{
+                          "assetTypeName":{
                               "name":"Expenses.doc",
-                              "size":"30kb",
-                              "type":"Document"
+                              "note":"",
+                              "numberOfYearDepreciation":""
                           }
                       },
                       {
-                          "data":{
-                              "name":"Resume.doc",
-                              "size":"25kb",
-                              "type":"Resume"
+                          "assetTypeName":{
+                              "name":"",
+                              "note":"",
+                              "numberOfYearDepreciation":""
                           }
                       }
                   ]
               },
               {
                   "data":{
-                      "name":"Home",
-                      "size":"20kb",
-                      "type":"Folder"
+                      "assetTypeName":"Đồ dùng",
+                      "note":"",
+                      "numberOfYearDepreciation":""
                   },
                   "children":[
                       {
                           "data":{
-                              "name":"Invoices",
-                              "size":"20kb",
-                              "type":"Text"
+                              "assetTypeName":"Đồ dùng 1",
+                              "note":"",
+                              "numberOfYearDepreciation":""
                           }
                       }
                   ]
@@ -69,29 +74,29 @@ export class AssetTypeComponent extends AppComponentBase implements OnInit {
       {
           "data":{
               "name":"Pictures",
-              "size":"150kb",
-              "type":"Folder"
+              "note":"",
+              "numberOfYearDepreciation":""
           },
           "children":[
               {
                   "data":{
                       "name":"barcelona.jpg",
-                      "size":"90kb",
-                      "type":"Picture"
+                      "note":"",
+                      "numberOfYearDepreciation":""
                   }
               },
               {
                   "data":{
                       "name":"primeui.png",
-                      "size":"30kb",
-                      "type":"Picture"
+                      "note":"",
+                      "numberOfYearDepreciation":""
                   }
               },
               {
                   "data":{
                       "name":"optimus.jpg",
-                      "size":"30kb",
-                      "type":"Picture"
+                      "note":"30kb",
+                      "numberOfYearDepreciation":"Picture"
                   }
               }
           ]

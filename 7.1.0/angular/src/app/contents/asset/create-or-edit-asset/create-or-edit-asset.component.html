@@ -13,40 +13,129 @@
                         <span aria-hidden="true">&times;</span>
                     </button> -->
                 </div>
-                <div class="modal-body">
+                <div class="modal-body bg-white row">
                     <!-- <div class="form-group" *ngIf="assetId">
                         <label for="AssetID">{{"Id" | localize}}</label>
                         <input id="AssetID" #assetID="ngModel" type="text" name="AssetID" class="form-control" [(ngModel)]="asset" disabled/>
                  
                     </div> -->
-                    <div class="form-group">
+                    <div class="title-page text-title col-12">Thông tin tài sản</div>
+                    <div class="form-group col-12">
+                        <input  type="checkbox" required maxlength="256" style="margin:10px  10px 0 5px"/>Tự động ghi tăng
+                        <!-- <span *ngIf="!asset?.assetCode" style="color:red; font-size: 12px;">Trường này không được để trống</span>
+                        <span style="color:red; font-size: 12px;">{{assetCodeMessage}}</span> -->
+                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
+                    </div>
+                    <div class="form-group col-4">
                         <label for="AssetCode">{{"Mã tài sản" | localize}} *</label>
                         <input id="AssetCode" #assetCode="ngModel" type="text" name="AssetCode" class="form-control" [(ngModel)]="asset.assetCode" required maxlength="256" (change)="setAssetCode()"/>
-                        <span *ngIf="!asset?.assetCode" style="color:red; font-size: 12px;">Trường này không được để trống</span>
-                        <span style="color:red; font-size: 12px;">{{assetCodeMessage}}</span>
+                        <!-- <span *ngIf="!asset?.assetCode" style="color:red; font-size: 12px;">Trường này không được để trống</span>
+                        <span style="color:red; font-size: 12px;">{{assetCodeMessage}}</span> -->
                         <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-4">
                         <label for="AssetName">{{"Tên tài sản" | localize}} *</label>
                         <input id="AssetName" #assetName="ngModel" type="text" name="AssetName" class="form-control" [(ngModel)]="asset.assetName" required maxlength="256" />
-                        <span *ngIf="!asset?.assetName" style="color:red; font-size: 12px;">Trường này không được để trống</span>
+                        <!-- <span *ngIf="!asset?.assetName" style="color:red; font-size: 12px;">Trường này không được để trống</span> -->
                         <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
                     </div>
-                    <div class="form-group">
-                        <label for="OrginalPrice">{{"Nguyên giá" | localize}} *</label>
-                        <input id="OrginalPrice" #orginalPrice="ngModel" type="number" name="OrginalPrice" class="form-control" [(ngModel)]="asset.orginalPrice" required/>
-                        <span *ngIf="!asset?.orginalPrice" style="color:red; font-size: 12px;">Trường này không được để trống</span>
-                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
-                    </div>
-                    <div class="form-group">
+                    <div class="form-group col-4">
                         <label for="AssetType">{{"Loại tài sản" | localize}} *</label>
                         <p-dropdown id="assetType" #assetType="ngModel" name="assetTypeSelection" [options]="assetTypeList"
                         [(ngModel)]="selectedAssetType" placeholder="{{ l('Chọn loại tài sản') }}" optionLabel="assetTypeName"
                         styleClass="form-control brandSelection-dropdown" (onChange)="onSelectAssetType()" required>
                         </p-dropdown>
-                        <span *ngIf="!selectedAssetType" class="error-message">Trường này không được để trống</span>
+                        <!-- <span *ngIf="!selectedAssetType" class="error-message">Trường này không được để trống</span> -->
                     </div>
-                </div>       
+                    <div class="form-group col-4">
+                        <label for="startDate">{{"Ngày ghi tăng" | localize}} *</label>
+                        <input id="startDate" #startDate="ngModel" type="date" name="startDate" class="form-control" [(ngModel)]="asset.startDate" required maxlength="256" />
+                        <!-- <span *ngIf="!asset?.startDate" class="error-message">Trường này không được để trống</span> -->
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="startDate">{{"Ngày bắt đầu sử dụng" | localize}} *</label>
+                        <input id="startDate" #startDate="ngModel" type="date" name="startDate" class="form-control" [(ngModel)]="asset.startDate" required maxlength="256" />
+                        <!-- <span *ngIf="!asset?.startDate" class="error-message">Trường này không được để trống</span> -->
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="AssetType">{{"Bộ phận sử dụng" | localize}} *</label>
+                        <p-dropdown id="assetType" #assetType="ngModel" name="assetTypeSelection" [options]="assetTypeList"
+                        [(ngModel)]="selectedAssetType"  optionLabel="assetTypeName"
+                        styleClass="form-control brandSelection-dropdown" (onChange)="onSelectAssetType()" required>
+                        </p-dropdown>
+                        <!-- <span *ngIf="!selectedAssetType" class="error-message">Trường này không được để trống</span> -->
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="AssetType">{{"Người sử dụng" | localize}} *</label>
+                        <p-dropdown id="assetType" #assetType="ngModel" name="assetTypeSelection" [options]="assetTypeList"
+                        [(ngModel)]="selectedAssetType" optionLabel="assetTypeName"
+                        styleClass="form-control brandSelection-dropdown" (onChange)="onSelectAssetType()" required>
+                        </p-dropdown>
+                        <!-- <span *ngIf="!selectedAssetType" class="error-message">Trường này không được để trống</span> -->
+                    </div>
+                </div>     
+                <div class="bg-white depreciation-asset row" style="margin-top: 20px ">
+                    <div class="title-page text-title col-12" style="padding: 20px 10px">Thông tin tính khấu hao</div>
+                    <div class="form-group col-3">
+                        <label for="startDate">{{"Ngày bắt đầu tính khấu hao" | localize}} *</label>
+                        <input id="startDate" #startDate="ngModel" type="date" name="startDate" class="form-control" [(ngModel)]="asset.startDate" required maxlength="256" />
+                        <!-- <span *ngIf="!asset?.startDate" class="error-message">Trường này không được để trống</span> -->
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="AssetName">{{"Thời gian sử dụng" | localize}} (năm) *</label>
+                        <input id="AssetName" #date="ngModel" type="text" name="AssetName" class="form-control" [(ngModel)]="asset.id" required maxlength="256" />
+                        <!-- <span *ngIf="!asset?.assetName" style="color:red; font-size: 12px;">Trường này không được để trống</span> -->
+                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="AssetName">{{"Nguyên giá" | localize}} *</label>
+                        <input id="AssetName" #price="ngModel" type="text" name="AssetName" class="form-control" [(ngModel)]="asset.assetCode" required maxlength="256" />
+                        <!-- <span *ngIf="!asset?.assetName" style="color:red; font-size: 12px;">Trường này không được để trống</span> -->
+                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="AssetName">{{"Giá trị tính khấu hao" | localize}} </label>
+                        <input id="AssetName" #value="ngModel" type="text" name="AssetName" class="form-control" [(ngModel)]="asset.assetName" required maxlength="256" />
+                        <!-- <span *ngIf="!asset?.assetName" style="color:red; font-size: 12px;">Trường này không được để trống</span> -->
+                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="value1">{{"Tỉ lệ tính khấu hao tháng(%)" | localize}} </label>
+                        <input id="value1" #value1="ngModel" type="text" name="value1" class="form-control" [(ngModel)]="asset.id" required maxlength="256" disabled/>
+                        <!-- <span *ngIf="!asset?.assetName" style="color:red; font-size: 12px;">Trường này không được để trống</span> -->
+                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="value1">{{"Tỉ lệ tính khấu hao năm(%)" | localize}}(năm) </label>
+                        <input id="value1" #value1="ngModel" type="text" name="value1" class="form-control" [(ngModel)]="asset.id" required maxlength="256" disabled/>
+                        <!-- <span *ngIf="!asset?.assetName" style="color:red; font-size: 12px;">Trường này không được để trống</span> -->
+                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="value1">{{"Giá trị khấu hao tháng" | localize}} </label>
+                        <input id="value1" #value1="ngModel" type="text" name="value1" class="form-control" [(ngModel)]="asset.id" required maxlength="256" disabled/>
+                        <!-- <span *ngIf="!asset?.assetName" style="color:red; font-size: 12px;">Trường này không được để trống</span> -->
+                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="value1">{{"Giá trị khấu hao năm" | localize}} </label>
+                        <input id="value1" #value1="ngModel" type="text" name="value1" class="form-control" [(ngModel)]="asset.id" required maxlength="256" disabled/>
+                        <!-- <span *ngIf="!asset?.assetName" style="color:red; font-size: 12px;">Trường này không được để trống</span> -->
+                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="AssetName">{{"Hao mòn lũy kế"| localize}} </label>
+                        <input id="AssetName" #assetName="ngModel" type="text" name="" class="form-control" [(ngModel)]="asset.assetName" required maxlength="256" />
+                        <!-- <span *ngIf="!asset?.assetName" style="color:red; font-size: 12px;">Trường này không được để trống</span> -->
+                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="AssetName">{{"Giá trị còn lại "| localize}} </label>
+                        <input  class="form-control" required maxlength="256" disabled/>
+                        <!-- <span *ngIf="!asset?.assetName" style="color:red; font-size: 12px;">Trường này không được để trống</span> -->
+                        <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
+                    </div>
+                </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn bg-danger" (click)="close()">{{"Hủy" |
                         localize}}</button>

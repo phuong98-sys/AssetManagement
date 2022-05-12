@@ -4,3 +4,9 @@
 .text-title{
     padding: 10px 0 10px 1rem;
 }
+.input-group-append{
+    display: none;
+}
+.card-header{
+    border-bottom: none;
+}

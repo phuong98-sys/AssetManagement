@@ -9,33 +9,38 @@
                 <span class="title-page title-child" *ngIf="!assetTypeId">{{"Tạo mới loại tài sản" | localize}}</span>
             </h4>
         </div>
-        <div class="modal-body">
-            <div class="form-group">
+        <div class="modal-body row">
+            <div class="form-group col-4">
                 <label for="AssetTypeCode">{{"Mã loại tài sản" | localize}} *</label>
                 <input id="AssetTypeCode" #assetTypeCode="ngModel" type="text" name="assetTypeCode" class="form-control" [(ngModel)]="assetType.assetTypeCode" required maxlength="256" (change)="setAssetTypeCode()"/>
                 <span *ngIf="!assetType?.assetTypeCode" style="color:red; font-size: 12px;">Trường này không được để trống</span>
                 <span style="color:red; font-size: 12px;">{{assetTypeCodeMessage}}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-4">
                 <label for="AssetTypeName">{{"Tên loại tài sản" | localize}} *</label>
                 <input id="AssetTypeName" #assetTypeName="ngModel" type="text" name="AssetTypeName" class="form-control" [(ngModel)]="assetType.assetTypeName" required maxlength="256" />
                 <span *ngIf="!assetType?.assetTypeName" style="color:red; font-size: 12px;">Trường này không được để trống</span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-4">
                 <label for="note">{{"Ghi chú" | localize}}</label>
-                <textarea id="assetTypeNote" #note="ngModel" rows="4" cols="50" name="assetTypeNote" class="form-control" [(ngModel)]="assetType.note">
-                </textarea>
+                <input id="assetTypeNote" #note="ngModel" rows="4" cols="50" name="assetTypeNote" class="form-control" [(ngModel)]="assetType.note"/>
+
             </div>
-            <div class="form-group">
-                <label for="assetTypeParent">{{"Mã loại tài sản cha" | localize}} *</label>
+            <div class="form-group col-4">
+                <label for="assetTypeParent">{{"Mã loại tài sản cha" | localize}} </label>
                 <p-dropdown id="assetTypeParent" #handlingMethod="ngModel" name="assetTypeParent" [options]="assetTypeParentList"
                 [(ngModel)]="selectedassetTypeParent" placeholder="{{ l('Chọn mã loại ài sản cha') }}" optionLabel="assetTypeName"
                 styleClass="form-control brandSelection-dropdown" required>
                 </p-dropdown>
             </div>
-            <div class="form-group">
-                <label for="numberOfYearDepreciation">{{"Thời gian trisch khấu hao (năm)" | localize}} *</label>
+            <div class="form-group col-4">
+                <label for="numberOfYearDepreciation">{{"Thời gian tối thiếu trích khấu hao (năm)" | localize}} *</label>
+                <input id="numberOfYearDepreciation" #numberOfYearDepreciation="ngModel" type="number" name="numberOfYearDepreciation" class="form-control" [(ngModel)]="assetType.numberOfYearDepreciation" required maxlength="256" />
+                <span *ngIf="!assetType?.numberOfYearDepreciation" style="color:red; font-size: 12px;">Trường này không được để trống</span>
+            </div>
+            <div class="form-group col-4">
+                <label for="numberOfYearDepreciation">{{"Thời gian tối đa trích khấu hao (năm)" | localize}} *</label>
                 <input id="numberOfYearDepreciation" #numberOfYearDepreciation="ngModel" type="number" name="numberOfYearDepreciation" class="form-control" [(ngModel)]="assetType.numberOfYearDepreciation" required maxlength="256" />
                 <span *ngIf="!assetType?.numberOfYearDepreciation" style="color:red; font-size: 12px;">Trường này không được để trống</span>
             </div>

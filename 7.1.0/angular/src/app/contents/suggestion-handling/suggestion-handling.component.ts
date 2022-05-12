@@ -1,7 +1,7 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
-import { SuggestionHandlingDto, SuggestionHandlingServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AssetInputDto, AssetTypeDto, SuggestionHandlingDto, SuggestionHandlingServiceProxy } from '@shared/service-proxies/service-proxies';
 import * as moment from 'moment';
 
 @Component({
@@ -15,9 +15,18 @@ export class SuggestionHandlingComponent extends AppComponentBase implements OnI
   cols: any[];
   loading =  false;
   totalRecords: number;
-    //
-    advancedFiltersVisible = false;
-    keyword ='';
+ //
+ keyword = '';
+ advancedFiltersVisible = false;
+ advancedFiltersAreShown = false;
+ maxDateFilter: moment.Moment;
+ minDateFilter: moment.Moment;
+ selectedAssetType : AssetTypeDto;
+ selectedAssetStatus: any;
+ selectedReasonReduce: any;
+ assetTypeList : AssetInputDto[] = [];
+ filterText = '';
+//
   constructor(
     injector: Injector,
     private suggestionHandlingService: SuggestionHandlingServiceProxy,

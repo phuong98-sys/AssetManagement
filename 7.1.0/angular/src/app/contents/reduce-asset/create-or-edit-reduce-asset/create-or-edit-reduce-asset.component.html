@@ -8,41 +8,41 @@
             <span class="title-page title-child" *ngIf="!reduceAsset?.id">{{"Tạo mới chứng từ" | localize}}</span>
         </h4>
     </div>
-    <div class="reduce-asset-container row">
-        <div class="reduce-asset-content pd-0 col-6">
+    <div class="reduce-asset-container ">
+        <div class="reduce-asset-content">
             <form #reduceAssetForm="ngForm" novalidate (ngSubmit)="save()" (keydown.enter)="$event.preventDefault()">     
                 <div class="title-page text-title">Thông tin chứng từ ghi giảm</div>
-                <div class="modal-body">
-                    <div class="form-group">
+                <div class="modal-body bg-white row">
+                    <div class="form-group col-2">
                         <label for="AssetCode">{{"Mã chứng từ" | localize}} *</label>
                         <input id="AssetCode" #assetCode="ngModel" type="text" name="AssetCode" class="form-control" [(ngModel)]="reduceAsset.reduceAssetCode" required maxlength="256" (change)="setReduceAssetCode()"/>
-                        <div style="display: grid;">
+                        <!-- <div style="display: grid;">
                             <span *ngIf="!reduceAsset?.reduceAssetCode" class="error-message">Trường này không được để trống</span>
                             <span class="error-message" *ngIf="reduceAsset.reduceAssetCode">{{reduceAssetCodeMessage}}</span>
-                        </div>
+                        </div> -->
                     </div>
-                    <div class="form-group">
-                        <label for="AssetName">{{"Ngày chứng từ" | localize}} </label>
+                    <div class="form-group col-2">
+                        <label for="AssetName">{{"Ngày chứng từ" | localize}} *</label>
                         <input id="AssetName" #assetName="ngModel" type="date" name="AssetName" class="form-control" [(ngModel)]="reduceAsset.creationTime" required maxlength="256" />
-                        <span *ngIf="!reduceAsset?.creationTime" class="error-message">Trường này không được để trống</span>
+                        <!-- <span *ngIf="!reduceAsset?.creationTime" class="error-message">Trường này không được để trống</span> -->
                     </div>
-                    <div class="form-group">
-                        <label for="ReduceAssetDate">{{"Ngày ghi giảm" | localize}} </label>
+                    <div class="form-group col-2">
+                        <label for="ReduceAssetDate">{{"Ngày ghi giảm" | localize}} *</label>
                         <input id="ReduceAssetDate" #reduceAssetDate="ngModel" type="date" name="ReduceAssetDate" class="form-control" [(ngModel)]="reduceAsset.reduceAssetDate"/>
-                        <span *ngIf="!reduceAsset?.reduceAssetDate" class="error-message">Trường này không được để trống</span>
+                        <!-- <span *ngIf="!reduceAsset?.reduceAssetDate" class="error-message">Trường này không được để trống</span> -->
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="reduceNote">{{"Nội dung" | localize}} *</label>
+                        <input id="reduceAssetNote" #reduceAssetNote="ngModel" rows="4" cols="50" name="ReduceAssetNote" class="form-control" [(ngModel)]="reduceAsset.note"/>
+                    
                     </div>
                     <div class="form-group">
-                        <label for="reduceNote">{{"Nội dung" | localize}} </label>
-                        <textarea id="reduceAssetNote" #reduceAssetNote="ngModel" rows="4" cols="50" name="ReduceAssetNote" class="form-control" [(ngModel)]="reduceAsset.note">
-                        </textarea>
-                    </div>
-                    <div class="form-group">
-                        <div style="font-weight: bold; font-size: 20px">Tổng thu hồi: 123 (đồng)</div>
+                        <div style="font-weight: bold; font-size: 20px">Tổng thu hồi:  (đồng)</div>
                     </div>
                 </div>                
             </form>
         </div>
-        <div class="choose-asset pd-0 col-6">
+        <!-- <div class="choose-asset pd-0 col-6">
             <div class="title-page text-title">Chọn tài sản</div>
             <div class="choose-asset-container">
                 <div class="form-group row">
@@ -71,11 +71,6 @@
                     <input id="OrginalPrice" #orginalPrice="ngModel" type="number" name="OrginalPrice" class="form-control" [(ngModel)]="asset.orginalPrice" disabled/>
         
                 </div>
-                <!-- <div class="form-group">
-                    <label for="NumberOfDayUsedAsset">{{"Thời gian sử dụng" | localize}}(năm) *</label>
-                    <input id="NumberOfDayUsedAsset" #numberOfDayUsedAsset="ngModel" type="number" name="NumberOfDayUsedAsset" class="form-control" [(ngModel)]="asset.numberOfDayUsedAsset" (change)="renderAmortizationValue()" min="1" required/>
-                    <span class="text-note">Nhập thời gian sử dụng của tài sản để tính giá trị khấu hao của tài sản</span>
-                </div> -->
                 <div class="form-group">
                     <label for="ReasonReduce">{{"Lí do ghi giảm" | localize}} *</label>
                     <p-dropdown id="reasonReduce" #reasonReduce="ngModel" name="reasonReduceAsset" [options]="reasonReduceList"
@@ -93,152 +88,50 @@
                     <button class="btn btn-reduce-asset" (click)="clickReduceAsset()" [disabled]="!asset.assetCode || !asset.reasonReduceId || assetMessage != '' || (asset.reasonReduceId == 1 && !asset.recoverableValue)">Ghi giảm</button>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
-    <div class="reduce-asset-table">
-        <div class="title-page text-title">Các tài sản đã chọn để ghi giảm</div>
-        <button class="btn btn-reduce-asset ml-1" (click)="onDeleteAssetListFromTable()">Xóa tài sản</button>
-        <div class="card-header">
-            <div class="row">
-                <div class="col-md-6">&emsp;</div>
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <button
-                                    type="button"
-                                    class="btn bg-blue"
-                                   
-                            >
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                        <input
-                                type="text"
-                                class="form-control"
-                                name="keyword"
-                                [placeholder]="'SearchWithThreeDot' | localize"
-                                [(ngModel)]="keyword"
-                              
-                        />
-                        <div class="input-group-append">
-                            <button
-                                    type="button"
-                                    class="btn btn-default"
-                                    (click)="advancedFiltersVisible = !advancedFiltersVisible"
-                            >
-                                <i
-                                        class="fas"
-                                        [class.fa-angle-up]="advancedFiltersVisible"
-                                        [class.fa-angle-down]="!advancedFiltersVisible"
-                                ></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+    <div class="reduce-asset-table bg-white" style="margin-top: 20px">
+        <div class="title-page text-title">Thông tin tài sản</div>
+        <div _ngcontent-olq-c180="" class="row align-items-center">
+            <div _ngcontent-olq-c180="" class="col-6"><div _ngcontent-olq-c180="" class="form-group m-form__group align-items-center"><div _ngcontent-olq-c180="" class="input-group"><input _ngcontent-olq-c180="" name="filterText" autofocus="" placeholder="Tìm kiếm theo mã tài sản, tên tài sản, tên loại tài sản người tạo" type="text" class="form-control m-input ng-untouched ng-pristine ng-valid" ng-reflect-name="filterText" ng-reflect-model=""><span _ngcontent-olq-c180="" class="input-group-btn"><button _ngcontent-olq-c180="" type="submit" class="btn btn-search"><i _ngcontent-olq-c180="" class="fa fa-search"></i></button></span></div>
             </div>
-            <div *ngIf="advancedFiltersVisible" class="card mb-0 mt-1">
-                <div class="card-body">
-                    <form class="form-horizontal">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group row mb-0">
-                                    <label class="col-md-3 col-form-label">
-                                        {{ "IsActive" | localize }}
-                                    </label>
-                                    <div class="col-md-9 pt-2">
-                                        <div class="custom-control custom-radio d-inline">
-                                            <input
-                                                    type="radio"
-                                                    class="custom-control-input"
-                                                    id="isActiveAll"
-                                                    name="isActive"
-                                                    [(ngModel)]="isActive"
-                                                    [value]="undefined"
-                                                    checked
-                                            />
-                                            <label class="custom-control-label" for="isActiveAll">
-                                                {{ "All" | localize }}
-                                            </label>
-                                        </div>
-                                        <div class="custom-control custom-radio d-inline mx-3">
-                                            <input
-                                                    type="radio"
-                                                    class="custom-control-input"
-                                                    id="isActiveActive"
-                                                    name="isActive"
-                                                    [(ngModel)]="isActive"
-                                                    [value]="true"
-                                            />
-                                            <label
-                                                    class="custom-control-label"
-                                                    for="isActiveActive"
-                                            >
-                                                {{ "Yes" | localize }}
-                                            </label>
-                                        </div>
-                                        <div class="custom-control custom-radio d-inline">
-                                            <input
-                                                    type="radio"
-                                                    class="custom-control-input"
-                                                    id="isActivePassive"
-                                                    name="isActive"
-                                                    [(ngModel)]="isActive"
-                                                    [value]="false"
-                                            />
-                                            <label
-                                                    class="custom-control-label"
-                                                    for="isActivePassive"
-                                            >
-                                                {{ "No" | localize }}
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="card-footer">
-                    <button
-                            type="button"
-                            class="btn bg-blue"
-                            
-                    >
-                        {{ "Search" | localize }}
-                    </button>
-                    <button
-                            type="button"
-                            class="btn btn-default float-right"
-                            (click)="clearFilters()"
-                    >
-                        {{ "Clear" | localize }}
-                    </button>
-                </div>
+        </div>
+        <div class="col-6">
+            <div _ngcontent-olq-c180="" class="form-group m-form__group align-items-center"><div _ngcontent-olq-c180="" class="input-group" style="justify-content: stretch">
+                <button class="btn btn-increase-asset ml-1" (click)="onDeleteAssetListFromTable()">Xóa tài sản</button>
+                <button style="position: absolute; right: 0px" class="btn btn-increase-asset ml-1" (click)="show()">Chọn tài sản</button>
             </div>
+            </div>
+        <div>
+        </div>
+        
+            
         </div>
         <div class="content-component">
-            <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="addAssetToReduceList" [resizableColumns]="true" [autoLayout]="true">
+            <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="assetList" [resizableColumns]="true" [autoLayout]="true">
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width:50px" class="pl-1">
                             <input type="checkbox" name="selectedAllAsset" [(ngModel)]="isSelectedAllAsset" (click)="onSelectedAllAsset($event)"/>
                         </th>
+                        <th style="width:100px">Xóa
+                        </th>
                         <th pResizableColumn pSortableColumn="assetCode" style="width:120px">
                             Mã tài sản
                             <p-sortIcon field="assetCode"></p-sortIcon>
                         </th>
-                        <th pResizableColumn pSortableColumn="assetTypeName" style="width:120px">
+                        <!-- <th pResizableColumn pSortableColumn="assetTypeName" style="width:120px">
                             Loại tài sản
                             <p-sortIcon field="assetTypeName"></p-sortIcon>
-                        </th>
+                        </th> -->
                         <th pResizableColumn pSortableColumn="assetName" style="width:120px">
                             Tên tài sản
                             <p-sortIcon field="assetName"></p-sortIcon>
                         </th>
-                        <th pResizableColumn pSortableColumn="orginalPrice" style="width:120px">
+                        <!-- <th pResizableColumn pSortableColumn="orginalPrice" style="width:120px">
                             Nguyên Giá 
                             <p-sortIcon field="orginalPrice"></p-sortIcon>
-                        </th>
+                        </th> -->
                         <th pResizableColumn pSortableColumn="depreciationOfAsset" style="width:150px">
                             Hao mòn lũy kế
                             <p-sortIcon field="depreciationOfAsset"></p-sortIcon>
@@ -247,25 +140,26 @@
                             Giá trị còn lại
                             <p-sortIcon field="residualValue"></p-sortIcon>
                         </th>
+                        <th pResizableColumn pSortableColumn="recoverableValue" style="width:200px">
+                            HÌnh thức ghi giảm
+                            <p-sortIcon field="recoverableValue"></p-sortIcon>
+                        </th>
                         <th pResizableColumn pSortableColumn="reasonReduceId" style="width:150px">
                             Lí do ghi giảm
                             <p-sortIcon field="reasonReduceId"></p-sortIcon>
                         </th>
-                        <th pResizableColumn pSortableColumn="recoverableValue" style="width:200px">
-                            Giá trị thu hồi
-                            <p-sortIcon field="recoverableValue"></p-sortIcon>
-                        </th>
-                        <th style="width:100px">
-                        </th>
+                        
+                        
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-assetSelected>
                     <tr>
                         <td style="width:50px" class="pl-1"><input type="checkbox" name="selectedAsset" (change)="onSelectedAsset(assetSelected, $event)"></td>
+                        <td style="width:100px"><button type="button" class="btn btn-sm bg-danger ng-tns-c137-2" (click) = "deleteAssetItemFromTable(assetSelected)"><i class="fas fa-trash ng-tns-c137-2"></i> Xóa </button></td>
                         <td style="width:120px">{{ assetSelected.assetCode}}</td>
-                        <td style="width:120px">{{ assetSelected.assetTypeName}}</td>
+                        <!-- <td style="width:120px">{{ assetSelected.assetTypeName}}</td> -->
                         <td style="width:120px">{{ assetSelected.assetName}}</td>
-                        <td style="width:120px">{{ assetSelected.orginalPrice }}</td>    
+                        <!-- <td style="width:120px">{{ assetSelected.orginalPrice }}</td>     -->
                         <td style="width:150px">{{ assetSelected.depreciationOfAsset }}</td>     
                         <td style="width:130px">{{ assetSelected.residualValue }}</td>            
                         <td style="width:150px">
@@ -275,7 +169,7 @@
                         </td>
                         <td style="width:200px">
                             <input class="form-control" [disabled]="assetSelected.reasonReduceId != 1" type="number" class="input-number" [(ngModel)]= "assetSelected.recoverableValue" min="1" required/></td>
-                        <td style="width:100px"><button type="button" class="btn btn-sm bg-danger ng-tns-c137-2" (click) = "deleteAssetItemFromTable(assetSelected)"><i class="fas fa-trash ng-tns-c137-2"></i> Xóa </button></td>
+                        
                     </tr>
                 </ng-template>
             </p-table>

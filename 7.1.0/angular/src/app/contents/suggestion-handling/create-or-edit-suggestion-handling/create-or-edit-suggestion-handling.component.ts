@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { AssetDto, DepartmentDto, SuggestionHandlingDto } from '@shared/service-proxies/service-proxies';
+import { AssetDto, AssetServiceProxy, DepartmentDto, SuggestionHandlingDto } from '@shared/service-proxies/service-proxies';
 import { AddAssetSuggestionHandlingComponent } from '../add-asset-suggestion-handling/add-asset-suggestion-handling.component';
 
 @Component({
@@ -23,11 +23,23 @@ export class CreateOrEditSuggestionHandlingComponent extends AppComponentBase im
         //
         advancedFiltersVisible = false;
         keyword ='';
-  constructor( injector: Injector) {
+        assetList: AssetDto[];
+  constructor( injector: Injector,
+    private assetService: AssetServiceProxy) {
+   
     super(injector);
    }
 
   ngOnInit(): void {
+    this.getAssets();
+  }
+  getAssets(){
+    this.assetService.getAssets().subscribe((result)=>{
+      
+      var a = result.items.filter((item)=> item.increaseAssetId == null);
+      this.assetList = a;
+    });
+   
   }
   close(){
 

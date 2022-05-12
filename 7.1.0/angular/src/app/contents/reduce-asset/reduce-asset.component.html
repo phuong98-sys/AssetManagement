@@ -1,131 +1,132 @@
 <div class="header-title">
     <div class="title-page">Chứng từ ghi giảm</div>
     <div class="btn-add-container">
-        <button class="btn btn-add" (click)="createOrEditReduceAsset()">Thêm chứng từ</button>
+        <button class="btn btn-add" (click)="createOrEditReduceAsset()" style="margin-right: 10px">Thêm bản ghi chứng từ</button>
+        <button class="btn btn-add" (click)="createOrEditReduceAsset()">Thêm từ file</button>
     </div>
 </div>
-<div class="card-header">
-    <div class="row">
-        <div class="col-md-6">&emsp;</div>
-        <div class="col-md-6">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <button
-                            type="button"
-                            class="btn bg-blue"
-                           
-                    >
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-                <input
-                        type="text"
-                        class="form-control"
-                        name="keyword"
-                        [placeholder]="'SearchWithThreeDot' | localize"
-                        [(ngModel)]="keyword"
-                      
-                />
-                <div class="input-group-append">
-                    <button
-                            type="button"
-                            class="btn btn-default"
-                            (click)="advancedFiltersVisible = !advancedFiltersVisible"
-                    >
-                        <i
-                                class="fas"
-                                [class.fa-angle-up]="advancedFiltersVisible"
-                                [class.fa-angle-down]="!advancedFiltersVisible"
-                        ></i>
-                    </button>
+<form class="kt-form" autocomplete="off">
+    <div class="row align-items-center">
+        <div class="col-xl-12">
+            <div class="form-group m-form__group align-items-center">
+                <div class="input-group">
+                    <input [(ngModel)]="filterText" name="filterText" autoFocus
+                        class="form-control m-input"
+                        placeholder="Tìm kiếm theo mã chứng từ, tên người tạo" type="text" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-search" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
                 </div>
             </div>
         </div>
     </div>
-    <div *ngIf="advancedFiltersVisible" class="card mb-0 mt-1">
-        <div class="card-body">
-            <form class="form-horizontal">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group row mb-0">
-                            <label class="col-md-3 col-form-label">
-                                {{ "IsActive" | localize }}
-                            </label>
-                            <div class="col-md-9 pt-2">
-                                <div class="custom-control custom-radio d-inline">
-                                    <input
-                                            type="radio"
-                                            class="custom-control-input"
-                                            id="isActiveAll"
-                                            name="isActive"
-                                            [(ngModel)]="isActive"
-                                            [value]="undefined"
-                                            checked
-                                    />
-                                    <label class="custom-control-label" for="isActiveAll">
-                                        {{ "All" | localize }}
-                                    </label>
-                                </div>
-                                <div class="custom-control custom-radio d-inline mx-3">
-                                    <input
-                                            type="radio"
-                                            class="custom-control-input"
-                                            id="isActiveActive"
-                                            name="isActive"
-                                            [(ngModel)]="isActive"
-                                            [value]="true"
-                                    />
-                                    <label
-                                            class="custom-control-label"
-                                            for="isActiveActive"
-                                    >
-                                        {{ "Yes" | localize }}
-                                    </label>
-                                </div>
-                                <div class="custom-control custom-radio d-inline">
-                                    <input
-                                            type="radio"
-                                            class="custom-control-input"
-                                            id="isActivePassive"
-                                            name="isActive"
-                                            [(ngModel)]="isActive"
-                                            [value]="false"
-                                    />
-                                    <label
-                                            class="custom-control-label"
-                                            for="isActivePassive"
-                                    >
-                                        {{ "No" | localize }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
+    <div class="row" [hidden]="!advancedFiltersAreShown">
+        <div class="col-md-12">
+            <div class="kt-separator kt-separator--border-dashed"></div>
         </div>
-        <div class="card-footer">
-            <button
-                    type="button"
-                    class="btn bg-blue"
-                    
-            >
-                {{ "Search" | localize }}
-            </button>
-            <button
-                    type="button"
-                    class="btn btn-default float-right"
-                    (click)="clearFilters()"
-            >
-                {{ "Clear" | localize }}
-            </button>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="MinDateFilter">Tìm kiếm theo ngày tạo</label>
+                <div class="input-group">
+                    <input class="form-control m-input" id="MinDateFilter"
+                        name="MinDateFilter" type="datetime" bsDatepicker
+                        placeholder="From" [(ngModel)]="minDateFilter"
+                        [bsConfig]="{ customTodayClass: 'custom-today-class' }" />
+                    <span style="
+                            line-height: 40px;
+                            padding: 0 15px 0 15px;
+                        ">
+                        &mdash;
+                    </span>
+                    <input class="form-control m-input" id="MaxDateFilter"
+                        name="MaxDateFilter" type="datetime" bsDatepicker placeholder="To"
+                        [(ngModel)]="maxDateFilter"
+                        [bsConfig]="{ customTodayClass: 'custom-today-class' }" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="MinDateFilter">Tìm kiếm theo ngày ghi tăng</label>
+                <div class="input-group">
+                    <input class="form-control m-input" id="MinDateFilter"
+                        name="MinDateFilter" type="datetime" bsDatepicker
+                        placeholder="From" [(ngModel)]="minDateFilter"
+                        [bsConfig]="{ customTodayClass: 'custom-today-class' }" />
+                    <span style="
+                            line-height: 40px;
+                            padding: 0 15px 0 15px;
+                        ">
+                        &mdash;
+                    </span>
+                    <input class="form-control m-input" id="MaxDateFilter"
+                        name="MaxDateFilter" type="datetime" bsDatepicker placeholder="To"
+                        [(ngModel)]="maxDateFilter"
+                        [bsConfig]="{ customTodayClass: 'custom-today-class' }" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="MinDateFilter">Tìm kiếm theo ngày chứng từ</label>
+                <div class="input-group">
+                    <input class="form-control m-input" id="MinDateFilter"
+                        name="MinDateFilter" type="datetime" bsDatepicker
+                        placeholder="From" [(ngModel)]="minDateFilter"
+                        [bsConfig]="{ customTodayClass: 'custom-today-class' }" />
+                    <span style="
+                            line-height: 40px;
+                            padding: 0 15px 0 15px;
+                        ">
+                        &mdash;
+                    </span>
+                    <input class="form-control m-input" id="MaxDateFilter"
+                        name="MaxDateFilter" type="datetime" bsDatepicker placeholder="To"
+                        [(ngModel)]="maxDateFilter"
+                        [bsConfig]="{ customTodayClass: 'custom-today-class' }" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="form-group">
+                <label class="form-label-no-content" style="height: 1rem; width: 100%;"></label>
+                <button class="btn btn-primary form-control" type="submit" style="width: 100px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" [style]="{'min-width':'15px'}" width="17.592" height="16" viewBox="0 0 17.592 16">
+                        <g id="filter-tool" transform="translate(0.601 1)">
+                          <path id="Path" d="M15.1.308A.583.583,0,0,0,14.583,0h-14A.583.583,0,0,0,.1.907L5.25,7.76v5.657A.583.583,0,0,0,5.833,14h3.5a.583.583,0,0,0,.583-.583V7.76L15.554.6C15.673.42,15.2.5,15.1.308Z" transform="translate(0.417 0)" fill="none" stroke="#ffffff" stroke-miterlimit="10" stroke-width="2"/>
+                        </g>
+                    </svg>
+                    Áp dụng</button>
+            </div>
         </div>
     </div>
+    <div class="row mb-2">
+        <div class="col-sm-12">
+            <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="
+                    advancedFiltersAreShown = !advancedFiltersAreShown
+                "><i class="fa fa-angle-down"></i>
+                {{ l("Hiện bộ lọc nâng cao") }}</span>
+            <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="
+                    advancedFiltersAreShown = !advancedFiltersAreShown
+                "><i class="fa fa-angle-up"></i>
+                {{ l("Ẩn bộ lọc nâng cao") }}</span>
+        </div>
+    </div>
+</form>
+<div _ngcontent-olq-c180="" class="form-group m-form__group align-items-center"><div _ngcontent-olq-c180="" class="input-group" style="justify-content: stretch">
+    <button class="btn btn-increase-asset ml-1" >Xóa chứng từ</button>
+    <button class="btn btn-increase-asset ml-1" style="margin-left: 10pxs"><i class="fa fa-save" style="margin-right: 5px"></i>In chứng từ</button>
 </div>
 <div class="content-component">
     <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="reduceAssetList" [resizableColumns]="true" [autoLayout]="true">
     <ng-template pTemplate="header">
         <tr>
+            <th style="width:50px" class="pl-1">
+                <input type="checkbox" name="selectedAllAsset" [(ngModel)]="isSelectedAllAsset" (click)="onSelectedAllAsset($event)"/>
+            </th>
             <th pResizableColumn pSortableColumn="" style="width:150px">
                 Chức năng
             </th>
@@ -165,6 +166,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-asset>
         <tr>
+            <td style="width:50px" class="pl-1"><input type="checkbox" name="selectedAsset" (change)="onSelectedAsset(assetSelected, $event)"></td>
             <td style="width:150px">
                 <div class="btn-group dropdown" dropdown container="body">
                     <button dropdownToggle class="dropdown-toggle btn btn-sm btn-primary">
