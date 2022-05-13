@@ -22,5 +22,9 @@ namespace AssetManagement.ProposeAssets
         public string Approver { get; set; }
         public string ApprovalStatus { get; set; }
         public string UserCode { get; set; }
+        public DateTime CreationTime { get; set; }
+        public ProposeAsset()
+        {
+        }
     }
 }

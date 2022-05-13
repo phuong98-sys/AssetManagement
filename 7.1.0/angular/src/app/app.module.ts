@@ -71,6 +71,8 @@ import { TransferComponent } from './contents/transfer/transfer.component';
 import { CreateOrEditTransferComponent } from './contents/transfer/create-or-edit-transfer/create-or-edit-transfer.component';
 import { AddAssetTransferComponent } from './contents/transfer/add-asset-transfer/add-asset-transfer.component';
 import { CreateOrEditPlaneMaintainComponent } from './contents/plane-maintain/create-or-edit-plane-maintain/create-or-edit-plane-maintain.component';
+import { CreateOrEditProposeAssetComponent } from './contents/propose-asset/create-or-edit-propose-asset/create-or-edit-propose-asset.component';
+import { CreateOrEditPlaneShopComponent } from './contents/plane-shop/create-or-edit-plane-shop/create-or-edit-plane-shop.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -124,6 +126,8 @@ import { CreateOrEditPlaneMaintainComponent } from './contents/plane-maintain/cr
     CreateOrEditTransferComponent,
     AddAssetTransferComponent,
     CreateOrEditPlaneMaintainComponent,
+    CreateOrEditProposeAssetComponent,
+    CreateOrEditPlaneShopComponent,
   ],
   imports: [
     CommonModule,
