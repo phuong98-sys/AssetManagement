@@ -60,6 +60,7 @@ namespace AssetManagement.Assets
         [ForeignKey(nameof(DepartmentId))]
         public Department Department { get; set; } 
         public int? DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         [ForeignKey(nameof(UserId))]
