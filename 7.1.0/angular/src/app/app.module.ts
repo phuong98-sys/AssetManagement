@@ -67,6 +67,9 @@ import { CreateOrEditDepreciationAssetComponent } from './aontents/depreciation-
 import {TreeModule} from 'primeng/tree';
 import {TreeTableModule} from 'primeng/treetable';
 import {TreeNode} from 'primeng/api';
+import { TransferComponent } from './contents/transfer/transfer.component';
+import { CreateOrEditTransferComponent } from './contents/transfer/create-or-edit-transfer/create-or-edit-transfer.component';
+import { AddAssetTransferComponent } from './contents/transfer/add-asset-transfer/add-asset-transfer.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -116,6 +119,9 @@ import {TreeNode} from 'primeng/api';
     CreateOrEditAssetTypeComponent,
     DepreciationAssetComponent,
     CreateOrEditDepreciationAssetComponent,
+    TransferComponent,
+    CreateOrEditTransferComponent,
+    AddAssetTransferComponent,
   ],
   imports: [
     CommonModule,
