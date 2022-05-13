@@ -135,12 +135,12 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
     }
   }
   resetAsset(){
-    this.asset.amortizationValue = null;
+    this.asset.monthlyAmortizationValue = null;
     this.asset.assetName = null;
     this.asset.orginalPrice = null;
   }
   renderAmortizationValue(){
-    this.asset.amortizationValue = Number(((this.asset.orginalPrice)/(this.asset.numberOfDayUsedAsset*12)).toFixed(3));
+    this.asset.monthlyAmortizationValue = Number(((this.asset.orginalPrice)/(this.asset.numberOfDayUsedAsset*12)).toFixed(3));
   }
   renderAmortizationValueOfAssetFromTable(asset : AssetDto){
     

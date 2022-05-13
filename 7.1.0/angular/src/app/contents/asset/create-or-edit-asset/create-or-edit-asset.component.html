@@ -114,7 +114,7 @@
                     </div> -->
                     <div class="form-group col-3">
                         <label for="amortizationValue">{{"HM/KH năm" | localize}} </label>
-                        <input id="amortizationValue" #amortizationValue="ngModel" type="text" name="amortizationValue" class="form-control" [(ngModel)]="asset.amortizationValue" required maxlength="256" disabled/>
+                        <input id="amortizationValue" #amortizationValue="ngModel" type="text" name="amortizationValue" class="form-control" [(ngModel)]="asset.monthlyAmortizationValue" required maxlength="256" disabled/>
                         <!-- <span *ngIf="!asset?.assetName" style="color:red; font-size: 12px;">Trường này không được để trống</span> -->
                         <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
                     </div>

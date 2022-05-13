@@ -92,7 +92,7 @@ export class AddAssetSuggestionHandlingComponent  extends  AppComponentBase impl
 
   }
   renderAmortizationValue(){
-    this.asset.amortizationValue = Number(((this.asset.orginalPrice)/(this.asset.numberOfDayUsedAsset*12)).toFixed(3));
+    this.asset.monthlyAmortizationValue = Number(((this.asset.orginalPrice)/(this.asset.numberOfDayUsedAsset*12)).toFixed(3));
   }
 
 }
