@@ -79,6 +79,7 @@
                         <label for="amortizationDate
                         ">{{"Ngày bắt đầu tính khấu hao" | localize}} *</label>
                         <input id="amortizationDate" #amortizationDate="ngModel" type="date" name="amortizationDate" class="form-control" [(ngModel)]="amortizationDateInput" required />
+                        <input id="startDate" type="date" #startDate="ngModel" name="startDate" class="form-control" [(ngModel)]="startDateInput" required  />
                         <!-- <span *ngIf="!asset?.startDate" class="error-message">Trường này không được để trống</span> -->
                     </div>
                     <div class="form-group col-3">

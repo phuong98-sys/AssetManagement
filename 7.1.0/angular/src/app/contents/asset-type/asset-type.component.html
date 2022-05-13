@@ -74,7 +74,8 @@
 </p-table>
 </div> -->
 <!-- <app-create-or-edit-asset #createOrEditAssetModal (modalSave)="getAll()"></app-create-or-edit-asset> -->
-<p-treeTable [value]="treeData">
+<p-treeTable [value]="treeData"  [(selection)]="selectedCategories"
+selectionMode="checkbox">
     <ng-template pTemplate="header">
         <tr>
             <th  style="width:150px">
