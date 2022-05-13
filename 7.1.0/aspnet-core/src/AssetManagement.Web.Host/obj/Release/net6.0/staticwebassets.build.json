@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "DaN4Z7I+XSOeahKwHop4Nza0O7rQui7b4pp2ihTPWCY=",
+  "Hash": "q95fJ8j2wlX4OLXtCUx91DOnOy/uBKBd7xO+ibhrVZQ=",
   "Source": "AssetManagement.Web.Host",
   "BasePath": "_content/AssetManagement.Web.Host",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "AssetManagement.Web.Host\\wwwroot",
       "Source": "AssetManagement.Web.Host",
-      "ContentRoot": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\wwwroot\\",
+      "ContentRoot": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\wwwroot\\",
       "BasePath": "_content/AssetManagement.Web.Host",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\wwwroot\\swagger\\ui\\abp.js",
+      "Identity": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\wwwroot\\swagger\\ui\\abp.js",
       "SourceId": "AssetManagement.Web.Host",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\wwwroot\\",
+      "ContentRoot": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\wwwroot\\",
       "BasePath": "_content/AssetManagement.Web.Host",
       "RelativePath": "swagger/ui/abp.js",
       "AssetKind": "All",
@@ -34,10 +34,10 @@
       "OriginalItemSpec": "wwwroot\\swagger\\ui\\abp.js"
     },
     {
-      "Identity": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\wwwroot\\swagger\\ui\\abp.swagger.js",
+      "Identity": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\wwwroot\\swagger\\ui\\abp.swagger.js",
       "SourceId": "AssetManagement.Web.Host",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\wwwroot\\",
+      "ContentRoot": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\wwwroot\\",
       "BasePath": "_content/AssetManagement.Web.Host",
       "RelativePath": "swagger/ui/abp.swagger.js",
       "AssetKind": "All",
