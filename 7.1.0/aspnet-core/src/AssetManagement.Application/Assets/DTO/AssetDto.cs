@@ -24,7 +24,6 @@ namespace AssetManagement.Assets.DTO
         public int? NumberOfDayUsedAsset { get; set; }
         public int? NumberOfDayRemaing { get; set; }
         public double OrginalPrice { get; set; }
-        public double? AmortizationValue { get; set; }
         public double? DepreciationOfAsset { get; set; }
         public double? ResidualValue { get; set; }
         public string UsageStatus { get; set; }
@@ -36,15 +35,25 @@ namespace AssetManagement.Assets.DTO
         public string AssetTypeName { get; set; }
         public int AssetStatusId { get; set; }
         public int? ReasonReduceId { get; set; }
+        public string? ReduceMethod { get; set; }
         public string? LastModifierUserName { get; set; }
         public string? CreatorUserName { get; set; }
         public DateTime? LastModificationTime { get; set; }
-        public string? AssetUnit { get; set; }
-        public int? Quantity { get; set; }
+        //public string? AssetUnit { get; set; }
+        //public int? Quantity { get; set; }
         public string DepartmentName { get; set; }
+        public int? DepartmentId { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string? UserName { get; set; }
+        public DateTime AmortizationDate { get; set; }
+        public double? MonthlyAmortizationRate { get; set; }
+        public double? AnnualAmortizationRate { get; set; }
+        public double? AnnualAmortizationValue { get; set; }
+        public double? MonthlyAmortizationValue { get; set; }
+        public string? EmployeeName { get; set; }
+        public int? EmployeeId { get; set; }
+        public double? InitialAmortizationValue { get; set; }
     }
     [AutoMapFrom(typeof(Asset))]
     public class AssetListDto: CreationAuditedEntityDto<int?>
@@ -60,7 +69,6 @@ namespace AssetManagement.Assets.DTO
         public int? NumberOfDayUsedAsset { get; set; }
         public int? NumberOfDayRemaing { get; set; }
         public double OrginalPrice { get; set; }
-        public double? AmortizationValue { get; set; }
         public double? DepreciationOfAsset { get; set; }
         public double? ResidualValue { get; set; }
         public string UsageStatus { get; set; }
@@ -71,12 +79,22 @@ namespace AssetManagement.Assets.DTO
         public int AssetTypeId { get; set; }
         public int AssetStatusId { get; set; }
         public int? ReasonReduceId { get; set; }
-        public string? AssetUnit { get; set; }
-        public int? Quantity { get; set; }
+        public string? ReduceMethod { get; set; }
+        //public string? AssetUnit { get; set; }
+        //public int? Quantity { get; set; }
         public string DepartmentName { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string? UserName { get; set; }
+        public DateTime AmortizationDate { get; set; }
+        public string? EmployeeName { get; set; }
+        public int? DepartmentId { get; set; }
+        public int? EmployeeId { get; set; }
+        public double? InitialAmortizationValue { get; set; }
+        public double? MonthlyAmortizationRate { get; set; }
+        public double? AnnualAmortizationRate { get; set; }
+        public double? AnnualAmortizationValue { get; set; }
+        public double? MonthlyAmortizationValue { get; set; }
     }
 
     [AutoMapTo(typeof(Asset))]
@@ -93,7 +111,6 @@ namespace AssetManagement.Assets.DTO
         public int? NumberOfDayUsedAsset { get; set; }
         public int? NumberOfDayRemaing { get; set; }
         public double OrginalPrice { get; set; }
-        public double? AmortizationValue { get; set; }
         public double? DepreciationOfAsset { get; set; }
         public double? ResidualValue { get; set; }
         public string UsageStatus { get; set; }
@@ -104,12 +121,22 @@ namespace AssetManagement.Assets.DTO
         public int AssetTypeId { get; set; }
         public int AssetStatusId { get; set; }
         public int? ReasonReduceId { get; set; }
-        public string? AssetUnit { get; set; }
-        public int? Quantity { get; set; }
+        public string? ReduceMethod { get; set; }
+        //public string? AssetUnit { get; set; }
+        //public int? Quantity { get; set; }
         public string DepartmentName { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string? UserName { get; set; }
+        public DateTime AmortizationDate { get; set; }
+        public string? EmployeeName { get; set; }
+        public int? EmployeeId { get; set; }
+        public int? DepartmentId { get; set; }
+        public double? InitialAmortizationValue { get; set; }
+        public double? MonthlyAmortizationRate { get; set; }
+        public double? AnnualAmortizationRate { get; set; }
+        public double? AnnualAmortizationValue { get; set; }
+        public double? MonthlyAmortizationValue { get; set; }
     }
     public class GetAssetInput
     {
@@ -130,11 +157,11 @@ namespace AssetManagement.Assets.DTO
         public int? NumberOfDayUsedAsset { get; set; }
         public int? NumberOfDayRemaing { get; set; }
         public double OrginalPrice { get; set; }
-        public double? AmortizationValue { get; set; }
         public double? DepreciationOfAsset { get; set; }
         public double? ResidualValue { get; set; }
         public string UsageStatus { get; set; }
         public string? ReasonForReduction { get; set; }
+        public string? ReduceMethod { get; set; }
         public double? RecoverableValue { get; set; }
         public int? IncreaseAssetId { get; set; }
         public int? ReduceAssetId { get; set; }
@@ -143,6 +170,15 @@ namespace AssetManagement.Assets.DTO
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string? UserName { get; set; }
+        public DateTime AmortizationDate { get; set; }
+        public string? EmployeeName { get; set; }
+        public int? EmployeeId { get; set; }
+        public int? DepartmentId { get; set; }
+        public double? InitialAmortizationValue { get; set; }
+        public double? MonthlyAmortizationRate { get; set; }
+        public double? AnnualAmortizationRate { get; set; }
+        public double? AnnualAmortizationValue { get; set; }
+        public double? MonthlyAmortizationValue { get; set; }
     }
     public class DeleteAssetInput
     {

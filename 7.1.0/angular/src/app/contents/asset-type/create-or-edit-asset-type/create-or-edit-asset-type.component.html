@@ -35,14 +35,14 @@
                 </p-dropdown>
             </div>
             <div class="form-group col-4">
-                <label for="numberOfYearDepreciation">{{"Thời gian tối thiếu trích khấu hao (năm)" | localize}} *</label>
-                <input id="numberOfYearDepreciation" #numberOfYearDepreciation="ngModel" type="number" name="numberOfYearDepreciation" class="form-control" [(ngModel)]="assetType.numberOfYearDepreciation" required maxlength="256" />
-                <span *ngIf="!assetType?.numberOfYearDepreciation" style="color:red; font-size: 12px;">Trường này không được để trống</span>
+                <label for="minNumberOfYearDepreciation">{{"Thời gian tối thiếu trích khấu hao (năm)" | localize}} *</label>
+                <input id="minNumberOfYearDepreciation" #minNumberOfYearDepreciation="ngModel" type="number" name="minNumberOfYearDepreciation" class="form-control" [(ngModel)]="assetType.minNumberOfYearDepreciation" required maxlength="256" />
+                <span *ngIf="!assetType?.minNumberOfYearDepreciation" style="color:red; font-size: 12px;">Trường này không được để trống</span>
             </div>
             <div class="form-group col-4">
-                <label for="numberOfYearDepreciation">{{"Thời gian tối đa trích khấu hao (năm)" | localize}} *</label>
-                <input id="numberOfYearDepreciation" #numberOfYearDepreciation="ngModel" type="number" name="numberOfYearDepreciation" class="form-control" [(ngModel)]="assetType.numberOfYearDepreciation" required maxlength="256" />
-                <span *ngIf="!assetType?.numberOfYearDepreciation" style="color:red; font-size: 12px;">Trường này không được để trống</span>
+                <label for="maxNumberOfYearDepreciation">{{"Thời gian tối đa trích khấu hao (năm)" | localize}} *</label>
+                <input id="maxNumberOfYearDepreciation" #maxNumberOfYearDepreciation="ngModel" type="number" name="maxNumberOfYearDepreciation" class="form-control" [(ngModel)]="assetType.maxNumberOfYearDepreciation" required maxlength="256" />
+                <span *ngIf="!assetType?.maxNumberOfYearDepreciation" style="color:red; font-size: 12px;">Trường này không được để trống</span>
             </div>
         </div>       
         <div class="modal-footer">

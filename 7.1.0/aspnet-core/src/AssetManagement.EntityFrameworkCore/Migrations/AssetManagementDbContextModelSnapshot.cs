@@ -1366,7 +1366,10 @@ namespace AssetManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<double?>("AmortizationValue")
+                    b.Property<DateTime>("AmortizationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double?>("AnnualAmortizationValue")
                         .HasColumnType("float");
 
                     b.Property<string>("AssetCode")
@@ -1384,9 +1387,6 @@ namespace AssetManagement.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("AssetTypeName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AssetUnit")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreationTime")
@@ -1407,6 +1407,9 @@ namespace AssetManagement.Migrations
                     b.Property<double?>("DepreciationOfAsset")
                         .HasColumnType("float");
 
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
@@ -1416,6 +1419,9 @@ namespace AssetManagement.Migrations
                     b.Property<int?>("IncreaseAssetId")
                         .HasColumnType("int");
 
+                    b.Property<double?>("InitialAmortizationValue")
+                        .HasColumnType("float");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -1424,6 +1430,9 @@ namespace AssetManagement.Migrations
 
                     b.Property<long?>("LastModifierUserId")
                         .HasColumnType("bigint");
+
+                    b.Property<double?>("MonthlyAmortizationValue")
+                        .HasColumnType("float");
 
                     b.Property<int?>("NumberOfDayAmortization")
                         .HasColumnType("int");
@@ -1436,9 +1445,6 @@ namespace AssetManagement.Migrations
 
                     b.Property<double>("OrginalPrice")
                         .HasColumnType("float");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
 
                     b.Property<string>("ReasonForReduction")
                         .HasColumnType("nvarchar(max)");
@@ -1454,6 +1460,9 @@ namespace AssetManagement.Migrations
 
                     b.Property<int?>("ReduceAssetId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ReduceMethod")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("ResidualValue")
                         .HasColumnType("float");
@@ -1477,6 +1486,8 @@ namespace AssetManagement.Migrations
                     b.HasIndex("AssetTypeId");
 
                     b.HasIndex("DepartmentId");
+
+                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("IncreaseAssetId");
 
@@ -1533,11 +1544,14 @@ namespace AssetManagement.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("MaxNumberOfYearDepreciation")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MinNumberOfYearDepreciation")
+                        .HasColumnType("int");
+
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumberOfYearDepreciation")
-                        .HasColumnType("int");
 
                     b.Property<string>("ParentAssetTypeId")
                         .HasColumnType("nvarchar(max)");
@@ -1798,6 +1812,40 @@ namespace AssetManagement.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Department");
+                });
+
+            modelBuilder.Entity("AssetManagement.Employees.Employee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EmployeeCode")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("EmployeeName")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("Employee");
                 });
 
             modelBuilder.Entity("AssetManagement.IncreaseAssets.IncreaseAsset", b =>
@@ -2439,6 +2487,10 @@ namespace AssetManagement.Migrations
                         .WithMany()
                         .HasForeignKey("DepartmentId");
 
+                    b.HasOne("AssetManagement.Employees.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
                     b.HasOne("AssetManagement.IncreaseAssets.IncreaseAsset", "IncreaseAsset")
                         .WithMany("Assets")
                         .HasForeignKey("IncreaseAssetId");
@@ -2460,6 +2512,8 @@ namespace AssetManagement.Migrations
                     b.Navigation("AssetType");
 
                     b.Navigation("Department");
+
+                    b.Navigation("Employee");
 
                     b.Navigation("IncreaseAsset");
 
@@ -2510,6 +2564,15 @@ namespace AssetManagement.Migrations
                     b.Navigation("DeleterUser");
 
                     b.Navigation("LastModifierUser");
+                });
+
+            modelBuilder.Entity("AssetManagement.Employees.Employee", b =>
+                {
+                    b.HasOne("AssetManagement.Departments.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId");
+
+                    b.Navigation("Department");
                 });
 
             modelBuilder.Entity("AssetManagement.MultiTenancy.Tenant", b =>

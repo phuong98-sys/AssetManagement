@@ -4,6 +4,7 @@ using AssetManagement.AssetStatuses;
 using AssetManagement.AssetTypes;
 using AssetManagement.Authorization.Users;
 using AssetManagement.Departments;
+using AssetManagement.Employees;
 using AssetManagement.IncreaseAssets;
 using AssetManagement.ReasonRuduces;
 using AssetManagement.ReduceAssets;
@@ -31,7 +32,8 @@ namespace AssetManagement.Assets
         public int? NumberOfDayUsedAsset { get; set; }
         public int? NumberOfDayRemaing { get; set; }
         public double OrginalPrice { get; set; }
-        public double? AmortizationValue { get; set; }
+        public double? MonthlyAmortizationValue { get; set; }
+        public double? AnnualAmortizationValue { get; set; }
         public double? DepreciationOfAsset { get; set; }
         public double? ResidualValue { get; set; }
         public string UsageStatus { get; set; }
@@ -54,9 +56,8 @@ namespace AssetManagement.Assets
         [ForeignKey(nameof(ReasonReduceId))]
         public ReasonReduce ReasonReduce { get; set; }
         public int? ReasonReduceId { get; set; }
+        public string? ReduceMethod { get; set; }
         public int? TenantId { get; set; }
-        public string? AssetUnit { get; set; }
-        public int Quantity { get; set; }
         [ForeignKey(nameof(DepartmentId))]
         public Department Department { get; set; } 
         public int? DepartmentId { get; set; }
@@ -66,6 +67,12 @@ namespace AssetManagement.Assets
         public User User { get; set; }
   
         public long? UserId { get; set; }
+        public DateTime AmortizationDate { get; set; }
+        [ForeignKey(nameof(EmployeeId))]
+        public Employee Employee { get; set; }
+
+        public int? EmployeeId { get; set; }
+        public double? InitialAmortizationValue { get; set; }
 
         public Asset()
         {

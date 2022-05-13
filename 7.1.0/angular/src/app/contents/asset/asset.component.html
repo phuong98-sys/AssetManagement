@@ -26,28 +26,6 @@
         <div class="col-md-12">
             <div class="kt-separator kt-separator--border-dashed"></div>
         </div>
-
-        <!-- <div class="col-md-4">
-            <div class="form-group">
-                <label for="MinDateFilter">Tìm kiếm theo ngày tạo</label>
-                <div class="input-group">
-                    <input class="form-control m-input" id="MinDateFilter"
-                        name="MinDateFilter" type="datetime" bsDatepicker
-                        placeholder="From" [(ngModel)]="minDateFilter"
-                        [bsConfig]="{ customTodayClass: 'custom-today-class' }" />
-                    <span style="
-                            line-height: 40px;
-                            padding: 0 15px 0 15px;
-                        ">
-                        &mdash;
-                    </span>
-                    <input class="form-control m-input" id="MaxDateFilter"
-                        name="MaxDateFilter" type="datetime" bsDatepicker placeholder="To"
-                        [(ngModel)]="maxDateFilter"
-                        [bsConfig]="{ customTodayClass: 'custom-today-class' }" />
-                </div>
-            </div>
-        </div> -->
         <div class="col-md-2">
             <div class="form-group">
                 <label for="TypeFilter">{{l("Bộ phận sử dụng")}}</label>
@@ -135,27 +113,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="col-md-2">
-            <div class="form-group">
-                <label for="titleFilter">Tên tà</label>
-                <input type="text" class="form-control" id="titleFilter"
-                    name="titleFilter" [(ngModel)]="titleFilter" />
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="form-group">
-                <label for="descriptionFilter">Description</label>
-                <input type="text" class="form-control" id="descriptionFilter"
-                    name="descriptionFilter" [(ngModel)]="descriptionFilter" />
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="form-group">
-                <label for="authorFilter">Author</label>
-                <input type="text" class="form-control" id="authorFilter"
-                    name="authorFilter" [(ngModel)]="authorFilter" />
-            </div>
-        </div> -->
         <div class="col-md-1">
             <div class="form-group">
                 <label class="form-label-no-content" style="height: 1rem; width: 100%;"></label>
@@ -182,124 +139,6 @@
         </div>
     </div>
 </form>
-<!-- <div class="card-header">
-    <div class="row">
-        <div class="col-md-6">&emsp;</div>
-        <div class="col-md-6">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <button
-                            type="button"
-                            class="btn bg-blue"
-                            (click)="getDataPage(1)"
-                    >
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-                <input
-                        type="text"
-                        class="form-control"
-                        name="keyword"
-                        [placeholder]="'SearchWithThreeDot' | localize"
-                        [(ngModel)]="keyword"
-                        (keyup.enter)="getDataPage(1)"
-                />
-                <div class="input-group-append">
-                    <button
-                            type="button"
-                            class="btn btn-default"
-                            (click)="advancedFiltersVisible = !advancedFiltersVisible"
-                    >
-                        <i
-                                class="fas"
-                                [class.fa-angle-up]="advancedFiltersVisible"
-                                [class.fa-angle-down]="!advancedFiltersVisible"
-                        ></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- <div *ngIf="advancedFiltersVisible" class="card mb-0 mt-1">
-        <div class="card-body">
-            <form class="form-horizontal">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group row mb-0">
-                            <label class="col-md-3 col-form-label">
-                                {{ "IsActive" | localize }}
-                            </label>
-                            <div class="col-md-9 pt-2">
-                                <div class="custom-control custom-radio d-inline">
-                                    <input
-                                            type="radio"
-                                            class="custom-control-input"
-                                            id="isActiveAll"
-                                            name="isActive"
-                                            [(ngModel)]="isActive"
-                                            [value]="undefined"
-                                            checked
-                                    />
-                                    <label class="custom-control-label" for="isActiveAll">
-                                        {{ "All" | localize }}
-                                    </label>
-                                </div>
-                                <div class="custom-control custom-radio d-inline mx-3">
-                                    <input
-                                            type="radio"
-                                            class="custom-control-input"
-                                            id="isActiveActive"
-                                            name="isActive"
-                                            [(ngModel)]="isActive"
-                                            [value]="true"
-                                    />
-                                    <label
-                                            class="custom-control-label"
-                                            for="isActiveActive"
-                                    >
-                                        {{ "Yes" | localize }}
-                                    </label>
-                                </div>
-                                <div class="custom-control custom-radio d-inline">
-                                    <input
-                                            type="radio"
-                                            class="custom-control-input"
-                                            id="isActivePassive"
-                                            name="isActive"
-                                            [(ngModel)]="isActive"
-                                            [value]="false"
-                                    />
-                                    <label
-                                            class="custom-control-label"
-                                            for="isActivePassive"
-                                    >
-                                        {{ "No" | localize }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="card-footer">
-            <button
-                    type="button"
-                    class="btn bg-blue"
-                    (click)="getDataPage(1)"
-            >
-                {{ "Search" | localize }}
-            </button>
-            <button
-                    type="button"
-                    class="btn btn-default float-right"
-                    (click)="clearFilters()"
-            >
-                {{ "Clear" | localize }}
-            </button>
-        </div>
-    </div>
-</div> -->
 <div _ngcontent-olq-c180="" class="form-group m-form__group align-items-center"><div _ngcontent-olq-c180="" class="input-group" style="justify-content: stretch">
     <button class="btn btn-increase-asset ml-1" >Xóa chứng từ</button>
   
@@ -334,9 +173,9 @@
                 Bộ phận sử dụng
                 <p-sortIcon field="department"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="userName" style="width:140px">
+            <th pResizableColumn pSortableColumn="employeeName" style="width:140px">
                 Người sử dụng
-                <p-sortIcon field="userName"></p-sortIcon>
+                <p-sortIcon field="employeeName"></p-sortIcon>
             </th>
             <!-- <th pResizableColumn pSortableColumn="increaseAssetDate" style="width:140px">
                 Ngày ghi tăng
@@ -346,9 +185,9 @@
                 Ngày khấu hao 
                 <p-sortIcon field="numberOfDayAmortization"></p-sortIcon>
             </th> -->
-            <th pResizableColumn pSortableColumn="numberOfDayUsedAsset" style="width:200px">
+            <th pResizableColumn pSortableColumn="startDate" style="width:200px">
                 Ngày bắt đầu sử dụng 
-                <p-sortIcon field="numberOfDayUsedAsset"></p-sortIcon>
+                <p-sortIcon field="startDate"></p-sortIcon>
             </th>
             <!-- <th pResizableColumn pSortableColumn="numberOfDayRemaing" style="width:130px">
                 Ngày còn lại
@@ -370,9 +209,13 @@
                 Trạng thái sử dụng
                 <p-sortIcon field="usageStatus"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="reduceAssetDate" style="width:170px">
+            <!-- <th pResizableColumn pSortableColumn="reduceAssetDate" style="width:170px">
                 Ngày ngừng sử dụng
                 <p-sortIcon field="reduceAssetDate"></p-sortIcon>
+            </th> -->
+            <th pResizableColumn pSortableColumn="reduceMethod" style="width:150px">
+                Hình thức ghi giảm
+                <p-sortIcon field="reduceMethod"></p-sortIcon>
             </th>
             <th pResizableColumn pSortableColumn="reasonForReduction" style="width:140px">
                 Lí do ghi giảm
@@ -426,65 +269,26 @@
             <td style="width:120px">{{ asset.assetName}}</td>
             <td style="width:120px">{{ asset.orginalPrice }}</td>
             <td style="width:140px">{{ asset.departmentName }}</td>
-            <td style="width:140x">{{ asset.userName }}</td>
-            <!-- <td style="width:140px">{{ asset.increaseAssetDate}}</td>
-            <td style="width:150px">{{ asset.numberOfDayAmortization }}</td> -->
+            <td style="width:140x">{{ asset.employeeName }}</td>
             <td style="width:200px">{{ asset.startDate }}</td>
-            <!-- <td style="width:140px">{{ asset.numberOfDayUsedAsset}}</td> -->
-            <!-- <td style="width:130px">{{ asset.numberOfDayRemaing }}</td> -->
             <td style="width:120px">{{ asset.amortizationValue}}</td>
             <td style="width:150px">{{ asset.depreciationOfAsset }}</td>
             <td style="width:140px">{{ asset.residualValue}}</td>
             <td style="width:180px">{{ asset.usageStatus }}</td>
-            <td style="width:170px">{{ asset.endDate}}</td>
+            <td style="width:150px">{{ asset.reduceMethod}}</td>
             <td style="width:140px">{{ asset.reasonForReduction}}</td>
+
             <td style="width:140px">{{ asset.recoverableValue}}</td>
             <td style="width:130px">{{ asset.creationTime}}</td>
-
             <td style="width:130px">{{ asset.creatorUserName}}</td>
-            <!-- <td style="width:130px">{{ asset.lastModificationTime}}</td>
-            <td style="width:130px">{{ asset.lastModificationName}}</td> -->
-          
+
         </tr>
     </ng-template>
     <div class="" *ngIf="totalRecords == 0">
         {{ l("NoData") }}
     </div>
     <div class="order-history__paginator" id="my-order-paging">
-        <!-- <p-paginator [rows]="2" #paginator
-            (onPageChange)="getAll()"
-            [totalRecords]="totalRecords"
-            [rowsPerPageOptions]="2"
-            styleClass="history-table-paginator">
-        </p-paginator> -->
-        <!-- <p-paginator [rows]="2" #paginator
-            (onPageChange)="getAll($event)"
-            [totalRecords]="totalRecords"
-            styleClass="history-table-paginator">
-        </p-paginator> -->
     </div>
-    <!-- <div class="card-footer table-card-footer bg-light border-top">
-        <div class="row">
-          <div class="col-sm-4 col-12 text-sm-left text-center">
-            <button class="btn btn-secondary"
-              (click)="refresh()">
-              <i class="fas fa-redo-alt"></i>
-            </button>
-          </div>
-          <div class="col-sm-4 col-12 text-center">
-            <p class="mb-0 my-2">
-              {{ "TotalRecordsCount" | localize: totalItems }}
-            </p>
-          </div>
-          <div class="col-sm-4 col-12">
-            <div class="float-sm-right m-auto">
-              <abp-pagination-controls id="server"
-                (pageChange)="getDataPage($event)">
-              </abp-pagination-controls>
-            </div>
-          </div>
-        </div>
-      </div> -->
 </p-table>
 </div>
 <!-- <app-create-or-edit-asset #createOrEditAssetModal (modalSave)="getAll()"></app-create-or-edit-asset> -->

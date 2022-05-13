@@ -109,9 +109,9 @@ namespace AssetManagement.IncreaseAssets
                 increaseAsset.Assets.ForEach(asset =>
                 {
                     asset.IncreaseAssetId = null;
-                    asset.AmortizationValue = null;
+                    asset.MonthlyAmortizationValue = null;
                     asset.IncreaseAssetDate = null;
-                    asset.AmortizationValue = null;
+                    
                     asset.NumberOfDayUsedAsset = null;
                     asset.AssetStatusId = 1;
                 });

@@ -37,7 +37,7 @@ namespace AssetManagement.Assets
                         NumberOfDayUsedAsset = a.NumberOfDayUsedAsset,
                         NumberOfDayRemaing = a.NumberOfDayRemaing,
                         OrginalPrice = a.OrginalPrice,
-                        AmortizationValue = a.AmortizationValue,
+                        MonthlyAmortizationValue = a.MonthlyAmortizationValue,
                         DepreciationOfAsset = a.DepreciationOfAsset,
                         ResidualValue = a.ResidualValue,
                         UsageStatus = a.AssetStatus.AssetStatusName,
@@ -134,7 +134,7 @@ namespace AssetManagement.Assets
                     foreach (var asset in inputList)
                     {
                         asset.IncreaseAssetId = null;
-                        asset.AmortizationValue = null;
+                        asset.MonthlyAmortizationValue = null;
                         asset.IncreaseAssetDate = null;
                         asset.NumberOfDayUsedAsset = null;
                         asset.AssetStatusId = 1;
@@ -183,8 +183,8 @@ namespace AssetManagement.Assets
         {
             try
             {
-                var employee = _assetRepository.FirstOrDefault(x => x.Id == input.Id);
-                var output = ObjectMapper.Map<AssetDto>(employee);
+                var asset = _assetRepository.FirstOrDefault(x => x.Id == input.Id);
+                var output = ObjectMapper.Map<AssetDto>(asset);
                 return output;
             }
             catch (Exception e)

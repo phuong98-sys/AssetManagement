@@ -995,6 +995,69 @@ export class DepartmentServiceProxy {
 }
 
 @Injectable()
+export class EmployeeServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getEmployees(): Observable<EmployeeDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Employee/GetEmployees";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetEmployees(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetEmployees(<any>response_);
+                } catch (e) {
+                    return <Observable<EmployeeDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<EmployeeDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetEmployees(response: HttpResponseBase): Observable<EmployeeDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = EmployeeDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<EmployeeDtoListResultDto>(<any>null);
+    }
+}
+
+@Injectable()
 export class IncreaseAssetServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -3462,7 +3525,6 @@ export class AssetDto implements IAssetDto {
     numberOfDayUsedAsset: number | undefined;
     numberOfDayRemaing: number | undefined;
     orginalPrice: number;
-    amortizationValue: number | undefined;
     depreciationOfAsset: number | undefined;
     residualValue: number | undefined;
     usageStatus: string | undefined;
@@ -3474,15 +3536,23 @@ export class AssetDto implements IAssetDto {
     assetTypeName: string | undefined;
     assetStatusId: number;
     reasonReduceId: number | undefined;
+    reduceMethod: string | undefined;
     lastModifierUserName: string | undefined;
     creatorUserName: string | undefined;
     lastModificationTime: moment.Moment | undefined;
-    assetUnit: string | undefined;
-    quantity: number | undefined;
     departmentName: string | undefined;
+    departmentId: number | undefined;
     startDate: moment.Moment | undefined;
     endDate: moment.Moment | undefined;
     userName: string | undefined;
+    amortizationDate: moment.Moment;
+    monthlyAmortizationRate: number | undefined;
+    annualAmortizationRate: number | undefined;
+    annualAmortizationValue: number | undefined;
+    monthlyAmortizationValue: number | undefined;
+    employeeName: string | undefined;
+    employeeId: number | undefined;
+    initialAmortizationValue: number | undefined;
 
     constructor(data?: IAssetDto) {
         if (data) {
@@ -3506,7 +3576,6 @@ export class AssetDto implements IAssetDto {
             this.numberOfDayUsedAsset = _data["numberOfDayUsedAsset"];
             this.numberOfDayRemaing = _data["numberOfDayRemaing"];
             this.orginalPrice = _data["orginalPrice"];
-            this.amortizationValue = _data["amortizationValue"];
             this.depreciationOfAsset = _data["depreciationOfAsset"];
             this.residualValue = _data["residualValue"];
             this.usageStatus = _data["usageStatus"];
@@ -3518,15 +3587,23 @@ export class AssetDto implements IAssetDto {
             this.assetTypeName = _data["assetTypeName"];
             this.assetStatusId = _data["assetStatusId"];
             this.reasonReduceId = _data["reasonReduceId"];
+            this.reduceMethod = _data["reduceMethod"];
             this.lastModifierUserName = _data["lastModifierUserName"];
             this.creatorUserName = _data["creatorUserName"];
             this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
-            this.assetUnit = _data["assetUnit"];
-            this.quantity = _data["quantity"];
             this.departmentName = _data["departmentName"];
+            this.departmentId = _data["departmentId"];
             this.startDate = _data["startDate"] ? moment(_data["startDate"].toString()) : <any>undefined;
             this.endDate = _data["endDate"] ? moment(_data["endDate"].toString()) : <any>undefined;
             this.userName = _data["userName"];
+            this.amortizationDate = _data["amortizationDate"] ? moment(_data["amortizationDate"].toString()) : <any>undefined;
+            this.monthlyAmortizationRate = _data["monthlyAmortizationRate"];
+            this.annualAmortizationRate = _data["annualAmortizationRate"];
+            this.annualAmortizationValue = _data["annualAmortizationValue"];
+            this.monthlyAmortizationValue = _data["monthlyAmortizationValue"];
+            this.employeeName = _data["employeeName"];
+            this.employeeId = _data["employeeId"];
+            this.initialAmortizationValue = _data["initialAmortizationValue"];
         }
     }
 
@@ -3550,7 +3627,6 @@ export class AssetDto implements IAssetDto {
         data["numberOfDayUsedAsset"] = this.numberOfDayUsedAsset;
         data["numberOfDayRemaing"] = this.numberOfDayRemaing;
         data["orginalPrice"] = this.orginalPrice;
-        data["amortizationValue"] = this.amortizationValue;
         data["depreciationOfAsset"] = this.depreciationOfAsset;
         data["residualValue"] = this.residualValue;
         data["usageStatus"] = this.usageStatus;
@@ -3562,15 +3638,23 @@ export class AssetDto implements IAssetDto {
         data["assetTypeName"] = this.assetTypeName;
         data["assetStatusId"] = this.assetStatusId;
         data["reasonReduceId"] = this.reasonReduceId;
+        data["reduceMethod"] = this.reduceMethod;
         data["lastModifierUserName"] = this.lastModifierUserName;
         data["creatorUserName"] = this.creatorUserName;
         data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["assetUnit"] = this.assetUnit;
-        data["quantity"] = this.quantity;
         data["departmentName"] = this.departmentName;
+        data["departmentId"] = this.departmentId;
         data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
         data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
         data["userName"] = this.userName;
+        data["amortizationDate"] = this.amortizationDate ? this.amortizationDate.toISOString() : <any>undefined;
+        data["monthlyAmortizationRate"] = this.monthlyAmortizationRate;
+        data["annualAmortizationRate"] = this.annualAmortizationRate;
+        data["annualAmortizationValue"] = this.annualAmortizationValue;
+        data["monthlyAmortizationValue"] = this.monthlyAmortizationValue;
+        data["employeeName"] = this.employeeName;
+        data["employeeId"] = this.employeeId;
+        data["initialAmortizationValue"] = this.initialAmortizationValue;
         return data; 
     }
 
@@ -3594,7 +3678,6 @@ export interface IAssetDto {
     numberOfDayUsedAsset: number | undefined;
     numberOfDayRemaing: number | undefined;
     orginalPrice: number;
-    amortizationValue: number | undefined;
     depreciationOfAsset: number | undefined;
     residualValue: number | undefined;
     usageStatus: string | undefined;
@@ -3606,15 +3689,23 @@ export interface IAssetDto {
     assetTypeName: string | undefined;
     assetStatusId: number;
     reasonReduceId: number | undefined;
+    reduceMethod: string | undefined;
     lastModifierUserName: string | undefined;
     creatorUserName: string | undefined;
     lastModificationTime: moment.Moment | undefined;
-    assetUnit: string | undefined;
-    quantity: number | undefined;
     departmentName: string | undefined;
+    departmentId: number | undefined;
     startDate: moment.Moment | undefined;
     endDate: moment.Moment | undefined;
     userName: string | undefined;
+    amortizationDate: moment.Moment;
+    monthlyAmortizationRate: number | undefined;
+    annualAmortizationRate: number | undefined;
+    annualAmortizationValue: number | undefined;
+    monthlyAmortizationValue: number | undefined;
+    employeeName: string | undefined;
+    employeeId: number | undefined;
+    initialAmortizationValue: number | undefined;
 }
 
 export class AssetDtoListResultDto implements IAssetDtoListResultDto {
@@ -3680,7 +3771,6 @@ export class AssetInputDto implements IAssetInputDto {
     numberOfDayUsedAsset: number | undefined;
     numberOfDayRemaing: number | undefined;
     orginalPrice: number;
-    amortizationValue: number | undefined;
     depreciationOfAsset: number | undefined;
     residualValue: number | undefined;
     usageStatus: string | undefined;
@@ -3691,12 +3781,20 @@ export class AssetInputDto implements IAssetInputDto {
     assetTypeId: number;
     assetStatusId: number;
     reasonReduceId: number | undefined;
-    assetUnit: string | undefined;
-    quantity: number | undefined;
+    reduceMethod: string | undefined;
     departmentName: string | undefined;
     startDate: moment.Moment | undefined;
     endDate: moment.Moment | undefined;
     userName: string | undefined;
+    amortizationDate: moment.Moment;
+    employeeName: string | undefined;
+    employeeId: number | undefined;
+    departmentId: number | undefined;
+    initialAmortizationValue: number | undefined;
+    monthlyAmortizationRate: number | undefined;
+    annualAmortizationRate: number | undefined;
+    annualAmortizationValue: number | undefined;
+    monthlyAmortizationValue: number | undefined;
 
     constructor(data?: IAssetInputDto) {
         if (data) {
@@ -3720,7 +3818,6 @@ export class AssetInputDto implements IAssetInputDto {
             this.numberOfDayUsedAsset = _data["numberOfDayUsedAsset"];
             this.numberOfDayRemaing = _data["numberOfDayRemaing"];
             this.orginalPrice = _data["orginalPrice"];
-            this.amortizationValue = _data["amortizationValue"];
             this.depreciationOfAsset = _data["depreciationOfAsset"];
             this.residualValue = _data["residualValue"];
             this.usageStatus = _data["usageStatus"];
@@ -3731,12 +3828,20 @@ export class AssetInputDto implements IAssetInputDto {
             this.assetTypeId = _data["assetTypeId"];
             this.assetStatusId = _data["assetStatusId"];
             this.reasonReduceId = _data["reasonReduceId"];
-            this.assetUnit = _data["assetUnit"];
-            this.quantity = _data["quantity"];
+            this.reduceMethod = _data["reduceMethod"];
             this.departmentName = _data["departmentName"];
             this.startDate = _data["startDate"] ? moment(_data["startDate"].toString()) : <any>undefined;
             this.endDate = _data["endDate"] ? moment(_data["endDate"].toString()) : <any>undefined;
             this.userName = _data["userName"];
+            this.amortizationDate = _data["amortizationDate"] ? moment(_data["amortizationDate"].toString()) : <any>undefined;
+            this.employeeName = _data["employeeName"];
+            this.employeeId = _data["employeeId"];
+            this.departmentId = _data["departmentId"];
+            this.initialAmortizationValue = _data["initialAmortizationValue"];
+            this.monthlyAmortizationRate = _data["monthlyAmortizationRate"];
+            this.annualAmortizationRate = _data["annualAmortizationRate"];
+            this.annualAmortizationValue = _data["annualAmortizationValue"];
+            this.monthlyAmortizationValue = _data["monthlyAmortizationValue"];
         }
     }
 
@@ -3760,7 +3865,6 @@ export class AssetInputDto implements IAssetInputDto {
         data["numberOfDayUsedAsset"] = this.numberOfDayUsedAsset;
         data["numberOfDayRemaing"] = this.numberOfDayRemaing;
         data["orginalPrice"] = this.orginalPrice;
-        data["amortizationValue"] = this.amortizationValue;
         data["depreciationOfAsset"] = this.depreciationOfAsset;
         data["residualValue"] = this.residualValue;
         data["usageStatus"] = this.usageStatus;
@@ -3771,12 +3875,20 @@ export class AssetInputDto implements IAssetInputDto {
         data["assetTypeId"] = this.assetTypeId;
         data["assetStatusId"] = this.assetStatusId;
         data["reasonReduceId"] = this.reasonReduceId;
-        data["assetUnit"] = this.assetUnit;
-        data["quantity"] = this.quantity;
+        data["reduceMethod"] = this.reduceMethod;
         data["departmentName"] = this.departmentName;
         data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
         data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
         data["userName"] = this.userName;
+        data["amortizationDate"] = this.amortizationDate ? this.amortizationDate.toISOString() : <any>undefined;
+        data["employeeName"] = this.employeeName;
+        data["employeeId"] = this.employeeId;
+        data["departmentId"] = this.departmentId;
+        data["initialAmortizationValue"] = this.initialAmortizationValue;
+        data["monthlyAmortizationRate"] = this.monthlyAmortizationRate;
+        data["annualAmortizationRate"] = this.annualAmortizationRate;
+        data["annualAmortizationValue"] = this.annualAmortizationValue;
+        data["monthlyAmortizationValue"] = this.monthlyAmortizationValue;
         return data; 
     }
 
@@ -3800,7 +3912,6 @@ export interface IAssetInputDto {
     numberOfDayUsedAsset: number | undefined;
     numberOfDayRemaing: number | undefined;
     orginalPrice: number;
-    amortizationValue: number | undefined;
     depreciationOfAsset: number | undefined;
     residualValue: number | undefined;
     usageStatus: string | undefined;
@@ -3811,12 +3922,20 @@ export interface IAssetInputDto {
     assetTypeId: number;
     assetStatusId: number;
     reasonReduceId: number | undefined;
-    assetUnit: string | undefined;
-    quantity: number | undefined;
+    reduceMethod: string | undefined;
     departmentName: string | undefined;
     startDate: moment.Moment | undefined;
     endDate: moment.Moment | undefined;
     userName: string | undefined;
+    amortizationDate: moment.Moment;
+    employeeName: string | undefined;
+    employeeId: number | undefined;
+    departmentId: number | undefined;
+    initialAmortizationValue: number | undefined;
+    monthlyAmortizationRate: number | undefined;
+    annualAmortizationRate: number | undefined;
+    annualAmortizationValue: number | undefined;
+    monthlyAmortizationValue: number | undefined;
 }
 
 export class AssetListDto implements IAssetListDto {
@@ -3831,7 +3950,6 @@ export class AssetListDto implements IAssetListDto {
     numberOfDayUsedAsset: number | undefined;
     numberOfDayRemaing: number | undefined;
     orginalPrice: number;
-    amortizationValue: number | undefined;
     depreciationOfAsset: number | undefined;
     residualValue: number | undefined;
     usageStatus: string | undefined;
@@ -3842,12 +3960,20 @@ export class AssetListDto implements IAssetListDto {
     assetTypeId: number;
     assetStatusId: number;
     reasonReduceId: number | undefined;
-    assetUnit: string | undefined;
-    quantity: number | undefined;
+    reduceMethod: string | undefined;
     departmentName: string | undefined;
     startDate: moment.Moment | undefined;
     endDate: moment.Moment | undefined;
     userName: string | undefined;
+    amortizationDate: moment.Moment;
+    employeeName: string | undefined;
+    departmentId: number | undefined;
+    employeeId: number | undefined;
+    initialAmortizationValue: number | undefined;
+    monthlyAmortizationRate: number | undefined;
+    annualAmortizationRate: number | undefined;
+    annualAmortizationValue: number | undefined;
+    monthlyAmortizationValue: number | undefined;
 
     constructor(data?: IAssetListDto) {
         if (data) {
@@ -3871,7 +3997,6 @@ export class AssetListDto implements IAssetListDto {
             this.numberOfDayUsedAsset = _data["numberOfDayUsedAsset"];
             this.numberOfDayRemaing = _data["numberOfDayRemaing"];
             this.orginalPrice = _data["orginalPrice"];
-            this.amortizationValue = _data["amortizationValue"];
             this.depreciationOfAsset = _data["depreciationOfAsset"];
             this.residualValue = _data["residualValue"];
             this.usageStatus = _data["usageStatus"];
@@ -3882,12 +4007,20 @@ export class AssetListDto implements IAssetListDto {
             this.assetTypeId = _data["assetTypeId"];
             this.assetStatusId = _data["assetStatusId"];
             this.reasonReduceId = _data["reasonReduceId"];
-            this.assetUnit = _data["assetUnit"];
-            this.quantity = _data["quantity"];
+            this.reduceMethod = _data["reduceMethod"];
             this.departmentName = _data["departmentName"];
             this.startDate = _data["startDate"] ? moment(_data["startDate"].toString()) : <any>undefined;
             this.endDate = _data["endDate"] ? moment(_data["endDate"].toString()) : <any>undefined;
             this.userName = _data["userName"];
+            this.amortizationDate = _data["amortizationDate"] ? moment(_data["amortizationDate"].toString()) : <any>undefined;
+            this.employeeName = _data["employeeName"];
+            this.departmentId = _data["departmentId"];
+            this.employeeId = _data["employeeId"];
+            this.initialAmortizationValue = _data["initialAmortizationValue"];
+            this.monthlyAmortizationRate = _data["monthlyAmortizationRate"];
+            this.annualAmortizationRate = _data["annualAmortizationRate"];
+            this.annualAmortizationValue = _data["annualAmortizationValue"];
+            this.monthlyAmortizationValue = _data["monthlyAmortizationValue"];
         }
     }
 
@@ -3911,7 +4044,6 @@ export class AssetListDto implements IAssetListDto {
         data["numberOfDayUsedAsset"] = this.numberOfDayUsedAsset;
         data["numberOfDayRemaing"] = this.numberOfDayRemaing;
         data["orginalPrice"] = this.orginalPrice;
-        data["amortizationValue"] = this.amortizationValue;
         data["depreciationOfAsset"] = this.depreciationOfAsset;
         data["residualValue"] = this.residualValue;
         data["usageStatus"] = this.usageStatus;
@@ -3922,12 +4054,20 @@ export class AssetListDto implements IAssetListDto {
         data["assetTypeId"] = this.assetTypeId;
         data["assetStatusId"] = this.assetStatusId;
         data["reasonReduceId"] = this.reasonReduceId;
-        data["assetUnit"] = this.assetUnit;
-        data["quantity"] = this.quantity;
+        data["reduceMethod"] = this.reduceMethod;
         data["departmentName"] = this.departmentName;
         data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
         data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
         data["userName"] = this.userName;
+        data["amortizationDate"] = this.amortizationDate ? this.amortizationDate.toISOString() : <any>undefined;
+        data["employeeName"] = this.employeeName;
+        data["departmentId"] = this.departmentId;
+        data["employeeId"] = this.employeeId;
+        data["initialAmortizationValue"] = this.initialAmortizationValue;
+        data["monthlyAmortizationRate"] = this.monthlyAmortizationRate;
+        data["annualAmortizationRate"] = this.annualAmortizationRate;
+        data["annualAmortizationValue"] = this.annualAmortizationValue;
+        data["monthlyAmortizationValue"] = this.monthlyAmortizationValue;
         return data; 
     }
 
@@ -3951,7 +4091,6 @@ export interface IAssetListDto {
     numberOfDayUsedAsset: number | undefined;
     numberOfDayRemaing: number | undefined;
     orginalPrice: number;
-    amortizationValue: number | undefined;
     depreciationOfAsset: number | undefined;
     residualValue: number | undefined;
     usageStatus: string | undefined;
@@ -3962,12 +4101,20 @@ export interface IAssetListDto {
     assetTypeId: number;
     assetStatusId: number;
     reasonReduceId: number | undefined;
-    assetUnit: string | undefined;
-    quantity: number | undefined;
+    reduceMethod: string | undefined;
     departmentName: string | undefined;
     startDate: moment.Moment | undefined;
     endDate: moment.Moment | undefined;
     userName: string | undefined;
+    amortizationDate: moment.Moment;
+    employeeName: string | undefined;
+    departmentId: number | undefined;
+    employeeId: number | undefined;
+    initialAmortizationValue: number | undefined;
+    monthlyAmortizationRate: number | undefined;
+    annualAmortizationRate: number | undefined;
+    annualAmortizationValue: number | undefined;
+    monthlyAmortizationValue: number | undefined;
 }
 
 export class AssetTypeDto implements IAssetTypeDto {
@@ -3977,7 +4124,8 @@ export class AssetTypeDto implements IAssetTypeDto {
     note: string | undefined;
     parentAssetTypeId: string | undefined;
     creationTime: moment.Moment;
-    numberOfYearDepreciation: number;
+    minNumberOfYearDepreciation: number;
+    maxNumberOfYearDepreciation: number;
 
     constructor(data?: IAssetTypeDto) {
         if (data) {
@@ -3996,7 +4144,8 @@ export class AssetTypeDto implements IAssetTypeDto {
             this.note = _data["note"];
             this.parentAssetTypeId = _data["parentAssetTypeId"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-            this.numberOfYearDepreciation = _data["numberOfYearDepreciation"];
+            this.minNumberOfYearDepreciation = _data["minNumberOfYearDepreciation"];
+            this.maxNumberOfYearDepreciation = _data["maxNumberOfYearDepreciation"];
         }
     }
 
@@ -4015,7 +4164,8 @@ export class AssetTypeDto implements IAssetTypeDto {
         data["note"] = this.note;
         data["parentAssetTypeId"] = this.parentAssetTypeId;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["numberOfYearDepreciation"] = this.numberOfYearDepreciation;
+        data["minNumberOfYearDepreciation"] = this.minNumberOfYearDepreciation;
+        data["maxNumberOfYearDepreciation"] = this.maxNumberOfYearDepreciation;
         return data; 
     }
 
@@ -4034,7 +4184,8 @@ export interface IAssetTypeDto {
     note: string | undefined;
     parentAssetTypeId: string | undefined;
     creationTime: moment.Moment;
-    numberOfYearDepreciation: number;
+    minNumberOfYearDepreciation: number;
+    maxNumberOfYearDepreciation: number;
 }
 
 export class AssetTypeDtoListResultDto implements IAssetTypeDtoListResultDto {
@@ -4095,7 +4246,8 @@ export class AssetTypeInputDto implements IAssetTypeInputDto {
     note: string | undefined;
     parentAssetTypeId: string | undefined;
     creationTime: moment.Moment;
-    numberOfYearDepreciation: number;
+    minNumberOfYearDepreciation: number;
+    maxNumberOfYearDepreciation: number;
 
     constructor(data?: IAssetTypeInputDto) {
         if (data) {
@@ -4114,7 +4266,8 @@ export class AssetTypeInputDto implements IAssetTypeInputDto {
             this.note = _data["note"];
             this.parentAssetTypeId = _data["parentAssetTypeId"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-            this.numberOfYearDepreciation = _data["numberOfYearDepreciation"];
+            this.minNumberOfYearDepreciation = _data["minNumberOfYearDepreciation"];
+            this.maxNumberOfYearDepreciation = _data["maxNumberOfYearDepreciation"];
         }
     }
 
@@ -4133,7 +4286,8 @@ export class AssetTypeInputDto implements IAssetTypeInputDto {
         data["note"] = this.note;
         data["parentAssetTypeId"] = this.parentAssetTypeId;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["numberOfYearDepreciation"] = this.numberOfYearDepreciation;
+        data["minNumberOfYearDepreciation"] = this.minNumberOfYearDepreciation;
+        data["maxNumberOfYearDepreciation"] = this.maxNumberOfYearDepreciation;
         return data; 
     }
 
@@ -4152,7 +4306,8 @@ export interface IAssetTypeInputDto {
     note: string | undefined;
     parentAssetTypeId: string | undefined;
     creationTime: moment.Moment;
-    numberOfYearDepreciation: number;
+    minNumberOfYearDepreciation: number;
+    maxNumberOfYearDepreciation: number;
 }
 
 export class AuthenticateModel implements IAuthenticateModel {
@@ -4802,6 +4957,132 @@ export interface IDepartmentInputDto {
     lastModifierUserName: string | undefined;
     creatorUserName: string | undefined;
     lastModificationTime: moment.Moment | undefined;
+}
+
+export class EmployeeDto implements IEmployeeDto {
+    id: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    employeeCode: string;
+    employeeName: string;
+    address: string | undefined;
+    note: string | undefined;
+    departmentId: number | undefined;
+    departmentName: string | undefined;
+
+    constructor(data?: IEmployeeDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.employeeCode = _data["employeeCode"];
+            this.employeeName = _data["employeeName"];
+            this.address = _data["address"];
+            this.note = _data["note"];
+            this.departmentId = _data["departmentId"];
+            this.departmentName = _data["departmentName"];
+        }
+    }
+
+    static fromJS(data: any): EmployeeDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new EmployeeDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["employeeCode"] = this.employeeCode;
+        data["employeeName"] = this.employeeName;
+        data["address"] = this.address;
+        data["note"] = this.note;
+        data["departmentId"] = this.departmentId;
+        data["departmentName"] = this.departmentName;
+        return data; 
+    }
+
+    clone(): EmployeeDto {
+        const json = this.toJSON();
+        let result = new EmployeeDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IEmployeeDto {
+    id: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    employeeCode: string;
+    employeeName: string;
+    address: string | undefined;
+    note: string | undefined;
+    departmentId: number | undefined;
+    departmentName: string | undefined;
+}
+
+export class EmployeeDtoListResultDto implements IEmployeeDtoListResultDto {
+    items: EmployeeDto[] | undefined;
+
+    constructor(data?: IEmployeeDtoListResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(EmployeeDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): EmployeeDtoListResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new EmployeeDtoListResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): EmployeeDtoListResultDto {
+        const json = this.toJSON();
+        let result = new EmployeeDtoListResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IEmployeeDtoListResultDto {
+    items: EmployeeDto[] | undefined;
 }
 
 export class ExternalAuthenticateModel implements IExternalAuthenticateModel {

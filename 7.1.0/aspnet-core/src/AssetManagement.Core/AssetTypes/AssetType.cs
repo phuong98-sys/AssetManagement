@@ -25,7 +25,8 @@ namespace AssetManagement.AssetTypes
         public string? ParentAssetTypeId { get; set; }
         public DateTime CreationTime { get; set; }
         public List<Asset> Assets { get; set; }
-        public int NumberOfYearDepreciation { get; set; }
+        public int MinNumberOfYearDepreciation { get; set; }
+        public int MaxNumberOfYearDepreciation { get; set; }
         public AssetType()
         {
             Assets = new List<Asset>();
