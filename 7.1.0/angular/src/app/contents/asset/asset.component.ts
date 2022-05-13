@@ -68,8 +68,9 @@ export class AssetComponent extends  PagedListingComponentBase<AssetDto> impleme
       this.loading = false;
         this.assetList = result.items;
         this.assetList.map((item)=>{ 
-          item.creationTime = item.creationTime? moment(item.creationTime).format("DD-MM-YYYY") : undefined;
-          item.increaseAssetDate = item.increaseAssetDate ? moment(item.increaseAssetDate).format("DD-MM-YYYY") : undefined});
+          item.creationTime = item.creationTime? moment(item.creationTime).format("DD/MM/YYYY") : undefined;
+          item.startDate = item.creationTime? moment(item.startDate).format("DD/MM/YYYY") : undefined;
+          item.increaseAssetDate = item.increaseAssetDate ? moment(item.increaseAssetDate).format("DD/MM/YYYY") : undefined});
         this.primengTableHelper.totalRecordsCount = result.items.length;
         this.primengTableHelper.records = result.items;
         this.totalRecords = this.assetList?.length;

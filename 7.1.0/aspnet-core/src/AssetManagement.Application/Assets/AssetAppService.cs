@@ -24,9 +24,7 @@ namespace AssetManagement.Assets
             try
             {
                 var assets = await _assetRepository.GetAll()
-                    .Include(x => x.AssetStatus)
-                    .Include(y => y.AssetType)
-                    .Include(y => y.ReasonReduce)
+                    .Include(x => x.User)
                     .Select(a => new AssetDto
                     {
                         Id = a.Id,
@@ -50,7 +48,13 @@ namespace AssetManagement.Assets
                         CreationTime = a.CreationTime,
                         ReduceAssetId = a.ReasonReduceId,
                         ReasonReduceId = a.ReasonReduceId,
-                        CreatorUserId = a.CreatorUserId
+                        CreatorUserId = a.CreatorUserId,
+                        DepartmentName = a.Department.DepartmentName,
+                        EmployeeName = a.Employee.EmployeeName,
+                        StartDate = a.StartDate,
+                        AnnualAmortizationValue = a.AnnualAmortizationValue,
+                        ReduceMethod = a.ReduceMethod,
+                        CreatorUserName = a.User.Name
                     }).ToListAsync();
                 var assetDtos = ObjectMapper.Map<List<AssetDto>>(assets);
                 return new ListResultDto<AssetDto>(assetDtos);

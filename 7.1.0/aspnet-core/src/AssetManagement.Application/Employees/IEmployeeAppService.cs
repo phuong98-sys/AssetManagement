@@ -12,5 +12,6 @@ namespace AssetManagement.Employees
     public interface IEmployeeAppService : IApplicationService
     {
         Task<ListResultDto<EmployeeDto>> GetEmployees();
+        Task<ListResultDto<EmployeeDto>> GetEmployeeByDepartment(EmployeeInputDto input);
     }
 }

@@ -27,5 +27,10 @@ namespace AssetManagement.Employees
         public Department Department { get; set; }
 
         public int? DepartmentId { get; set; }
+
+        public object ToListAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace WS.AssetTypes.DTO
         [StringLength(maxLength)]
         public string AssetTypeName { get; set; }
         public string Note { get; set; }
-        public string ParentAssetTypeId { get; set; }
+        public int? ParentAssetTypeId { get; set; }
         public DateTime CreationTime { get; set; }
         public int MinNumberOfYearDepreciation { get; set; }
         public int MaxNumberOfYearDepreciation { get; set; }

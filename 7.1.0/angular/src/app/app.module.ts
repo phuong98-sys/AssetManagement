@@ -67,6 +67,7 @@ import { CreateOrEditDepreciationAssetComponent } from './aontents/depreciation-
 import {TreeModule} from 'primeng/tree';
 import {TreeTableModule} from 'primeng/treetable';
 import {TreeNode} from 'primeng/api';
+import { ArrayToTreeConverterService } from '@shared/utils/array-to-tree-converter.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -138,7 +139,9 @@ import {TreeNode} from 'primeng/api';
     TreeModule,
     TreeTableModule
   ],
-  providers: [ BsDatepickerConfig],
+  providers: [ BsDatepickerConfig,
+    ArrayToTreeConverterService
+  ],
   entryComponents: [
     // tenants
     CreateTenantDialogComponent,

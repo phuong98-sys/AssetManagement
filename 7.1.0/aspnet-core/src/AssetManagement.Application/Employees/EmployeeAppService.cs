@@ -31,5 +31,20 @@ namespace AssetManagement.Employees
 
             }
         }
+        public async Task<ListResultDto<EmployeeDto>> GetEmployeeByDepartment(EmployeeInputDto input)
+        {
+            try
+            {
+                var employees = await _employeeRepository.GetAll().Where(x => x.Id == input.Id).ToListAsync();
+                var employeeDtos = ObjectMapper.Map<List<EmployeeDto>>(employees);
+                return new ListResultDto<EmployeeDto>(employeeDtos);
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+        }
     }
 }

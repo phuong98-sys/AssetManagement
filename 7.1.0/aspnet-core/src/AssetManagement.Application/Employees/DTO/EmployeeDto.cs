@@ -24,4 +24,8 @@ namespace AssetManagement.Employees.DTO
         public long? DepartmentId { get; set; }
         public string? DepartmentName { get; set; }
     }
+    public class EmployeeInputDto
+    {
+        public int Id { get; set; }
+    }
 }

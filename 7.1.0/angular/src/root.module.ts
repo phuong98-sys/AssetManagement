@@ -15,6 +15,7 @@ import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module
 import { RootRoutingModule } from './root-routing.module';
 import { AppConsts } from '@shared/AppConsts';
 import { API_BASE_URL } from '@shared/service-proxies/service-proxies';
+import { ArrayToTreeConverterService } from '@shared/utils/array-to-tree-converter.service';
 
 import { RootComponent } from './root.component';
 import { AppInitializer } from './app-initializer';
@@ -55,6 +56,7 @@ export function getCurrentLanguage(): string {
       provide: LOCALE_ID,
       useFactory: getCurrentLanguage,
     },
+    ArrayToTreeConverterService
   ],
   bootstrap: [RootComponent],
 })

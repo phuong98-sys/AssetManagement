@@ -50,8 +50,8 @@ export class IncreaseAssetComponent extends AppComponentBase implements OnInit {
           this.increaseAssetList = result.items;
           
           this.increaseAssetList.map((item)=>{ 
-            item.creationTime = moment(item.creationTime).format("DD-MM-YYYY");
-            item.increaseAssetDate = moment(item.increaseAssetDate).format("DD-MM-YYYY")});
+            item.creationTime = moment(item.creationTime).format("DD/MM/YYYY");
+            item.increaseAssetDate = moment(item.increaseAssetDate).format("DD/MM/YYYY")});
           this.totalRecords = this.increaseAssetList?.length;
       });
     }

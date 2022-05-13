@@ -140,7 +140,7 @@
     </div>
 </form>
 <div _ngcontent-olq-c180="" class="form-group m-form__group align-items-center"><div _ngcontent-olq-c180="" class="input-group" style="justify-content: stretch">
-    <button class="btn btn-increase-asset ml-1" >Xóa chứng từ</button>
+    <button class="btn btn-increase-asset ml-1" >Xóa tài sản</button>
   
 </div>
 <div class="content-component">
@@ -150,7 +150,7 @@
             <th style="width:50px" class="pl-1">
                 <input type="checkbox" name="selectedAllAsset" [(ngModel)]="isSelectedAllAsset" (click)="onSelectedAllAsset($event)"/>
             </th>
-            <th pResizableColumn pSortableColumn="assetCode" style="width:150px">
+            <th pResizableColumn style="width:150px">
                 Chức năng
             </th>
             <th pResizableColumn pSortableColumn="assetCode" style="width:120px">
@@ -188,6 +188,10 @@
             <th pResizableColumn pSortableColumn="startDate" style="width:200px">
                 Ngày bắt đầu sử dụng 
                 <p-sortIcon field="startDate"></p-sortIcon>
+            </th>
+            <th pResizableColumn pSortableColumn="increaseAssetDate" style="width:200px">
+                Ngày ghi tăng
+                <p-sortIcon field="increaseAssetDate"></p-sortIcon>
             </th>
             <!-- <th pResizableColumn pSortableColumn="numberOfDayRemaing" style="width:130px">
                 Ngày còn lại
@@ -269,9 +273,11 @@
             <td style="width:120px">{{ asset.assetName}}</td>
             <td style="width:120px">{{ asset.orginalPrice }}</td>
             <td style="width:140px">{{ asset.departmentName }}</td>
-            <td style="width:140x">{{ asset.employeeName }}</td>
+            <td style="width:140px">{{ asset.employeeName }}</td>
+            <!-- <td style="width:140x">{{ asset.employeeName }}</td> -->
             <td style="width:200px">{{ asset.startDate }}</td>
-            <td style="width:120px">{{ asset.monthlyAmortizationValue}}</td>
+            <td style="width:200px">{{ asset.increaseAssetDate }}</td>
+            <td style="width:120px">{{ asset.annualAmortizationValue}}</td>
             <td style="width:150px">{{ asset.depreciationOfAsset }}</td>
             <td style="width:140px">{{ asset.residualValue}}</td>
             <td style="width:180px">{{ asset.usageStatus }}</td>

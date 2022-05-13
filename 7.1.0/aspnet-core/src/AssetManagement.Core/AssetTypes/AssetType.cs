@@ -22,7 +22,7 @@ namespace AssetManagement.AssetTypes
         [StringLength(maxLength)]
         public string AssetTypeName { get; set; }
         public string? Note { get; set; }
-        public string? ParentAssetTypeId { get; set; }
+        public int? ParentAssetTypeId { get; set; }
         public DateTime CreationTime { get; set; }
         public List<Asset> Assets { get; set; }
         public int MinNumberOfYearDepreciation { get; set; }

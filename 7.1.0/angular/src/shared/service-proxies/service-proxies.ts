@@ -1055,6 +1055,62 @@ export class EmployeeServiceProxy {
         }
         return _observableOf<EmployeeDtoListResultDto>(<any>null);
     }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getEmployeeByDepartment(id: number | undefined): Observable<EmployeeDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Employee/GetEmployeeByDepartment?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetEmployeeByDepartment(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetEmployeeByDepartment(<any>response_);
+                } catch (e) {
+                    return <Observable<EmployeeDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<EmployeeDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetEmployeeByDepartment(response: HttpResponseBase): Observable<EmployeeDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = EmployeeDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<EmployeeDtoListResultDto>(<any>null);
+    }
 }
 
 @Injectable()
@@ -4122,7 +4178,7 @@ export class AssetTypeDto implements IAssetTypeDto {
     assetTypeCode: string;
     assetTypeName: string;
     note: string | undefined;
-    parentAssetTypeId: string | undefined;
+    parentAssetTypeId: number | undefined;
     creationTime: moment.Moment;
     minNumberOfYearDepreciation: number;
     maxNumberOfYearDepreciation: number;
@@ -4182,7 +4238,7 @@ export interface IAssetTypeDto {
     assetTypeCode: string;
     assetTypeName: string;
     note: string | undefined;
-    parentAssetTypeId: string | undefined;
+    parentAssetTypeId: number | undefined;
     creationTime: moment.Moment;
     minNumberOfYearDepreciation: number;
     maxNumberOfYearDepreciation: number;

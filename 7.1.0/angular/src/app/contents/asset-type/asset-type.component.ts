@@ -1,7 +1,8 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
-import { AssetInputDto, AssetServiceProxy, AssetTypeInputDto, AssetTypeServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AssetInputDto, AssetServiceProxy, AssetTypeDto, AssetTypeInputDto, AssetTypeServiceProxy } from '@shared/service-proxies/service-proxies';
+import { ArrayToTreeConverterService } from '@shared/utils/array-to-tree-converter.service';
 import { LazyLoadEvent } from 'primeng/api/lazyloadevent';
 import { Paginator } from 'primeng/paginator';
 import { finalize } from 'rxjs/operators';
@@ -16,6 +17,8 @@ export class AssetTypeComponent extends AppComponentBase implements OnInit {
   loading =  false;
   totalRecords: number;
   primengTableHelper: PrimengTableHelper;
+  treeData: any;
+  selectedCategories: any;
   data =
   [
     // <td style="width:120px">{{ rowNode.assetTypeCode }}</td>
@@ -106,6 +109,7 @@ export class AssetTypeComponent extends AppComponentBase implements OnInit {
   constructor(
     injector: Injector,
     private assetTypeService: AssetTypeServiceProxy,
+    private _arrayToTreeConverterService: ArrayToTreeConverterService,
     private _router: Router) {   
         super(injector);
         this.primengTableHelper = new PrimengTableHelper();
@@ -113,18 +117,20 @@ export class AssetTypeComponent extends AppComponentBase implements OnInit {
 
   ngOnInit(): void {
   this.getAll();
+ 
   }
   getAll(event?: LazyLoadEvent){
-    if (this.primengTableHelper.shouldResetPaging(event)) {
-      this.paginator?.changePage(0);
-      return;
-  }
+//     if (this.primengTableHelper.shouldResetPaging(event)) {
+//       this.paginator?.changePage(0);
+//       return;
+//   }
   this.primengTableHelper.showLoadingIndicator();
     this.loading = true;
     this.assetTypeService.getAssetTypes()
     .subscribe(result => {
       this.loading = false;
         this.assetTypeList = result.items;
+        this.setTreeData(this.assetTypeList);
         this.primengTableHelper.totalRecordsCount = result.items.length;
         this.primengTableHelper.records = result.items;
         this.totalRecords = this.assetTypeList?.length;
@@ -156,4 +162,34 @@ export class AssetTypeComponent extends AppComponentBase implements OnInit {
   //     }
   // );
   }
+  private setTreeData(assetTypeList: AssetTypeDto[]) {
+    this.treeData = this._arrayToTreeConverterService.createTree(
+        assetTypeList,
+        "parentAssetTypeId",
+        "id",
+        null,
+        "children",
+        [
+            {
+                target: "label",
+                targetFunction(item) {
+                    return item.assetTypeName;
+                },
+            },
+            {
+                target: "expandedIcon",
+                value: "fa fa-folder-open m--font-warning",
+            },
+            {
+                target: "collapsedIcon",
+                value: "fa fa-folder m--font-warning",
+            },
+            {
+                target: "expanded",
+                value: true,
+            },
+        ]
+    );
+}
+  
 }

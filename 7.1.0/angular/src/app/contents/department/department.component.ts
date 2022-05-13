@@ -33,8 +33,8 @@ export class DepartmentComponent extends AppComponentBase implements OnInit {
       this.loading = false;
         this.departmentList = result.items;
         this.departmentList.map((item)=>{ 
-          item.creationTime = moment(item.creationTime).format("DD-MM-YYYY");
-          item.lastModificationTime = moment(item.lastModificationTime).format("DD-MM-YYYY")});
+          item.creationTime = moment(item.creationTime).format("DD/MM/YYYY");
+          item.lastModificationTime = moment(item.lastModificationTime).format("DD/MM/YYYY")});
         this.totalRecords = this.departmentList?.length;
     });
   }
