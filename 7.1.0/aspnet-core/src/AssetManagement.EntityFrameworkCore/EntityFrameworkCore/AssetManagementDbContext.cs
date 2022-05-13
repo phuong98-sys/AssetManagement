@@ -17,6 +17,7 @@ using AssetManagement.SuggestionHandlingDetails;
 using AssetManagement.ReasonRuduces;
 using AssetManagement.Employees;
 using AssetManagement.Transfers;
+using AssetManagement.PlaneMaintains;
 
 namespace AssetManagement.EntityFrameworkCore
 {
@@ -37,6 +38,7 @@ namespace AssetManagement.EntityFrameworkCore
         public DbSet<ReasonReduce> ReasonReduces { get; set; }
         public DbSet<Employee> Empolyees { get; set; }
         public DbSet<Transfer> Transfers { get; set; }
+        public DbSet<PlaneMaintain> PlaneMaintains { get; set; }
         public AssetManagementDbContext(DbContextOptions<AssetManagementDbContext> options)
             : base(options)
         {

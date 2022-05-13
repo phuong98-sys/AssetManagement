@@ -3676,6 +3676,233 @@ export class TransferServiceProxy {
         return _observableOf<void>(<any>null);
     }
 }
+//PlaneMaintain
+@Injectable()
+export class PlaneMaintainServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getPlaneMaintains(): Observable<PlaneMaintainDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/PlaneMaintain/GetPlaneMaintains";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPlaneMaintains(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPlaneMaintains(<any>response_);
+                } catch (e) {
+                    return <Observable<PlaneMaintainDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PlaneMaintainDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPlaneMaintains(response: HttpResponseBase): Observable<PlaneMaintainDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PlaneMaintainDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PlaneMaintainDtoListResultDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    insertOrUpdatePlaneMaintain(body: PlaneMaintainInputDto | undefined): Observable<PlaneMaintainListDto> {
+        let url_ = this.baseUrl + "/api/services/app/PlaneMaintain/InsertOrUpdatePlaneMaintain";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertOrUpdatePlaneMaintain(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertOrUpdatePlaneMaintain(<any>response_);
+                } catch (e) {
+                    return <Observable<PlaneMaintainListDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PlaneMaintainListDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processInsertOrUpdatePlaneMaintain(response: HttpResponseBase): Observable<PlaneMaintainListDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PlaneMaintainListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PlaneMaintainListDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getPlaneMaintain(id: number | undefined): Observable<PlaneMaintainDto> {
+        let url_ = this.baseUrl + "/api/services/app/PlaneMaintain/GetPlaneMaintain?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPlaneMaintain(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPlaneMaintain(<any>response_);
+                } catch (e) {
+                    return <Observable<PlaneMaintainDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PlaneMaintainDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPlaneMaintain(response: HttpResponseBase): Observable<PlaneMaintainDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PlaneMaintainDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PlaneMaintainDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    deletePlaneMaintain(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/PlaneMaintain/DeletePlaneMaintain?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeletePlaneMaintain(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeletePlaneMaintain(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeletePlaneMaintain(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
 export class ApplicationInfoDto implements IApplicationInfoDto {
     version: string | undefined;
     releaseDate: moment.Moment;
@@ -8081,7 +8308,300 @@ export class ApiException extends Error {
         return obj.isApiException === true;
     }
 }
+//PlaneMaintainDto
+export class PlaneMaintainDto implements IPlaneMaintainDto {
+    id: number;
+    creatorUserId: number | undefined;
+    expectedDate: moment.Moment;
+    estimates: number|undefined;
+    maintenanceType: string|undefined;
+    describe: string;
+    assetId: number | undefined;
+    assetCode: string;
+    assetName: string;
+    assetTypeName: string;
+    departmentName: string|undefined;
+    creationTime: moment.Moment;
 
+    constructor(data?: IPlaneMaintainDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
+            this.expectedDate = _data["expectedDate"] ? moment(_data["expectedDate"].toString()) : <any>undefined;
+            this.estimates = _data["estimates"];
+            this.maintenanceType = _data["maintenanceType"];
+            this.describe = _data["describe"];
+            this.assetId = _data["assetId"];
+            this.assetCode = _data["assetCode"];
+            this.assetName = _data["assetName"];
+            this.assetTypeName = _data["assetTypeName"];
+            this.departmentName = _data["departmentName"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): PlaneMaintainDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlaneMaintainDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
+        data["expectedDate"] = this.expectedDate ? this.expectedDate.toISOString() : <any>undefined;
+        data["estimates"] = this.estimates;
+        data["maintenanceType"] = this.maintenanceType;
+        data["describe"] = this.describe;
+        data["assetId"] = this.assetId;
+        data["assetCode"] = this.assetCode;
+        data["assetName"] = this.assetName;
+        data["assetTypeName"] = this.assetTypeName;
+        data["departmentName"] = this.departmentName;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): PlaneMaintainDto {
+        const json = this.toJSON();
+        let result = new PlaneMaintainDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlaneMaintainDto {
+    id: number;
+    creatorUserId: number | undefined;
+    expectedDate: moment.Moment;
+    estimates: number|undefined;
+    maintenanceType: string|undefined;
+    describe: string;
+    assetId: number | undefined;
+    assetTypeName: string;
+    departmentName: string|undefined;
+    creationTime: moment.Moment;
+}
+
+export class PlaneMaintainDtoListResultDto implements IPlaneMaintainDtoListResultDto {
+    items: PlaneMaintainDto[] | undefined;
+
+    constructor(data?: IPlaneMaintainDtoListResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(PlaneMaintainDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PlaneMaintainDtoListResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlaneMaintainDtoListResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): PlaneMaintainDtoListResultDto {
+        const json = this.toJSON();
+        let result = new PlaneMaintainDtoListResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlaneMaintainDtoListResultDto {
+    items: PlaneMaintainDto[] | undefined;
+}
+
+export class PlaneMaintainInputDto implements IPlaneMaintainInputDto {
+    id: number;
+    creatorUserId: number | undefined;
+    expectedDate: moment.Moment;
+    estimates: number|undefined;
+    maintenanceType: string|undefined;
+    describe: string;
+    assetId: number | undefined;
+    assetTypeName: string;
+    departmentName: string|undefined;
+    creationTime: moment.Moment;
+
+    constructor(data?: IPlaneMaintainInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
+            this.expectedDate = _data["expectedDate"] ? moment(_data["expectedDate"].toString()) : <any>undefined;
+            this.estimates = _data["estimates"];
+            this.maintenanceType = _data["maintenanceType"];
+            this.describe = _data["describe"];
+            this.assetId = _data["assetId"];
+            this.assetTypeName = _data["assetTypeName"];
+            this.departmentName = _data["departmentName"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): PlaneMaintainInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlaneMaintainInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
+        data["expectedDate"] = this.expectedDate ? this.expectedDate.toISOString() : <any>undefined;
+        data["estimates"] = this.estimates;
+        data["maintenanceType"] = this.maintenanceType;
+        data["describe"] = this.describe;
+        data["assetId"] = this.assetId;
+        data["assetTypeName"] = this.assetTypeName;
+        data["departmentName"] = this.departmentName;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): PlaneMaintainInputDto {
+        const json = this.toJSON();
+        let result = new PlaneMaintainInputDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlaneMaintainInputDto {
+    id: number;
+    creatorUserId: number | undefined;
+    expectedDate: moment.Moment;
+    estimates: number|undefined;
+    maintenanceType: string|undefined;
+    describe: string;
+    assetId: number | undefined;
+    assetTypeName: string;
+    departmentName: string|undefined;
+    creationTime: moment.Moment;
+}
+
+export class PlaneMaintainListDto implements IPlaneMaintainListDto {
+    id: number;
+    creatorUserId: number | undefined;
+    expectedDate: moment.Moment;
+    estimates: number|undefined;
+    maintenanceType: string|undefined;
+    describe: string;
+    assetId: number | undefined;
+    assetTypeName: string;
+    departmentName: string|undefined;
+    creationTime: moment.Moment;
+
+    constructor(data?: IPlaneMaintainListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
+            this.expectedDate = _data["expectedDate"] ? moment(_data["expectedDate"].toString()) : <any>undefined;
+            this.estimates = _data["estimates"];
+            this.maintenanceType = _data["maintenanceType"];
+            this.describe = _data["describe"];
+            this.assetId = _data["assetId"];
+            this.assetTypeName = _data["assetTypeName"];
+            this.departmentName = _data["departmentName"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): PlaneMaintainListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlaneMaintainListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
+        data["expectedDate"] = this.expectedDate ? this.expectedDate.toISOString() : <any>undefined;
+        data["estimates"] = this.estimates;
+        data["maintenanceType"] = this.maintenanceType;
+        data["describe"] = this.describe;
+        data["assetId"] = this.assetId;
+        data["assetTypeName"] = this.assetTypeName;
+        data["departmentName"] = this.departmentName;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): PlaneMaintainListDto {
+        const json = this.toJSON();
+        let result = new PlaneMaintainListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlaneMaintainListDto {
+    id: number;
+    creatorUserId: number | undefined;
+    expectedDate: moment.Moment;
+    estimates: number|undefined;
+    maintenanceType: string|undefined;
+    describe: string;
+    assetId: number | undefined;
+    assetTypeName: string;
+    departmentName: string|undefined;
+    creationTime: moment.Moment;
+}
 function throwException(message: string, status: number, response: string, headers: { [key: string]: any; }, result?: any): Observable<any> {
     if (result !== null && result !== undefined)
         return _observableThrow(result);

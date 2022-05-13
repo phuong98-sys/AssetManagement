@@ -31,6 +31,7 @@ import { CreateOrEditDepreciationAssetComponent } from './aontents/depreciation-
 import { TransferComponent } from './contents/transfer/transfer.component';
 import { CreateOrEditTransferComponent } from './contents/transfer/create-or-edit-transfer/create-or-edit-transfer.component';
 import { AddAssetTransferComponent } from './contents/transfer/add-asset-transfer/add-asset-transfer.component';
+import { CreateOrEditPlaneMaintainComponent } from './contents/plane-maintain/create-or-edit-plane-maintain/create-or-edit-plane-maintain.component';
 
 @NgModule({
     imports: [
@@ -66,6 +67,8 @@ import { AddAssetTransferComponent } from './contents/transfer/add-asset-transfe
                         {path: 'propose-asset', component: ProposeAssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'plane-shop', component: PlaneShopComponent, canActivate: [AppRouteGuard] },
                         {path: 'plane-maintain', component: PlaneMaintainComponent, canActivate: [AppRouteGuard] },
+                        {path: 'plane-maintain/create', component: CreateOrEditPlaneMaintainComponent, canActivate: [AppRouteGuard] },
+                        {path: 'plane-maintain/:id', component: CreateOrEditPlaneMaintainComponent, canActivate: [AppRouteGuard] },
                         {path: 'suggestion-handling', component: SuggestionHandlingComponent, canActivate: [AppRouteGuard] },
                         {path: 'suggestion-handling/create', component: CreateOrEditSuggestionHandlingComponent, canActivate: [AppRouteGuard] },
                         {path: 'suggestion-handling/:id', component: CreateOrEditSuggestionHandlingComponent, canActivate: [AppRouteGuard] },

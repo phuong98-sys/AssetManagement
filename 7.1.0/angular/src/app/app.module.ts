@@ -70,6 +70,7 @@ import {TreeNode} from 'primeng/api';
 import { TransferComponent } from './contents/transfer/transfer.component';
 import { CreateOrEditTransferComponent } from './contents/transfer/create-or-edit-transfer/create-or-edit-transfer.component';
 import { AddAssetTransferComponent } from './contents/transfer/add-asset-transfer/add-asset-transfer.component';
+import { CreateOrEditPlaneMaintainComponent } from './contents/plane-maintain/create-or-edit-plane-maintain/create-or-edit-plane-maintain.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -122,6 +123,7 @@ import { AddAssetTransferComponent } from './contents/transfer/add-asset-transfe
     TransferComponent,
     CreateOrEditTransferComponent,
     AddAssetTransferComponent,
+    CreateOrEditPlaneMaintainComponent,
   ],
   imports: [
     CommonModule,
