@@ -9339,23 +9339,27 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Win 10\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\Huyen\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Core\\AssetManagement.Web.Core.csproj",
       "projectName": "AssetManagement.Web.Core",
       "projectPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Core\\AssetManagement.Web.Core.csproj",
       "packagesPath": "C:\\Users\\Win 10\\.nuget\\packages\\",
       "outputPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Core\\obj\\",
+=======
+      "projectUniqueName": "F:\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Core\\AssetManagement.Web.Core.csproj",
+      "projectName": "AssetManagement.Web.Core",
+      "projectPath": "F:\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Core\\AssetManagement.Web.Core.csproj",
+      "packagesPath": "C:\\Users\\Huyen\\.nuget\\packages\\",
+      "outputPath": "F:\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Core\\obj\\",
+>>>>>>> 12c41d05acedc28aa0fdbf3650d68a73040a5eb4
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Win 10\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Huyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -9369,11 +9373,19 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
+<<<<<<< HEAD
             "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj": {
               "projectPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj"
             },
             "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj": {
               "projectPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj"
+=======
+            "F:\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj": {
+              "projectPath": "F:\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj"
+            },
+            "F:\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj": {
+              "projectPath": "F:\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj"
+>>>>>>> 12c41d05acedc28aa0fdbf3650d68a73040a5eb4
             }
           }
         }

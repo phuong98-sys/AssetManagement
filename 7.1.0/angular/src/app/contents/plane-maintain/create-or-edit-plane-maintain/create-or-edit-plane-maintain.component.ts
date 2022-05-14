@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
 import { PlaneMaintainDto, PlaneMaintainInputDto, PlaneMaintainServiceProxy, AssetDto, AssetServiceProxy } from '@shared/service-proxies/service-proxies';
+import * as moment from 'moment';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -26,6 +27,7 @@ export class CreateOrEditPlaneMaintainComponent extends AppComponentBase impleme
   assetList: AssetDto[];
   planeMaintainList: PlaneMaintainDto [];
   selectedAsset: AssetDto;
+  expectedDateInput: any;
   planeMaintainId : number;
   constructor(
     injector: Injector,
@@ -71,7 +73,8 @@ export class CreateOrEditPlaneMaintainComponent extends AppComponentBase impleme
     });
 
     return form.valid;
-}
+  }
+  /*
   save(){
     if (this.validateForm(this.submitForm.form)) {
       this.saving= true;
@@ -106,6 +109,34 @@ export class CreateOrEditPlaneMaintainComponent extends AppComponentBase impleme
         });
       }
   }
+  }
+  */
+  save(){
+    debugger
+    if (this.validateForm(this.submitForm.form)) {
+      this.saving= true;
+      this.planeMaintain.expectedDate= moment.utc( this.expectedDateInput);
+
+      this.planeMaintainService
+      .insertOrUpdatePlaneMaintain(this.planeMaintain)
+      .pipe(
+          finalize(() => {
+              this.saving = false;
+          })
+      )
+      .subscribe(() => {
+        this.saving = false;
+        if(!this.planeMaintain.id){
+          this.notify.info(this.l("SavedSuccessfully"));
+        }
+        else{
+          this.notify.info(this.l("UpdatedSuccessfully"));
+        }
+          this.close();
+          this.modalSave.emit(null);
+      });
+
+    }
   }
   resetForm(){
     this.planeMaintain.id=null;

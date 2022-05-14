@@ -8,9 +8,17 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = AssetManagement.Web.Host
 build_property.RootNamespace = AssetManagement.Web.Host
+<<<<<<< HEAD
 build_property.ProjectDir = D:\QLTS\7.1.0\aspnet-core\src\AssetManagement.Web.Host\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = D:\QLTS\7.1.0\aspnet-core\src\AssetManagement.Web.Host
+=======
+build_property.ProjectDir = F:\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Web.Host\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
+build_property.MSBuildProjectDirectory = F:\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Web.Host
+>>>>>>> 12c41d05acedc28aa0fdbf3650d68a73040a5eb4
 build_property._RazorSourceGeneratorDebug =

@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {}
   },
   "projects": {
@@ -12,6 +13,19 @@
         "projectPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj",
         "packagesPath": "C:\\Users\\Win 10\\.nuget\\packages\\",
         "outputPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\obj\\",
+=======
+    "F:\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {}
+  },
+  "projects": {
+    "F:\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "F:\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj",
+        "projectName": "AssetManagement.Core",
+        "projectPath": "F:\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj",
+        "packagesPath": "C:\\Users\\Huyen\\.nuget\\packages\\",
+        "outputPath": "F:\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\obj\\",
+>>>>>>> 12c41d05acedc28aa0fdbf3650d68a73040a5eb4
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
