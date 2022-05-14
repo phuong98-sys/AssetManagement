@@ -1,0 +1,143 @@
+<div _ngcontent-ynt-c147="" busyif="loading" class="plane-shop-component">
+    <div _ngcontent-ynt-c147="" class="header-title-container main-header navbar navbar-expand navbar-white navbar-light" style="margin-left: 0 !important;">
+        <h4 _ngcontent-ynt-c147="" class="header-title">
+            <span _ngcontent-ynt-c147="" class="title-page parent-title">Kế hoạch mua sắm</span>
+            <span _ngcontent-ynt-c147="" class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span _ngcontent-ynt-c147="" class="title-page title-child">Tạo mới kế hoạch mua sắm</span>
+        </h4>
+    </div>
+    <div _ngcontent-ynt-c147="" class="plane-shop-container row">
+        <div _ngcontent-ynt-c147="" class="plane-shop-content pd-0 col-6">
+            <form _ngcontent-ynt-c147="" novalidate="" class="ng-untouched ng-pristine ng-invalid">
+                <div _ngcontent-ynt-c147="" class="title-page text-title"> Thông tin chung</div>
+                <div _ngcontent-ynt-c147="" class="modal-body">
+                    <div _ngcontent-ynt-c147="" class="form-group">
+                        <label _ngcontent-ynt-c147="" for="AssetCode">Số phiếu *</label>
+                        <input _ngcontent-ynt-c147="" id="AssetCode" type="text" name="AssetCode" required="" maxlength="256" class="form-control ng-untouched ng-pristine ng-invalid" ng-reflect-required="" ng-reflect-maxlength="256" ng-reflect-name="AssetCode">
+                        <span _ngcontent-ynt-c147="" class="error-message">Trường này không được để trống</span><br _ngcontent-ynt-c147=""><span _ngcontent-ynt-c147="" class="error-message"></span>
+                    </div>
+                    <div _ngcontent-ynt-c147="" class="form-group">
+                        <label _ngcontent-ynt-c147="" for="AssetName">Ngày lập </label>
+                        <input _ngcontent-ynt-c147="" id="AssetName" type="date" name="AssetName" required="" maxlength="256" class="form-control ng-untouched ng-pristine ng-invalid" ng-reflect-required="" ng-reflect-maxlength="256" ng-reflect-name="AssetName">
+                        <span _ngcontent-ynt-c147="" class="error-message">Trường này không được để trống</span>
+                    </div>
+                    <div _ngcontent-ynt-c147="" class="form-group">
+                        <label _ngcontent-ynt-c147="" for="IncreaseAssetDate">Trạng thái </label>
+                        <input _ngcontent-ynt-c147="" id="IncreaseAssetDate" type="text" name="IncreaseAssetDate" class="form-control ng-untouched ng-pristine ng-valid" ng-reflect-name="IncreaseAssetDate">
+                        <span _ngcontent-ynt-c147="" class="error-message">Trường này không được để trống</span>
+                    </div>
+                    <div _ngcontent-ynt-c147="" class="form-group">
+                        <label _ngcontent-ynt-c147="" for="increaseNote">Nội dung </label>
+                        <textarea _ngcontent-ynt-c147="" id="increaseAssetNote" rows="4" cols="50" name="IncreaseAssetNote" class="form-control ng-untouched ng-pristine ng-valid" ng-reflect-name="IncreaseAssetNote">                        </textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div _ngcontent-ynt-c147="" class="choose-asset pd-0 col-6">
+            <div _ngcontent-ynt-c147="" class="title-page text-title">Thông tin chi tiết</div>
+            <div _ngcontent-ynt-c147="" class="choose-asset-container">
+                <div _ngcontent-ynt-c147="" class="form-group row">
+                    <div _ngcontent-ynt-c147="" class="col-6">
+                        <label _ngcontent-ynt-c147="" for="AssetCode">Mã tài sản *</label>
+                        <input _ngcontent-ynt-c147="" id="AssetCode" type="text" name="AssetCode" required="" maxlength="256" class="form-control ng-untouched ng-pristine ng-invalid" ng-reflect-required="" ng-reflect-maxlength="256" ng-reflect-name="AssetCode"><span _ngcontent-ynt-c147="" class="text-note">Nhập mã tài sản để tìm kiếm thông tin tài sản</span><br _ngcontent-ynt-c147="">
+                        <span _ngcontent-ynt-c147="" class="error-message"></span>
+                    </div>
+                </div>
+                <div _ngcontent-ynt-c147="" class="form-group">
+                    <label _ngcontent-ynt-c147="" for="AssetName">Tên tài sản </label>
+                    <input _ngcontent-ynt-c147="" id="AssetName" type="text" name="AssetName" required="" maxlength="256" class="form-control ng-untouched ng-pristine ng-invalid" ng-reflect-required="" ng-reflect-maxlength="256" ng-reflect-name="AssetName">
+                </div>
+                <div _ngcontent-ynt-c147="" class="form-group">
+                    <label _ngcontent-ynt-c147="" for="OrginalPrice">Loại tài sản</label>
+                    <input _ngcontent-ynt-c147="" id="OrginalPrice" type="number" name="OrginalPrice" required="" class="form-control ng-untouched ng-pristine ng-invalid" ng-reflect-required="" ng-reflect-name="OrginalPrice">
+                </div>
+                <div _ngcontent-ynt-c147="" class="form-group">
+                    <label _ngcontent-ynt-c147="" for="NumberOfDayUsedAsset">Đơn vị tính</label>
+                    <input _ngcontent-ynt-c147="" id="NumberOfDayUsedAsset" type="number" name="NumberOfDayUsedAsset" min="1" class="form-control ng-untouched ng-pristine ng-valid" ng-reflect-name="NumberOfDayUsedAsset" ng-reflect-min="1">
+                </div>
+                <div _ngcontent-ynt-c147="" class="form-group">
+                    <label _ngcontent-ynt-c147="" for="AmortizationValue">Mô tả đặc điểm</label>
+                    <input _ngcontent-ynt-c147="" id="AmortizationValue" type="number" name="AmortizationValue" class="form-control ng-untouched ng-pristine ng-valid" ng-reflect-name="AmortizationValue">
+                </div>
+                <div _ngcontent-ynt-c147="" class="form-group">
+                    <label _ngcontent-ynt-c147="" for="AmortizationValue">Số lượng</label>
+                    <input _ngcontent-ynt-c147="" id="AmortizationValue" type="number" name="AmortizationValue" class="form-control ng-untouched ng-pristine ng-valid" ng-reflect-name="AmortizationValue">
+                </div>
+                <div _ngcontent-ynt-c147="" class="form-group">
+                    <label _ngcontent-ynt-c147="" for="AmortizationValue">Đơn giá</label>
+                    <input _ngcontent-ynt-c147="" id="AmortizationValue" type="number" name="AmortizationValue" class="form-control ng-untouched ng-pristine ng-valid" ng-reflect-name="AmortizationValue">
+                </div>
+                <div _ngcontent-ynt-c147="" class="form-group">
+                    <label _ngcontent-ynt-c147="" for="AmortizationValue">Hình thức</label>
+                    <input _ngcontent-ynt-c147="" id="AmortizationValue" type="number" name="AmortizationValue" class="form-control ng-untouched ng-pristine ng-valid" ng-reflect-name="AmortizationValue">
+                </div>
+                <div _ngcontent-ynt-c147="">
+                    <button _ngcontent-ynt-c147="" class="btn btn-increase-asset" >Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="reduce-asset-table">
+        <div class="title-page text-title">Danh sách tài sản </div>
+        <button class="btn btn-reduce-asset ml-1" >Xóa tài sản</button>
+        <div class="content-component">
+            <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px"  [resizableColumns]="true" [autoLayout]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width:50px" class="pl-1">
+                            <input type="checkbox" name="selectedAllAsset" [(ngModel)]="isSelectedAllAsset" (click)="onSelectedAllAsset($event)"/>
+                        </th>
+                        <th pResizableColumn pSortableColumn="assetCode" style="width:120px">
+                            Tên tài sản
+                        </th>
+                        <th pResizableColumn pSortableColumn="assetName" style="width:120px">
+                            Loại tài sản
+                        </th>
+                        <th pResizableColumn pSortableColumn="orginalPrice" style="width:120px">
+                            Đơn vị tính 
+                        </th>
+                        <th pResizableColumn pSortableColumn="orginalPrice" style="width:120px">
+                           Mô tả đặc điểm
+                        </th>
+                        <th pResizableColumn pSortableColumn="reasonReduceId" style="width:150px">
+                            Số lượng
+                        </th>
+                        
+                        <th style="width:100px">
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-assetSelected>
+                    <tr>
+                        <td style="width:50px" class="pl-1"><input type="checkbox" name="selectedAsset" (change)="onSelectedAsset(assetSelected, $event)"></td>
+                        <td style="width:120px">{{ assetSelected.assetCode}}</td>
+                        <td style="width:120px">{{ assetSelected.assetName}}</td>
+                        <td style="width:120px">{{ assetSelected.orginalPrice }}</td>           
+                        <td style="width:150px">
+                                <!-- <p-dropdown id="reasonReduceFromTable" #reasonReduceFromTable="ngModel" name="reasonReduceAsset" [options]="reasonReduceList"
+                                [(ngModel)]="assetSelected.reasonReduceId" optionLabel="reasonReduceName" optionValue = "id"
+                                styleClass="form-control brandSelection-dropdown" (onChange)="onSelectReasonReduceFromTable(assetSelected)" required>
+                                </p-dropdown> -->
+                                <select name="duration" [(ngModel)]="assetSelected.reasonReduceId" class="form-control" (change)="onSelectReasonReduceFromTable(assetSelected)"> 
+                                    <option *ngFor="let reasonReduce of reasonReduceList" [value]="reasonReduce.id" >{{reasonReduce.reasonReduceName}}</option> 
+                                </select> 
+                                <!-- <span *ngIf="assetSelected.reasonReduceId" class="error-message">Trường này không được để trống</span> -->
+                            <!-- <input type="number" class="input-number" [(ngModel)]= "assetSelected.numberOfDayUsedAsset" (change)="renderAmortizationValueOfAssetFromTable(assetSelected)" min="1" required/> -->
+                        </td>
+                        <td style="width:200px">
+                            <input class="form-control" [disabled]="assetSelected.reasonReduceId != 1" type="number" class="input-number" [(ngModel)]= "assetSelected.recoverableValue" min="1" required/></td>
+                        <td style="width:100px"><button type="button" class="btn btn-sm bg-danger mx-2 ng-tns-c137-2" (click) = "deleteAssetItemFromTable(assetSelected)"><i class="fas fa-trash ng-tns-c137-2"></i> Xóa </button></td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button [disabled]="" type="button" class="btn btn-cancel" >{{"Hủy" |
+            localize}}</button> 
+        <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')" [disabled]="" ><i class="fa fa-save" style="margin-right: 5px"></i>
+            <span>{{"Lưu" | localize}}</span></button>
+    </div>
+</div>
+
+

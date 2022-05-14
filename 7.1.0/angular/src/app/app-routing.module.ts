@@ -28,6 +28,12 @@ import { AddAssetSuggestionHandlingComponent } from './contents/suggestion-handl
 import { CreateOrEditAssetTypeComponent } from './contents/asset-type/create-or-edit-asset-type/create-or-edit-asset-type.component';
 import { DepreciationAssetComponent } from './aontents/depreciation-asset/depreciation-asset.component';
 import { CreateOrEditDepreciationAssetComponent } from './aontents/depreciation-asset/create-or-edit-depreciation-asset/create-or-edit-depreciation-asset.component';
+import { TransferComponent } from './contents/transfer/transfer.component';
+import { CreateOrEditTransferComponent } from './contents/transfer/create-or-edit-transfer/create-or-edit-transfer.component';
+import { AddAssetTransferComponent } from './contents/transfer/add-asset-transfer/add-asset-transfer.component';
+import { CreateOrEditPlaneMaintainComponent } from './contents/plane-maintain/create-or-edit-plane-maintain/create-or-edit-plane-maintain.component';
+import { CreateOrEditProposeAssetComponent } from './contents/propose-asset/create-or-edit-propose-asset/create-or-edit-propose-asset.component';
+import { CreateOrEditPlaneShopComponent } from './contents/plane-shop/create-or-edit-plane-shop/create-or-edit-plane-shop.component';
 
 @NgModule({
     imports: [
@@ -61,8 +67,14 @@ import { CreateOrEditDepreciationAssetComponent } from './aontents/depreciation-
                         {path: 'department/create', component: CreateOrEditDepartmentComponent, canActivate: [AppRouteGuard] },
                         {path: 'department/:id', component: CreateOrEditDepartmentComponent, canActivate: [AppRouteGuard] },
                         {path: 'propose-asset', component: ProposeAssetComponent, canActivate: [AppRouteGuard] },
+                        {path: 'propose-asset/create', component: CreateOrEditProposeAssetComponent, canActivate: [AppRouteGuard] },
+                        {path: 'propose-asset/:id', component: CreateOrEditProposeAssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'plane-shop', component: PlaneShopComponent, canActivate: [AppRouteGuard] },
+                        {path: 'plane-shop/create', component: CreateOrEditPlaneShopComponent, canActivate: [AppRouteGuard] },
+                        {path: 'plane-shop/:id', component: CreateOrEditPlaneShopComponent, canActivate: [AppRouteGuard] },
                         {path: 'plane-maintain', component: PlaneMaintainComponent, canActivate: [AppRouteGuard] },
+                        {path: 'plane-maintain/create', component: CreateOrEditPlaneMaintainComponent, canActivate: [AppRouteGuard] },
+                        {path: 'plane-maintain/:id', component: CreateOrEditPlaneMaintainComponent, canActivate: [AppRouteGuard] },
                         {path: 'suggestion-handling', component: SuggestionHandlingComponent, canActivate: [AppRouteGuard] },
                         {path: 'suggestion-handling/create', component: CreateOrEditSuggestionHandlingComponent, canActivate: [AppRouteGuard] },
                         {path: 'suggestion-handling/:id', component: CreateOrEditSuggestionHandlingComponent, canActivate: [AppRouteGuard] },
@@ -70,7 +82,10 @@ import { CreateOrEditDepreciationAssetComponent } from './aontents/depreciation-
                         {path: 'depreciation-asset', component: DepreciationAssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'depreciation-asset/create', component: CreateOrEditDepreciationAssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'depreciation-asset/:id', component: CreateOrEditDepreciationAssetComponent, canActivate: [AppRouteGuard] },
-                        
+                        {path: 'transfer', component: TransferComponent, canActivate: [AppRouteGuard] },
+                        {path: 'transfer/create', component: CreateOrEditTransferComponent, canActivate: [AppRouteGuard] },
+                        {path: 'transfer/:id', component: CreateOrEditTransferComponent, canActivate: [AppRouteGuard] },
+                        {path: 'transfer/addAsset', component: AddAssetTransferComponent, canActivate: [AppRouteGuard] },
                     ], canActivate: [AppRouteGuard] },
                     
                 ]
