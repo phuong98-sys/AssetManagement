@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "eGPJvztdTxzrg6Tun41kArb6Fcj81qzyzMegV/s37PDZbznT6Xcr90Ewd8DIALaPwNcnP4rvCyUwIpfFBobX5w==",
+  "dgSpecHash": "mGTyEcc7tUrKdT3hK6a7ezpLLhcXkggdMgv+s9roCUfTEWdYPr7XKmEyaTGrbJcPKkuoFg1t4NTcfwt05+lXMw==",
   "success": true,
-  "projectFilePath": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj",
+  "projectFilePath": "F:\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Huyen\\.nuget\\packages\\abp\\7.1.0\\abp.7.1.0.nupkg.sha512",
     "C:\\Users\\Huyen\\.nuget\\packages\\abp.automapper\\7.1.0\\abp.automapper.7.1.0.nupkg.sha512",

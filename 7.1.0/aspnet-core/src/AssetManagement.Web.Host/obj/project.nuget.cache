@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "bVQjU89iOF9k5kXei56w2GZVt+WbpZverIUVnZ1yRpDullhGFKED/WwwfsKJv/k22A6t9nO+nrph/vcCdHXIfw==",
+  "dgSpecHash": "vommh25QR56VuU+46cr+uzWy4iXX5i6VKMmBu7Zv6Cd7ggRb0MwUx9BcbfWhVlcNelV9IHzhK5khBeqP6/+6Pg==",
   "success": true,
-  "projectFilePath": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\AssetManagement.Web.Host.csproj",
+  "projectFilePath": "F:\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\AssetManagement.Web.Host.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Huyen\\.nuget\\packages\\abp\\7.1.0\\abp.7.1.0.nupkg.sha512",
     "C:\\Users\\Huyen\\.nuget\\packages\\abp.aspnetcore\\7.1.0\\abp.aspnetcore.7.1.0.nupkg.sha512",
