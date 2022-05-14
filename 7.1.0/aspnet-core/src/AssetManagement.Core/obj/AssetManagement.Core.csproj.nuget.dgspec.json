@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {}
+    "F:\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {}
   },
   "projects": {
-    "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
+    "F:\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj",
+        "projectUniqueName": "F:\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj",
         "projectName": "AssetManagement.Core",
-        "projectPath": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj",
+        "projectPath": "F:\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj",
         "packagesPath": "C:\\Users\\Huyen\\.nuget\\packages\\",
-        "outputPath": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\obj\\",
+        "outputPath": "F:\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Huyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
