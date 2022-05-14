@@ -7,6 +7,7 @@ import { Paginator } from 'primeng/paginator';
 import { finalize } from 'rxjs/operators';
 import { CreateOrEditPlaneMaintainComponent } from './create-or-edit-plane-maintain/create-or-edit-plane-maintain.component';
 import { PrimengTableHelper } from 'shared/helpers/PrimengTableHelper';
+import { PagedRequestDto } from '@shared/paged-listing-component-base';
 
 @Component({
   selector: 'app-plane-maintain',
@@ -16,6 +17,8 @@ import { PrimengTableHelper } from 'shared/helpers/PrimengTableHelper';
 
 export class PlaneMaintainComponent extends AppComponentBase implements OnInit {
   planeMaintainList;
+  keyword = '';
+  filterText = '';
   cols: any[];
   loading =  false;
   totalRecords: number;

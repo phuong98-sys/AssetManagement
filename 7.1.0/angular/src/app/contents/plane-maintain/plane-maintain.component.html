@@ -4,6 +4,24 @@
         <button class="btn btn-add" (click)="createOrEditPlaneMaintain()">Thêm</button>
     </div>
 </div>
+<form class="kt-form" autocomplete="off">
+    <div class="row align-items-center">
+        <div class="col-xl-12">
+            <div class="form-group m-form__group align-items-center">
+                <div class="input-group">
+                    <input [(ngModel)]="filterText" name="filterText" autoFocus
+                        class="form-control m-input"
+                        placeholder="Tìm kiếm theo mã tài sản, tên tài sản" type="text" />
+                    <span class="input-group-btn">
+                        <button (click)="getPlaneMaintains()" class="btn btn-search" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 <div class="content-component">
     <p-table (onLazyLoad)="getPlaneMaintains($event)" [paginator]="false" [lazy]="true" [rows]="3" [totalRecords]="totalRecords"  [scrollable]="true" scrollHeight="320px" scrollWidth="1100px" [value]="planeMaintainList" [resizableColumns]="true" [autoLayout]="true" [responsive]="primengTableHelper.isResponsive">
     <ng-template pTemplate="header">

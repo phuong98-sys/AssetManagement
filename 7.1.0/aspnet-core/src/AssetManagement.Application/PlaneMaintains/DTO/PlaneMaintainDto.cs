@@ -42,7 +42,7 @@ namespace AssetManagement.PlaneMaintains.DTO
     [AutoMapTo(typeof(PlaneMaintain))]
     public class PlaneMaintainInputDto : CreationAuditedEntityDto<int?>
     {
-        //public int? Id { get; set; }
+        public int? Id { get; set; }
         public DateTime? ExpectedDate { get; set; }
         public double Estimates { get; set; }
         public string MaintenanceType { get; set; }

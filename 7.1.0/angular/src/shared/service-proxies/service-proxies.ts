@@ -9127,6 +9127,7 @@ export interface IPlaneMaintainListDto {
     departmentName: string|undefined;
     creationTime: moment.Moment;
 }
+
 function throwException(message: string, status: number, response: string, headers: { [key: string]: any; }, result?: any): Observable<any> {
     if (result !== null && result !== undefined)
         return _observableThrow(result);

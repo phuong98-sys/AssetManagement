@@ -34,6 +34,7 @@ import { AddAssetTransferComponent } from './contents/transfer/add-asset-transfe
 import { CreateOrEditPlaneMaintainComponent } from './contents/plane-maintain/create-or-edit-plane-maintain/create-or-edit-plane-maintain.component';
 import { CreateOrEditProposeAssetComponent } from './contents/propose-asset/create-or-edit-propose-asset/create-or-edit-propose-asset.component';
 import { CreateOrEditPlaneShopComponent } from './contents/plane-shop/create-or-edit-plane-shop/create-or-edit-plane-shop.component';
+import { AddAssetPlaneShopComponent } from './contents/plane-shop/add-asset-plane-shop/add-asset-plane-shop.component';
 
 @NgModule({
     imports: [
@@ -72,6 +73,7 @@ import { CreateOrEditPlaneShopComponent } from './contents/plane-shop/create-or-
                         {path: 'plane-shop', component: PlaneShopComponent, canActivate: [AppRouteGuard] },
                         {path: 'plane-shop/create', component: CreateOrEditPlaneShopComponent, canActivate: [AppRouteGuard] },
                         {path: 'plane-shop/:id', component: CreateOrEditPlaneShopComponent, canActivate: [AppRouteGuard] },
+                        {path: 'plane-shop/addAsset', component: AddAssetPlaneShopComponent, canActivate: [AppRouteGuard] },
                         {path: 'plane-maintain', component: PlaneMaintainComponent, canActivate: [AppRouteGuard] },
                         {path: 'plane-maintain/create', component: CreateOrEditPlaneMaintainComponent, canActivate: [AppRouteGuard] },
                         {path: 'plane-maintain/:id', component: CreateOrEditPlaneMaintainComponent, canActivate: [AppRouteGuard] },
