@@ -3,13 +3,15 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DepartmentComponent } from '@app/contents/department/department.component';
 import { AppComponentBase } from '@shared/app-component-base';
-import { AssetDto, AssetInputDto, AssetServiceProxy, IncreaseAssetDto, IncreaseAssetInputDto, IncreaseAssetServiceProxy, DepartmentDto } from '@shared/service-proxies/service-proxies';
+import { AssetDto, AssetInputDto, AssetServiceProxy, IncreaseAssetDto, IncreaseAssetInputDto, IncreaseAssetServiceProxy, DepartmentDto, DepartmentServiceProxy, EmployeeServiceProxy, EmployeeDto } from '@shared/service-proxies/service-proxies';
+import { result } from 'lodash';
 import * as moment from 'moment';
 import { ModalDirective } from 'ngx-bootstrap/modal';
-import { LazyLoadEvent } from 'primeng/api/lazyloadevent';
+import { LazyLoadEvent } from 'primeng/api';
 import { TRISTATECHECKBOX_VALUE_ACCESSOR } from 'primeng/tristatecheckbox';
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { AddAssetIncreaseAssetComponent } from '../add-asset-increase-asset/add-asset-increase-asset.component';
 import { EditIncreaseAssetModalComponent } from '../edit-increase-asset-modal/edit-increase-asset-modal.component';
 declare var $:any;
 @Component({
@@ -21,6 +23,7 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
   @ViewChild("createOrEditModal", { static: true }) modal: ModalDirective;
   @ViewChild("increaseAssetForm", { static: true }) private submitForm: NgForm;
   @ViewChild('editIncreaseAssetModal', { static: true }) editIncreaseAssetModal: EditIncreaseAssetModalComponent;
+  @ViewChild('addAssetIncreaseAssetModal', { static: true }) addAssetIncreaseAssetModal: AddAssetIncreaseAssetComponent
   @Output() modalSave = new EventEmitter<any>();
   active = false;
   saving = false;
@@ -38,7 +41,9 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
   deleteAssetList : AssetDto[] = [];
   deleteAssetConfirmedList : any[] = [];
   departmentList : DepartmentDto[] = [];
-  selectedDepartment: DepartmentDto;
+  // selectedDepartment: DepartmentDto;
+  employeeList : EmployeeDto[] =[];
+  // selectedEmployee: EmployeeDto;
   // assetTypeList: IncreaseAssetTypeDto[];
   // selectedAssetType: AssetTypeDto;
   isSelectedAsset = false;
@@ -46,38 +51,45 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
     //
     advancedFiltersVisible = false;
     keyword ='';
+  selectedAssetTable: AssetDto[] = [];
   constructor(
     injector: Injector,
     private assetService: AssetServiceProxy,
     private increaseAssetService: IncreaseAssetServiceProxy,
+    private departmentService: DepartmentServiceProxy,
+    private employeeService: EmployeeServiceProxy,
     private _router: Router,
     private _activatedRoute: ActivatedRoute) {
         super(injector);
         if (this._activatedRoute.snapshot.params['id']) {
           this.increaseAssetId = Number(this._activatedRoute.snapshot.params['id']);
-          this.assetService.getAssetIncreased(this.increaseAssetId).subscribe((result)=>{
-            
-              this.addAssetToIncreaseList = result.items;
-          });
+          this.getAssetIncreased(this.increaseAssetId);
         }
   }
 
   ngOnInit(): void {
-    this.getAssets();
-    this.getIncreaseAssetForEdit();
-    this.getIncreaseAssets();
+    // this.getAssets();
+     this.getIncreaseAssetForEdit();
+     this.getDepartmentList();
+     this.getEmployeeList();
+    // this.getIncreaseAssets();
   }
-  getIncreaseAssets(){
-    this.increaseAssetService.getIncreaseAssets().subscribe((result) => {
-      this.increaseAssetList = result.items;
-    });
+  // getIncreaseAssets(){
+  //   this.increaseAssetService.getIncreaseAssets().subscribe((result) => {
+  //     this.increaseAssetList = result.items;
+  //   });
+  // }
+  getAssetIncreased(increaseAssetId: number){
+    this.assetService.getAssetIncreased(increaseAssetId)
+    .subscribe((result) => {
+        this.selectedAssetTable = result.items;
+    })
   }
   show(increaseAsset?: IncreaseAssetInputDto): void {
-    if(increaseAsset?.id){
-      this.increaseAsset = increaseAsset;
-      // this.selectedAssetType = this.assetTypeList.find((item)=> item.id == asset.assetTypeId);
-    }
-    this.editIncreaseAssetModal.show();
+    // if(increaseAsset?.id){
+    //   this.increaseAsset = increaseAsset;
+    // }
+    this.addAssetIncreaseAssetModal.show();
     
   }
   validateForm(form) {
@@ -89,24 +101,32 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
 }
   save(){
     if (this.validateForm(this.submitForm?.form)) {
+      debugger
       this.saving= true;
       // ghi tăng tài sản
        this.increaseAsset.creationTime =  moment.utc(this.increaseAsset.creationTime.toString());
        this.increaseAsset.increaseAssetDate = moment.utc( this.increaseAsset.increaseAssetDate.toString());
           this.increaseAssetService.insertOrUpdateIncreaseAsset(this.increaseAsset)
-          .pipe(finalize(() => (this.loading = false)))
+          .pipe(finalize(() => (this.saving = false)))
           .subscribe((result) => {
+            debugger
               this.increaseAsset = result;
-              this.addAssetToIncreaseList.map((item) => { 
+              this.selectedAssetTable.map((item) => { 
                 item.increaseAssetId = this.increaseAsset.id;
-                item.increaseAssetDate = moment.utc( this.increaseAsset.increaseAssetDate.toString());
+                debugger
+                //  item.increaseAssetDate = moment.utc( this.increaseAsset.increaseAssetDate.toString());
+                  item.creationTime = moment.utc( item.creationTime.toString());
+                  item.startDate = moment.utc( item.startDate.toString());
+                  item.amortizationDate = moment.utc( item.amortizationDate.toString());
+                  item.increaseAssetDate = moment.utc( item.increaseAssetDate.toString());
                 });
-              this.assetService.increaseAssetList(this.addAssetToIncreaseList).subscribe();
+                debugger
+              this.assetService.increaseAssetList(this.selectedAssetTable).subscribe();
               // xóa tài sản ghi tăng
               
-              if(this.deleteAssetConfirmedList.length > 0 ){
-                this.assetService.test(1,this.deleteAssetConfirmedList).subscribe();
-              }
+              // if(this.deleteAssetConfirmedList.length > 0 ){
+              //   this.assetService.test(1,this.deleteAssetConfirmedList).subscribe();
+              // }
               this.notify.info(this.l("SavedSuccessfully"));
               this.close();
               // this.modalSave.emit(null);
@@ -120,46 +140,49 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
     this.submitForm.form.reset();
     this._router.navigate(['app/contents/increase-asset']);
   }
-  searchAsset(){
-    var newAsset = new AssetDto;
-    newAsset =this.asset;
-    this.assetList = this.assetHaveNotIncreaseList.filter(x => !this.addAssetToIncreaseList.map(y => y?.assetCode).includes(x?.assetCode));
-    newAsset = this.assetList?.find((item) => item.assetCode == newAsset?.assetCode);
-    if(!newAsset){
-      this.resetAsset();
-      this.assetMessage = "Mã tài sản không tồn tại hoặc đã được ghi tăng";
-    }
-    else{
-      this.asset = newAsset;
-      this.assetMessage = "";
-    }
-  }
-  resetAsset(){
-    this.asset.monthlyAmortizationValue = null;
-    this.asset.assetName = null;
-    this.asset.orginalPrice = null;
-  }
+  // searchAsset(){
+  //   var newAsset = new AssetDto;
+  //   newAsset =this.asset;
+  //   this.assetList = this.assetHaveNotIncreaseList.filter(x => !this.addAssetToIncreaseList.map(y => y?.assetCode).includes(x?.assetCode));
+  //   newAsset = this.assetList?.find((item) => item.assetCode == newAsset?.assetCode);
+  //   if(!newAsset){
+  //     this.resetAsset();
+  //     this.assetMessage = "Mã tài sản không tồn tại hoặc đã được ghi tăng";
+  //   }
+  //   else{
+  //     this.asset = newAsset;
+  //     this.assetMessage = "";
+  //   }
+  // }
+  // resetAsset(){
+  //   this.asset.monthlyAmortizationValue = null;
+  //   this.asset.assetName = null;
+  //   this.asset.orginalPrice = null;
+  // }
   renderAmortizationValue(){
     this.asset.monthlyAmortizationValue = Number(((this.asset.orginalPrice)/(this.asset.numberOfDayUsedAsset*12)).toFixed(3));
   }
-  renderAmortizationValueOfAssetFromTable(asset : AssetDto){
+  // renderAmortizationValueOfAssetFromTable(asset : AssetDto){
     
-    var index = this.addAssetToIncreaseList.findIndex(c => c.id == asset.id);
-    this.addAssetToIncreaseList[index] = asset;
-    var amortizationValue = Number(((asset.orginalPrice)/(asset.numberOfDayUsedAsset*12)).toFixed(3));
-    this.addAssetToIncreaseList[index].amortizationValue = amortizationValue;
-  }
-  getAssets(){
-    this.assetService.getAssets().subscribe((result)=>{
+  //   var index = this.addAssetToIncreaseList.findIndex(c => c.id == asset.id);
+  //   this.addAssetToIncreaseList[index] = asset;
+  //   var amortizationValue = Number(((asset.orginalPrice)/(asset.numberOfDayUsedAsset*12)).toFixed(3));
+  //   this.addAssetToIncreaseList[index].amortizationValue = amortizationValue;
+  // }
+  // getAssets(){
+  //   this.assetService.getAssets().subscribe((result)=>{
       
-      this.assetHaveNotIncreaseList = result.items.filter((item)=> item.increaseAssetId == null);
-      this.assetList = this.assetHaveNotIncreaseList;
-    });
+  //     this.assetHaveNotIncreaseList = result.items.filter((item)=> item.increaseAssetId == null);
+  //     this.assetList = this.assetHaveNotIncreaseList;
+  //   });
    
-  }
-
+  // }
+// getAssetIncreaseList(){
+//   this.assetService.GetAssetIncreased()
+//   .subscribe((resul))
+// }
   clickIncreaseAsset(){
-    this.searchAsset();
+    // this.searchAsset();
     if(this.assetMessage  != ""){
       this.message.warn(this.l('Không hợp lệ vui lòng kiểm tra lại'));
     }
@@ -273,6 +296,50 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
 
   }
   onSelectDepartmentFromTable(asset : AssetDto){
-
+    var index = this.selectedAssetTable.findIndex(c => c.id == asset.id);
+    this.selectedAssetTable[index].employeeId = null;
+    // var amortizationValue = Number(((asset.orginalPrice)/(asset.numberOfDayUsedAsset*12)).toFixed(3));
+    // this.addAssetToIncreaseList[index].amortizationValue = amortizationValue;
+    // this.selectedAssetTable[]
+    // this.getEmployeeListByDepartment(asset.departmentId);
+  }
+  addAssetIncreaseToTable(assetList){
+    
+    this.selectedAssetTable = [ ...this.selectedAssetTable, ...assetList];
+    console.log("list =", this.selectedAssetTable);
+  }
+  getDepartmentList(){
+    debugger
+    this.departmentService.getDepartments()
+    .subscribe((result)=>{
+      this.departmentList = result.items;
+    })
+  }
+  // onSelectEmployeeFromTable(asset: AssetDto){
+  //   debugger
+  //   console.log(  )
+  //   this.getEmployeeListByDepartment(asset.departmentId);
+  // }
+  // getEmployeeListByDepartment(departmentId: number){
+  //   this.employeeService.getEmployeeByDepartment(departmentId)
+  //   .subscribe((result)=>{
+  //     var employeeList = result.items;
+  //   })
+  // }
+  getEmployeeList(){
+    this.employeeService.getEmployees()
+    .subscribe((result)=>{
+      this.employeeList = result.items;
+    })
+  }
+  editSelectedAsset(asset){
+    debugger
+    console.log("asset=", asset);
+    var index = this.selectedAssetTable.findIndex(c => c.id == asset.id);
+    console.log("index=", index);
+    this.selectedAssetTable[index] = asset;
+    console.log("selected asset =",  this.selectedAssetTable[index]);
+    // var amortizationValue = Number(((asset.orginalPrice)/(asset.numberOfDayUsedAsset*12)).toFixed(3));
+    // this.addAssetToIncreaseList[index].amortizationValue = amortizationValue;
   }
 }

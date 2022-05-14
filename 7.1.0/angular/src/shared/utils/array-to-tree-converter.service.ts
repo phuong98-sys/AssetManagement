@@ -7,14 +7,14 @@ export class ArrayToTreeConverterService {
     createTree(array: any[], parentIdProperty, idProperty, parentIdValue, childrenProperty: string, fieldMappings): any {
         let tree = [];
         let nodes = _.filter(array, [parentIdProperty, parentIdValue]);
-debugger
+
         _.forEach(nodes, node => {
             let newNode = {
                 data: node
             };
 
             this.mapFields(node, newNode, fieldMappings);
-debugger
+
             newNode[childrenProperty] = this.createTree(
                 array,
                 parentIdProperty,
@@ -23,7 +23,7 @@ debugger
                 childrenProperty,
                 fieldMappings
             );
-debugger
+
             tree.push(newNode);
         });
 

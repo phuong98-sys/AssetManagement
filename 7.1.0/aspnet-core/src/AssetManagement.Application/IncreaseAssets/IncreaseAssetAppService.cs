@@ -3,6 +3,7 @@ using Abp.Domain.Repositories;
 using Abp.Runtime.Session;
 using Abp.UI;
 using AssetManagement.Assets.DTO;
+using AssetManagement.Authorization.Users;
 using AssetManagement.IncreaseAssets.DTO;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -17,15 +18,35 @@ namespace AssetManagement.IncreaseAssets
     public class IncreaseAssetAppService: AssetManagementAppServiceBase, IIncreaseAssetAppService
     {
         private readonly IRepository<IncreaseAsset> _increaseAssetRepository;
-        public IncreaseAssetAppService(IRepository<IncreaseAsset> increaseAssetRepository)
+        private readonly IRepository<User, long> _userRepository;
+        public IncreaseAssetAppService(IRepository<IncreaseAsset> increaseAssetRepository,
+            IRepository<User, long> userRepository)
         {
             _increaseAssetRepository = increaseAssetRepository;
+            _userRepository = userRepository;
         }
         public async Task<ListResultDto<IncreaseAssetDto>> GetIncreaseAssets()
         {
             try
             {
-                var increaseAssets = await _increaseAssetRepository.GetAll().ToListAsync();
+                var query =  _increaseAssetRepository.GetAll();
+                var queryLeftJoin = from q in query
+                                    join u in _userRepository.GetAll() on q.CreatorUserId equals u.Id into ps
+                                    from u in ps.DefaultIfEmpty()
+                                    select new { query = q, CreatorUserName = u == null ? "" : u.Name };
+                var increaseAssets = await queryLeftJoin.Select(p => new IncreaseAssetDto()
+                {
+                    Id = p.query.Id,
+                    IncreaseAssetCode = p.query.IncreaseAssetCode,
+                    CreationTime = p.query.CreationTime,
+                    IncreaseAssetDate = p.query.IncreaseAssetDate,
+                    Note = p.query.Note,
+                    TotalAssetValue = p.query.TotalAssetValue,
+                    CreatorUserId = p.query.CreatorUserId,
+                    CreatorUserName = p.CreatorUserName,
+                    LastModificationTime = p.query.LastModificationTime
+    })
+                .ToListAsync();
                 var increaseAssetsDtos= ObjectMapper.Map<List<IncreaseAssetDto>>(increaseAssets);
                 return new ListResultDto<IncreaseAssetDto>(increaseAssetsDtos);
             }

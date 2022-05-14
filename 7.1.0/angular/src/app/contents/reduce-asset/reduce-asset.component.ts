@@ -44,7 +44,7 @@ export class ReduceAssetComponent extends AppComponentBase implements OnInit {
       this.reduceAssetService.getReduceAssets()
       .subscribe(result => {
         this.loading = false;
-        debugger
+        
           this.reduceAssetList = result.items;
           this.reduceAssetList.map((item)=>{ 
             item.creationTime = moment(item.creationTime).format("DD/MM/YYYY");

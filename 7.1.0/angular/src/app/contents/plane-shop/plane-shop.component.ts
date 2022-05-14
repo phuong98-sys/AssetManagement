@@ -33,7 +33,7 @@ export class PlaneShopComponent extends AppComponentBase implements OnInit {
     this.getPlaneShops();
   }
   getPlaneShops(event?: LazyLoadEvent){
-    debugger
+    
   this.primengTableHelper.showLoadingIndicator();
     this.loading = true;
     this.planeShopService.getPlaneShops()
@@ -63,7 +63,7 @@ export class PlaneShopComponent extends AppComponentBase implements OnInit {
               .deletePlaneMaintain(planeMaintain.id)
               .pipe(finalize(() => this.loading = false))
               .subscribe(() => {
-                debugger
+                
                   this.getPlaneMaintains();
                   this.notify.success(this.l('SuccessfullyDeleted'));
               });

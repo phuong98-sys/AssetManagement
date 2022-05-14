@@ -79,7 +79,7 @@
                         <label for="amortizationDate
                         ">{{"Ngày bắt đầu tính khấu hao" | localize}} *</label>
                         <input id="amortizationDate" #amortizationDate="ngModel" type="date" name="amortizationDate" class="form-control" [(ngModel)]="amortizationDateInput" required />
-                        <input id="startDate" type="date" #startDate="ngModel" name="startDate" class="form-control" [(ngModel)]="startDateInput" required  />
+                       
                         <!-- <span *ngIf="!asset?.startDate" class="error-message">Trường này không được để trống</span> -->
                     </div>
                     <div class="form-group col-3">
@@ -93,7 +93,7 @@
                     </div>
                     <div class="form-group col-3">
                         <label for="orginalPrice">{{"Nguyên giá" | localize}} *</label>
-                        <input id="orginalPrice" #orginalPrice="ngModel" type="number" name="orginalPrice" class="form-control" [(ngModel)]="asset.orginalPrice" required maxlength="256" min="0" (change)="getAmortizationValue()"/>
+                        <input id="orginalPrice" #orginalPrice="ngModel" type="number" name="orginalPrice" class="form-control" [(ngModel)]="asset.orginalPrice" required maxlength="256" min="1" (change)="getAmortizationValueAndResidualValue()"/>
                         <!-- <span *ngIf="!asset?.assetName" style="color:red; font-size: 12px;">Trường này không được để trống</span> -->
                         <!-- <validation-messages [formCtrl]="assetCodeInput"></validation-messages> -->
                     </div>
@@ -101,8 +101,8 @@
                         <label for="depreciationOfAsset">{{"Khấu hao lũy kế" | localize}} </label>
                         <input id="depreciationOfAsset" #depreciationOfAsset="ngModel" type="number" name="depreciationOfAsset" class="form-control" [(ngModel)]="asset.depreciationOfAsset" maxlength="256" min="0" (change)="checkDepreciationOfAsset()"/>
                         <div style="display: grid;">
-                            <span  class="text-note" *ngIf="asset.depreciationOfAsset">Giá trị phải nhỏ hơn nguyên giá</span>
-                            <span  class="error-message" *ngIf="asset.orginalPrice">{{depreciationOfAssetMessage}}</span>
+                            <span  class="text-note" *ngIf="asset.orginalPrice">Giá trị phải nhỏ hơn nguyên giá</span>
+                            <span  class="error-message" *ngIf="asset.depreciationOfAsset">{{depreciationOfAssetMessage}}</span>
                         </div>
                     </div>
                     <!-- <div class="form-group col-3">

@@ -36,7 +36,7 @@ export class ProposeAssetComponent extends AppComponentBase implements OnInit {
     this.getProposeAssets();
   }
   getProposeAssets(event?: LazyLoadEvent){
-    debugger
+    
   this.primengTableHelper.showLoadingIndicator();
     this.loading = true;
     this.proposeAssetService.getProposeAssets()
@@ -66,7 +66,7 @@ export class ProposeAssetComponent extends AppComponentBase implements OnInit {
               .deletePlaneMaintain(planeMaintain.id)
               .pipe(finalize(() => this.loading = false))
               .subscribe(() => {
-                debugger
+                
                   this.getPlaneMaintains();
                   this.notify.success(this.l('SuccessfullyDeleted'));
               });

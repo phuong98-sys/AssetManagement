@@ -34,7 +34,7 @@ export class CreateOrEditPlaneMaintainComponent extends AppComponentBase impleme
     private _activatedRoute: ActivatedRoute,
     private _router: Router) {
         super(injector);
-        debugger
+        
         if (this._activatedRoute.snapshot.params['id']) {
           this.planeMaintainId = Number(this._activatedRoute.snapshot.params['id']);
           
@@ -111,7 +111,7 @@ export class CreateOrEditPlaneMaintainComponent extends AppComponentBase impleme
     this.planeMaintain.id=null;
   }
   close(): void {
-    debugger
+    
     this.active = false;
     this.submitForm.form.reset();
     this._router.navigate(['app/contents/plane-maintain']);

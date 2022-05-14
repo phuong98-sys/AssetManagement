@@ -1340,7 +1340,233 @@ export class IncreaseAssetServiceProxy {
     }
 }
 
-//PlaneShop
+@Injectable()
+export class PlaneMaintainServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getPlaneMaintains(): Observable<PlaneMaintainDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/PlaneMaintain/GetPlaneMaintains";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPlaneMaintains(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPlaneMaintains(<any>response_);
+                } catch (e) {
+                    return <Observable<PlaneMaintainDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PlaneMaintainDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPlaneMaintains(response: HttpResponseBase): Observable<PlaneMaintainDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PlaneMaintainDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PlaneMaintainDtoListResultDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    insertOrUpdatePlaneMaintain(body: PlaneMaintainInputDto | undefined): Observable<PlaneMaintainListDto> {
+        let url_ = this.baseUrl + "/api/services/app/PlaneMaintain/InsertOrUpdatePlaneMaintain";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertOrUpdatePlaneMaintain(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertOrUpdatePlaneMaintain(<any>response_);
+                } catch (e) {
+                    return <Observable<PlaneMaintainListDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PlaneMaintainListDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processInsertOrUpdatePlaneMaintain(response: HttpResponseBase): Observable<PlaneMaintainListDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PlaneMaintainListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PlaneMaintainListDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getPlaneMaintain(id: number | undefined): Observable<PlaneMaintainDto> {
+        let url_ = this.baseUrl + "/api/services/app/PlaneMaintain/GetPlaneMaintain?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPlaneMaintain(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPlaneMaintain(<any>response_);
+                } catch (e) {
+                    return <Observable<PlaneMaintainDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PlaneMaintainDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPlaneMaintain(response: HttpResponseBase): Observable<PlaneMaintainDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PlaneMaintainDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PlaneMaintainDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    deletePlaneMaintain(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/PlaneMaintain/DeletePlaneMaintain?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeletePlaneMaintain(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeletePlaneMaintain(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeletePlaneMaintain(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
+
 @Injectable()
 export class PlaneShopServiceProxy {
     private http: HttpClient;
@@ -1402,9 +1628,172 @@ export class PlaneShopServiceProxy {
         }
         return _observableOf<PlaneShopDtoListResultDto>(<any>null);
     }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    insertOrUpdatePlaneShop(body: PlaneShopInputDto | undefined): Observable<PlaneShopListDto> {
+        let url_ = this.baseUrl + "/api/services/app/PlaneShop/InsertOrUpdatePlaneShop";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertOrUpdatePlaneShop(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertOrUpdatePlaneShop(<any>response_);
+                } catch (e) {
+                    return <Observable<PlaneShopListDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PlaneShopListDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processInsertOrUpdatePlaneShop(response: HttpResponseBase): Observable<PlaneShopListDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PlaneShopListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PlaneShopListDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getPlaneShop(id: number | undefined): Observable<PlaneShopDto> {
+        let url_ = this.baseUrl + "/api/services/app/PlaneShop/GetPlaneShop?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPlaneShop(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPlaneShop(<any>response_);
+                } catch (e) {
+                    return <Observable<PlaneShopDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PlaneShopDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPlaneShop(response: HttpResponseBase): Observable<PlaneShopDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PlaneShopDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PlaneShopDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    deletePlaneShop(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/PlaneShop/DeletePlaneShop?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeletePlaneShop(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeletePlaneShop(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeletePlaneShop(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
 }
 
-// ProposeAsset
 @Injectable()
 export class ProposeAssetServiceProxy {
     private http: HttpClient;
@@ -3051,6 +3440,233 @@ export class TokenAuthServiceProxy {
 }
 
 @Injectable()
+export class TransferServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getTransfers(): Observable<TransferDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Transfer/GetTransfers";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTransfers(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTransfers(<any>response_);
+                } catch (e) {
+                    return <Observable<TransferDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TransferDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetTransfers(response: HttpResponseBase): Observable<TransferDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = TransferDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TransferDtoListResultDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    insertOrUpdateTransfer(body: TransferInputDto | undefined): Observable<TransferListDto> {
+        let url_ = this.baseUrl + "/api/services/app/Transfer/InsertOrUpdateTransfer";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertOrUpdateTransfer(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertOrUpdateTransfer(<any>response_);
+                } catch (e) {
+                    return <Observable<TransferListDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TransferListDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processInsertOrUpdateTransfer(response: HttpResponseBase): Observable<TransferListDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = TransferListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TransferListDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getTransfer(id: number | undefined): Observable<TransferDto> {
+        let url_ = this.baseUrl + "/api/services/app/Transfer/GetTransfer?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTransfer(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTransfer(<any>response_);
+                } catch (e) {
+                    return <Observable<TransferDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TransferDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetTransfer(response: HttpResponseBase): Observable<TransferDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = TransferDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TransferDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    deleteTransfer(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Transfer/DeleteTransfer?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteTransfer(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteTransfer(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteTransfer(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
 export class UserServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -3671,460 +4287,7 @@ export class UserServiceProxy {
         return _observableOf<UserDtoPagedResultDto>(<any>null);
     }
 }
-//Transfer
-@Injectable()
-export class TransferServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
-    }
-
-    /**
-     * @return Success
-     */
-    getTransfers(): Observable<TransferDtoListResultDto> {
-        let url_ = this.baseUrl + "/api/services/app/Transfer/GetTransfers";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetTransfers(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetTransfers(<any>response_);
-                } catch (e) {
-                    return <Observable<TransferDtoListResultDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<TransferDtoListResultDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetTransfers(response: HttpResponseBase): Observable<TransferDtoListResultDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = TransferDtoListResultDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<TransferDtoListResultDto>(<any>null);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    insertOrUpdateTransfer(body: TransferInputDto | undefined): Observable<TransferListDto> {
-        let url_ = this.baseUrl + "/api/services/app/Transfer/InsertOrUpdateTransfer";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processInsertOrUpdateTransfer(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processInsertOrUpdateTransfer(<any>response_);
-                } catch (e) {
-                    return <Observable<TransferListDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<TransferListDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processInsertOrUpdateTransfer(response: HttpResponseBase): Observable<TransferListDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = TransferListDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<TransferListDto>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getTransfer(id: number | undefined): Observable<TransferDto> {
-        let url_ = this.baseUrl + "/api/services/app/Transfer/GetTransfer?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetTransfer(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetTransfer(<any>response_);
-                } catch (e) {
-                    return <Observable<TransferDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<TransferDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetTransfer(response: HttpResponseBase): Observable<TransferDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = TransferDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<TransferDto>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    deleteTransfer(id: number | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Transfer/DeleteTransfer?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDeleteTransfer(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processDeleteTransfer(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processDeleteTransfer(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-}
-//PlaneMaintain
-@Injectable()
-export class PlaneMaintainServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
-    }
-
-    /**
-     * @return Success
-     */
-    getPlaneMaintains(): Observable<PlaneMaintainDtoListResultDto> {
-        let url_ = this.baseUrl + "/api/services/app/PlaneMaintain/GetPlaneMaintains";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetPlaneMaintains(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetPlaneMaintains(<any>response_);
-                } catch (e) {
-                    return <Observable<PlaneMaintainDtoListResultDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PlaneMaintainDtoListResultDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetPlaneMaintains(response: HttpResponseBase): Observable<PlaneMaintainDtoListResultDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PlaneMaintainDtoListResultDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PlaneMaintainDtoListResultDto>(<any>null);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    insertOrUpdatePlaneMaintain(body: PlaneMaintainInputDto | undefined): Observable<PlaneMaintainListDto> {
-        let url_ = this.baseUrl + "/api/services/app/PlaneMaintain/InsertOrUpdatePlaneMaintain";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processInsertOrUpdatePlaneMaintain(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processInsertOrUpdatePlaneMaintain(<any>response_);
-                } catch (e) {
-                    return <Observable<PlaneMaintainListDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PlaneMaintainListDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processInsertOrUpdatePlaneMaintain(response: HttpResponseBase): Observable<PlaneMaintainListDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PlaneMaintainListDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PlaneMaintainListDto>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getPlaneMaintain(id: number | undefined): Observable<PlaneMaintainDto> {
-        let url_ = this.baseUrl + "/api/services/app/PlaneMaintain/GetPlaneMaintain?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetPlaneMaintain(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetPlaneMaintain(<any>response_);
-                } catch (e) {
-                    return <Observable<PlaneMaintainDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PlaneMaintainDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetPlaneMaintain(response: HttpResponseBase): Observable<PlaneMaintainDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PlaneMaintainDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PlaneMaintainDto>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    deletePlaneMaintain(id: number | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/PlaneMaintain/DeletePlaneMaintain?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDeletePlaneMaintain(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processDeletePlaneMaintain(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processDeletePlaneMaintain(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-}
 export class ApplicationInfoDto implements IApplicationInfoDto {
     version: string | undefined;
     releaseDate: moment.Moment;
@@ -6084,13 +6247,12 @@ export interface IGetRoleForEditOutput {
 
 export class IncreaseAssetDto implements IIncreaseAssetDto {
     id: number;
-    creatorUserId: number | undefined;
     increaseAssetCode: string;
     creationTime: moment.Moment;
     increaseAssetDate: moment.Moment;
     note: string | undefined;
     totalAssetValue: number;
-    lastModifierUserName: string | undefined;
+    creatorUserId: number | undefined;
     creatorUserName: string | undefined;
     lastModificationTime: moment.Moment | undefined;
 
@@ -6106,13 +6268,12 @@ export class IncreaseAssetDto implements IIncreaseAssetDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.creatorUserId = _data["creatorUserId"];
             this.increaseAssetCode = _data["increaseAssetCode"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
             this.increaseAssetDate = _data["increaseAssetDate"] ? moment(_data["increaseAssetDate"].toString()) : <any>undefined;
             this.note = _data["note"];
             this.totalAssetValue = _data["totalAssetValue"];
-            this.lastModifierUserName = _data["lastModifierUserName"];
+            this.creatorUserId = _data["creatorUserId"];
             this.creatorUserName = _data["creatorUserName"];
             this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
         }
@@ -6128,13 +6289,12 @@ export class IncreaseAssetDto implements IIncreaseAssetDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["creatorUserId"] = this.creatorUserId;
         data["increaseAssetCode"] = this.increaseAssetCode;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         data["increaseAssetDate"] = this.increaseAssetDate ? this.increaseAssetDate.toISOString() : <any>undefined;
         data["note"] = this.note;
         data["totalAssetValue"] = this.totalAssetValue;
-        data["lastModifierUserName"] = this.lastModifierUserName;
+        data["creatorUserId"] = this.creatorUserId;
         data["creatorUserName"] = this.creatorUserName;
         data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
         return data; 
@@ -6150,13 +6310,12 @@ export class IncreaseAssetDto implements IIncreaseAssetDto {
 
 export interface IIncreaseAssetDto {
     id: number;
-    creatorUserId: number | undefined;
     increaseAssetCode: string;
     creationTime: moment.Moment;
     increaseAssetDate: moment.Moment;
     note: string | undefined;
     totalAssetValue: number;
-    lastModifierUserName: string | undefined;
+    creatorUserId: number | undefined;
     creatorUserName: string | undefined;
     lastModificationTime: moment.Moment | undefined;
 }
@@ -6220,7 +6379,6 @@ export class IncreaseAssetInputDto implements IIncreaseAssetInputDto {
     increaseAssetDate: moment.Moment;
     note: string | undefined;
     totalAssetValue: number;
-    lastModifierUserName: string | undefined;
     creatorUserName: string | undefined;
     lastModificationTime: moment.Moment | undefined;
 
@@ -6242,7 +6400,6 @@ export class IncreaseAssetInputDto implements IIncreaseAssetInputDto {
             this.increaseAssetDate = _data["increaseAssetDate"] ? moment(_data["increaseAssetDate"].toString()) : <any>undefined;
             this.note = _data["note"];
             this.totalAssetValue = _data["totalAssetValue"];
-            this.lastModifierUserName = _data["lastModifierUserName"];
             this.creatorUserName = _data["creatorUserName"];
             this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
         }
@@ -6264,7 +6421,6 @@ export class IncreaseAssetInputDto implements IIncreaseAssetInputDto {
         data["increaseAssetDate"] = this.increaseAssetDate ? this.increaseAssetDate.toISOString() : <any>undefined;
         data["note"] = this.note;
         data["totalAssetValue"] = this.totalAssetValue;
-        data["lastModifierUserName"] = this.lastModifierUserName;
         data["creatorUserName"] = this.creatorUserName;
         data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
         return data; 
@@ -6286,7 +6442,6 @@ export interface IIncreaseAssetInputDto {
     increaseAssetDate: moment.Moment;
     note: string | undefined;
     totalAssetValue: number;
-    lastModifierUserName: string | undefined;
     creatorUserName: string | undefined;
     lastModificationTime: moment.Moment | undefined;
 }
@@ -6530,9 +6685,305 @@ export interface IPermissionDtoListResultDto {
     items: PermissionDto[] | undefined;
 }
 
-//PlaneShopDto
+export class PlaneMaintainDto implements IPlaneMaintainDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
+    expectedDate: moment.Moment | undefined;
+    estimates: number;
+    maintenanceType: string | undefined;
+    describe: string | undefined;
+    assetId: number | undefined;
+    assetCode: string | undefined;
+    assetName: string | undefined;
+    assetTypeName: string | undefined;
+    departmentName: string | undefined;
+    creationTime: moment.Moment;
+
+    constructor(data?: IPlaneMaintainDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
+            this.expectedDate = _data["expectedDate"] ? moment(_data["expectedDate"].toString()) : <any>undefined;
+            this.estimates = _data["estimates"];
+            this.maintenanceType = _data["maintenanceType"];
+            this.describe = _data["describe"];
+            this.assetId = _data["assetId"];
+            this.assetCode = _data["assetCode"];
+            this.assetName = _data["assetName"];
+            this.assetTypeName = _data["assetTypeName"];
+            this.departmentName = _data["departmentName"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): PlaneMaintainDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlaneMaintainDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
+        data["expectedDate"] = this.expectedDate ? this.expectedDate.toISOString() : <any>undefined;
+        data["estimates"] = this.estimates;
+        data["maintenanceType"] = this.maintenanceType;
+        data["describe"] = this.describe;
+        data["assetId"] = this.assetId;
+        data["assetCode"] = this.assetCode;
+        data["assetName"] = this.assetName;
+        data["assetTypeName"] = this.assetTypeName;
+        data["departmentName"] = this.departmentName;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): PlaneMaintainDto {
+        const json = this.toJSON();
+        let result = new PlaneMaintainDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlaneMaintainDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
+    expectedDate: moment.Moment | undefined;
+    estimates: number;
+    maintenanceType: string | undefined;
+    describe: string | undefined;
+    assetId: number | undefined;
+    assetCode: string | undefined;
+    assetName: string | undefined;
+    assetTypeName: string | undefined;
+    departmentName: string | undefined;
+    creationTime: moment.Moment;
+}
+
+export class PlaneMaintainDtoListResultDto implements IPlaneMaintainDtoListResultDto {
+    items: PlaneMaintainDto[] | undefined;
+
+    constructor(data?: IPlaneMaintainDtoListResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(PlaneMaintainDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PlaneMaintainDtoListResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlaneMaintainDtoListResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): PlaneMaintainDtoListResultDto {
+        const json = this.toJSON();
+        let result = new PlaneMaintainDtoListResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlaneMaintainDtoListResultDto {
+    items: PlaneMaintainDto[] | undefined;
+}
+
+export class PlaneMaintainInputDto implements IPlaneMaintainInputDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
+    expectedDate: moment.Moment | undefined;
+    estimates: number;
+    maintenanceType: string | undefined;
+    describe: string | undefined;
+    assetId: number | undefined;
+    assetTypeName: string | undefined;
+    departmentName: string | undefined;
+    creationTime: moment.Moment;
+
+    constructor(data?: IPlaneMaintainInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
+            this.expectedDate = _data["expectedDate"] ? moment(_data["expectedDate"].toString()) : <any>undefined;
+            this.estimates = _data["estimates"];
+            this.maintenanceType = _data["maintenanceType"];
+            this.describe = _data["describe"];
+            this.assetId = _data["assetId"];
+            this.assetTypeName = _data["assetTypeName"];
+            this.departmentName = _data["departmentName"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): PlaneMaintainInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlaneMaintainInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
+        data["expectedDate"] = this.expectedDate ? this.expectedDate.toISOString() : <any>undefined;
+        data["estimates"] = this.estimates;
+        data["maintenanceType"] = this.maintenanceType;
+        data["describe"] = this.describe;
+        data["assetId"] = this.assetId;
+        data["assetTypeName"] = this.assetTypeName;
+        data["departmentName"] = this.departmentName;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): PlaneMaintainInputDto {
+        const json = this.toJSON();
+        let result = new PlaneMaintainInputDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlaneMaintainInputDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
+    expectedDate: moment.Moment | undefined;
+    estimates: number;
+    maintenanceType: string | undefined;
+    describe: string | undefined;
+    assetId: number | undefined;
+    assetTypeName: string | undefined;
+    departmentName: string | undefined;
+    creationTime: moment.Moment;
+}
+
+export class PlaneMaintainListDto implements IPlaneMaintainListDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
+    expectedDate: moment.Moment | undefined;
+    estimates: number;
+    maintenanceType: string | undefined;
+    describe: string | undefined;
+    assetId: number | undefined;
+    assetTypeName: string | undefined;
+    departmentName: string | undefined;
+    creationTime: moment.Moment;
+
+    constructor(data?: IPlaneMaintainListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
+            this.expectedDate = _data["expectedDate"] ? moment(_data["expectedDate"].toString()) : <any>undefined;
+            this.estimates = _data["estimates"];
+            this.maintenanceType = _data["maintenanceType"];
+            this.describe = _data["describe"];
+            this.assetId = _data["assetId"];
+            this.assetTypeName = _data["assetTypeName"];
+            this.departmentName = _data["departmentName"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): PlaneMaintainListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlaneMaintainListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
+        data["expectedDate"] = this.expectedDate ? this.expectedDate.toISOString() : <any>undefined;
+        data["estimates"] = this.estimates;
+        data["maintenanceType"] = this.maintenanceType;
+        data["describe"] = this.describe;
+        data["assetId"] = this.assetId;
+        data["assetTypeName"] = this.assetTypeName;
+        data["departmentName"] = this.departmentName;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): PlaneMaintainListDto {
+        const json = this.toJSON();
+        let result = new PlaneMaintainListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlaneMaintainListDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
+    expectedDate: moment.Moment | undefined;
+    estimates: number;
+    maintenanceType: string | undefined;
+    describe: string | undefined;
+    assetId: number | undefined;
+    assetTypeName: string | undefined;
+    departmentName: string | undefined;
+    creationTime: moment.Moment;
+}
+
 export class PlaneShopDto implements IPlaneShopDto {
     id: number | undefined;
+    creatorUserId: number | undefined;
     planPeriod: string;
     dateFound: moment.Moment | undefined;
     content: string | undefined;
@@ -6553,6 +7004,7 @@ export class PlaneShopDto implements IPlaneShopDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
             this.planPeriod = _data["planPeriod"];
             this.dateFound = _data["dateFound"] ? moment(_data["dateFound"].toString()) : <any>undefined;
             this.content = _data["content"];
@@ -6573,6 +7025,7 @@ export class PlaneShopDto implements IPlaneShopDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
         data["planPeriod"] = this.planPeriod;
         data["dateFound"] = this.dateFound ? this.dateFound.toISOString() : <any>undefined;
         data["content"] = this.content;
@@ -6593,6 +7046,7 @@ export class PlaneShopDto implements IPlaneShopDto {
 
 export interface IPlaneShopDto {
     id: number | undefined;
+    creatorUserId: number | undefined;
     planPeriod: string;
     dateFound: moment.Moment | undefined;
     content: string | undefined;
@@ -6652,8 +7106,10 @@ export class PlaneShopDtoListResultDto implements IPlaneShopDtoListResultDto {
 export interface IPlaneShopDtoListResultDto {
     items: PlaneShopDto[] | undefined;
 }
+
 export class PlaneShopInputDto implements IPlaneShopInputDto {
     id: number | undefined;
+    creatorUserId: number | undefined;
     planPeriod: string;
     dateFound: moment.Moment | undefined;
     content: string | undefined;
@@ -6674,6 +7130,7 @@ export class PlaneShopInputDto implements IPlaneShopInputDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
             this.planPeriod = _data["planPeriod"];
             this.dateFound = _data["dateFound"] ? moment(_data["dateFound"].toString()) : <any>undefined;
             this.content = _data["content"];
@@ -6694,6 +7151,7 @@ export class PlaneShopInputDto implements IPlaneShopInputDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
         data["planPeriod"] = this.planPeriod;
         data["dateFound"] = this.dateFound ? this.dateFound.toISOString() : <any>undefined;
         data["content"] = this.content;
@@ -6714,6 +7172,7 @@ export class PlaneShopInputDto implements IPlaneShopInputDto {
 
 export interface IPlaneShopInputDto {
     id: number | undefined;
+    creatorUserId: number | undefined;
     planPeriod: string;
     dateFound: moment.Moment | undefined;
     content: string | undefined;
@@ -6725,6 +7184,7 @@ export interface IPlaneShopInputDto {
 
 export class PlaneShopListDto implements IPlaneShopListDto {
     id: number | undefined;
+    creatorUserId: number | undefined;
     planPeriod: string;
     dateFound: moment.Moment | undefined;
     content: string | undefined;
@@ -6745,6 +7205,7 @@ export class PlaneShopListDto implements IPlaneShopListDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
             this.planPeriod = _data["planPeriod"];
             this.dateFound = _data["dateFound"] ? moment(_data["dateFound"].toString()) : <any>undefined;
             this.content = _data["content"];
@@ -6765,6 +7226,7 @@ export class PlaneShopListDto implements IPlaneShopListDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
         data["planPeriod"] = this.planPeriod;
         data["dateFound"] = this.dateFound ? this.dateFound.toISOString() : <any>undefined;
         data["content"] = this.content;
@@ -6785,6 +7247,7 @@ export class PlaneShopListDto implements IPlaneShopListDto {
 
 export interface IPlaneShopListDto {
     id: number | undefined;
+    creatorUserId: number | undefined;
     planPeriod: string;
     dateFound: moment.Moment | undefined;
     content: string | undefined;
@@ -6794,17 +7257,16 @@ export interface IPlaneShopListDto {
     creationTime: moment.Moment;
 }
 
-//ProposeAsset
 export class ProposeAssetDto implements IProposeAssetDto {
-    id: number;
+    id: number | undefined;
     creatorUserId: number | undefined;
-    numbersProposeAsset: string|undefined;
-    dateFound: moment.Moment;
-    proponent: string;
-    content: string;
-    approver: string;
-    approvalStatus: string;
-    userCode: string;
+    numbersProposeAsset: string;
+    dateFound: moment.Moment | undefined;
+    proponent: string | undefined;
+    content: string | undefined;
+    approver: string | undefined;
+    approvalStatus: string | undefined;
+    userCode: string | undefined;
     creationTime: moment.Moment;
 
     constructor(data?: IProposeAssetDto) {
@@ -6862,15 +7324,15 @@ export class ProposeAssetDto implements IProposeAssetDto {
 }
 
 export interface IProposeAssetDto {
-    id: number;
+    id: number | undefined;
     creatorUserId: number | undefined;
-    numbersProposeAsset: string|undefined;
-    dateFound: moment.Moment;
-    proponent: string;
-    content: string;
-    approver: string;
-    approvalStatus: string;
-    userCode: string;
+    numbersProposeAsset: string;
+    dateFound: moment.Moment | undefined;
+    proponent: string | undefined;
+    content: string | undefined;
+    approver: string | undefined;
+    approvalStatus: string | undefined;
+    userCode: string | undefined;
     creationTime: moment.Moment;
 }
 
@@ -6920,20 +7382,21 @@ export class ProposeAssetDtoListResultDto implements IProposeAssetDtoListResultD
         return result;
     }
 }
+
 export interface IProposeAssetDtoListResultDto {
     items: ProposeAssetDto[] | undefined;
 }
 
 export class ProposeAssetInputDto implements IProposeAssetInputDto {
-    id: number;
+    id: number | undefined;
     creatorUserId: number | undefined;
-    numbersProposeAsset: string|undefined;
-    dateFound: moment.Moment;
-    proponent: string;
-    content: string;
-    approver: string;
-    approvalStatus: string;
-    userCode: string;
+    numbersProposeAsset: string;
+    dateFound: moment.Moment | undefined;
+    proponent: string | undefined;
+    content: string | undefined;
+    approver: string | undefined;
+    approvalStatus: string | undefined;
+    userCode: string | undefined;
     creationTime: moment.Moment;
 
     constructor(data?: IProposeAssetInputDto) {
@@ -6989,29 +7452,30 @@ export class ProposeAssetInputDto implements IProposeAssetInputDto {
         return result;
     }
 }
+
 export interface IProposeAssetInputDto {
-    id: number;
+    id: number | undefined;
     creatorUserId: number | undefined;
-    numbersProposeAsset: string|undefined;
-    dateFound: moment.Moment;
-    proponent: string;
-    content: string;
-    approver: string;
-    approvalStatus: string;
-    userCode: string;
+    numbersProposeAsset: string;
+    dateFound: moment.Moment | undefined;
+    proponent: string | undefined;
+    content: string | undefined;
+    approver: string | undefined;
+    approvalStatus: string | undefined;
+    userCode: string | undefined;
     creationTime: moment.Moment;
 }
 
 export class ProposeAssetListDto implements IProposeAssetListDto {
-    id: number;
+    id: number | undefined;
     creatorUserId: number | undefined;
-    numbersProposeAsset: string|undefined;
-    dateFound: moment.Moment;
-    proponent: string;
-    content: string;
-    approver: string;
-    approvalStatus: string;
-    userCode: string;
+    numbersProposeAsset: string;
+    dateFound: moment.Moment | undefined;
+    proponent: string | undefined;
+    content: string | undefined;
+    approver: string | undefined;
+    approvalStatus: string | undefined;
+    userCode: string | undefined;
     creationTime: moment.Moment;
 
     constructor(data?: IProposeAssetListDto) {
@@ -7069,15 +7533,15 @@ export class ProposeAssetListDto implements IProposeAssetListDto {
 }
 
 export interface IProposeAssetListDto {
-    id: number;
+    id: number | undefined;
     creatorUserId: number | undefined;
-    numbersProposeAsset: string|undefined;
-    dateFound: moment.Moment;
-    proponent: string;
-    content: string;
-    approver: string;
-    approvalStatus: string;
-    userCode: string;
+    numbersProposeAsset: string;
+    dateFound: moment.Moment | undefined;
+    proponent: string | undefined;
+    content: string | undefined;
+    approver: string | undefined;
+    approvalStatus: string | undefined;
+    userCode: string | undefined;
     creationTime: moment.Moment;
 }
 
@@ -8323,6 +8787,294 @@ export interface ITenantLoginInfoDto {
     name: string | undefined;
 }
 
+export class TransferDto implements ITransferDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
+    numbersTransfer: string;
+    dateFound: moment.Moment | undefined;
+    departmentName: string | undefined;
+    content: string | undefined;
+    approver: string | undefined;
+    approvalStatus: string | undefined;
+    userCode: string | undefined;
+    creationTime: moment.Moment;
+
+    constructor(data?: ITransferDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
+            this.numbersTransfer = _data["numbersTransfer"];
+            this.dateFound = _data["dateFound"] ? moment(_data["dateFound"].toString()) : <any>undefined;
+            this.departmentName = _data["departmentName"];
+            this.content = _data["content"];
+            this.approver = _data["approver"];
+            this.approvalStatus = _data["approvalStatus"];
+            this.userCode = _data["userCode"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): TransferDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TransferDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
+        data["numbersTransfer"] = this.numbersTransfer;
+        data["dateFound"] = this.dateFound ? this.dateFound.toISOString() : <any>undefined;
+        data["departmentName"] = this.departmentName;
+        data["content"] = this.content;
+        data["approver"] = this.approver;
+        data["approvalStatus"] = this.approvalStatus;
+        data["userCode"] = this.userCode;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): TransferDto {
+        const json = this.toJSON();
+        let result = new TransferDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITransferDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
+    numbersTransfer: string;
+    dateFound: moment.Moment | undefined;
+    departmentName: string | undefined;
+    content: string | undefined;
+    approver: string | undefined;
+    approvalStatus: string | undefined;
+    userCode: string | undefined;
+    creationTime: moment.Moment;
+}
+
+export class TransferDtoListResultDto implements ITransferDtoListResultDto {
+    items: TransferDto[] | undefined;
+
+    constructor(data?: ITransferDtoListResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(TransferDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): TransferDtoListResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TransferDtoListResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): TransferDtoListResultDto {
+        const json = this.toJSON();
+        let result = new TransferDtoListResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITransferDtoListResultDto {
+    items: TransferDto[] | undefined;
+}
+
+export class TransferInputDto implements ITransferInputDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
+    numbersTransfer: string;
+    dateFound: moment.Moment | undefined;
+    departmentName: string | undefined;
+    content: string | undefined;
+    approver: string | undefined;
+    approvalStatus: string | undefined;
+    userCode: string | undefined;
+    creationTime: moment.Moment;
+
+    constructor(data?: ITransferInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
+            this.numbersTransfer = _data["numbersTransfer"];
+            this.dateFound = _data["dateFound"] ? moment(_data["dateFound"].toString()) : <any>undefined;
+            this.departmentName = _data["departmentName"];
+            this.content = _data["content"];
+            this.approver = _data["approver"];
+            this.approvalStatus = _data["approvalStatus"];
+            this.userCode = _data["userCode"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): TransferInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TransferInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
+        data["numbersTransfer"] = this.numbersTransfer;
+        data["dateFound"] = this.dateFound ? this.dateFound.toISOString() : <any>undefined;
+        data["departmentName"] = this.departmentName;
+        data["content"] = this.content;
+        data["approver"] = this.approver;
+        data["approvalStatus"] = this.approvalStatus;
+        data["userCode"] = this.userCode;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): TransferInputDto {
+        const json = this.toJSON();
+        let result = new TransferInputDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITransferInputDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
+    numbersTransfer: string;
+    dateFound: moment.Moment | undefined;
+    departmentName: string | undefined;
+    content: string | undefined;
+    approver: string | undefined;
+    approvalStatus: string | undefined;
+    userCode: string | undefined;
+    creationTime: moment.Moment;
+}
+
+export class TransferListDto implements ITransferListDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
+    numbersTransfer: string;
+    dateFound: moment.Moment | undefined;
+    departmentName: string | undefined;
+    content: string | undefined;
+    approver: string | undefined;
+    approvalStatus: string | undefined;
+    userCode: string | undefined;
+    creationTime: moment.Moment;
+
+    constructor(data?: ITransferListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
+            this.numbersTransfer = _data["numbersTransfer"];
+            this.dateFound = _data["dateFound"] ? moment(_data["dateFound"].toString()) : <any>undefined;
+            this.departmentName = _data["departmentName"];
+            this.content = _data["content"];
+            this.approver = _data["approver"];
+            this.approvalStatus = _data["approvalStatus"];
+            this.userCode = _data["userCode"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): TransferListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TransferListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
+        data["numbersTransfer"] = this.numbersTransfer;
+        data["dateFound"] = this.dateFound ? this.dateFound.toISOString() : <any>undefined;
+        data["departmentName"] = this.departmentName;
+        data["content"] = this.content;
+        data["approver"] = this.approver;
+        data["approvalStatus"] = this.approvalStatus;
+        data["userCode"] = this.userCode;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): TransferListDto {
+        const json = this.toJSON();
+        let result = new TransferListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITransferListDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
+    numbersTransfer: string;
+    dateFound: moment.Moment | undefined;
+    departmentName: string | undefined;
+    content: string | undefined;
+    approver: string | undefined;
+    approvalStatus: string | undefined;
+    userCode: string | undefined;
+    creationTime: moment.Moment;
+}
+
 export class UserDto implements IUserDto {
     id: number;
     userName: string;
@@ -8523,293 +9275,7 @@ export interface IUserLoginInfoDto {
     userName: string | undefined;
     emailAddress: string | undefined;
 }
-//TransferDto
-export class TransferDto implements ITransferDto {
-    id: number;
-    creatorUserId: number | undefined;
-    numbersTransfer: string|undefined;
-    dateFound: moment.Moment;
-    departmentName: string;
-    content: string;
-    approver: string;
-    approvalStatus: string;
-    userCode: string;
-    creationTime: moment.Moment;
 
-    constructor(data?: ITransferDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.creatorUserId = _data["creatorUserId"];
-            this.numbersTransfer = _data["numbersTransfer"];
-            this.dateFound = _data["dateFound"] ? moment(_data["dateFound"].toString()) : <any>undefined;
-            this.departmentName = _data["departmentName"];
-            this.content = _data["content"];
-            this.approver = _data["approver"];
-            this.approvalStatus = _data["approvalStatus"];
-            this.userCode = _data["userCode"];
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): TransferDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TransferDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["creatorUserId"] = this.creatorUserId;
-        data["numbersTransfer"] = this.numbersTransfer;
-        data["dateFound"] = this.dateFound ? this.dateFound.toISOString() : <any>undefined;
-        data["departmentName"] = this.departmentName;
-        data["content"] = this.content;
-        data["approver"] = this.approver;
-        data["approvalStatus"] = this.approvalStatus;
-        data["userCode"] = this.userCode;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        return data; 
-    }
-
-    clone(): TransferDto {
-        const json = this.toJSON();
-        let result = new TransferDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ITransferDto {
-    id: number;
-    creatorUserId: number | undefined;
-    numbersTransfer: string|undefined;
-    dateFound: moment.Moment;
-    departmentName: string;
-    content: string;
-    approver: string;
-    approvalStatus: string;
-    userCode: string;
-    creationTime: moment.Moment;
-}
-export class TransferDtoListResultDto implements ITransferDtoListResultDto {
-    items: TransferDto[] | undefined;
-
-    constructor(data?: ITransferDtoListResultDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items.push(TransferDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): TransferDtoListResultDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TransferDtoListResultDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-
-    clone(): TransferDtoListResultDto {
-        const json = this.toJSON();
-        let result = new TransferDtoListResultDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ITransferDtoListResultDto {
-    items: TransferDto[] | undefined;
-}
-
-export class TransferInputDto implements ITransferInputDto {
-    id: number;
-    creatorUserId: number | undefined;
-    numbersTransfer: string|undefined;
-    dateFound: moment.Moment;
-    departmentName: string;
-    content: string;
-    approver: string;
-    approvalStatus: string;
-    userCode: string;
-    creationTime: moment.Moment;
-
-    constructor(data?: ITransferInputDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.creatorUserId = _data["creatorUserId"];
-            this.numbersTransfer = _data["numbersTransfer"];
-            this.dateFound = _data["dateFound"] ? moment(_data["dateFound"].toString()) : <any>undefined;
-            this.departmentName = _data["departmentName"];
-            this.content = _data["content"];
-            this.approver = _data["approver"];
-            this.approvalStatus = _data["approvalStatus"];
-            this.userCode = _data["userCode"];
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): TransferInputDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TransferInputDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["creatorUserId"] = this.creatorUserId;
-        data["numbersTransfer"] = this.numbersTransfer;
-        data["dateFound"] = this.dateFound ? this.dateFound.toISOString() : <any>undefined;
-        data["departmentName"] = this.departmentName;
-        data["content"] = this.content;
-        data["approver"] = this.approver;
-        data["approvalStatus"] = this.approvalStatus;
-        data["userCode"] = this.userCode;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        return data; 
-    }
-
-    clone(): TransferInputDto {
-        const json = this.toJSON();
-        let result = new TransferInputDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ITransferInputDto {
-    id: number;
-    creatorUserId: number | undefined;
-    numbersTransfer: string|undefined;
-    dateFound: moment.Moment;
-    departmentName: string;
-    content: string;
-    approver: string;
-    approvalStatus: string;
-    userCode: string;
-    creationTime: moment.Moment;
-}
-
-export class TransferListDto implements ITransferListDto {
-    id: number;
-    creatorUserId: number | undefined;
-    numbersTransfer: string|undefined;
-    dateFound: moment.Moment;
-    departmentName: string;
-    content: string;
-    approver: string;
-    approvalStatus: string;
-    userCode: string;
-    creationTime: moment.Moment;
-
-    constructor(data?: ITransferListDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.creatorUserId = _data["creatorUserId"];
-            this.numbersTransfer = _data["numbersTransfer"];
-            this.dateFound = _data["dateFound"] ? moment(_data["dateFound"].toString()) : <any>undefined;
-            this.departmentName = _data["departmentName"];
-            this.content = _data["content"];
-            this.approver = _data["approver"];
-            this.approvalStatus = _data["approvalStatus"];
-            this.userCode = _data["userCode"];
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): TransferListDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TransferListDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["creatorUserId"] = this.creatorUserId;
-        data["numbersTransfer"] = this.numbersTransfer;
-        data["dateFound"] = this.dateFound ? this.dateFound.toISOString() : <any>undefined;
-        data["departmentName"] = this.departmentName;
-        data["content"] = this.content;
-        data["approver"] = this.approver;
-        data["approvalStatus"] = this.approvalStatus;
-        data["userCode"] = this.userCode;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        return data; 
-    }
-
-    clone(): TransferListDto {
-        const json = this.toJSON();
-        let result = new TransferListDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ITransferListDto {
-    id: number;
-    creatorUserId: number | undefined;
-    numbersTransfer: string|undefined;
-    dateFound: moment.Moment;
-    departmentName: string;
-    content: string;
-    approver: string;
-    approvalStatus: string;
-    userCode: string;
-    creationTime: moment.Moment;
-}
 export class ApiException extends Error {
     message: string;
     status: number;
@@ -8833,300 +9299,7 @@ export class ApiException extends Error {
         return obj.isApiException === true;
     }
 }
-//PlaneMaintainDto
-export class PlaneMaintainDto implements IPlaneMaintainDto {
-    id: number;
-    creatorUserId: number | undefined;
-    expectedDate: moment.Moment;
-    estimates: number|undefined;
-    maintenanceType: string|undefined;
-    describe: string;
-    assetId: number | undefined;
-    assetCode: string;
-    assetName: string;
-    assetTypeName: string;
-    departmentName: string|undefined;
-    creationTime: moment.Moment;
 
-    constructor(data?: IPlaneMaintainDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.creatorUserId = _data["creatorUserId"];
-            this.expectedDate = _data["expectedDate"] ? moment(_data["expectedDate"].toString()) : <any>undefined;
-            this.estimates = _data["estimates"];
-            this.maintenanceType = _data["maintenanceType"];
-            this.describe = _data["describe"];
-            this.assetId = _data["assetId"];
-            this.assetCode = _data["assetCode"];
-            this.assetName = _data["assetName"];
-            this.assetTypeName = _data["assetTypeName"];
-            this.departmentName = _data["departmentName"];
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): PlaneMaintainDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PlaneMaintainDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["creatorUserId"] = this.creatorUserId;
-        data["expectedDate"] = this.expectedDate ? this.expectedDate.toISOString() : <any>undefined;
-        data["estimates"] = this.estimates;
-        data["maintenanceType"] = this.maintenanceType;
-        data["describe"] = this.describe;
-        data["assetId"] = this.assetId;
-        data["assetCode"] = this.assetCode;
-        data["assetName"] = this.assetName;
-        data["assetTypeName"] = this.assetTypeName;
-        data["departmentName"] = this.departmentName;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        return data; 
-    }
-
-    clone(): PlaneMaintainDto {
-        const json = this.toJSON();
-        let result = new PlaneMaintainDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPlaneMaintainDto {
-    id: number;
-    creatorUserId: number | undefined;
-    expectedDate: moment.Moment;
-    estimates: number|undefined;
-    maintenanceType: string|undefined;
-    describe: string;
-    assetId: number | undefined;
-    assetTypeName: string;
-    departmentName: string|undefined;
-    creationTime: moment.Moment;
-}
-
-export class PlaneMaintainDtoListResultDto implements IPlaneMaintainDtoListResultDto {
-    items: PlaneMaintainDto[] | undefined;
-
-    constructor(data?: IPlaneMaintainDtoListResultDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items.push(PlaneMaintainDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PlaneMaintainDtoListResultDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PlaneMaintainDtoListResultDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-
-    clone(): PlaneMaintainDtoListResultDto {
-        const json = this.toJSON();
-        let result = new PlaneMaintainDtoListResultDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPlaneMaintainDtoListResultDto {
-    items: PlaneMaintainDto[] | undefined;
-}
-
-export class PlaneMaintainInputDto implements IPlaneMaintainInputDto {
-    id: number;
-    creatorUserId: number | undefined;
-    expectedDate: moment.Moment;
-    estimates: number|undefined;
-    maintenanceType: string|undefined;
-    describe: string;
-    assetId: number | undefined;
-    assetTypeName: string;
-    departmentName: string|undefined;
-    creationTime: moment.Moment;
-
-    constructor(data?: IPlaneMaintainInputDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.creatorUserId = _data["creatorUserId"];
-            this.expectedDate = _data["expectedDate"] ? moment(_data["expectedDate"].toString()) : <any>undefined;
-            this.estimates = _data["estimates"];
-            this.maintenanceType = _data["maintenanceType"];
-            this.describe = _data["describe"];
-            this.assetId = _data["assetId"];
-            this.assetTypeName = _data["assetTypeName"];
-            this.departmentName = _data["departmentName"];
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): PlaneMaintainInputDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PlaneMaintainInputDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["creatorUserId"] = this.creatorUserId;
-        data["expectedDate"] = this.expectedDate ? this.expectedDate.toISOString() : <any>undefined;
-        data["estimates"] = this.estimates;
-        data["maintenanceType"] = this.maintenanceType;
-        data["describe"] = this.describe;
-        data["assetId"] = this.assetId;
-        data["assetTypeName"] = this.assetTypeName;
-        data["departmentName"] = this.departmentName;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        return data; 
-    }
-
-    clone(): PlaneMaintainInputDto {
-        const json = this.toJSON();
-        let result = new PlaneMaintainInputDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPlaneMaintainInputDto {
-    id: number;
-    creatorUserId: number | undefined;
-    expectedDate: moment.Moment;
-    estimates: number|undefined;
-    maintenanceType: string|undefined;
-    describe: string;
-    assetId: number | undefined;
-    assetTypeName: string;
-    departmentName: string|undefined;
-    creationTime: moment.Moment;
-}
-
-export class PlaneMaintainListDto implements IPlaneMaintainListDto {
-    id: number;
-    creatorUserId: number | undefined;
-    expectedDate: moment.Moment;
-    estimates: number|undefined;
-    maintenanceType: string|undefined;
-    describe: string;
-    assetId: number | undefined;
-    assetTypeName: string;
-    departmentName: string|undefined;
-    creationTime: moment.Moment;
-
-    constructor(data?: IPlaneMaintainListDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.creatorUserId = _data["creatorUserId"];
-            this.expectedDate = _data["expectedDate"] ? moment(_data["expectedDate"].toString()) : <any>undefined;
-            this.estimates = _data["estimates"];
-            this.maintenanceType = _data["maintenanceType"];
-            this.describe = _data["describe"];
-            this.assetId = _data["assetId"];
-            this.assetTypeName = _data["assetTypeName"];
-            this.departmentName = _data["departmentName"];
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): PlaneMaintainListDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PlaneMaintainListDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["creatorUserId"] = this.creatorUserId;
-        data["expectedDate"] = this.expectedDate ? this.expectedDate.toISOString() : <any>undefined;
-        data["estimates"] = this.estimates;
-        data["maintenanceType"] = this.maintenanceType;
-        data["describe"] = this.describe;
-        data["assetId"] = this.assetId;
-        data["assetTypeName"] = this.assetTypeName;
-        data["departmentName"] = this.departmentName;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        return data; 
-    }
-
-    clone(): PlaneMaintainListDto {
-        const json = this.toJSON();
-        let result = new PlaneMaintainListDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPlaneMaintainListDto {
-    id: number;
-    creatorUserId: number | undefined;
-    expectedDate: moment.Moment;
-    estimates: number|undefined;
-    maintenanceType: string|undefined;
-    describe: string;
-    assetId: number | undefined;
-    assetTypeName: string;
-    departmentName: string|undefined;
-    creationTime: moment.Moment;
-}
 function throwException(message: string, status: number, response: string, headers: { [key: string]: any; }, result?: any): Observable<any> {
     if (result !== null && result !== undefined)
         return _observableThrow(result);

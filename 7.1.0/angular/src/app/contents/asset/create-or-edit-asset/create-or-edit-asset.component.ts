@@ -89,10 +89,10 @@ export class CreateOrEditAssetComponent extends AppComponentBase implements OnIn
     this.getListEmployeeByDeparmentId(this.asset.departmentId);
   }
   getListEmployeeByDeparmentId(departmentId: number){
-    debugger
+    
     this.employeeService.getEmployeeByDepartment(departmentId)
     .subscribe((result) =>{
-      debugger
+      
       this.employeeList = result.items;
       this.selectedEmployee = this.employeeList.find((item)=> item.id == this.asset.employeeId);
     })
@@ -115,7 +115,7 @@ export class CreateOrEditAssetComponent extends AppComponentBase implements OnIn
     return form.valid;
 }
   save(){
-    debugger
+    
     if (this.validateForm(this.submitForm.form)) {
       this.saving= true;
       this.asset.increaseAssetDate = moment.utc( this.increaseAssetDateInput);
@@ -169,7 +169,7 @@ export class CreateOrEditAssetComponent extends AppComponentBase implements OnIn
           this.asset = res1;
           this.assetTypeList = res2.items;
           this.departmentList = res3.items;
-          debugger
+          
           this.getListEmployeeByDeparmentId(res1.departmentId);
          
           this.selectedAssetType = this.assetTypeList.find((item)=> item.id == this.asset.assetTypeId);
@@ -206,33 +206,36 @@ export class CreateOrEditAssetComponent extends AppComponentBase implements OnIn
     else{
       this.numberUsedAssetMessage ="Không hợp lệ. Cần chọn loại tài sản trước";
     }
-    this.getAmortizationValue();
+    this.getAmortizationValueAndResidualValue();
   }
-  getAmortizationValue(){
+  getAmortizationValueAndResidualValue(){
     this.resetResidualValueAndDepreciationOfAsset();
-    this.asset.residualValue = this.asset.orginalPrice - this.asset.depreciationOfAsset;
-    if(this.asset.numberOfDayUsedAsset && this.asset.orginalPrice && !this.numberUsedAssetMessage){
-      debugger
+    
+    if(this.asset.orginalPrice){
+      this.checkDepreciationOfAsset();
+      // this.asset.residualValue = this.asset.orginalPrice - this.asset.depreciationOfAsset;
       this.asset.annualAmortizationValue = Number(((this.asset.orginalPrice)/(this.asset.numberOfDayUsedAsset)).toFixed(3));
       this.asset.monthlyAmortizationValue = Number((this.asset.annualAmortizationValue/12).toFixed(3));
       // this.checkDepreciationOfAsset();
     }
   }
   checkDepreciationOfAsset(){
-    debugger
+    
     if(this.asset.depreciationOfAsset < this.asset.orginalPrice){
       this.asset.residualValue = this.asset.orginalPrice - this.asset.depreciationOfAsset;
       this.depreciationOfAssetMessage = "";
     }
     else{
+      this.asset.residualValue = this.asset.orginalPrice;
       this.depreciationOfAssetMessage ="Giá trị không hợp lệ";
     }
     
   }
   resetResidualValueAndDepreciationOfAsset(){
     this.asset.monthlyAmortizationValue = 0;
+    this.asset.annualAmortizationValue = 0;
     this.asset.residualValue = 0;
-    this.asset.depreciationOfAsset = 0;
+    // this.asset.depreciationOfAsset = 0;
   }
   checkSeletectedDepartment(){
     if( !this.selectedDepartment){

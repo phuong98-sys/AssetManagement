@@ -36,7 +36,7 @@ export class PlaneMaintainComponent extends AppComponentBase implements OnInit {
     this.getPlaneMaintains();
   }
   getPlaneMaintains(event?: LazyLoadEvent){
-    debugger
+    
   this.primengTableHelper.showLoadingIndicator();
     this.loading = true;
     this.planeMaintainService.getPlaneMaintains()
@@ -66,7 +66,7 @@ export class PlaneMaintainComponent extends AppComponentBase implements OnInit {
               .deletePlaneMaintain(planeMaintain.id)
               .pipe(finalize(() => this.loading = false))
               .subscribe(() => {
-                debugger
+                
                   this.getPlaneMaintains();
                   this.notify.success(this.l('SuccessfullyDeleted'));
               });

@@ -201,8 +201,37 @@ namespace AssetManagement.Assets
         {
             try
             {
-                var assetDtos = await _assetRepository.GetAll().Where(x => x.IncreaseAssetId == increaseId).ToListAsync();
-
+                var assetDtos = await _assetRepository.GetAll().Where(x => x.IncreaseAssetId == increaseId)
+                                    .Select(a => new AssetDto
+                                    {
+                                        Id = a.Id,
+                                        AssetCode = a.AssetCode,
+                                        AssetName = a.AssetName,
+                                        IncreaseAssetDate = a.IncreaseAssetDate,
+                                        NumberOfDayUsedAsset = a.NumberOfDayUsedAsset,
+                                        NumberOfDayRemaing = a.NumberOfDayRemaing,
+                                        OrginalPrice = a.OrginalPrice,
+                                        MonthlyAmortizationValue = a.MonthlyAmortizationValue,
+                                        DepreciationOfAsset = a.DepreciationOfAsset,
+                                        ResidualValue = a.ResidualValue,
+                                        UsageStatus = a.AssetStatus.AssetStatusName,
+                                        ReasonForReduction = a.ReasonReduce.ReasonReduceName,
+                                        RecoverableValue = a.RecoverableValue,
+                                        IncreaseAssetId = a.IncreaseAssetId,
+                                        AssetTypeId = a.AssetTypeId,
+                                        AssetTypeName = a.AssetType.AssetTypeName,
+                                        AssetStatusId = a.AssetStatusId,
+                                        CreationTime = a.CreationTime,
+                                        ReduceAssetId = a.ReasonReduceId,
+                                        ReasonReduceId = a.ReasonReduceId,
+                                        CreatorUserId = a.CreatorUserId,
+                                        DepartmentName = a.Department.DepartmentName,
+                                        EmployeeName = a.Employee.EmployeeName,
+                                        StartDate = a.StartDate,
+                                        AnnualAmortizationValue = a.AnnualAmortizationValue,
+                                        ReduceMethod = a.ReduceMethod,
+                                        CreatorUserName = a.User.Name
+                                    }).ToListAsync();
                 var assets = ObjectMapper.Map<List<AssetDto>>(assetDtos);
                 return new ListResultDto<AssetDto>(assets);
             }

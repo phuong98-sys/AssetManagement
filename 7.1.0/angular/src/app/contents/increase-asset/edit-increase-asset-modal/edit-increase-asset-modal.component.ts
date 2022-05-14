@@ -36,10 +36,12 @@ export class EditIncreaseAssetModalComponent extends AppComponentBase implements
   // selectedAssetType: AssetTypeDto;
   isSelectedAsset = false;
   isSelectedAllAsset = false;
+  depreciationOfAssetMessage ='';
   constructor(
     injector: Injector,
     private assetService: AssetServiceProxy,
     private increaseAssetService: IncreaseAssetServiceProxy,
+    
     private _router: Router,
     private _activatedRoute: ActivatedRoute
   ) { 
@@ -56,6 +58,8 @@ export class EditIncreaseAssetModalComponent extends AppComponentBase implements
   ngOnInit(): void {
   }
   show(asset?: AssetDto): void {
+    debugger
+    this.submitForm.form.reset();
     this.asset = asset;
     this.modal.show();
     
@@ -77,52 +81,32 @@ export class EditIncreaseAssetModalComponent extends AppComponentBase implements
     return form.valid;
 }
   save(){
-    if (this.validateForm(this.submitForm?.form)) {
-      this.saving= true;
-      // ghi tăng tài sản
-       this.increaseAsset.creationTime =  moment.utc(this.increaseAsset.creationTime.toString());
-       this.increaseAsset.increaseAssetDate = moment.utc( this.increaseAsset.increaseAssetDate.toString());
-          this.increaseAssetService.insertOrUpdateIncreaseAsset(this.increaseAsset)
-          .pipe(finalize(() => (this.loading = false)))
-          .subscribe((result) => {
-              this.increaseAsset = result;
-              this.addAssetToIncreaseList.map((item) => { 
-                item.increaseAssetId = this.increaseAsset.id;
-                item.increaseAssetDate = moment.utc( this.increaseAsset.increaseAssetDate.toString());
-                });
-              this.assetService.increaseAssetList(this.addAssetToIncreaseList).subscribe();
-              // xóa tài sản ghi tăng
-              
-              if(this.deleteAssetConfirmedList.length > 0 ){
-                this.assetService.test(1,this.deleteAssetConfirmedList).subscribe();
-              }
-              this.notify.info(this.l("SavedSuccessfully"));
-              this.close();
-              // this.modalSave.emit(null);
-          });
-      }
+    debugger
+    this.modalSave.emit(this.asset);
+    this.close();
   }
   close(): void {
     
-    this.active = false;
+    // this.active = false;
     // this.userPasswordRepeat = "";
-    this.submitForm.form.reset();
-    this._router.navigate(['app/contents/increase-asset']);
+    // this.submitForm.form.reset();
+    this.modal.hide();
+    // this._router.navigate(['app/contents/increase-asset']);
   }
-  searchAsset(){
-    var newAsset = new AssetDto;
-    newAsset =this.asset;
-    this.assetList = this.assetHaveNotIncreaseList.filter(x => !this.addAssetToIncreaseList.map(y => y?.assetCode).includes(x?.assetCode));
-    newAsset = this.assetList?.find((item) => item.assetCode == newAsset?.assetCode);
-    if(!newAsset){
-      this.resetAsset();
-      this.assetMessage = "Mã tài sản không tồn tại hoặc đã được ghi tăng";
-    }
-    else{
-      this.asset = newAsset;
-      this.assetMessage = "";
-    }
-  }
+  // searchAsset(){
+  //   var newAsset = new AssetDto;
+  //   newAsset =this.asset;
+  //   this.assetList = this.assetHaveNotIncreaseList.filter(x => !this.addAssetToIncreaseList.map(y => y?.assetCode).includes(x?.assetCode));
+  //   newAsset = this.assetList?.find((item) => item.assetCode == newAsset?.assetCode);
+  //   if(!newAsset){
+  //     this.resetAsset();
+  //     this.assetMessage = "Mã tài sản không tồn tại hoặc đã được ghi tăng";
+  //   }
+  //   else{
+  //     this.asset = newAsset;
+  //     this.assetMessage = "";
+  //   }
+  // }
   resetAsset(){
     this.asset.monthlyAmortizationValue = null;
     this.asset.assetName = null;
@@ -135,31 +119,31 @@ export class EditIncreaseAssetModalComponent extends AppComponentBase implements
     var amortizationValue = Number(((asset.orginalPrice)/(asset.numberOfDayUsedAsset*12)).toFixed(3));
     this.addAssetToIncreaseList[index].amortizationValue = amortizationValue;
   }
-  getAssets(){
-    this.assetService.getAssets().subscribe((result)=>{
+  // getAssets(){
+  //   this.assetService.getAssets().subscribe((result)=>{
       
-      this.assetHaveNotIncreaseList = result.items.filter((item)=> item.increaseAssetId == null);
-      this.assetList = this.assetHaveNotIncreaseList;
-    });
+  //     this.assetHaveNotIncreaseList = result.items.filter((item)=> item.increaseAssetId == null);
+  //     this.assetList = this.assetHaveNotIncreaseList;
+  //   });
    
-  }
+  // }
 
-  clickIncreaseAsset(){
-    this.searchAsset();
-    if(this.assetMessage  != ""){
-      this.message.warn(this.l('Không hợp lệ vui lòng kiểm tra lại'));
-    }
-    else{
-      var newAsset = new AssetDto;
-      newAsset =this.asset;
-      this.addAssetToIncreaseList.push(newAsset);
-      this.asset = new AssetDto;
-      // 
-      this.assetList = [];
-      //  this.assetList = this.assetHaveNotIncreaseList.filter(x => !this.addAssetToIncreaseList.map(y => y?.assetCode).includes(x?.assetCode));
-    }
+  // clickEditAssetSelected(){
+  //   // this.searchAsset();
+  //   if(this.assetMessage  != ""){
+  //     this.message.warn(this.l('Không hợp lệ vui lòng kiểm tra lại'));
+  //   }
+  //   else{
+  //     var newAsset = new AssetDto;
+  //     newAsset =this.asset;
+  //     this.addAssetToIncreaseList.push(newAsset);
+  //     this.asset = new AssetDto;
+  //     // 
+  //     this.assetList = [];
+      
+  //   }
    
-  }
+  // }
   setIncreaseAssetCode(){
     var increaseAsset = this.increaseAssetList.find(x=> x.increaseAssetCode == this.increaseAsset.increaseAssetCode);
     if(increaseAsset && increaseAsset.id != this.increaseAssetId){
@@ -181,7 +165,39 @@ export class EditIncreaseAssetModalComponent extends AppComponentBase implements
   onSelectDepartmet(){
 
   }
+  onSelecEmployee(){
+
+  }
   onSelectDepartmentFromTable(asset : AssetDto){
 
+  }
+  getAmortizationValueAndResidualValue(){
+    this.resetResidualValueAndDepreciationOfAsset();
+    
+    if(this.asset.orginalPrice){
+      this.checkDepreciationOfAsset();
+      // this.asset.residualValue = this.asset.orginalPrice - this.asset.depreciationOfAsset;
+      this.asset.annualAmortizationValue = Number(((this.asset.orginalPrice)/(this.asset.numberOfDayUsedAsset)).toFixed(3));
+      this.asset.monthlyAmortizationValue = Number((this.asset.annualAmortizationValue/12).toFixed(3));
+      // this.checkDepreciationOfAsset();
+    }
+  }
+  checkDepreciationOfAsset(){
+    debugger
+    if(this.asset.depreciationOfAsset < this.asset.orginalPrice){
+      this.asset.residualValue = this.asset.orginalPrice - this.asset.depreciationOfAsset;
+      this.depreciationOfAssetMessage = "";
+    }
+    else{
+      this.asset.residualValue = this.asset.orginalPrice;
+      this.depreciationOfAssetMessage ="Giá trị không hợp lệ";
+    }
+    
+  }
+  resetResidualValueAndDepreciationOfAsset(){
+    this.asset.monthlyAmortizationValue = 0;
+    this.asset.annualAmortizationValue = 0;
+    this.asset.residualValue = 0;
+    // this.asset.depreciationOfAsset = 0;
   }
 }
