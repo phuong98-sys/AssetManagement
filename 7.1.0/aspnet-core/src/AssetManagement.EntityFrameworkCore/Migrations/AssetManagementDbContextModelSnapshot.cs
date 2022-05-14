@@ -1455,6 +1455,9 @@ namespace AssetManagement.Migrations
                     b.Property<int?>("ReasonReduceId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ReasonReduceNote")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double?>("RecoverableValue")
                         .HasColumnType("float");
 
@@ -1463,9 +1466,6 @@ namespace AssetManagement.Migrations
 
                     b.Property<int?>("ReduceAssetId")
                         .HasColumnType("int");
-
-                    b.Property<string>("ReduceMethod")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("ResidualValue")
                         .HasColumnType("float");
@@ -2191,7 +2191,7 @@ namespace AssetManagement.Migrations
                     b.Property<DateTime>("ReduceAssetDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("TotalRecovery")
+                    b.Property<double?>("TotalRecovery")
                         .HasColumnType("float");
 
                     b.HasKey("Id");

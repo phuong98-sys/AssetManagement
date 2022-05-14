@@ -20,7 +20,7 @@ namespace AssetManagement.ReduceAssets
         public string ReduceAssetCode { get; set; }
         public DateTime ReduceAssetDate { get; set; }
         public string Note { get; set; }
-        public double TotalRecovery { get; set; }
+        public double? TotalRecovery { get; set; }
         public List<Asset> Assets { get; set; }
         public ReduceAsset()
         {

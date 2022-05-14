@@ -14,11 +14,12 @@ namespace AssetManagement.Assets
         Task<ListResultDto<AssetDto>> GetAssets();
         AssetDto GetAsset(GetAssetInput input);
         Task<AssetListDto> InsertOrUpdateAsset(AssetInputDto input);
-        Task IncreaseAssetList(List<AssetInputDto> t);
-        Task test(List<AssetInputDto> inputList, int index);
+        Task IncreaseAssetList(List<AssetInputDto> inputList, int index);
+        //Task test(List<AssetInputDto> inputList, int index);
         Task DeleteAsset(DeleteAssetInput input);
         Task ReduceAssetList(List<AssetInputDto> inputList);
         //Task DeleteListAssetReduced(List<AssetInputDto> inputList);
         Task<ListResultDto<AssetDto>> GetAssetReduced(int reduceId);
+       
     }
 }

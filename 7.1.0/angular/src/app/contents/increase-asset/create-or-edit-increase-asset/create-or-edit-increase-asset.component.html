@@ -34,6 +34,9 @@
                         <label for="increaseNote">{{"Ghi chú" | localize}} </label>
                         <input id="increaseAssetNote" #increaseAssetNote="ngModel" rows="4" cols="50" name="IncreaseAssetNote" class="form-control" [(ngModel)]="increaseAsset.note"/>
                     </div>
+                    <!-- <div class="form-group col-12">
+                        <label class="label" for="increaseNote">Tổng nguyên giá: {{increaseAsset.totalAssetValue}} đồng</label>
+                    </div> -->
                 </div>                
             </form>
         </div>
@@ -162,6 +165,6 @@
             <span>{{"Lưu" | localize}}</span></button>
     </div>
 </div>
-<app-edit-increase-asset-modal #editIncreaseAssetModal (modalSave)="editSelectedAsset($event)"></app-edit-increase-asset-modal>
-<app-add-asset-increase-asset #addAssetIncreaseAssetModal (modalSave)="addAssetIncreaseToTable($event)"></app-add-asset-increase-asset>
+<app-edit-increase-asset-modal #editIncreaseAssetModal (modalSave)="editSelectedAsset($event)" ></app-edit-increase-asset-modal>
+<app-add-asset-increase-asset #addAssetIncreaseAssetModal (modalSave)="addAssetIncreaseToTable($event)" ></app-add-asset-increase-asset>
 

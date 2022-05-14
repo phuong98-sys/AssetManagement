@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\AssetManagement.Tests.csproj": {}
+    "D:\\QLTS\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\AssetManagement.Tests.csproj": {}
   },
   "projects": {
-    "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj": {
+    "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj",
+        "projectUniqueName": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj",
         "projectName": "AssetManagement.Application",
-        "projectPath": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj",
-        "packagesPath": "C:\\Users\\Huyen\\.nuget\\packages\\",
-        "outputPath": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\obj\\",
+        "projectPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj",
+        "packagesPath": "C:\\Users\\Win 10\\.nuget\\packages\\",
+        "outputPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Huyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Win 10\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +31,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
-                "projectPath": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj"
+              "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
+                "projectPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj"
               }
             }
           }
@@ -63,17 +66,20 @@
         }
       }
     },
-    "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
+    "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj",
+        "projectUniqueName": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj",
         "projectName": "AssetManagement.Core",
-        "projectPath": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj",
-        "packagesPath": "C:\\Users\\Huyen\\.nuget\\packages\\",
-        "outputPath": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\obj\\",
+        "projectPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj",
+        "packagesPath": "C:\\Users\\Win 10\\.nuget\\packages\\",
+        "outputPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Huyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Win 10\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -132,17 +138,20 @@
         }
       }
     },
-    "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj": {
+    "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj",
+        "projectUniqueName": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj",
         "projectName": "AssetManagement.EntityFrameworkCore",
-        "projectPath": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj",
-        "packagesPath": "C:\\Users\\Huyen\\.nuget\\packages\\",
-        "outputPath": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\obj\\",
+        "projectPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj",
+        "packagesPath": "C:\\Users\\Win 10\\.nuget\\packages\\",
+        "outputPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Huyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Win 10\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -156,8 +165,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
-                "projectPath": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj"
+              "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
+                "projectPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj"
               }
             }
           }
@@ -209,17 +218,20 @@
         }
       }
     },
-    "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\AssetManagement.Tests.csproj": {
+    "D:\\QLTS\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\AssetManagement.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\AssetManagement.Tests.csproj",
+        "projectUniqueName": "D:\\QLTS\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\AssetManagement.Tests.csproj",
         "projectName": "AssetManagement.Tests",
-        "projectPath": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\AssetManagement.Tests.csproj",
-        "packagesPath": "C:\\Users\\Huyen\\.nuget\\packages\\",
-        "outputPath": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\obj\\",
+        "projectPath": "D:\\QLTS\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\AssetManagement.Tests.csproj",
+        "packagesPath": "C:\\Users\\Win 10\\.nuget\\packages\\",
+        "outputPath": "D:\\QLTS\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Huyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Win 10\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -233,11 +245,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj": {
-                "projectPath": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj"
+              "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj": {
+                "projectPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj"
               },
-              "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj": {
-                "projectPath": "F:\\BaoVe\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj"
+              "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj": {
+                "projectPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj"
               }
             }
           }

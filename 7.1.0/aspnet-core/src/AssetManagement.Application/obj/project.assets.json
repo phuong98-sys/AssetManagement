@@ -7527,11 +7527,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj",
+      "projectUniqueName": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj",
       "projectName": "AssetManagement.Application",
-      "projectPath": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj",
+      "projectPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj",
       "packagesPath": "C:\\Users\\Win 10\\.nuget\\packages\\",
-      "outputPath": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\obj\\",
+      "outputPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -7551,8 +7551,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
-              "projectPath": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj"
+            "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
+              "projectPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj"
             }
           }
         }

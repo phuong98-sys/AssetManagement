@@ -9345,11 +9345,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Core\\AssetManagement.Web.Core.csproj",
+      "projectUniqueName": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Core\\AssetManagement.Web.Core.csproj",
       "projectName": "AssetManagement.Web.Core",
-      "projectPath": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Core\\AssetManagement.Web.Core.csproj",
+      "projectPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Core\\AssetManagement.Web.Core.csproj",
       "packagesPath": "C:\\Users\\Win 10\\.nuget\\packages\\",
-      "outputPath": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Core\\obj\\",
+      "outputPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -9369,11 +9369,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj": {
-              "projectPath": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj"
+            "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj": {
+              "projectPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj"
             },
-            "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj": {
-              "projectPath": "D:\\QuanliTaiSan\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj"
+            "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj": {
+              "projectPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj"
             }
           }
         }

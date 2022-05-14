@@ -2,6 +2,7 @@
 using Abp.Domain.Repositories;
 using Abp.Runtime.Session;
 using Abp.UI;
+using AssetManagement.Authorization.Users;
 using AssetManagement.ReduceAssets;
 using AssetManagement.ReduceAssets.DTO;
 using Microsoft.EntityFrameworkCore;
@@ -16,15 +17,38 @@ namespace AssetManagement.ReduceAssetsH
     public class ReduceAssetAppService : AssetManagementAppServiceBase, IReduceAssetAppService
     {
         private readonly IRepository<ReduceAsset> _reduceAssetRepository;
-        public ReduceAssetAppService(IRepository<ReduceAsset> reduceAssetRepository)
+        private readonly IRepository<User, long> _userRepository;
+        public ReduceAssetAppService(IRepository<ReduceAsset> reduceAssetRepository,
+            IRepository<User, long> userRepository)
         {
             _reduceAssetRepository = reduceAssetRepository;
+            _userRepository = userRepository;
+
         }
         public async Task<ListResultDto<ReduceAssetDto>> GetReduceAssets()
         {
             try
             {
-                var reduceAssets = await _reduceAssetRepository.GetAll().ToListAsync();
+                var query = _reduceAssetRepository.GetAll().Include(x => x.Assets);
+                var queryLeftJoin = from q in query
+                                    join u in _userRepository.GetAll() on q.CreatorUserId equals u.Id into ps
+                                    from u in ps.DefaultIfEmpty()
+                                    select new { query = q, CreatorUserName = u == null ? "" : u.Name };
+                var reduceAssets = await queryLeftJoin
+
+                    .Select(p => new ReduceAssetDto()
+                    {
+                        Id = p.query.Id,
+                        ReduceAssetCode = p.query.ReduceAssetCode,
+                        CreationTime = p.query.CreationTime,
+                        ReduceAssetDate = p.query.ReduceAssetDate,
+                        Note = p.query.Note,
+                        TotalRecovery = (double)p.query.Assets.Sum(x => x.ResidualValue),
+                        CreatorUserId = p.query.CreatorUserId,
+                        CreatorUserName = p.CreatorUserName,
+                        LastModificationTime = p.query.LastModificationTime
+                    })
+                .ToListAsync();
                 var reduceAssetsDtos = ObjectMapper.Map<List<ReduceAssetDto>>(reduceAssets);
                 return new ListResultDto<ReduceAssetDto>(reduceAssetsDtos);
             }

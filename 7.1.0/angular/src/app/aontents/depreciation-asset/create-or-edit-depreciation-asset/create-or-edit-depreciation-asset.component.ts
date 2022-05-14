@@ -97,11 +97,11 @@ export class CreateOrEditDepreciationAssetComponent extends AppComponentBase imp
                 item.increaseAssetId = this.increaseAsset.id;
                 item.increaseAssetDate = moment.utc( this.increaseAsset.increaseAssetDate.toString());
                 });
-              this.assetService.increaseAssetList(this.addAssetToIncreaseList).subscribe();
+              this.assetService.increaseAssetList(0, this.addAssetToIncreaseList).subscribe();
               // xóa tài sản ghi tăng
               
               if(this.deleteAssetConfirmedList.length > 0 ){
-                this.assetService.test(1,this.deleteAssetConfirmedList).subscribe();
+                this.assetService.increaseAssetList(1,this.deleteAssetConfirmedList).subscribe();
               }
               this.notify.info(this.l("SavedSuccessfully"));
               this.close();
@@ -189,7 +189,7 @@ export class CreateOrEditDepreciationAssetComponent extends AppComponentBase imp
       })
   }
   onSelectedAsset(assetForEdit : AssetDto, event ){
-    
+    debugger
     console.log(event.target.checked);
     
     if(event.target.checked)
@@ -205,13 +205,14 @@ export class CreateOrEditDepreciationAssetComponent extends AppComponentBase imp
 
   }
   onDeleteAssetListFromTable(){
+    debugger
     this.message.confirm(
       this.l('Tất cả tài sản đã chọn sẽ bị xóa khỏi bảng tài sản ghi tăng'),
       this.l('Bạn chắc chắn thực hiện chức năng này?'),
       (isConfirmed) => {
           if (isConfirmed) {
               this.loading = true;
-
+debugger
               this.addAssetToIncreaseList = this.addAssetToIncreaseList.filter(x => !this.deleteAssetList.map(y => y.id).includes(x?.id));
               
              this.deleteAssetList.forEach((item) => {
