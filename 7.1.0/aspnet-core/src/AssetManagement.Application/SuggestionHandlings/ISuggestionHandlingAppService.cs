@@ -1,5 +1,6 @@
 ﻿using Abp.Application.Services;
 using Abp.Application.Services.Dto;
+using AssetManagement.Assets.DTO;
 using AssetManagement.SuggestionHandlings.DTO;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,7 @@ namespace AssetManagement.SuggestionHandlings
     {
         Task<ListResultDto<SuggestionHandlingDto>> GetSuggestionHandlings();
         Task<SuggestionHandlingDto> InsertOrUpdateSuggestionHandling(SuggestionHandlingInputDto input);
+        SuggestionHandlingDto GetSuggestionHandling(GetSuggestionHandlingInput input);
+
     }
 }

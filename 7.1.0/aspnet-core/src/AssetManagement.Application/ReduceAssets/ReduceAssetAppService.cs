@@ -43,7 +43,7 @@ namespace AssetManagement.ReduceAssetsH
                         CreationTime = p.query.CreationTime,
                         ReduceAssetDate = p.query.ReduceAssetDate,
                         Note = p.query.Note,
-                        TotalRecovery = (double)p.query.Assets.Sum(x => x.ResidualValue),
+                        TotalRecovery = (double)p.query.Assets.Sum(x => x.RecoverableValue),
                         CreatorUserId = p.query.CreatorUserId,
                         CreatorUserName = p.CreatorUserName,
                         LastModificationTime = p.query.LastModificationTime

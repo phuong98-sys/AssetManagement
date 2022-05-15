@@ -1,5 +1,6 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
+using AssetManagement.SuggestionHandlingDetails;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -50,5 +51,36 @@ namespace AssetManagement.SuggestionHandlings.DTO
         public int? UserId { get; set; }
         public int? DepartmentId { get; set; }
         public string? DepartmentName { get; set; }
+    }
+    public class DeleteSuggestionHandlingInput
+    {
+        public int Id { get; set; }
+    }
+    public class GetSuggestionHandlingInput
+    {
+        public int? Id { get; set; }
+    }
+    [AutoMapFrom(typeof(SuggestionHandlingDetail))]
+    public class SuggestionHandlingDetailDto : CreationAuditedEntityDto<int?>
+    {
+        public int? Id { get; set; }
+        public int SuggestionHandlingId { get; set; }
+        public int AssetId { get; set; }
+        public string? HandlingMethod { get; set; }
+        public int? HandlingMethodId { get; set; }
+        public long? CreatorUserId { get; set; }
+        public string? CreatorUserName { get; set; }
+
+    }
+    [AutoMapTo(typeof(SuggestionHandlingDetail))]
+    public class SuggestionHandlingDetailInputDto : CreationAuditedEntityDto<int?>
+    {
+        public int SuggestionHandlingId { get; set; }
+        public int AssetId { get; set; }
+        public string? HandlingMethod { get; set; }
+        public int? HandlingMethodId { get; set; }
+        public long? CreatorUserId { get; set; }
+        public string? CreatorUserName { get; set; }
+
     }
 }

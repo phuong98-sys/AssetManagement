@@ -155,30 +155,10 @@
                 Ngày lập
                 <p-sortIcon field="creationTime"></p-sortIcon>
             </th>
-            <!-- <th pResiazableColumn pSortableColumn="note" style="width:120px">
-                Nội dung 
-                <p-sortIcon field="note"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="totalAssetValue" style="width:150px">
-                Tổng nguyên giá 
-                <p-sortIcon field="totalAssetValue"></p-sortIcon>
-            </th>
-            <th pResizableColumn pSortableColumn="creatorUserId" style="width:150px">
-                Tổng nguyên giá 
-                <p-sortIcon field="totalAssetValue"></p-sortIcon>
-            </th> -->
             <th pResizableColumn pSortableColumn="creatorUserName" style="width:130px">
                 Người tạo
                 <p-sortIcon field="creatorUserName"></p-sortIcon>
-            </th>     
-            <th pResizableColumn pSortableColumn="lastModificationTime" style="width:130px">
-                Ngày sửa
-                <p-sortIcon field="lastModificationTime"></p-sortIcon>
-            </th>     
-            <th pResizableColumn pSortableColumn="lastModificationName" style="width:130px">
-                Người sửa
-                <p-sortIcon field="lastModificationName"></p-sortIcon>
-            </th>  
+            </th>    
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-suggestionHandling>
@@ -201,7 +181,7 @@
                     </ul>
                 </div>
             </td>
-            <!-- <td style="width:120px">{{ suggestionHandling.suggestionHandlingCode }}</td>
+            <td style="width:120px">{{ suggestionHandling.suggestionHandlingCode }}</td>
             <td style="width:140px">{{ suggestionHandling.suggestionHandlingDate }}</td>
             <td style="width:140px">{{ suggestionHandling.petitionerName }}</td>
             <td style="width:140px">{{ suggestionHandling.departmentName }}</td>
@@ -209,18 +189,16 @@
             <td style="width:140px">{{ suggestionHandling.suggestionHandlingStatusName }}</td>
             <td style="width:150px">{{ suggestionHandling.creationTime}}</td>
             <td style="width:130px">{{ suggestionHandling.creatorUserName}}</td>
-            <td style="width:130px">{{ suggestionHandling.lastModificationTime}}</td>
-            <td style="width:130px">{{ suggestionHandling.lastModificationName}}</td> -->
-            <td style="width:120px">1</td>
+            <!-- <td style="width:130px">{{ suggestionHandling.lastModificationTime}}</td>
+            <td style="width:130px">{{ suggestionHandling.lastModificationName}}</td>
+            <td style="width:120px">{{}}</td>
             <td style="width:140px">08-05-2022</td>
             <td style="width:140px">phuong</td>
             <td style="width:140px">Kĩ thuật</td>
             <td style="width:140px"></td>
             <td style="width:140px">đang chờ phê duyệt</td>
             <td style="width:150px">08-05-2022</td>
-            <td style="width:130px">admin</td>
-            <td style="width:130px">09-05-2022</td>
-            <td style="width:130px">admin</td>      
+            <td style="width:130px">admin</td>    -->
         </tr>
     </ng-template>
 </p-table>

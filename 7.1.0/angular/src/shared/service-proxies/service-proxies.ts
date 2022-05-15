@@ -316,11 +316,16 @@ export class AssetServiceProxy {
     }
 
     /**
+     * @param index (optional) 
      * @param body (optional) 
      * @return Success
      */
-    reduceAssetList(body: AssetInputDto[] | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Asset/ReduceAssetList";
+    reduceAssetList(index: number | undefined, body: AssetInputDto[] | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Asset/ReduceAssetList?";
+        if (index === null)
+            throw new Error("The parameter 'index' cannot be null.");
+        else if (index !== undefined)
+            url_ += "index=" + encodeURIComponent("" + index) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -477,6 +482,185 @@ export class AssetServiceProxy {
             }));
         }
         return _observableOf<AssetDtoListResultDto>(<any>null);
+    }
+
+    /**
+     * @param suggestionHandlingId (optional) 
+     * @param body (optional) 
+     * @return Success
+     */
+    suggestionHandlingList(suggestionHandlingId: number | undefined, body: AssetInputDto[] | undefined): Observable<SuggestionHandlingDetailDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Asset/SuggestionHandlingList?";
+        if (suggestionHandlingId === null)
+            throw new Error("The parameter 'suggestionHandlingId' cannot be null.");
+        else if (suggestionHandlingId !== undefined)
+            url_ += "suggestionHandlingId=" + encodeURIComponent("" + suggestionHandlingId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processSuggestionHandlingList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processSuggestionHandlingList(<any>response_);
+                } catch (e) {
+                    return <Observable<SuggestionHandlingDetailDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<SuggestionHandlingDetailDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processSuggestionHandlingList(response: HttpResponseBase): Observable<SuggestionHandlingDetailDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = SuggestionHandlingDetailDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SuggestionHandlingDetailDtoListResultDto>(<any>null);
+    }
+
+    /**
+     * @param suggestionHandlingId (optional) 
+     * @return Success
+     */
+    getSuggestionHandling(suggestionHandlingId: number | undefined): Observable<AssetDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Asset/GetSuggestionHandling?";
+        if (suggestionHandlingId === null)
+            throw new Error("The parameter 'suggestionHandlingId' cannot be null.");
+        else if (suggestionHandlingId !== undefined)
+            url_ += "suggestionHandlingId=" + encodeURIComponent("" + suggestionHandlingId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSuggestionHandling(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSuggestionHandling(<any>response_);
+                } catch (e) {
+                    return <Observable<AssetDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AssetDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetSuggestionHandling(response: HttpResponseBase): Observable<AssetDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = AssetDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AssetDtoListResultDto>(<any>null);
+    }
+
+    /**
+     * @param inputList (optional) 
+     * @param suggestionHandlingId (optional) 
+     * @return Success
+     */
+    deleteSuggestionHandling(inputList: AssetInputDto[] | undefined, suggestionHandlingId: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Asset/DeleteSuggestionHandling?";
+        if (inputList === null)
+            throw new Error("The parameter 'inputList' cannot be null.");
+        else if (inputList !== undefined)
+            inputList && inputList.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "inputList[" + index + "]." + attr + "=" + encodeURIComponent("" + (<any>item)[attr]) + "&";
+        			}
+            });
+        if (suggestionHandlingId === null)
+            throw new Error("The parameter 'suggestionHandlingId' cannot be null.");
+        else if (suggestionHandlingId !== undefined)
+            url_ += "suggestionHandlingId=" + encodeURIComponent("" + suggestionHandlingId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteSuggestionHandling(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteSuggestionHandling(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteSuggestionHandling(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
     }
 
     /**
@@ -2900,6 +3084,114 @@ export class SuggestionHandlingServiceProxy {
         }
         return _observableOf<SuggestionHandlingDto>(<any>null);
     }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getSuggestionHandling(id: number | undefined): Observable<SuggestionHandlingDto> {
+        let url_ = this.baseUrl + "/api/services/app/SuggestionHandling/GetSuggestionHandling?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSuggestionHandling(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSuggestionHandling(<any>response_);
+                } catch (e) {
+                    return <Observable<SuggestionHandlingDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<SuggestionHandlingDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetSuggestionHandling(response: HttpResponseBase): Observable<SuggestionHandlingDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = SuggestionHandlingDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SuggestionHandlingDto>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    deleteSuggestionHandling(input: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/SuggestionHandling/DeleteSuggestionHandling?";
+        if (input === null)
+            throw new Error("The parameter 'input' cannot be null.");
+        else if (input !== undefined)
+            url_ += "input=" + encodeURIComponent("" + input) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteSuggestionHandling(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteSuggestionHandling(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteSuggestionHandling(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
 }
 
 @Injectable()
@@ -4322,6 +4614,7 @@ export class AssetDto implements IAssetDto {
     assetTypeName: string | undefined;
     assetStatusId: number;
     reasonReduceId: number | undefined;
+    reasonReduceName: string | undefined;
     reasonReduceNote: string | undefined;
     lastModifierUserName: string | undefined;
     creatorUserName: string | undefined;
@@ -4373,6 +4666,7 @@ export class AssetDto implements IAssetDto {
             this.assetTypeName = _data["assetTypeName"];
             this.assetStatusId = _data["assetStatusId"];
             this.reasonReduceId = _data["reasonReduceId"];
+            this.reasonReduceName = _data["reasonReduceName"];
             this.reasonReduceNote = _data["reasonReduceNote"];
             this.lastModifierUserName = _data["lastModifierUserName"];
             this.creatorUserName = _data["creatorUserName"];
@@ -4424,6 +4718,7 @@ export class AssetDto implements IAssetDto {
         data["assetTypeName"] = this.assetTypeName;
         data["assetStatusId"] = this.assetStatusId;
         data["reasonReduceId"] = this.reasonReduceId;
+        data["reasonReduceName"] = this.reasonReduceName;
         data["reasonReduceNote"] = this.reasonReduceNote;
         data["lastModifierUserName"] = this.lastModifierUserName;
         data["creatorUserName"] = this.creatorUserName;
@@ -4475,6 +4770,7 @@ export interface IAssetDto {
     assetTypeName: string | undefined;
     assetStatusId: number;
     reasonReduceId: number | undefined;
+    reasonReduceName: string | undefined;
     reasonReduceNote: string | undefined;
     lastModifierUserName: string | undefined;
     creatorUserName: string | undefined;
@@ -4567,6 +4863,7 @@ export class AssetInputDto implements IAssetInputDto {
     assetTypeId: number;
     assetStatusId: number;
     reasonReduceId: number | undefined;
+    reasonReduceName: string | undefined;
     reasonReduceNote: string | undefined;
     departmentName: string | undefined;
     startDate: moment.Moment | undefined;
@@ -4614,6 +4911,7 @@ export class AssetInputDto implements IAssetInputDto {
             this.assetTypeId = _data["assetTypeId"];
             this.assetStatusId = _data["assetStatusId"];
             this.reasonReduceId = _data["reasonReduceId"];
+            this.reasonReduceName = _data["reasonReduceName"];
             this.reasonReduceNote = _data["reasonReduceNote"];
             this.departmentName = _data["departmentName"];
             this.startDate = _data["startDate"] ? moment(_data["startDate"].toString()) : <any>undefined;
@@ -4661,6 +4959,7 @@ export class AssetInputDto implements IAssetInputDto {
         data["assetTypeId"] = this.assetTypeId;
         data["assetStatusId"] = this.assetStatusId;
         data["reasonReduceId"] = this.reasonReduceId;
+        data["reasonReduceName"] = this.reasonReduceName;
         data["reasonReduceNote"] = this.reasonReduceNote;
         data["departmentName"] = this.departmentName;
         data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
@@ -4708,6 +5007,7 @@ export interface IAssetInputDto {
     assetTypeId: number;
     assetStatusId: number;
     reasonReduceId: number | undefined;
+    reasonReduceName: string | undefined;
     reasonReduceNote: string | undefined;
     departmentName: string | undefined;
     startDate: moment.Moment | undefined;
@@ -4746,6 +5046,7 @@ export class AssetListDto implements IAssetListDto {
     assetTypeId: number;
     assetStatusId: number;
     reasonReduceId: number | undefined;
+    reasonReduceName: string | undefined;
     reasonReduceNote: string | undefined;
     departmentName: string | undefined;
     startDate: moment.Moment | undefined;
@@ -4793,6 +5094,7 @@ export class AssetListDto implements IAssetListDto {
             this.assetTypeId = _data["assetTypeId"];
             this.assetStatusId = _data["assetStatusId"];
             this.reasonReduceId = _data["reasonReduceId"];
+            this.reasonReduceName = _data["reasonReduceName"];
             this.reasonReduceNote = _data["reasonReduceNote"];
             this.departmentName = _data["departmentName"];
             this.startDate = _data["startDate"] ? moment(_data["startDate"].toString()) : <any>undefined;
@@ -4840,6 +5142,7 @@ export class AssetListDto implements IAssetListDto {
         data["assetTypeId"] = this.assetTypeId;
         data["assetStatusId"] = this.assetStatusId;
         data["reasonReduceId"] = this.reasonReduceId;
+        data["reasonReduceName"] = this.reasonReduceName;
         data["reasonReduceNote"] = this.reasonReduceNote;
         data["departmentName"] = this.departmentName;
         data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
@@ -4887,6 +5190,7 @@ export interface IAssetListDto {
     assetTypeId: number;
     assetStatusId: number;
     reasonReduceId: number | undefined;
+    reasonReduceName: string | undefined;
     reasonReduceNote: string | undefined;
     departmentName: string | undefined;
     startDate: moment.Moment | undefined;
@@ -8309,6 +8613,128 @@ export class RoleListDtoListResultDto implements IRoleListDtoListResultDto {
 
 export interface IRoleListDtoListResultDto {
     items: RoleListDto[] | undefined;
+}
+
+export class SuggestionHandlingDetailDto implements ISuggestionHandlingDetailDto {
+    id: number | undefined;
+    creationTime: moment.Moment;
+    suggestionHandlingId: number;
+    assetId: number;
+    handlingMethod: string | undefined;
+    handlingMethodId: number | undefined;
+    creatorUserId: number | undefined;
+    creatorUserName: string | undefined;
+
+    constructor(data?: ISuggestionHandlingDetailDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.suggestionHandlingId = _data["suggestionHandlingId"];
+            this.assetId = _data["assetId"];
+            this.handlingMethod = _data["handlingMethod"];
+            this.handlingMethodId = _data["handlingMethodId"];
+            this.creatorUserId = _data["creatorUserId"];
+            this.creatorUserName = _data["creatorUserName"];
+        }
+    }
+
+    static fromJS(data: any): SuggestionHandlingDetailDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SuggestionHandlingDetailDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["suggestionHandlingId"] = this.suggestionHandlingId;
+        data["assetId"] = this.assetId;
+        data["handlingMethod"] = this.handlingMethod;
+        data["handlingMethodId"] = this.handlingMethodId;
+        data["creatorUserId"] = this.creatorUserId;
+        data["creatorUserName"] = this.creatorUserName;
+        return data; 
+    }
+
+    clone(): SuggestionHandlingDetailDto {
+        const json = this.toJSON();
+        let result = new SuggestionHandlingDetailDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISuggestionHandlingDetailDto {
+    id: number | undefined;
+    creationTime: moment.Moment;
+    suggestionHandlingId: number;
+    assetId: number;
+    handlingMethod: string | undefined;
+    handlingMethodId: number | undefined;
+    creatorUserId: number | undefined;
+    creatorUserName: string | undefined;
+}
+
+export class SuggestionHandlingDetailDtoListResultDto implements ISuggestionHandlingDetailDtoListResultDto {
+    items: SuggestionHandlingDetailDto[] | undefined;
+
+    constructor(data?: ISuggestionHandlingDetailDtoListResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(SuggestionHandlingDetailDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): SuggestionHandlingDetailDtoListResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SuggestionHandlingDetailDtoListResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): SuggestionHandlingDetailDtoListResultDto {
+        const json = this.toJSON();
+        let result = new SuggestionHandlingDetailDtoListResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISuggestionHandlingDetailDtoListResultDto {
+    items: SuggestionHandlingDetailDto[] | undefined;
 }
 
 export class SuggestionHandlingDto implements ISuggestionHandlingDto {

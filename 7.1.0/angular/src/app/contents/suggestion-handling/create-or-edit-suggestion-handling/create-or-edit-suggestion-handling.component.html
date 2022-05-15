@@ -15,16 +15,16 @@
                 <div class="modal-body bg-white">
                     <div class="row">
                         <div class="form-group col-2">
-                            <label for="AssetCode">{{"Số phiếu" | localize}} *</label>
-                            <input id="AssetCode" #assetCode="ngModel" type="text" name="AssetCode" class="form-control" [(ngModel)]="suggestionHandling.suggestionHandlingCode" required maxlength="256" (change)="setSuggestionHandlingCode()"/>
+                            <label for="suggestionHandlingCode">{{"Số phiếu" | localize}} *</label>
+                            <input id="suggestionHandlingCode" #suggestionHandlingCode="ngModel" type="text" name="suggestionHandlingCode" class="form-control" [(ngModel)]="suggestionHandling.suggestionHandlingCode" required maxlength="256" (change)="setSuggestionHandlingCode()"/>
                             <div style="display: grid;">
                                 <!-- <span *ngIf="!suggestionHandling?.suggestionHandlingCode" class="error-message">Trường này không được để trống</span> -->
                                 <!-- <span class="error-message" *ngIf="suggestionHandling.suggestionHandlingCode">{{suggestionHandlingCodeMessage}}</span> -->
                             </div>
                         </div>
                         <div class="form-group col-2">
-                            <label for="AssetName">{{"Ngày lập" | localize}} *</label>
-                            <input id="AssetName" #assetName="ngModel" type="date" name="AssetName" class="form-control" [(ngModel)]="suggestionHandling.creationTime" required maxlength="256" />
+                            <label for="creationTime">{{"Ngày lập" | localize}} *</label>
+                            <input id="creationTime" #creationTime="ngModel" type="date" name="creationTime" class="form-control" [(ngModel)]="suggestionHandling.creationTime" required maxlength="256" />
                             <!-- <span *ngIf="!suggestionHandling?.creationTime" class="error-message">Trường này không được để trống</span> -->
                         </div>
                         <div class="form-group col-2">
@@ -34,27 +34,27 @@
                         </div>
                         <div class="form-group col-3">
                             <label for="petitionerName">{{"Người đề nghị" | localize}} *</label>
-                            <p-dropdown id="petitionerName" #department="ngModel" name="petitionerName" [options]="employeeList"
-                            [(ngModel)]="selectedAny" placeholder="{{ l('Chọn nhân viên') }}" optionLabel="employeeName"
-                            styleClass="form-control brandSelection-dropdown" (onChange)="onChangeAny()" required>
+                            <p-dropdown id="petitionerName" #petitionerName="ngModel" name="petitionerName" [options]="employeeList"
+                            [(ngModel)]="selectedPetitioner" placeholder="{{ l('Chọn người đề nghị') }}" optionLabel="employeeName"
+                            styleClass="form-control brandSelection-dropdown" (onChange)="onChangePetitioner()" required>
                             </p-dropdown>
-                            <span *ngIf="selectedAny" class="error-message">Trường này không được để trống</span>
+                            <span *ngIf="selectedPetitioner" class="error-message">Trường này không được để trống</span>
                         </div>
                         <div class="form-group col-3">
                             <label for="departmentName">{{"Bộ phận đề nghị" | localize}} *</label>
                             <p-dropdown id="departmentName" #department="ngModel" name="departmentName" [options]="departmentList"
-                            [(ngModel)]="selectedAny" placeholder="{{ l('Chọn bộ phận') }}" optionLabel="departmentName"
-                            styleClass="form-control brandSelection-dropdown" (onChange)="onChangeAny()" required>
+                            [(ngModel)]="selectedDepartment" placeholder="{{ l('Chọn bộ phận') }}" optionLabel="departmentName"
+                            styleClass="form-control brandSelection-dropdown" (onChange)="onChangeDepartment()" required>
                             </p-dropdown>
-                            <span *ngIf="selectedAny" class="error-message">Trường này không được để trống</span>
+                            <span *ngIf="selectedDepartment" class="error-message">Trường này không được để trống</span>
                         </div>
                         <div class="form-group col-2">
                             <label for="suggestionHandlingStatus">{{"Trạng thái" | localize}} *</label>
                             <p-dropdown id="suggestionHandlingStatus" #suggestionHandlingStatus="ngModel" name="suggestionHandlingStatus" [options]="suggestionHandlingStatusList"
-                            [(ngModel)]="selectedAny" placeholder="{{ l('Chọn trạng thái') }}" optionLabel="suggestionHandlingStatusName"
+                            [(ngModel)]="selectedHandlingStatus" placeholder="{{ l('Chọn trạng thái') }}" optionLabel="suggestionHandlingStatusName"
                             styleClass="form-control brandSelection-dropdown" (onChange)="onChangeAny()" required>
                             </p-dropdown>
-                            <span *ngIf="selectedAny" class="error-message">Trường này không được để trống</span>
+                            <span *ngIf="selectedHandlingStatus" class="error-message">Trường này không được để trống</span>
                         </div>
                         <div class="form-group col-10">
                             <label for="description">{{"Nội dung" | localize}} </label>

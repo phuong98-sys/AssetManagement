@@ -35,6 +35,7 @@ namespace AssetManagement.Assets.DTO
         public string AssetTypeName { get; set; }
         public int AssetStatusId { get; set; }
         public int? ReasonReduceId { get; set; }
+        public string? ReasonReduceName { get; set; }
         public string? ReasonReduceNote { get; set; }
         public string? LastModifierUserName { get; set; }
         public string? CreatorUserName { get; set; }
@@ -79,6 +80,7 @@ namespace AssetManagement.Assets.DTO
         public int AssetTypeId { get; set; }
         public int AssetStatusId { get; set; }
         public int? ReasonReduceId { get; set; }
+        public string? ReasonReduceName { get; set; }
         public string? ReasonReduceNote { get; set; }
         //public string? AssetUnit { get; set; }
         //public int? Quantity { get; set; }
@@ -121,6 +123,7 @@ namespace AssetManagement.Assets.DTO
         public int AssetTypeId { get; set; }
         public int AssetStatusId { get; set; }
         public int? ReasonReduceId { get; set; }
+        public string? ReasonReduceName { get; set; }
         public string? ReasonReduceNote { get; set; }
         //public string? AssetUnit { get; set; }
         //public int? Quantity { get; set; }

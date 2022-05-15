@@ -120,17 +120,17 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
           .subscribe((result) => {
             
               this.reduceAsset = result;
-              // ghi tăng tài sản
+              // ghi giảm tài sản
               this.selectedAssetTable.map((item) => { 
                 item.reduceAssetId = this.reduceAsset.id;
                 //  item.reduceAssetDate = moment.utc( this.reduceAsset.reduceAssetDate.toString());
                   item.creationTime = moment.utc( item.creationTime?.toString());
                   item.startDate = moment.utc( item.startDate?.toString());
                   item.amortizationDate = moment.utc( item.amortizationDate?.toString());
-                  item.reduceAssetDate = moment.utc( item.reduceAssetDate?.toString());
+                  item.reduceAssetDate = moment.utc( this.reduceAsset.reduceAssetDate?.toString());
                 });
                 debugger
-              this.assetService.reduceAssetList(this.selectedAssetTable).subscribe();
+              this.assetService.reduceAssetList(0,this.selectedAssetTable).subscribe();
               // xóa tài sản ghi tăng
 
               if(this.deleteAssetConfirmedList.length > 0 ){
@@ -142,7 +142,7 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
                     item.reduceAssetDate = moment.utc( item.reduceAssetDate?.toString());
                   });
 
-                this.assetService.reduceAssetList(this.deleteAssetConfirmedList).subscribe();
+                this.assetService.reduceAssetList(1,this.deleteAssetConfirmedList).subscribe();
               }
               this.notify.info(this.l("SavedSuccessfully"));
               this.close();

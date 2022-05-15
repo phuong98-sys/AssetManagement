@@ -1,5 +1,6 @@
 ﻿using Abp.Domain.Entities.Auditing;
 using AssetManagement.Departments;
+using AssetManagement.SuggestionHandlingDetails;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -31,5 +32,10 @@ namespace AssetManagement.SuggestionHandlings
         public Department Department { get; set; } // them tu department table
         public int? DepartmentId { get; set; }
         public string? DepartmentName { get; set; }
+        public List<SuggestionHandlingDetail> SuggestionHandlingDetails { get; set; }
+        public SuggestionHandling()
+        {
+            SuggestionHandlingDetails = new List<SuggestionHandlingDetail>();
+        }
     }
 }
