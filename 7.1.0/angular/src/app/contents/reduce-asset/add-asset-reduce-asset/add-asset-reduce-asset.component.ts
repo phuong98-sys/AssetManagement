@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
 import { PrimengTableHelper } from '@shared/helpers/PrimengTableHelper';
-import { AssetDto, AssetServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AssetDto, AssetServiceProxy, ReasonReduceDto, ReasonReduceServiceProxy } from '@shared/service-proxies/service-proxies';
 import * as moment from 'moment';
 import { ModalDirective } from 'ngx-bootstrap/modal/modal.directive';
 import { SortEvent } from 'primeng/api';
@@ -25,7 +25,7 @@ export class AddAssetReduceAssetComponent extends AppComponentBase implements On
   asset: AssetDto = new AssetDto();
   assetList : AssetDto[];
   totalRecords = 0;
-  selectedAssetIncreaseList : AssetDto[] = [];
+  selectedAssetReduceList : AssetDto[] = [];
   handlingMethodList : any;//
   selectedHandlingMethod: any;//
   // lebelTotalAssetSelected = 0;
@@ -34,10 +34,12 @@ export class AddAssetReduceAssetComponent extends AppComponentBase implements On
   sortOrder = -1;
 
   sortField = "assetCode";
-
+  reasonReduceList: ReasonReduceDto[] = [];
+  selectedReasonReduce: ReasonReduceDto;
   constructor(
     injector: Injector,
     private assetService: AssetServiceProxy,
+    private reasonReduceService: ReasonReduceServiceProxy,
     private _router: Router) {   
         super(injector);
       
@@ -45,6 +47,13 @@ export class AddAssetReduceAssetComponent extends AppComponentBase implements On
   }
   ngOnInit(): void {
     this.getAssets();
+    this.getReasonReduceList();
+  }
+  getReasonReduceList(){
+    this.reasonReduceService.getReasonReduces()
+    .subscribe((result)=>{
+        this.reasonReduceList = result.items;
+    });
   }
   // onSort(event) {
   //   console.log(document.getElementsByTagName('tr'))
@@ -85,7 +94,7 @@ export class AddAssetReduceAssetComponent extends AppComponentBase implements On
       this.assetService.getAssets()
       .subscribe(result => {
         this.loading = false;
-          this.assetList = result.items.filter((item)=> item.increaseAssetId == null);
+          this.assetList = result.items.filter((item)=> item.reduceAssetId == null);
           debugger
           this.totalAsset = this.assetList.length-1;
           // this.assetList.map((item)=>{ 
@@ -115,9 +124,15 @@ export class AddAssetReduceAssetComponent extends AppComponentBase implements On
     //     });
     //   }
     debugger
-    this.assetList = this.assetList.filter(x => !this.selectedAssetIncreaseList.map(y => y?.id).includes(x?.id));
-    this.modalSave.emit(this.selectedAssetIncreaseList);
-    this.selectedAssetIncreaseList = [];
+    this.assetList = this.assetList.filter(x => !this.selectedAssetReduceList.map(y => y?.id).includes(x?.id));
+    this.selectedAssetReduceList;
+    this.selectedAssetReduceList.map((item) => {
+      item.reasonReduceId = this.selectedReasonReduce.id;
+      item.reasonReduceNote = this.asset.reasonReduceNote;
+    })
+    this.modalSave.emit(this.selectedAssetReduceList);
+
+    this.selectedAssetReduceList = [];
     this.close();
   }
   close(): void {
@@ -131,33 +146,33 @@ export class AddAssetReduceAssetComponent extends AppComponentBase implements On
   // renderAmortizationValue(){
   //   this.asset.monthlyAmortizationValue = Number(((this.asset.orginalPrice)/(this.asset.numberOfDayUsedAsset*12)).toFixed(3));
   // }
-  onSelectedAssetIncreasse(asset : AssetDto, event ){
+  onSelectedAssetReduce(asset : AssetDto, event ){
     debugger
     console.log(event.target.checked);
     
     if(event.target.checked)
     {
-      this.selectedAssetIncreaseList.push(asset);
+      this.selectedAssetReduceList.push(asset);
       // this.lebelTotalAssetSelected ++;
     }
     else{
-      var index = this.selectedAssetIncreaseList?.indexOf(asset);
+      var index = this.selectedAssetReduceList?.indexOf(asset);
       if (index !== -1) {
-          this.selectedAssetIncreaseList.splice(index, 1);
+          this.selectedAssetReduceList.splice(index, 1);
       }   
-      // this.lebelTotalAssetSelected--;     
+      var a =this.selectedReasonReduce;
     }
 
   }
   clickUnTickAssetListSeleted(){
     debugger
-      for( let i = this.selectedAssetIncreaseList.length-1; i>= 0; i-- ){
+      for( let i = this.selectedAssetReduceList.length-1; i>= 0; i-- ){
         
         var selector = 'input[name="selectedAssetIncrease"]:checked'  ;
         $(selector).click();
     } 
   
-    this.selectedAssetIncreaseList = [];
+    this.selectedAssetReduceList = [];
     // this.lebelTotalAssetSelected = 0;
   }
   onSelectedAllAsset(event){

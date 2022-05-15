@@ -7521,19 +7521,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Huyen\\.nuget\\packages\\": {}
+    "C:\\Users\\Win 10\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj",
+      "projectUniqueName": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj",
       "projectName": "AssetManagement.Application",
-      "projectPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj",
-      "packagesPath": "C:\\Users\\Huyen\\.nuget\\packages\\",
-      "outputPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\obj\\",
+      "projectPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj",
+      "packagesPath": "C:\\Users\\Win 10\\.nuget\\packages\\",
+      "outputPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Huyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Win 10\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7547,8 +7551,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
-              "projectPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj"
+            "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
+              "projectPath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj"
             }
           }
         }

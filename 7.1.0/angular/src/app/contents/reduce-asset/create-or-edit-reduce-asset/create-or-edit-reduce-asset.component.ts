@@ -57,6 +57,7 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
     private reduceAssetService:ReduceAssetServiceProxy,
     private departmentService: DepartmentServiceProxy,
     private employeeService: EmployeeServiceProxy,
+    private reasonReduceService: ReasonReduceServiceProxy,
     private _router: Router,
     private _activatedRoute: ActivatedRoute) {
         super(injector);
@@ -71,13 +72,20 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
      this.getReduceAssetForEdit();
      this.getDepartmentList();
      this.getEmployeeList();
-    // this.getReduceAssets();
+    this.getReduceAssets();
+    this.getReasonReduceList();
   }
-  // getReduceAssets(){
-  //   this.reduceAssetService.getReduceAssets().subscribe((result) => {
-  //     this.reduceAssetList = result.items;
-  //   });
-  // }
+  getReasonReduceList(){
+    this.reasonReduceService.getReasonReduces()
+    .subscribe((result)=>{
+        this.reasonReduceList = result.items;
+    });
+  }
+  getReduceAssets(){
+    this.reduceAssetService.getReduceAssets().subscribe((result) => {
+      this.reduceAssetList = result.items;
+    });
+  }
   getAssetReduced(reduceAssetId: number){
     this.assetService.getAssetReduced(reduceAssetId)
     .subscribe((result) => {
@@ -112,17 +120,17 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
           .subscribe((result) => {
             
               this.reduceAsset = result;
-              // ghi tăng gtafi sản
+              // ghi giảm tài sản
               this.selectedAssetTable.map((item) => { 
                 item.reduceAssetId = this.reduceAsset.id;
                 //  item.reduceAssetDate = moment.utc( this.reduceAsset.reduceAssetDate.toString());
                   item.creationTime = moment.utc( item.creationTime?.toString());
                   item.startDate = moment.utc( item.startDate?.toString());
                   item.amortizationDate = moment.utc( item.amortizationDate?.toString());
-                  item.reduceAssetDate = moment.utc( item.reduceAssetDate?.toString());
+                  item.reduceAssetDate = moment.utc( this.reduceAsset.reduceAssetDate?.toString());
                 });
                 debugger
-              this.assetService.reduceAssetList(this.selectedAssetTable).subscribe();
+              this.assetService.reduceAssetList(0,this.selectedAssetTable).subscribe();
               // xóa tài sản ghi tăng
 
               if(this.deleteAssetConfirmedList.length > 0 ){
@@ -134,7 +142,7 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
                     item.reduceAssetDate = moment.utc( item.reduceAssetDate?.toString());
                   });
 
-                this.assetService.reduceAssetList(this.deleteAssetConfirmedList).subscribe();
+                this.assetService.reduceAssetList(1,this.deleteAssetConfirmedList).subscribe();
               }
               this.notify.info(this.l("SavedSuccessfully"));
               this.close();
@@ -312,16 +320,38 @@ debugger
   onSelectDepartmet(){
 
   }
-  onSelectDepartmentFromTable(asset : AssetDto){
+  onSelectReasonReduceFromTable(asset : AssetDto){
     var index = this.selectedAssetTable.findIndex(c => c.id == asset.id);
-    this.selectedAssetTable[index].employeeId = null;
+    this.selectedAssetTable[index] = asset;
+    this.selectedAssetTable[index].reasonReduceId = asset.reasonReduceId;
+
+    // var amortizationValue = Number(((asset.orginalPrice)/(asset.numberOfDayUsedAsset*12)).toFixed(3));
+    // this.addAssetToReduceList[index].amortizationValue = amortizationValue;
+    // this.selectedAssetTable[]
+    // this.getEmployeeListByDepartment(asset.departmentId);
+  }
+  onSelectReasonReduceNoteFromTable(asset : AssetDto){
+    var index = this.selectedAssetTable.findIndex(c => c.id == asset.id);
+    this.selectedAssetTable[index] = asset;
+    this.selectedAssetTable[index].reasonReduceNote = asset.reasonReduceNote;
+
+    // var amortizationValue = Number(((asset.orginalPrice)/(asset.numberOfDayUsedAsset*12)).toFixed(3));
+    // this.addAssetToReduceList[index].amortizationValue = amortizationValue;
+    // this.selectedAssetTable[]
+    // this.getEmployeeListByDepartment(asset.departmentId);
+  }
+  onSelectRecoverableValueFromTable(asset : AssetDto){
+    var index = this.selectedAssetTable.findIndex(c => c.id == asset.id);
+    this.selectedAssetTable[index] = asset;
+    this.selectedAssetTable[index].recoverableValue = asset.recoverableValue;
+
     // var amortizationValue = Number(((asset.orginalPrice)/(asset.numberOfDayUsedAsset*12)).toFixed(3));
     // this.addAssetToReduceList[index].amortizationValue = amortizationValue;
     // this.selectedAssetTable[]
     // this.getEmployeeListByDepartment(asset.departmentId);
   }
   addAssetReduceToTable(assetList){
-    
+    debugger
     this.selectedAssetTable = [ ...this.selectedAssetTable, ...assetList];
     console.log("list =", this.selectedAssetTable);
   }

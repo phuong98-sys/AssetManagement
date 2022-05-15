@@ -217,13 +217,13 @@
                 Ngày ngừng sử dụng
                 <p-sortIcon field="reduceAssetDate"></p-sortIcon>
             </th> -->
-            <th pResizableColumn pSortableColumn="reduceMethod" style="width:150px">
+            <th pResizableColumn pSortableColumn="reasonReduce" style="width:150px">
                 Hình thức ghi giảm
-                <p-sortIcon field="reduceMethod"></p-sortIcon>
+                <p-sortIcon field="reasonReduce"></p-sortIcon>
             </th>
-            <th pResizableColumn pSortableColumn="reasonForReduction" style="width:140px">
+            <th pResizableColumn pSortableColumn="reasonReduceNote" style="width:140px">
                 Lí do ghi giảm
-                <p-sortIcon field="reasonForReduction"></p-sortIcon>
+                <p-sortIcon field="reasonReduceNote"></p-sortIcon>
             </th>
             <th pResizableColumn pSortableColumn="recoverableValue" style="width:140px">
                 Giá trị thu hồi
@@ -281,8 +281,8 @@
             <td style="width:150px">{{ asset.depreciationOfAsset }}</td>
             <td style="width:140px">{{ asset.residualValue}}</td>
             <td style="width:180px">{{ asset.usageStatus }}</td>
-            <td style="width:150px">{{ asset.reduceMethod}}</td>
-            <td style="width:140px">{{ asset.reasonForReduction}}</td>
+            <td style="width:150px">{{ asset.reasonReduceName}}</td>
+            <td style="width:140px">{{ asset.reasonReduceNote}}</td>
 
             <td style="width:140px">{{ asset.recoverableValue}}</td>
             <td style="width:130px">{{ asset.creationTime}}</td>

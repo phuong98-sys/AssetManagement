@@ -20,5 +20,13 @@ namespace AssetManagement.SuggestionHandlingDetails
         public Asset Asset { get; set; }
         public int? AssetId { get; set; }
         public string? HandlingMethod { get; set; }
+        public int? HandlingMethodId { get; set; }
+        //public List<SuggestionHandling> SuggestionHandlings { get; set; }
+        //public List<Asset> Assets { get; set; }
+        //public SuggestionHandlingDetail()
+        //{
+        //    SuggestionHandlings = new List<SuggestionHandling>();
+        //    Assets = new List<Asset>();
+        //}
     }
 }

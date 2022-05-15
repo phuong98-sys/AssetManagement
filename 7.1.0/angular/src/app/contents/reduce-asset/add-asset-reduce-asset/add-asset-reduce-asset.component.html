@@ -14,7 +14,7 @@
                 <div class="content-component" style="padding: 10px">
                     <div _ngcontent-olq-c180="" class="row align-items-center">
                         <div class="col-6">
-                            <span> Đã chọn : {{selectedAssetIncreaseList.length}} tài sản </span>
+                            <span> Đã chọn : {{selectedAssetReduceList.length}} tài sản </span>
                             <div class="btn btn-primary" style="margin-left: 10px" (click)="clickUnTickAssetListSeleted()">Bỏ chọn</div>
                         </div>
                         <div _ngcontent-olq-c180="" class="col-6"><div _ngcontent-olq-c180="" class="form-group m-form__group align-items-center"><div _ngcontent-olq-c180="" class="input-group"><input _ngcontent-olq-c180="" name="filterText" autofocus="" placeholder="Tìm kiếm theo mã tài sản, tên tài sản, tên loại tài sản, bộ phận,..." type="text" class="form-control m-input ng-untouched ng-pristine ng-valid" ng-reflect-name="filterText" ng-reflect-model=""><span _ngcontent-olq-c180="" class="input-group-btn"><button _ngcontent-olq-c180="" type="submit" class="btn btn-search"><i _ngcontent-olq-c180="" class="fa fa-search"></i></button></span></div>
@@ -74,7 +74,7 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-asset>
                             <tr>
-                                <td style="width:50px" class="pl-1"><input type ="checkbox" name="selectedAssetIncrease" (change)="onSelectedAssetIncreasse(asset, $event)"></td>
+                                <td style="width:50px" class="pl-1"><input type ="checkbox" name="selectedAssetIncrease" (change)="onSelectedAssetReduce(asset, $event)"></td>
                                 <td style="width:120px">{{ asset.assetCode }}</td>
                                 <td style="width:120px">{{ asset.assetTypeName}}</td>
                                 <td style="width:120px">{{ asset.assetName}}</td>
@@ -96,22 +96,22 @@
                 </div>
                 <div class="modal-body row">
                     <div class="form-group col-5">
-                        <label for="handlingMethod">{{"Hình thức ghi giảm" | localize}} *</label>
-                        <p-dropdown id="handlingMethod" #handlingMethod="ngModel" name="handlingMethod" [options]="handlingMethodList"
-                        [(ngModel)]="selectedHandlingMethod" placeholder="{{ l('Chọn hình thức xử lí') }}" optionLabel="handlingMethodName"
+                        <label for="reasonReduce">{{"Hình thức ghi giảm" | localize}} *</label>
+                        <p-dropdown id="reasonReduce" #reasonReduce="ngModel" name="reasonReduce" [options]="reasonReduceList"
+                        [(ngModel)]="selectedReasonReduce" placeholder="{{ l('Chọn hình thức ghi giảm') }}" optionLabel="reasonReduceName"
                         styleClass="form-control brandSelection-dropdown" required>
                         </p-dropdown>
                     </div>
                     <div class="form-group col-7">
-                        <label for="OrginalPrice">{{"Lí do ghi giảm" | localize}}</label>
-                        <input id="OrginalPrice" #orginalPrice="ngModel" type="number" name="OrginalPrice" class="form-control" [(ngModel)]="asset.orginalPrice" />
+                        <label for="reasonReduceNote">{{"Lí do ghi giảm" | localize}}</label>
+                        <input id="reasonReduceNote" #reasonReduceNote="ngModel" type="text" name="reasonReduceNote" class="form-control" [(ngModel)]="asset.reasonReduceNote" />
             
                     </div>
                 </div>   
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-cancel" (click)="close()">{{"Hủy" |
                         localize}}</button>
-                    <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')"><i class="fa fa-save" style="margin-right: 5px" ></i>
+                    <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')" [disabled] = "selectedAssetReduceList?.length > 0 && !selectedReasonReduce?.id"><i class="fa fa-save" style="margin-right: 5px"></i>
                         <span>{{"Đồng ý" | localize}}</span></button>
                 </div>             
             </form>
