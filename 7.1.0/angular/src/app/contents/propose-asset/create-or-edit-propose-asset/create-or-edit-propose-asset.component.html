@@ -1,5 +1,5 @@
 
-<div class="increase-asset-component" busyIf="loading">
+<div class="propose-asset-component" busyIf="loading">
     <div class="header-title-container main-header navbar navbar-expand navbar-white navbar-light" style="margin-left: 0 !important">
         <h4 class="header-title">
             <span class="title-page parent-title" (click)="close()">Yêu cầu điều chuyển</span>
@@ -8,15 +8,15 @@
             <span class="title-page title-child" *ngIf="!proposeAsset?.id">{{"Tạo mới yêu cầu điều chuyển" | localize}}</span>
         </h4>
     </div>
-    <div class="increase-asset-container">
-        <div class="increase-asset-content">
+    <div class="propose-asset-container">
+        <div class="propose-asset-content">
             <form #proposeAssetForm="ngForm" novalidate (ngSubmit)="save()" (keydown.enter)="$event.preventDefault()">     
                 <div class="title-page text-title" style="padding-left: 10px">Thông tin chung</div>
-                <div class="modal-body ">
+                <div class="modal-body bg-white">
                     <div class="row">
                         <div class="form-group col-2">
-                            <label for="AssetCode">{{"Số phiếu" | localize}} *</label>
-                            <input id="AssetCode" #assetCode="ngModel" type="text" name="AssetCode" class="form-control" [(ngModel)]="proposeAsset.numbersProposeAsset" required maxlength="256" (change)="setNumbersProposeAsset()"/>
+                            <label for="numbersProposeAsset">{{"Số phiếu" | localize}} *</label>
+                            <input id="numbersProposeAsset" #numbersProposeAsset="ngModel" type="text" name="numbersProposeAsset" class="form-control" [(ngModel)]="proposeAsset.numbersProposeAsset" required maxlength="256" (change)="setNumbersProposeAsset()"/>
                             <div style="display: grid;"></div>
                         </div>
                         <div class="form-group col-2">
@@ -24,192 +24,99 @@
                             <input id="dateFound" #dateFound="ngModel" type="date" name="dateFound" class="form-control" [(ngModel)]="proposeAsset.dateFound" required maxlength="256" />
                         </div>
                         <div class="form-group col-2">
+                            <label for="proponent">{{"Người đề nghị" | localize}} </label>
+                            <input id="proponent" #proponent="ngModel" type="text" name="proponent" class="form-control" [(ngModel)]="proposeAsset.proponent"/>
+                        </div>
+                        <div class="form-group col-2">
                             <label for="content">{{"Nội dung" | localize}} </label>
-                            <input id="content" #content="ngModel" rows="4" style="width: 650px;" name="content" class="form-control" [(ngModel)]="proposeAsset.content"/>
+                            <input id="content" #content="ngModel" rows="4" style="width: 500px;" name="content" class="form-control" [(ngModel)]="proposeAsset.content"/>
                         </div>
                     </div>
                 </div>                
             </form>
         </div>
     </div> 
-    <div class="increase-asset-table">
-        <div class="title-page text-title" style="padding-left: 10px">Các tài sản đã chọn vào phiếu đề nghị xử lí</div>
-        <button class="btn btn-increase-asset ml-1" (click)="onDeleteAssetListFromTable()">Xóa tài sản</button>
-        <button style="position: absolute; right: 22px" class="btn btn-increase-asset ml-1" (click)="selecteAssetListToProposeAsset()">Chọn tài sản</button>
-        <div class="card-header">
-            <div class="row">
-                <div class="col-md-6">&emsp;</div>
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <button type="button" class="btn bg-blue">
-                                <i class="fas fa-search"></i>
-                            </button>
+    <div class="propose-asset-table">
+        <div class="title-page text-title" style="padding-left: 10px">Thông tin chi tiết</div>
+        <div class="modal-body bg-white">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button type="button" class="btn bg-blue">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    name="keyword"
+                                    [placeholder]="'SearchWithThreeDot' | localize"
+                                    [(ngModel)]="keyword"
+                                  
+                            />
                         </div>
-                        <input
-                                type="text"
-                                class="form-control"
-                                name="keyword"
-                                [placeholder]="'SearchWithThreeDot' | localize"
-                                [(ngModel)]="keyword"
-                              
-                        />
-                        <div class="input-group-append">
-                            <button
-                                    type="button"
-                                    class="btn btn-default"
-                                    (click)="advancedFiltersVisible = !advancedFiltersVisible"
-                            >
-                                <i
-                                        class="fas"
-                                        [class.fa-angle-up]="advancedFiltersVisible"
-                                        [class.fa-angle-down]="!advancedFiltersVisible"
-                                ></i>
-                            </button>
-                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <button style="position: absolute; right: 22px" class="btn btn-increase-asset ml-1" (click)="selecteAssetListToProposeAsset()">Chọn tài sản</button>
                     </div>
                 </div>
             </div>
-            <div *ngIf="advancedFiltersVisible" class="card mb-0 mt-1">
-                <div class="card-body">
-                    <form class="form-horizontal">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group row mb-0">
-                                    <label class="col-md-3 col-form-label">
-                                        {{ "IsActive" | localize }}
-                                    </label>
-                                    <div class="col-md-9 pt-2">
-                                        <div class="custom-control custom-radio d-inline">
-                                            <input
-                                                    type="radio"
-                                                    class="custom-control-input"
-                                                    id="isActiveAll"
-                                                    name="isActive"
-                                                    [(ngModel)]="isActive"
-                                                    [value]="undefined"
-                                                    checked
-                                            />
-                                            <label class="custom-control-label" for="isActiveAll">
-                                                {{ "All" | localize }}
-                                            </label>
-                                        </div>
-                                        <div class="custom-control custom-radio d-inline mx-3">
-                                            <input
-                                                    type="radio"
-                                                    class="custom-control-input"
-                                                    id="isActiveActive"
-                                                    name="isActive"
-                                                    [(ngModel)]="isActive"
-                                                    [value]="true"
-                                            />
-                                            <label
-                                                    class="custom-control-label"
-                                                    for="isActiveActive"
-                                            >
-                                                {{ "Yes" | localize }}
-                                            </label>
-                                        </div>
-                                        <div class="custom-control custom-radio d-inline">
-                                            <input
-                                                    type="radio"
-                                                    class="custom-control-input"
-                                                    id="isActivePassive"
-                                                    name="isActive"
-                                                    [(ngModel)]="isActive"
-                                                    [value]="false"
-                                            />
-                                            <label
-                                                    class="custom-control-label"
-                                                    for="isActivePassive"
-                                            >
-                                                {{ "No" | localize }}
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="card-footer">
-                    <button
-                            type="button"
-                            class="btn bg-blue"
-                            
-                    >
-                        {{ "Search" | localize }}
-                    </button>
-                    <button
-                            type="button"
-                            class="btn btn-default float-right"
-                            (click)="clearFilters()"
-                    >
-                        {{ "Clear" | localize }}
-                    </button>
-                </div>
+            <div class="content-component">
+                <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="addAssetToProposeAssetList" [resizableColumns]="true" [autoLayout]="true">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width:50px" class="pl-1">
+                                <input type="checkbox" name="selectedAllAsset" [(ngModel)]="isSelectedAllAsset" (click)="onSelectedAllAsset($event)"/>
+                            </th>
+                            <th pResizableColumn pSortableColumn="assetCode" style="width:150px">
+                                Bộ phận đề nghị
+                            </th>
+                            <th pResizableColumn pSortableColumn="assetTypeName" style="width:120px">
+                                Tên tài sản
+                            </th>
+                            <th pResizableColumn pSortableColumn="assetName" style="width:120px">
+                                Loại tài sản
+                            </th>
+                            <th pResizableColumn pSortableColumn="orginalPrice" style="width:120px">
+                                Mô tả đặc điểm 
+                            </th> 
+                            <th pResizableColumn pSortableColumn="departmentName" style="width:150px">
+                                Số lượng
+                            </th>
+                            <th pResizableColumn pSortableColumn="handlingMethod" style="width:150px">
+                                Đơn vị tính
+                            </th>
+                            <th pResizableColumn pSortableColumn="handlingMethod" style="width:150px">
+                                Dự toán
+                            </th>
+                            <th style="width:100px">
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-assetSelected>
+                        <tr>
+                            <td style="width:50px" class="pl-1"><input type="checkbox" name="selectedAsset" (change)="onSelectedAsset(assetSelected, $event)"></td>
+                            <td style="width:120px">{{ assetSelected.assetCode}}</td>
+                            <td style="width:120px">{{ assetSelected.assetTypeName}}</td>
+                            <td style="width:120px">{{ assetSelected.assetName}}</td>
+                            <td style="width:120px">{{ assetSelected.orginalPrice }}</td>   
+                            <td style="width:120px">{{ assetSelected.departmentName}}</td>
+                            <!-- <td style="width:120px">{{ assetSelected.handlingMethod}}</td> -->
+                            <td style="width:150px">
+                                <select name="department" [(ngModel)]="assetSelected.departmentId" class="form-control" (change)="onSelectDepartmentFromTable(assetSelected)"> 
+                                    <option *ngFor="let department of departmentList" [value]="department.id" >{{department.departmentName}}</option> 
+                                </select> 
+                            </td>      
+                            <td style="width:120px"></td>  
+                           <!--  <td style="width:150px"><input type="number" class="input-number form-control" [(ngModel)]= "assetSelected.numberOfDayUsedAsset" (change)="renderAmortizationValueOfAssetFromTable(assetSelected)" min="1" required/></td> -->
+                            <!-- <td style="width:200px">{{ assetSelected.amortizationValue}}</td>
+                            <td style="width:100px"><button type="button" class="btn btn-sm bg-danger ng-tns-c137-2" (click) = "deleteAssetItemFromTable(assetSelected)"><i class="fas fa-trash ng-tns-c137-2"></i> Xóa </button></td> -->
+                        </tr>
+                    </ng-template>
+                </p-table>
             </div>
-        </div>
-        <div class="content-component">
-            <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="addAssetToProposeAssetList" [resizableColumns]="true" [autoLayout]="true">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th style="width:50px" class="pl-1">
-                            <input type="checkbox" name="selectedAllAsset" [(ngModel)]="isSelectedAllAsset" (click)="onSelectedAllAsset($event)"/>
-                        </th>
-                        <th pResizableColumn pSortableColumn="assetCode" style="width:120px">
-                            Mã tài sản
-                            <p-sortIcon field="assetCode"></p-sortIcon>
-                        </th>
-                        <th pResizableColumn pSortableColumn="assetTypeName" style="width:120px">
-                            Loại tài sản
-                            <p-sortIcon field="assetTypeName"></p-sortIcon>
-                        </th>
-                        <th pResizableColumn pSortableColumn="assetName" style="width:120px">
-                            Tên tài sản
-                            <p-sortIcon field="assetName"></p-sortIcon>
-                        </th>
-                        <th pResizableColumn pSortableColumn="orginalPrice" style="width:120px">
-                            Nguyên Giá 
-                            <p-sortIcon field="orginalPrice"></p-sortIcon>
-                        </th> 
-                        <th pResizableColumn pSortableColumn="departmentName" style="width:150px">
-                            Bộ phận sử dụng
-                            <p-sortIcon field="departmentName"></p-sortIcon>
-                        </th>
-                        <th pResizableColumn pSortableColumn="handlingMethod" style="width:150px">
-                            Bộ phận sử dụng mới
-                            <p-sortIcon field="handlingMethod"></p-sortIcon>
-                        </th>
-                        <th pResizableColumn pSortableColumn="handlingMethod" style="width:150px">
-                            Đặc điểm
-                            <p-sortIcon field="handlingMethod"></p-sortIcon>
-                        </th>
-                        <th style="width:100px">
-                        </th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-assetSelected>
-                    <tr>
-                        <td style="width:50px" class="pl-1"><input type="checkbox" name="selectedAsset" (change)="onSelectedAsset(assetSelected, $event)"></td>
-                        <td style="width:120px">{{ assetSelected.assetCode}}</td>
-                        <td style="width:120px">{{ assetSelected.assetTypeName}}</td>
-                        <td style="width:120px">{{ assetSelected.assetName}}</td>
-                        <td style="width:120px">{{ assetSelected.orginalPrice }}</td>   
-                        <td style="width:120px">{{ assetSelected.departmentName}}</td>
-                        <!-- <td style="width:120px">{{ assetSelected.handlingMethod}}</td> -->
-                        <td style="width:150px">
-                            <select name="department" [(ngModel)]="assetSelected.departmentId" class="form-control" (change)="onSelectDepartmentFromTable(assetSelected)"> 
-                                <option *ngFor="let department of departmentList" [value]="department.id" >{{department.departmentName}}</option> 
-                            </select> 
-                        </td>      
-                        <td style="width:120px"></td>  
-                       <!--  <td style="width:150px"><input type="number" class="input-number form-control" [(ngModel)]= "assetSelected.numberOfDayUsedAsset" (change)="renderAmortizationValueOfAssetFromTable(assetSelected)" min="1" required/></td> -->
-                        <!-- <td style="width:200px">{{ assetSelected.amortizationValue}}</td>
-                        <td style="width:100px"><button type="button" class="btn btn-sm bg-danger ng-tns-c137-2" (click) = "deleteAssetItemFromTable(assetSelected)"><i class="fas fa-trash ng-tns-c137-2"></i> Xóa </button></td> -->
-                    </tr>
-                </ng-template>
-            </p-table>
         </div>
     </div>
     <div class="modal-footer">

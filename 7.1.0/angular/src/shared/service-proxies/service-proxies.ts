@@ -3613,7 +3613,124 @@ export class TransferServiceProxy {
         return _observableOf<void>(<any>null);
     }
 }
+@Injectable()
+export class ProposeAssetDetailServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getProposeAssetDetails(): Observable<ProposeAssetDetailDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/SuggestionHandling/GetSuggestionHandlings";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetProposeAssetDetails(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetProposeAssetDetails(<any>response_);
+                } catch (e) {
+                    return <Observable<ProposeAssetDetailDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProposeAssetDetailDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetProposeAssetDetails(response: HttpResponseBase): Observable<ProposeAssetDetailDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProposeAssetDetailDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProposeAssetDetailDtoListResultDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    insertOrUpdateProposeAssetDetail(body: ProposeAssetDetailInputDto | undefined): Observable<ProposeAssetDetailDto> {
+        let url_ = this.baseUrl + "/api/services/app/ProposeAssetDetail/InsertOrUpdateProposeAssetDetail";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertOrUpdateProposeAssetDetail(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertOrUpdateProposeAssetDetail(<any>response_);
+                } catch (e) {
+                    return <Observable<ProposeAssetDetailDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProposeAssetDetailDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processInsertOrUpdateProposeAssetDetail(response: HttpResponseBase): Observable<ProposeAssetDetailDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProposeAssetDetailDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProposeAssetDetailDto>(<any>null);
+    }
+}
 @Injectable()
 export class UserServiceProxy {
     private http: HttpClient;
@@ -9022,7 +9139,329 @@ export interface ITransferListDto {
     userCode: string | undefined;
     creationTime: moment.Moment;
 }
+//
+export class ProposeAssetDetailDto implements IProposeAssetDetailDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
+    proposeAssetId: number;
+    assetId: number;
+    assetName: string;
+    assetTypeName: string;
+    dateFound: moment.Moment | undefined;
+    quantity: number;
+    describe: string;
+    estimates: number;
+    departmentId: number;
+    departmentName: string | undefined;
+    creationTime: moment.Moment;
+    constructor(data?: IProposeAssetDetailDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
 
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
+            this.proposeAssetId = _data["proposeAssetId"];
+            this.assetId = _data["assetId"];
+            this.assetName=_data["assetName"];
+            this.assetTypeName=_data["assetTypeName"];
+            this.dateFound = _data["dateFound"] ? moment(_data["dateFound"].toString()) : <any>undefined;
+            this.quantity=_data["quantity"];
+            this.describe=_data["describe"];
+            this.estimates=_data["estimates"];
+            this.departmentId=_data["departmentId"];
+            this.departmentName = _data["departmentName"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): ProposeAssetDetailDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProposeAssetDetailDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
+        data["proposeAssetId"] = this.proposeAssetId;
+        data["assetId"] = this.assetId;
+        data["assetName"] = this.assetName;
+        data["assetTypeName"] = this.assetTypeName;
+        data["dateFound"] = this.dateFound ? this.dateFound.toISOString() : <any>undefined;
+        data["quantity"] = this.quantity;
+        data["describe"] = this.describe;
+        data["estimates"] = this.estimates;
+        data["departmentId"] = this.departmentId;
+        data["departmentName"] = this.departmentName;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): ProposeAssetDetailDto {
+        const json = this.toJSON();
+        let result = new ProposeAssetDetailDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProposeAssetDetailDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
+    proposeAssetId: number;
+    assetId: number;
+    assetName: string;
+    assetTypeName: string;
+    dateFound: moment.Moment | undefined;
+    quantity: number;
+    describe: string;
+    estimates: number;
+    departmentId: number;
+    departmentName: string | undefined;
+    creationTime: moment.Moment;
+}
+
+export class ProposeAssetDetailDtoListResultDto implements IProposeAssetDetailDtoListResultDto {
+    items: ProposeAssetDetailDto[] | undefined;
+
+    constructor(data?: IProposeAssetDetailDtoListResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(ProposeAssetDetailDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ProposeAssetDetailDtoListResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProposeAssetDetailDtoListResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ProposeAssetDetailDtoListResultDto {
+        const json = this.toJSON();
+        let result = new ProposeAssetDetailDtoListResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProposeAssetDetailDtoListResultDto {
+    items: ProposeAssetDetailDto[] | undefined;
+}
+
+export class ProposeAssetDetailInputDto implements IProposeAssetDetailInputDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
+    proposeAssetId: number;
+    assetId: number;
+    assetName: string;
+    assetTypeName: string;
+    dateFound: moment.Moment | undefined;
+    quantity: number;
+    describe: string;
+    estimates: number;
+    departmentId: number;
+    departmentName: string | undefined;
+    creationTime: moment.Moment;
+
+    constructor(data?: IProposeAssetDetailInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
+            this.proposeAssetId = _data["proposeAssetId"];
+            this.assetId = _data["assetId"];
+            this.assetName=_data["assetName"];
+            this.assetTypeName=_data["assetTypeName"];
+            this.dateFound = _data["dateFound"] ? moment(_data["dateFound"].toString()) : <any>undefined;
+            this.quantity=_data["quantity"];
+            this.describe=_data["describe"];
+            this.estimates=_data["estimates"];
+            this.departmentId=_data["departmentId"];
+            this.departmentName = _data["departmentName"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): ProposeAssetDetailInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProposeAssetDetailInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
+        data["proposeAssetId"] = this.proposeAssetId;
+        data["assetId"] = this.assetId;
+        data["assetName"] = this.assetName;
+        data["assetTypeName"] = this.assetTypeName;
+        data["dateFound"] = this.dateFound ? this.dateFound.toISOString() : <any>undefined;
+        data["quantity"] = this.quantity;
+        data["describe"] = this.describe;
+        data["estimates"] = this.estimates;
+        data["departmentId"] = this.departmentId;
+        data["departmentName"] = this.departmentName;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): ProposeAssetDetailInputDto {
+        const json = this.toJSON();
+        let result = new ProposeAssetDetailInputDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProposeAssetDetailInputDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
+    proposeAssetId: number;
+    assetId: number;
+    assetName: string;
+    assetTypeName: string;
+    dateFound: moment.Moment | undefined;
+    quantity: number;
+    describe: string;
+    estimates: number;
+    departmentId: number;
+    departmentName: string | undefined;
+    creationTime: moment.Moment;
+}
+
+export class ProposeAssetDetailListDto implements IProposeAssetDetailListDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
+    proposeAssetId: number;
+    assetId: number;
+    assetName: string;
+    assetTypeName: string;
+    dateFound: moment.Moment | undefined;
+    quantity: number;
+    describe: string;
+    estimates: number;
+    departmentId: number;
+    departmentName: string | undefined;
+    creationTime: moment.Moment;
+
+    constructor(data?: IProposeAssetDetailListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creatorUserId = _data["creatorUserId"];
+            this.proposeAssetId = _data["proposeAssetId"];
+            this.assetId = _data["assetId"];
+            this.assetName=_data["assetName"];
+            this.assetTypeName=_data["assetTypeName"];
+            this.dateFound = _data["dateFound"] ? moment(_data["dateFound"].toString()) : <any>undefined;
+            this.quantity=_data["quantity"];
+            this.describe=_data["describe"];
+            this.estimates=_data["estimates"];
+            this.departmentId=_data["departmentId"];
+            this.departmentName = _data["departmentName"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): ProposeAssetDetailListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProposeAssetDetailListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creatorUserId"] = this.creatorUserId;
+        data["proposeAssetId"] = this.proposeAssetId;
+        data["assetId"] = this.assetId;
+        data["assetName"] = this.assetName;
+        data["assetTypeName"] = this.assetTypeName;
+        data["dateFound"] = this.dateFound ? this.dateFound.toISOString() : <any>undefined;
+        data["quantity"] = this.quantity;
+        data["describe"] = this.describe;
+        data["estimates"] = this.estimates;
+        data["departmentId"] = this.departmentId;
+        data["departmentName"] = this.departmentName;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): ProposeAssetDetailListDto {
+        const json = this.toJSON();
+        let result = new ProposeAssetDetailListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProposeAssetDetailListDto {
+    id: number | undefined;
+    creatorUserId: number | undefined;
+    proposeAssetId: number;
+    assetId: number;
+    assetName: string;
+    assetTypeName: string;
+    dateFound: moment.Moment | undefined;
+    quantity: number;
+    describe: string;
+    estimates: number;
+    departmentId: number;
+    departmentName: string | undefined;
+    creationTime: moment.Moment;
+}
 export class UserDto implements IUserDto {
     id: number;
     userName: string;
