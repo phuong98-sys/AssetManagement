@@ -1,14 +1,8 @@
 {
   "version": 2,
-<<<<<<< HEAD
-  "dgSpecHash": "n+rJXXlolYf12yrnCbaZ7yo0ZN7gXNpjyjOrHktuo2tNr1mqPUZOacYDJ928mzzdqBeMxQei+IwTPr+LcG9pDQ==",
+  "dgSpecHash": "K6ndlZY/BMPbbZsv9b6lQ0xNWoc11vuiB5qYgU/2wJtry+UTodiYMRxo5aOt+RVXlqmWjm3XVZSWkOFiTGguWA==",
   "success": true,
-  "projectFilePath": "D:\\QLTS\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\AssetManagement.Web.Host.csproj",
-=======
-  "dgSpecHash": "vommh25QR56VuU+46cr+uzWy4iXX5i6VKMmBu7Zv6Cd7ggRb0MwUx9BcbfWhVlcNelV9IHzhK5khBeqP6/+6Pg==",
-  "success": true,
-  "projectFilePath": "F:\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\AssetManagement.Web.Host.csproj",
->>>>>>> 12c41d05acedc28aa0fdbf3650d68a73040a5eb4
+  "projectFilePath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\AssetManagement.Web.Host.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Huyen\\.nuget\\packages\\abp\\7.1.0\\abp.7.1.0.nupkg.sha512",
     "C:\\Users\\Huyen\\.nuget\\packages\\abp.aspnetcore\\7.1.0\\abp.aspnetcore.7.1.0.nupkg.sha512",

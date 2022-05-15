@@ -120,3 +120,20 @@ F:\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release
 F:\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\ref\AssetManagement.Application.dll
 F:\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.pdb
 >>>>>>> 12c41d05acedc28aa0fdbf3650d68a73040a5eb4
+F:\QLTS\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\bin\Release\net6.0\AssetManagement.Application.deps.json
+F:\QLTS\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\bin\Release\net6.0\AssetManagement.Application.dll
+F:\QLTS\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\bin\Release\net6.0\ref\AssetManagement.Application.dll
+F:\QLTS\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\bin\Release\net6.0\AssetManagement.Application.pdb
+F:\QLTS\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\bin\Release\net6.0\AssetManagement.Application.xml
+F:\QLTS\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\bin\Release\net6.0\AssetManagement.Core.dll
+F:\QLTS\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\bin\Release\net6.0\AssetManagement.Core.pdb
+F:\QLTS\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.csproj.AssemblyReference.cache
+F:\QLTS\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.GeneratedMSBuildEditorConfig.editorconfig
+F:\QLTS\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.AssemblyInfoInputs.cache
+F:\QLTS\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.AssemblyInfo.cs
+F:\QLTS\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.csproj.CoreCompileInputs.cache
+F:\QLTS\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.csproj.CopyComplete
+F:\QLTS\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.dll
+F:\QLTS\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\ref\AssetManagement.Application.dll
+F:\QLTS\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.xml
+F:\QLTS\AssetManagement\7.1.0\aspnet-core\src\AssetManagement.Application\obj\Release\net6.0\AssetManagement.Application.pdb
