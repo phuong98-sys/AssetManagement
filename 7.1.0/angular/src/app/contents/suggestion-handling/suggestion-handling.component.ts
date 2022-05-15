@@ -45,9 +45,7 @@ export class SuggestionHandlingComponent extends AppComponentBase implements OnI
       
         this.suggestionHandlingList = result.items;
         this.suggestionHandlingList.map((item)=>{ 
-          item.creationTime = moment(item.creationTime).format("DD/MM/YYYY");
-          item.suggestionHandlingDate = moment(item.creationTime).format("DD/MM/YYYY");
-          item.lastModificationTime = moment(item.lastModificationTime).format("DD/MM/YYYY")});
+        });
         this.totalRecords = this.suggestionHandlingList?.length;
     });
   }

@@ -109,8 +109,8 @@
                     </div>
                 </div>   
                 <div class="modal-footer">
-                    <button [disabled]="saving" type="button" class="btn btn-cancel" (click)="close()">{{"Hủy" |
-                        localize}}</button>
+                    <div class="btn btn-cancel" (click)="cancel()">{{"Hủy" |
+                        localize}}</div>
                     <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')" [disabled] = "selectedAssetReduceList?.length > 0 && !selectedReasonReduce?.id"><i class="fa fa-save" style="margin-right: 5px"></i>
                         <span>{{"Đồng ý" | localize}}</span></button>
                 </div>             

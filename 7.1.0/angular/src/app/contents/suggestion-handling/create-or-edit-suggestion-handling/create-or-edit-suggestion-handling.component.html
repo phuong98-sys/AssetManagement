@@ -18,27 +18,19 @@
                             <label for="suggestionHandlingCode">{{"Số phiếu" | localize}} *</label>
                             <input id="suggestionHandlingCode" #suggestionHandlingCode="ngModel" type="text" name="suggestionHandlingCode" class="form-control" [(ngModel)]="suggestionHandling.suggestionHandlingCode" required maxlength="256" (change)="setSuggestionHandlingCode()"/>
                             <div style="display: grid;">
-                                <!-- <span *ngIf="!suggestionHandling?.suggestionHandlingCode" class="error-message">Trường này không được để trống</span> -->
-                                <!-- <span class="error-message" *ngIf="suggestionHandling.suggestionHandlingCode">{{suggestionHandlingCodeMessage}}</span> -->
+                                <span *ngIf="!suggestionHandling?.suggestionHandlingCode" class="error-message">Trường này không được để trống</span> 
+                                <span class="error-message" *ngIf="suggestionHandling.suggestionHandlingCode">{{suggestionHandlingCodeMessage}}</span>
                             </div>
                         </div>
                         <div class="form-group col-2">
                             <label for="creationTime">{{"Ngày lập" | localize}} *</label>
-                            <input id="creationTime" #creationTime="ngModel" type="date" name="creationTime" class="form-control" [(ngModel)]="suggestionHandling.creationTime" required maxlength="256" />
+                            <input id="creationTime" #creationTime="ngModel" type="date" name="creationTime" class="form-control" [(ngModel)]="suggestionHandling.creationTime" required />
                             <!-- <span *ngIf="!suggestionHandling?.creationTime" class="error-message">Trường này không được để trống</span> -->
                         </div>
                         <div class="form-group col-2">
                             <label for="suggestionHandlingDate">{{"Ngày chứng từ" | localize}} *</label>
-                            <input id="suggestionHandlingDate" #suggestionHandlingDate="ngModel" type="date" name="suggestionHandlingDate" class="form-control" [(ngModel)]="suggestionHandling.suggestionHandlingDate" required maxlength="256" />
+                            <input id="suggestionHandlingDate" #suggestionHandlingDate="ngModel" type="date" name="suggestionHandlingDate" class="form-control" [(ngModel)]="suggestionHandling.suggestionHandlingDate" required  />
                             <!-- <span *ngIf="!suggestionHandling?.suggestionHandlingDate" class="error-message">Trường này không được để trống</span> -->
-                        </div>
-                        <div class="form-group col-3">
-                            <label for="petitionerName">{{"Người đề nghị" | localize}} *</label>
-                            <p-dropdown id="petitionerName" #petitionerName="ngModel" name="petitionerName" [options]="employeeList"
-                            [(ngModel)]="selectedPetitioner" placeholder="{{ l('Chọn người đề nghị') }}" optionLabel="employeeName"
-                            styleClass="form-control brandSelection-dropdown" (onChange)="onChangePetitioner()" required>
-                            </p-dropdown>
-                            <span *ngIf="selectedPetitioner" class="error-message">Trường này không được để trống</span>
                         </div>
                         <div class="form-group col-3">
                             <label for="departmentName">{{"Bộ phận đề nghị" | localize}} *</label>
@@ -46,15 +38,23 @@
                             [(ngModel)]="selectedDepartment" placeholder="{{ l('Chọn bộ phận') }}" optionLabel="departmentName"
                             styleClass="form-control brandSelection-dropdown" (onChange)="onChangeDepartment()" required>
                             </p-dropdown>
-                            <span *ngIf="selectedDepartment" class="error-message">Trường này không được để trống</span>
+                            <span *ngIf="!selectedDepartment" class="error-message">Trường này không được để trống</span>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="petitionerName">{{"Người đề nghị" | localize}} *</label>
+                            <p-dropdown id="petitionerName" #petitioner="ngModel" name="petitionerName" [options]="employeeList"
+                            [(ngModel)]="selectedPetitioner" placeholder="{{ l('Chọn người đề nghị') }}" optionLabel="employeeName"
+                            styleClass="form-control brandSelection-dropdown" (onChange)="onChangePetitioner()" required>
+                            </p-dropdown>
+                            <span *ngIf="!selectedPetitioner" class="error-message">Trường này không được để trống</span>
                         </div>
                         <div class="form-group col-2">
                             <label for="suggestionHandlingStatus">{{"Trạng thái" | localize}} *</label>
                             <p-dropdown id="suggestionHandlingStatus" #suggestionHandlingStatus="ngModel" name="suggestionHandlingStatus" [options]="suggestionHandlingStatusList"
-                            [(ngModel)]="selectedHandlingStatus" placeholder="{{ l('Chọn trạng thái') }}" optionLabel="suggestionHandlingStatusName"
-                            styleClass="form-control brandSelection-dropdown" (onChange)="onChangeAny()" required>
+                            [(ngModel)]="selectedHandlingStatus" placeholder="{{ l('Chọn trạng thái') }}" optionLabel="name"
+                            styleClass="form-control brandSelection-dropdown" (onChange)="onChangeStatus()" required>
                             </p-dropdown>
-                            <span *ngIf="selectedHandlingStatus" class="error-message">Trường này không được để trống</span>
+                            <span *ngIf="!selectedHandlingStatus" class="error-message">Trường này không được để trống</span>
                         </div>
                         <div class="form-group col-10">
                             <label for="description">{{"Nội dung" | localize}} </label>
@@ -65,59 +65,6 @@
                 </div>                
             </form>
         </div>
-        <!-- <div class="choose-asset pd-0 col-6">
-            <div class="title-page text-title">Chọn tài sản</div>
-            <div class="choose-asset-container">
-                <div class="form-group row">
-                    <div class="col-6 pd-0">
-                        <label for="AssetCode">{{"Mã tài sản" | localize}} *</label>
-                        <input id="AssetCode" #assetCode="ngModel" type="text" name="AssetCode" class="form-control" [(ngModel)]="asset.assetCode" required maxlength="256" />
-                        <div style="display: grid;">
-                            <span class="text-note">Nhập mã tài sản để tìm kiếm thông tin tài sản</span>
-                            <span class="error-message" *ngIf="asset.assetCode">{{assetMessage}}</span>
-                        </div>
-                        
-                    </div>
-                    <div class="col-3" >
-                        <button class="btn btn-search-asset" (click)="searchAsset()">Kiểm tra</button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="AssetTypeName">{{"Loại tài sản" | localize}} </label>
-                    <input id="AssetTypeName" #assetTypeName="ngModel" type="text" name="AssetTypeName" class="form-control" [(ngModel)]="asset.assetTypeName" disabled maxlength="256" />   
-                </div>
-                <div class="form-group">
-                    <label for="AssetName">{{"Tên tài sản" | localize}} </label>
-                    <input id="AssetName" #assetName="ngModel" type="text" name="AssetName" class="form-control" [(ngModel)]="asset.assetName" disabled maxlength="256" />   
-                </div>
-                <div class="form-group">
-                    <label for="OrginalPrice">{{"Nguyên giá" | localize}}( đồng)</label>
-                    <input id="OrginalPrice" #orginalPrice="ngModel" type="number" name="OrginalPrice" class="form-control" [(ngModel)]="asset.orginalPrice" disabled/>
-        
-                </div>
-                <div class="form-group">
-                    <label for="department">{{"Bộ phận sử dụng" | localize}} *</label>
-                    <p-dropdown id="department" #department="ngModel" name="department" [options]="departmentList"
-                    [(ngModel)]="selectedDepartment" placeholder="{{ l('Chọn bộ phận sử dụng') }}" optionLabel="departmentName"
-                    styleClass="form-control brandSelection-dropdown" (onChange)="onSelectDepartmet()" required>
-                    </p-dropdown>
-                    <span *ngIf="!selectedDepartment" class="error-message">Trường này không được để trống</span>
-                </div>
-                <div class="form-group">
-                    <label for="NumberOfDayUsedAsset">{{"Thời gian sử dụng" | localize}}(năm) *</label>
-                    <input id="NumberOfDayUsedAsset" #numberOfDayUsedAsset="ngModel" type="number" name="NumberOfDayUsedAsset" class="form-control" [(ngModel)]="asset.numberOfDayUsedAsset" (change)="renderAmortizationValue()" min="1" required/>
-                    <span class="text-note">Nhập thời gian sử dụng của tài sản để tính giá trị khấu hao của tài sản</span>
-                </div>
-                <div class="form-group">
-                    <label for="AmortizationValue">{{"Giá trị khấu hao" | localize}} (đồng)</label>
-                    <input id="AmortizationValue" #amortizationValue="ngModel" type="number" name="AmortizationValue" class="form-control" [(ngModel)]="asset.amortizationValue" disabled/>
-                    
-                </div>
-                <div>
-                    <button class="btn btn-increase-asset" (click)="clickSuggestionHandling()" [disabled]="!asset.assetCode || !asset.numberOfDayUsedAsset || assetMessage != ''">Ghi tăng</button>
-                </div>
-            </div>
-        </div>-->
     </div> 
     <div class="increase-asset-table bg-white" style="margin-top: 20px">
         <div class="title-page text-title" style="padding-left: 10px">Thông tin tài sản</div>
@@ -129,7 +76,7 @@
             <div class="col-6">
                 <div _ngcontent-olq-c180="" class="form-group m-form__group align-items-center"><div _ngcontent-olq-c180="" class="input-group" style="justify-content: stretch">
                     <button class="btn btn-increase-asset ml-1" >Xóa tài sản</button>
-                    <button style="position: absolute; right: 0px" class="btn btn-increase-asset ml-1" (click)="selecteAssetListToSuggestionHandling()">Chọn tài sản</button>
+                    <button style="position: absolute; right: 0px" class="btn btn-increase-asset ml-1" (click)="show()">Chọn tài sản</button>
                 </div>
                 </div>
             <div>
@@ -138,7 +85,7 @@
                 
             </div>
         <div class="content-component">
-            <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="assetList" [resizableColumns]="true" [autoLayout]="true">
+            <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="selectedAssetTable" [resizableColumns]="true" [autoLayout]="true">
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width:50px" class="pl-1">
@@ -158,21 +105,17 @@
                             Tên tài sản
                             <p-sortIcon field="assetName"></p-sortIcon>
                         </th>
-                        <!-- <th pResizableColumn pSortableColumn="orginalPrice" style="width:120px">
-                            Nguyên Giá 
-                            <p-sortIcon field="orginalPrice"></p-sortIcon>
-                        </th> -->
                         <th pResizableColumn pSortableColumn="departmentName" style="width:150px">
                             Bộ phận sử dụng
                             <p-sortIcon field="departmentName"></p-sortIcon>
                         </th>
-                        <th pResizableColumn pSortableColumn="handlingMethod" style="width:150px">
+                        <!-- <th pResizableColumn pSortableColumn="handlingMethod" style="width:150px">
                             Mô tả đặc điểm
                             <p-sortIcon field="handlingMethod"></p-sortIcon>
-                        </th>
-                        <th pResizableColumn pSortableColumn="handlingMethod" style="width:150px">
+                        </th> -->
+                        <th pResizableColumn pSortableColumn="handlingMethodId" style="width:150px">
                             Hình thức xử lí
-                            <p-sortIcon field="handlingMethod"></p-sortIcon>
+                            <p-sortIcon field="handlingMethodId"></p-sortIcon>
                         </th>
                         <th pResizableColumn pSortableColumn="handlingMethod" style="width:150px">
                             Ghi chú
@@ -201,13 +144,13 @@
                         
                         <!-- <td style="width:120px">{{ assetSelected.handlingMethod}}</td> -->
                        
-                        <td style="width:150px">{{ assetSelected.departmentName}}</td>
+                        <!-- <td style="width:150px">{{ assetSelected.departmentName}}</td> -->
                          <td style="width:150px">
-                            <select name="department" [(ngModel)]="assetSelected.departmentId" class="form-control" (change)="onSelectDepartmentFromTable(assetSelected)"> 
-                                <option *ngFor="let department of departmentList" [value]="department.id" >{{department.departmentName}}</option> 
+                            <select name="handlingMethod" [(ngModel)]="assetSelected.handlingMethodId" class="form-control" (change)="onSelectHandlingMethodFromTable(assetSelected)"> 
+                                <option *ngFor="let handlingMethod of handlingMethodList" [value]="handlingMethod.id" >{{handlingMethod.handlingMethodName}}</option> 
                             </select> 
                         </td>    
-                        <td style="width:150px">{{ assetSelected.departmentName}}</td>
+                        <td style="width:150px">{{ assetSelected.handlingMethod}}</td>
                         <!-- <td style="width:120px"></td>   -->
                        <!--  <td style="width:150px"><input type="number" class="input-number form-control" [(ngModel)]= "assetSelected.numberOfDayUsedAsset" (change)="renderAmortizationValueOfAssetFromTable(assetSelected)" min="1" required/></td> -->
                         <!-- <td style="width:200px">{{ assetSelected.amortizationValue}}</td>
@@ -225,4 +168,4 @@
     </div>
 </div>
 
-<app-add-asset-suggestion-handling #addAssetSuggestionHandlingModal></app-add-asset-suggestion-handling>
+<app-add-asset-suggestion-handling #addAssetSuggestionHandlingModal (modalSave)="addAssetSuggestionHandlingToTable($event)"></app-add-asset-suggestion-handling>

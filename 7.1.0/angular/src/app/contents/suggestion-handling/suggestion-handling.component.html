@@ -182,12 +182,12 @@
                 </div>
             </td>
             <td style="width:120px">{{ suggestionHandling.suggestionHandlingCode }}</td>
-            <td style="width:140px">{{ suggestionHandling.suggestionHandlingDate }}</td>
+            <td style="width:140px">{{ suggestionHandling.suggestionHandlingDate | date : 'dd/MM/yyyy'}}</td>
             <td style="width:140px">{{ suggestionHandling.petitionerName }}</td>
             <td style="width:140px">{{ suggestionHandling.departmentName }}</td>
             <td style="width:140px">{{ suggestionHandling.description }}</td>
             <td style="width:140px">{{ suggestionHandling.suggestionHandlingStatusName }}</td>
-            <td style="width:150px">{{ suggestionHandling.creationTime}}</td>
+            <td style="width:150px">{{ suggestionHandling.creationTime | date : 'dd/MM/yyyy'}}</td>
             <td style="width:130px">{{ suggestionHandling.creatorUserName}}</td>
             <!-- <td style="width:130px">{{ suggestionHandling.lastModificationTime}}</td>
             <td style="width:130px">{{ suggestionHandling.lastModificationName}}</td>

@@ -178,6 +178,11 @@ export class AddAssetIncreaseAssetComponent extends  AppComponentBase implements
     }  
     }
   }
+  cancel(){
+    this.selectedAssetIncreaseList = [];
+    this.clickUnTickAssetListSeleted();
+    this.close();
+  }
   customSort(event: SortEvent) {
     event.data.sort((data1, data2) => {
         let value1 = data1[event.field];

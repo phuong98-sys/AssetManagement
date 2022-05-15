@@ -192,6 +192,13 @@ export class AddAssetReduceAssetComponent extends AppComponentBase implements On
     }  
     }
   }
+  cancel(){
+    this.selectedAssetReduceList = [];
+    this.selectedReasonReduce = null;
+    this.asset.reasonReduceNote = null;
+    this.clickUnTickAssetListSeleted();
+    this.close();
+  }
   customSort(event: SortEvent) {
     event.data.sort((data1, data2) => {
         let value1 = data1[event.field];
