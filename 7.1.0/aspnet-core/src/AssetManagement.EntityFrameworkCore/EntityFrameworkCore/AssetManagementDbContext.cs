@@ -18,6 +18,7 @@ using AssetManagement.ReasonRuduces;
 using AssetManagement.Employees;
 using AssetManagement.Transfers;
 using AssetManagement.PlaneMaintains;
+using AssetManagement.ProposeAssetDetails;
 
 namespace AssetManagement.EntityFrameworkCore
 {
@@ -39,6 +40,7 @@ namespace AssetManagement.EntityFrameworkCore
         public DbSet<Employee> Empolyees { get; set; }
         public DbSet<Transfer> Transfers { get; set; }
         public DbSet<PlaneMaintain> PlaneMaintains { get; set; }
+        public DbSet<ProposeAssetDetail> ProposeAssetDetails { get; set; }
         public AssetManagementDbContext(DbContextOptions<AssetManagementDbContext> options)
             : base(options)
         {

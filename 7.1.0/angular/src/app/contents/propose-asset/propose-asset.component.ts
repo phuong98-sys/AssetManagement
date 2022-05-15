@@ -20,7 +20,7 @@ export class ProposeAssetComponent extends AppComponentBase implements OnInit {
   loading =  false;
   totalRecords: number;
   primengTableHelper: PrimengTableHelper;
-  //@ViewChild('createOrEditPlaneMaintainModal', { static: true }) createOrEditPlaneMaintainModal: CreateOrEditPlaneMaintainComponent;
+  //@ViewChild('createOrEditProposeAssetModal', { static: true }) createOrEditProposeAssetModal: CreateOrEditProposeAssetComponent;
   @ViewChild("paginator", { static: true }) paginator: Paginator;
   constructor(
     injector: Injector,

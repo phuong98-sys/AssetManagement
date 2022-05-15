@@ -74,43 +74,6 @@ export class CreateOrEditPlaneMaintainComponent extends AppComponentBase impleme
 
     return form.valid;
   }
-  /*
-  save(){
-    if (this.validateForm(this.submitForm.form)) {
-      this.saving= true;
-      if(!this.planeMaintain.id){
-        this.planeMaintainService
-        .insertOrUpdatePlaneMaintain(this.planeMaintain)
-        .pipe(
-            finalize(() => {
-                this.saving = false;
-            })
-        )
-        .subscribe(() => {
-          this.saving = false;
-            this.notify.info(this.l("SavedSuccessfully"));
-            this.close();
-            this.modalSave.emit(null);
-        });
-      }
-      if(this.planeMaintain.id){
-        this.planeMaintainService
-        .insertOrUpdatePlaneMaintain(this.planeMaintain)
-        .pipe(
-            finalize(() => {
-                this.saving = false;
-            })
-        )
-        .subscribe(() => {
-          this.saving = false;
-            this.notify.info(this.l("UpdatedSuccessfully"));
-            this.close();
-            this.modalSave.emit(null);
-        });
-      }
-  }
-  }
-  */
   save(){
     debugger
     if (this.validateForm(this.submitForm.form)) {
