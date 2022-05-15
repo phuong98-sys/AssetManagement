@@ -16,10 +16,10 @@
                     <div class="form-group col-2">
                         <label for="AssetCode">{{"Mã chứng từ" | localize}} *</label>
                         <input id="AssetCode" #assetCode="ngModel" type="text" name="AssetCode" class="form-control" [(ngModel)]="reduceAsset.reduceAssetCode" required maxlength="256" (change)="setReduceAssetCode()"/>
-                        <!-- <div style="display: grid;">
+                        <div style="display: grid;">
                             <span *ngIf="!reduceAsset?.reduceAssetCode" class="error-message">Trường này không được để trống</span>
                             <span class="error-message" *ngIf="reduceAsset.reduceAssetCode">{{reduceAssetCodeMessage}}</span>
-                        </div> -->
+                        </div>
                     </div>
                     <div class="form-group col-2">
                         <label for="AssetName">{{"Ngày chứng từ" | localize}} *</label>
@@ -28,17 +28,17 @@
                     </div>
                     <div class="form-group col-2">
                         <label for="ReduceAssetDate">{{"Ngày ghi giảm" | localize}} *</label>
-                        <input id="ReduceAssetDate" #reduceAssetDate="ngModel" type="date" name="ReduceAssetDate" class="form-control" [(ngModel)]="reduceAsset.reduceAssetDate"/>
+                        <input id="ReduceAssetDate" #reduceAssetDate="ngModel" type="date" name="ReduceAssetDate" class="form-control" [(ngModel)]="reduceAsset.reduceAssetDate" required/>
                         <!-- <span *ngIf="!reduceAsset?.reduceAssetDate" class="error-message">Trường này không được để trống</span> -->
                     </div>
                     <div class="form-group col-6">
                         <label for="reduceNote">{{"Nội dung" | localize}} *</label>
-                        <input id="reduceAssetNote" #reduceAssetNote="ngModel" rows="4" cols="50" name="ReduceAssetNote" class="form-control" [(ngModel)]="reduceAsset.note"/>
+                        <input id="reduceAssetNote" #reduceAssetNote="ngModel" rows="4" cols="50" name="ReduceAssetNote" class="form-control" [(ngModel)]="reduceAsset.note" required/>
                     
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <div style="font-weight: bold; font-size: 20px">Tổng thu hồi:  (đồng)</div>
-                    </div>
+                    </div> -->
                 </div>                
             </form>
         </div>
@@ -93,22 +93,29 @@
     <div class="reduce-asset-table bg-white" style="margin-top: 20px">
         <div class="title-page text-title">Thông tin tài sản</div>
         <div _ngcontent-olq-c180="" class="row align-items-center">
-            <div _ngcontent-olq-c180="" class="col-6"><div _ngcontent-olq-c180="" class="form-group m-form__group align-items-center"><div _ngcontent-olq-c180="" class="input-group"><input _ngcontent-olq-c180="" name="filterText" autofocus="" placeholder="Tìm kiếm theo mã tài sản, tên tài sản, tên loại tài sản người tạo" type="text" class="form-control m-input ng-untouched ng-pristine ng-valid" ng-reflect-name="filterText" ng-reflect-model=""><span _ngcontent-olq-c180="" class="input-group-btn"><button _ngcontent-olq-c180="" type="submit" class="btn btn-search"><i _ngcontent-olq-c180="" class="fa fa-search"></i></button></span></div>
+            <div _ngcontent-olq-c180="" class="col-6">
+                <div _ngcontent-olq-c180="" class="form-group m-form__group align-items-center">
+                    <div _ngcontent-olq-c180="" class="input-group">
+                        <input _ngcontent-olq-c180="" name="filterText" autofocus="" placeholder="Tìm kiếm theo mã tài sản, tên tài sản, tên loại tài sản người tạo" type="text" class="form-control m-input ng-untouched ng-pristine ng-valid" ng-reflect-name="filterText" ng-reflect-model="">
+                        <span _ngcontent-olq-c180="" class="input-group-btn">
+                            <button _ngcontent-olq-c180="" type="submit" class="btn btn-search">
+                                <i _ngcontent-olq-c180="" class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div _ngcontent-olq-c180="" class="form-group m-form__group align-items-center"><div _ngcontent-olq-c180="" class="input-group" style="justify-content: stretch">
+                    <button class="btn btn-increase-asset ml-1" (click)="onDeleteAssetListFromTable()">Xóa tài sản</button>
+                    <button style="position: absolute; right: 0px" class="btn btn-increase-asset ml-1" (click)="show()">Chọn tài sản</button>
+                </div>
             </div>
         </div>
-        <div class="col-6">
-            <div _ngcontent-olq-c180="" class="form-group m-form__group align-items-center"><div _ngcontent-olq-c180="" class="input-group" style="justify-content: stretch">
-                <button class="btn btn-increase-asset ml-1" (click)="onDeleteAssetListFromTable()">Xóa tài sản</button>
-                <button style="position: absolute; right: 0px" class="btn btn-increase-asset ml-1" (click)="show()">Chọn tài sản</button>
-            </div>
-            </div>
-        <div>
         </div>
-        
-            
-        </div>
+       
         <div class="content-component">
-            <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="assetList" [resizableColumns]="true" [autoLayout]="true">
+            <p-table [scrollable]="true" scrollHeight="300px" scrollWidth="1100px" [value]="selectedAssetTable" [resizableColumns]="true" [autoLayout]="true">
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width:50px" class="pl-1">
@@ -148,8 +155,10 @@
                             Lí do ghi giảm
                             <p-sortIcon field="reasonReduceId"></p-sortIcon>
                         </th>
-                        
-                        
+                        <th pResizableColumn pSortableColumn="reasonReduceId" style="width:300px">
+                            Số tiền thu được từ xử lí tài sản
+                            <p-sortIcon field="reasonReduceId"></p-sortIcon>
+                        </th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-assetSelected>
@@ -161,24 +170,29 @@
                         <td style="width:120px">{{ assetSelected.assetName}}</td>
                         <!-- <td style="width:120px">{{ assetSelected.orginalPrice }}</td>     -->
                         <td style="width:150px">{{ assetSelected.depreciationOfAsset }}</td>     
-                        <td style="width:130px">{{ assetSelected.residualValue }}</td>            
-                        <td style="width:150px">
+                        <td style="width:130px">{{ assetSelected.residualValue }}</td>   
+                                 
+                        <td style="width:200px">
                             <select name="duration" [(ngModel)]="assetSelected.reasonReduceId" class="form-control" (change)="onSelectReasonReduceFromTable(assetSelected)"> 
                                 <option *ngFor="let reasonReduce of reasonReduceList" [value]="reasonReduce.id" >{{reasonReduce.reasonReduceName}}</option> 
                             </select> 
                         </td>
-                        <td style="width:200px">
-                            <input class="form-control" [disabled]="assetSelected.reasonReduceId != 1" type="number" class="input-number" [(ngModel)]= "assetSelected.recoverableValue" min="1" required/></td>
-                        
+                        <td style="width:150px">
+                            <input class="form-control" type="text" [(ngModel)]= "assetSelected.reasonReduceNote" (change)="onSelectReasonReduceNoteFromTable(assetSelected)"/>
+                        </td>
+                        <td style="width:300px">
+                            <input class="form-control" [disabled]="assetSelected.reasonReduceId != 1" type="number" [(ngModel)]= "assetSelected.recoverableValue" min="0" (change)="onSelectRecoverableValueFromTable(assetSelected)"/>
+                        </td>  
                     </tr>
                 </ng-template>
             </p-table>
         </div>
     </div>
+    <!-- </div> -->
     <div class="modal-footer">
         <button [disabled]="saving" type="button" class="btn bg-danger" (click)="close()">{{"Hủy" |
             localize}}</button> 
-        <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')" [disabled]="!reduceAssetForm.form.valid" (click)="save()"><i class="fa fa-save" style="margin-right: 5px"></i>
+        <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')" [disabled]="!reduceAssetForm.form.valid || reduceAssetCodeMessage !='' " (click)="save()"><i class="fa fa-save" style="margin-right: 5px"></i>
             <span>{{"Lưu" | localize}}</span></button>
     </div>
 </div>

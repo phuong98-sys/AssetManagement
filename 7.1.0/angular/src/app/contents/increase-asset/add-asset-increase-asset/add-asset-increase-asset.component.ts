@@ -86,7 +86,7 @@ export class AddAssetIncreaseAssetComponent extends  AppComponentBase implements
       this.assetService.getAssets()
       .subscribe(result => {
         this.loading = false;
-          this.assetList = result.items.filter((item)=> item.increaseAssetId == null);
+          this.assetList = result.items.filter((item)=> item.increaseAssetId == null && item.reduceAssetId == null);
           debugger
           this.totalAsset = this.assetList.length-1;
           // this.assetList.map((item)=>{ 

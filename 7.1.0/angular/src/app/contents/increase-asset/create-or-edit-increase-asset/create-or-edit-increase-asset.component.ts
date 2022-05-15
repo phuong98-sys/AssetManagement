@@ -73,13 +73,13 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
      this.getIncreaseAssetForEdit();
      this.getDepartmentList();
      this.getEmployeeList();
-    // this.getIncreaseAssets();
+    this.getIncreaseAssets();
   }
-  // getIncreaseAssets(){
-  //   this.increaseAssetService.getIncreaseAssets().subscribe((result) => {
-  //     this.increaseAssetList = result.items;
-  //   });
-  // }
+  getIncreaseAssets(){
+    this.increaseAssetService.getIncreaseAssets().subscribe((result) => {
+      this.increaseAssetList = result.items;
+    });
+  }
   getAssetIncreased(increaseAssetId: number){
     this.assetService.getAssetIncreased(increaseAssetId)
     .subscribe((result) => {
