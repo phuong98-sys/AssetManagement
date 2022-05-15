@@ -34,7 +34,7 @@ export class TransferComponent extends AppComponentBase implements OnInit {
     this.getTransfers();
   }
   getTransfers(event?: LazyLoadEvent){
-    
+    debugger
   this.primengTableHelper.showLoadingIndicator();
     this.loading = true;
     this.transferService.getTransfers()
@@ -64,7 +64,7 @@ export class TransferComponent extends AppComponentBase implements OnInit {
               .deletePlaneMaintain(planeMaintain.id)
               .pipe(finalize(() => this.loading = false))
               .subscribe(() => {
-                
+                debugger
                   this.getPlaneMaintains();
                   this.notify.success(this.l('SuccessfullyDeleted'));
               });

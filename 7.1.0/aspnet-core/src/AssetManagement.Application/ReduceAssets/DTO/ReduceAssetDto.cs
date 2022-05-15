@@ -21,7 +21,7 @@ namespace AssetManagement.ReduceAssets.DTO
         public string Note { get; set; }
         public double TotalRecovery { get; set; }
         public string? LastModifierUserName { get; set; }
-        public long? CreatorUserId { get; set; }
+        public int? CreatorUserId { get; set; }
         public string? CreatorUserName { get; set; }
         public DateTime? LastModificationTime { get; set; }
     }
@@ -35,7 +35,7 @@ namespace AssetManagement.ReduceAssets.DTO
         public DateTime CreationTime { get; set; }
         public DateTime ReduceAssetDate { get; set; }
         public string Note { get; set; }
-        public double? TotalRecovery { get; set; }
+        public double TotalRecovery { get; set; }
         public string? LastModifierUserName { get; set; }
         public int? CreatorUserId { get; set; }
         public string? CreatorUserName { get; set; }

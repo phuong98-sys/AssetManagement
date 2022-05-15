@@ -53,7 +53,7 @@ namespace AssetManagement.Assets
                         EmployeeName = a.Employee.EmployeeName,
                         StartDate = a.StartDate,
                         AnnualAmortizationValue = a.AnnualAmortizationValue,
-                        ReasonReduceNote = a.ReasonReduceNote,
+                        ReduceMethod = a.ReduceMethod,
                         CreatorUserName = a.User.Name
                     }).ToListAsync();
                 var assetDtos = ObjectMapper.Map<List<AssetDto>>(assets);
@@ -93,47 +93,16 @@ namespace AssetManagement.Assets
             }
 
         }
-        public async Task IncreaseAssetList(List<AssetInputDto> inputList, int index)
+        public async Task IncreaseAssetList(List<AssetInputDto> inputList)
         {
             try
             {
-                //var assetForEdit = await _assetRepository.FirstOrDefaultAsync(x => x.Id == input.Id);
-                //ObjectMapper.Map(input, assetForEdit);
-                //return ObjectMapper.Map<AssetListDto>(assetForEdit);
-                if(index == 0)
+
+                foreach (var asset in inputList)
                 {
-                    foreach (var asset in inputList)
-                    {
-                        asset.AssetStatusId = 2;
-                        asset.ReduceAssetId = null;
-                        var assetForEdit = await _assetRepository.FirstOrDefaultAsync(x => x.Id == asset.Id);
-                        ObjectMapper.Map(asset, assetForEdit);
-                    }
-                }
-                
-                if (index == 1)
-                {
-                    foreach (var asset in inputList)
-                    {
-                        asset.IncreaseAssetId = null;
-                        asset.AssetStatusId = 1;
-                        var assetForEdit = await _assetRepository.FirstOrDefaultAsync(x => x.Id == asset.Id);
-                        ObjectMapper.Map(asset, assetForEdit);
-                    }
-                }
-                if (index == 2)
-                {
-                    foreach (var asset in inputList)
-                    {
-                        asset.ReduceAssetId = null;
-                        asset.ReduceAssetDate = null;
-                        asset.AssetStatusId = 1;
-                        asset.ReasonReduceId = null;
-                        asset.RecoverableValue = null;
-                        asset.ReasonForReduction = null;
-                        var assetForEdit = await _assetRepository.FirstOrDefaultAsync(x => x.Id == asset.Id);
-                        ObjectMapper.Map(asset, assetForEdit);
-                    }
+                    asset.AssetStatusId = 2;
+                    var assetForEdit = await _assetRepository.FirstOrDefaultAsync(x => x.Id == asset.Id);
+                    ObjectMapper.Map(asset, assetForEdit);
                 }
             }
             catch (Exception e)
@@ -160,58 +129,51 @@ namespace AssetManagement.Assets
             }
 
         }
-        //public void DeleteAssetIncreased(List<AssetInputDto> inputList)
-        //{
-        //    //foreach (var asset in inputList)
-        //    //{
-        //    //    asset.IncreaseAssetId = null;
-        //    //    asset.AssetStatusId = 1;
-        //    //    var assetForEdit = await _assetRepository.FirstOrDefaultAsync(x => x.Id == asset.Id);
-        //    //    ObjectMapper.Map(asset, assetForEdit);
-        //    //}
-        //}
-        //public async Task test(List<AssetInputDto> inputList, int index)
-        //{
-        //    try
-        //    {
-        //        if(index == 1)
-        //        {
-        //            foreach (var asset in inputList)
-        //            {
-        //                asset.IncreaseAssetId = null;
-        //                asset.AssetStatusId = 1;
-        //                var assetForEdit = await _assetRepository.FirstOrDefaultAsync(x => x.Id == asset.Id);
-        //                ObjectMapper.Map(asset, assetForEdit);
-        //            }
-        //        }
-        //        if(index == 2)
-        //        {
-        //            foreach (var asset in inputList)
-        //            {
-        //                asset.ReduceAssetId = null;
-        //                asset.ReduceAssetDate = null;
-        //                asset.AssetStatusId = 1;
-        //                asset.ReasonReduceId = null;
-        //                asset.RecoverableValue = null;
-        //                asset.ReasonForReduction = null;
-        //                var assetForEdit = await _assetRepository.FirstOrDefaultAsync(x => x.Id == asset.Id);
-        //                ObjectMapper.Map(asset, assetForEdit);
-        //            }
-        //        }
+        public async Task test(List<AssetInputDto> inputList, int index)
+        {
+            try
+            {
+                if(index == 1)
+                {
+                    foreach (var asset in inputList)
+                    {
+                        asset.IncreaseAssetId = null;
+                        asset.MonthlyAmortizationValue = null;
+                        asset.IncreaseAssetDate = null;
+                        asset.NumberOfDayUsedAsset = null;
+                        asset.AssetStatusId = 1;
+                        var assetForEdit = await _assetRepository.FirstOrDefaultAsync(x => x.Id == asset.Id);
+                        ObjectMapper.Map(asset, assetForEdit);
+                    }
+                }
+                if(index == 2)
+                {
+                    foreach (var asset in inputList)
+                    {
+                        asset.ReduceAssetId = null;
+                        asset.ReduceAssetDate = null;
+                        asset.AssetStatusId = 1;
+                        asset.ReasonReduceId = null;
+                        asset.RecoverableValue = null;
+                        asset.ReasonForReduction = null;
+                        var assetForEdit = await _assetRepository.FirstOrDefaultAsync(x => x.Id == asset.Id);
+                        ObjectMapper.Map(asset, assetForEdit);
+                    }
+                }
+                
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
 
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw (e);
-        //    }
-
-        //}
+        }
         //public async Task DeleteListAssetReduced(List<AssetInputDto> inputList)
         //{
         //    try
         //    {
 
-
+               
         //    }
         //    catch (Exception e)
         //    {
@@ -240,38 +202,36 @@ namespace AssetManagement.Assets
             try
             {
                 var assetDtos = await _assetRepository.GetAll().Where(x => x.IncreaseAssetId == increaseId)
-                .Select(a => new AssetDto
-                 {
-                     Id = a.Id,
-                     AssetCode = a.AssetCode,
-                     AssetName = a.AssetName,
-                     IncreaseAssetDate = a.IncreaseAssetDate,
-                     NumberOfDayUsedAsset = a.NumberOfDayUsedAsset,
-                     NumberOfDayRemaing = a.NumberOfDayRemaing,
-                     OrginalPrice = a.OrginalPrice,
-                     MonthlyAmortizationValue = a.MonthlyAmortizationValue,
-                     DepreciationOfAsset = a.DepreciationOfAsset,
-                     ResidualValue = a.ResidualValue,
-                     UsageStatus = a.AssetStatus.AssetStatusName,
-                     ReasonForReduction = a.ReasonReduce.ReasonReduceName,
-                     RecoverableValue = a.RecoverableValue,
-                     IncreaseAssetId = a.IncreaseAssetId,
-                     AssetTypeId = a.AssetTypeId,
-                     AssetTypeName = a.AssetType.AssetTypeName,
-                     AssetStatusId = a.AssetStatusId,
-                     CreationTime = a.CreationTime,
-                     ReduceAssetId = a.ReasonReduceId,
-                     ReasonReduceId = a.ReasonReduceId,
-                     CreatorUserId = a.CreatorUserId,
-                     DepartmentName = a.Department.DepartmentName,
-                     EmployeeName = a.Employee.EmployeeName,
-                     StartDate = a.StartDate,
-                     AnnualAmortizationValue = a.AnnualAmortizationValue,
-                    ReasonReduceNote = a.ReasonReduceNote,
-                     CreatorUserName = a.User.Name,
-                     DepartmentId = a.DepartmentId,
-                     EmployeeId = a.EmployeeId
-                 }).ToListAsync();
+                                    .Select(a => new AssetDto
+                                    {
+                                        Id = a.Id,
+                                        AssetCode = a.AssetCode,
+                                        AssetName = a.AssetName,
+                                        IncreaseAssetDate = a.IncreaseAssetDate,
+                                        NumberOfDayUsedAsset = a.NumberOfDayUsedAsset,
+                                        NumberOfDayRemaing = a.NumberOfDayRemaing,
+                                        OrginalPrice = a.OrginalPrice,
+                                        MonthlyAmortizationValue = a.MonthlyAmortizationValue,
+                                        DepreciationOfAsset = a.DepreciationOfAsset,
+                                        ResidualValue = a.ResidualValue,
+                                        UsageStatus = a.AssetStatus.AssetStatusName,
+                                        ReasonForReduction = a.ReasonReduce.ReasonReduceName,
+                                        RecoverableValue = a.RecoverableValue,
+                                        IncreaseAssetId = a.IncreaseAssetId,
+                                        AssetTypeId = a.AssetTypeId,
+                                        AssetTypeName = a.AssetType.AssetTypeName,
+                                        AssetStatusId = a.AssetStatusId,
+                                        CreationTime = a.CreationTime,
+                                        ReduceAssetId = a.ReasonReduceId,
+                                        ReasonReduceId = a.ReasonReduceId,
+                                        CreatorUserId = a.CreatorUserId,
+                                        DepartmentName = a.Department.DepartmentName,
+                                        EmployeeName = a.Employee.EmployeeName,
+                                        StartDate = a.StartDate,
+                                        AnnualAmortizationValue = a.AnnualAmortizationValue,
+                                        ReduceMethod = a.ReduceMethod,
+                                        CreatorUserName = a.User.Name
+                                    }).ToListAsync();
                 var assets = ObjectMapper.Map<List<AssetDto>>(assetDtos);
                 return new ListResultDto<AssetDto>(assets);
             }

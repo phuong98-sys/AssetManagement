@@ -46,9 +46,9 @@ export class ReduceAssetComponent extends AppComponentBase implements OnInit {
         this.loading = false;
         
           this.reduceAssetList = result.items;
-          // this.reduceAssetList.map((item)=>{ 
-          //   item.creationTime = moment(item.creationTime).format("DD/MM/YYYY");
-          //   item.reduceAssetDate = moment(item.reduceAssetDate).format("DD/MM/YYYY")});
+          this.reduceAssetList.map((item)=>{ 
+            item.creationTime = moment(item.creationTime).format("DD/MM/YYYY");
+            item.reduceAssetDate = moment(item.reduceAssetDate).format("DD/MM/YYYY")});
           this.totalRecords = this.reduceAssetList?.length;
       });
     }

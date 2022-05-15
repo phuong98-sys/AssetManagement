@@ -259,16 +259,11 @@ export class AssetServiceProxy {
     }
 
     /**
-     * @param index (optional) 
      * @param body (optional) 
      * @return Success
      */
-    increaseAssetList(index: number | undefined, body: AssetInputDto[] | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Asset/IncreaseAssetList?";
-        if (index === null)
-            throw new Error("The parameter 'index' cannot be null.");
-        else if (index !== undefined)
-            url_ += "index=" + encodeURIComponent("" + index) + "&";
+    increaseAssetList(body: AssetInputDto[] | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Asset/IncreaseAssetList";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -349,6 +344,63 @@ export class AssetServiceProxy {
     }
 
     protected processReduceAssetList(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param index (optional) 
+     * @param body (optional) 
+     * @return Success
+     */
+    test(index: number | undefined, body: AssetInputDto[] | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Asset/test?";
+        if (index === null)
+            throw new Error("The parameter 'index' cannot be null.");
+        else if (index !== undefined)
+            url_ += "index=" + encodeURIComponent("" + index) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processTest(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processTest(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processTest(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -4322,7 +4374,7 @@ export class AssetDto implements IAssetDto {
     assetTypeName: string | undefined;
     assetStatusId: number;
     reasonReduceId: number | undefined;
-    reasonReduceNote: string | undefined;
+    reduceMethod: string | undefined;
     lastModifierUserName: string | undefined;
     creatorUserName: string | undefined;
     lastModificationTime: moment.Moment | undefined;
@@ -4373,7 +4425,7 @@ export class AssetDto implements IAssetDto {
             this.assetTypeName = _data["assetTypeName"];
             this.assetStatusId = _data["assetStatusId"];
             this.reasonReduceId = _data["reasonReduceId"];
-            this.reasonReduceNote = _data["reasonReduceNote"];
+            this.reduceMethod = _data["reduceMethod"];
             this.lastModifierUserName = _data["lastModifierUserName"];
             this.creatorUserName = _data["creatorUserName"];
             this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
@@ -4424,7 +4476,7 @@ export class AssetDto implements IAssetDto {
         data["assetTypeName"] = this.assetTypeName;
         data["assetStatusId"] = this.assetStatusId;
         data["reasonReduceId"] = this.reasonReduceId;
-        data["reasonReduceNote"] = this.reasonReduceNote;
+        data["reduceMethod"] = this.reduceMethod;
         data["lastModifierUserName"] = this.lastModifierUserName;
         data["creatorUserName"] = this.creatorUserName;
         data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
@@ -4475,7 +4527,7 @@ export interface IAssetDto {
     assetTypeName: string | undefined;
     assetStatusId: number;
     reasonReduceId: number | undefined;
-    reasonReduceNote: string | undefined;
+    reduceMethod: string | undefined;
     lastModifierUserName: string | undefined;
     creatorUserName: string | undefined;
     lastModificationTime: moment.Moment | undefined;
@@ -4567,7 +4619,7 @@ export class AssetInputDto implements IAssetInputDto {
     assetTypeId: number;
     assetStatusId: number;
     reasonReduceId: number | undefined;
-    reasonReduceNote: string | undefined;
+    reduceMethod: string | undefined;
     departmentName: string | undefined;
     startDate: moment.Moment | undefined;
     endDate: moment.Moment | undefined;
@@ -4614,7 +4666,7 @@ export class AssetInputDto implements IAssetInputDto {
             this.assetTypeId = _data["assetTypeId"];
             this.assetStatusId = _data["assetStatusId"];
             this.reasonReduceId = _data["reasonReduceId"];
-            this.reasonReduceNote = _data["reasonReduceNote"];
+            this.reduceMethod = _data["reduceMethod"];
             this.departmentName = _data["departmentName"];
             this.startDate = _data["startDate"] ? moment(_data["startDate"].toString()) : <any>undefined;
             this.endDate = _data["endDate"] ? moment(_data["endDate"].toString()) : <any>undefined;
@@ -4661,7 +4713,7 @@ export class AssetInputDto implements IAssetInputDto {
         data["assetTypeId"] = this.assetTypeId;
         data["assetStatusId"] = this.assetStatusId;
         data["reasonReduceId"] = this.reasonReduceId;
-        data["reasonReduceNote"] = this.reasonReduceNote;
+        data["reduceMethod"] = this.reduceMethod;
         data["departmentName"] = this.departmentName;
         data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
         data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
@@ -4708,7 +4760,7 @@ export interface IAssetInputDto {
     assetTypeId: number;
     assetStatusId: number;
     reasonReduceId: number | undefined;
-    reasonReduceNote: string | undefined;
+    reduceMethod: string | undefined;
     departmentName: string | undefined;
     startDate: moment.Moment | undefined;
     endDate: moment.Moment | undefined;
@@ -4746,7 +4798,7 @@ export class AssetListDto implements IAssetListDto {
     assetTypeId: number;
     assetStatusId: number;
     reasonReduceId: number | undefined;
-    reasonReduceNote: string | undefined;
+    reduceMethod: string | undefined;
     departmentName: string | undefined;
     startDate: moment.Moment | undefined;
     endDate: moment.Moment | undefined;
@@ -4793,7 +4845,7 @@ export class AssetListDto implements IAssetListDto {
             this.assetTypeId = _data["assetTypeId"];
             this.assetStatusId = _data["assetStatusId"];
             this.reasonReduceId = _data["reasonReduceId"];
-            this.reasonReduceNote = _data["reasonReduceNote"];
+            this.reduceMethod = _data["reduceMethod"];
             this.departmentName = _data["departmentName"];
             this.startDate = _data["startDate"] ? moment(_data["startDate"].toString()) : <any>undefined;
             this.endDate = _data["endDate"] ? moment(_data["endDate"].toString()) : <any>undefined;
@@ -4840,7 +4892,7 @@ export class AssetListDto implements IAssetListDto {
         data["assetTypeId"] = this.assetTypeId;
         data["assetStatusId"] = this.assetStatusId;
         data["reasonReduceId"] = this.reasonReduceId;
-        data["reasonReduceNote"] = this.reasonReduceNote;
+        data["reduceMethod"] = this.reduceMethod;
         data["departmentName"] = this.departmentName;
         data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
         data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
@@ -4887,7 +4939,7 @@ export interface IAssetListDto {
     assetTypeId: number;
     assetStatusId: number;
     reasonReduceId: number | undefined;
-    reasonReduceNote: string | undefined;
+    reduceMethod: string | undefined;
     departmentName: string | undefined;
     startDate: moment.Moment | undefined;
     endDate: moment.Moment | undefined;
@@ -7598,12 +7650,12 @@ export interface IReasonReduceDtoListResultDto {
 export class ReduceAssetDto implements IReduceAssetDto {
     id: number;
     creationTime: moment.Moment;
+    creatorUserId: number | undefined;
     reduceAssetCode: string;
     reduceAssetDate: moment.Moment;
     note: string | undefined;
     totalRecovery: number;
     lastModifierUserName: string | undefined;
-    creatorUserId: number | undefined;
     creatorUserName: string | undefined;
     lastModificationTime: moment.Moment | undefined;
 
@@ -7620,12 +7672,12 @@ export class ReduceAssetDto implements IReduceAssetDto {
         if (_data) {
             this.id = _data["id"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
             this.reduceAssetCode = _data["reduceAssetCode"];
             this.reduceAssetDate = _data["reduceAssetDate"] ? moment(_data["reduceAssetDate"].toString()) : <any>undefined;
             this.note = _data["note"];
             this.totalRecovery = _data["totalRecovery"];
             this.lastModifierUserName = _data["lastModifierUserName"];
-            this.creatorUserId = _data["creatorUserId"];
             this.creatorUserName = _data["creatorUserName"];
             this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
         }
@@ -7642,12 +7694,12 @@ export class ReduceAssetDto implements IReduceAssetDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
         data["reduceAssetCode"] = this.reduceAssetCode;
         data["reduceAssetDate"] = this.reduceAssetDate ? this.reduceAssetDate.toISOString() : <any>undefined;
         data["note"] = this.note;
         data["totalRecovery"] = this.totalRecovery;
         data["lastModifierUserName"] = this.lastModifierUserName;
-        data["creatorUserId"] = this.creatorUserId;
         data["creatorUserName"] = this.creatorUserName;
         data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
         return data; 
@@ -7664,12 +7716,12 @@ export class ReduceAssetDto implements IReduceAssetDto {
 export interface IReduceAssetDto {
     id: number;
     creationTime: moment.Moment;
+    creatorUserId: number | undefined;
     reduceAssetCode: string;
     reduceAssetDate: moment.Moment;
     note: string | undefined;
     totalRecovery: number;
     lastModifierUserName: string | undefined;
-    creatorUserId: number | undefined;
     creatorUserName: string | undefined;
     lastModificationTime: moment.Moment | undefined;
 }
@@ -7732,7 +7784,7 @@ export class ReduceAssetInputDto implements IReduceAssetInputDto {
     creationTime: moment.Moment;
     reduceAssetDate: moment.Moment;
     note: string | undefined;
-    totalRecovery: number | undefined;
+    totalRecovery: number;
     lastModifierUserName: string | undefined;
     creatorUserName: string | undefined;
     lastModificationTime: moment.Moment | undefined;
@@ -7798,7 +7850,7 @@ export interface IReduceAssetInputDto {
     creationTime: moment.Moment;
     reduceAssetDate: moment.Moment;
     note: string | undefined;
-    totalRecovery: number | undefined;
+    totalRecovery: number;
     lastModifierUserName: string | undefined;
     creatorUserName: string | undefined;
     lastModificationTime: moment.Moment | undefined;

@@ -56,7 +56,7 @@ namespace AssetManagement.Assets
         [ForeignKey(nameof(ReasonReduceId))]
         public ReasonReduce ReasonReduce { get; set; }
         public int? ReasonReduceId { get; set; }
-        public string? ReasonReduceNote { get; set; }
+        public string? ReduceMethod { get; set; }
         public int? TenantId { get; set; }
         [ForeignKey(nameof(DepartmentId))]
         public Department Department { get; set; } 

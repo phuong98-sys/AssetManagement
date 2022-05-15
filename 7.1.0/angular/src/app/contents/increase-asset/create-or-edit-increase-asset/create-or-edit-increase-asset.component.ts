@@ -11,7 +11,7 @@ import { LazyLoadEvent } from 'primeng/api';
 import { TRISTATECHECKBOX_VALUE_ACCESSOR } from 'primeng/tristatecheckbox';
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { AddAssetIncreaseAssetComponent } from '../add-asset-increase-asset/add-asset-increase-asset.component';
+// import { AddAssetIncreaseAssetComponent } from '../add-asset-increase-asset/add-asset-increase-asset.component';
 import { EditIncreaseAssetModalComponent } from '../edit-increase-asset-modal/edit-increase-asset-modal.component';
 declare var $:any;
 @Component({
@@ -23,7 +23,7 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
   @ViewChild("createOrEditModal", { static: true }) modal: ModalDirective;
   @ViewChild("increaseAssetForm", { static: true }) private submitForm: NgForm;
   @ViewChild('editIncreaseAssetModal', { static: true }) editIncreaseAssetModal: EditIncreaseAssetModalComponent;
-  @ViewChild('addAssetIncreaseAssetModal', { static: true }) addAssetIncreaseAssetModal: AddAssetIncreaseAssetComponent
+  // @ViewChild('addAssetIncreaseAssetModal', { static: true }) addAssetIncreaseAssetModal: AddAssetIncreaseAssetComponent
   @Output() modalSave = new EventEmitter<any>();
   active = false;
   saving = false;
@@ -39,7 +39,7 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
   increaseAssetId: number;
   increaseAssetCodeMessage = "";
   deleteAssetList : AssetDto[] = [];
-  deleteAssetConfirmedList : AssetDto[] = [];
+  deleteAssetConfirmedList : any[] = [];
   departmentList : DepartmentDto[] = [];
   // selectedDepartment: DepartmentDto;
   employeeList : EmployeeDto[] =[];
@@ -52,7 +52,6 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
     advancedFiltersVisible = false;
     keyword ='';
   selectedAssetTable: AssetDto[] = [];
-  deletedAssetListFromTable : AssetDto[] = [];
   constructor(
     injector: Injector,
     private assetService: AssetServiceProxy,
@@ -90,8 +89,7 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
     // if(increaseAsset?.id){
     //   this.increaseAsset = increaseAsset;
     // }
-    this.addAssetIncreaseAssetModal.show(this.deletedAssetListFromTable);
-    this.deletedAssetListFromTable = [];
+    // this.addAssetIncreaseAssetModal.show();
     
   }
   validateForm(form) {
@@ -103,41 +101,32 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
 }
   save(){
     if (this.validateForm(this.submitForm?.form)) {
-      
+      debugger
       this.saving= true;
       // ghi tăng tài sản
-      
        this.increaseAsset.creationTime =  moment.utc(this.increaseAsset.creationTime.toString());
        this.increaseAsset.increaseAssetDate = moment.utc( this.increaseAsset.increaseAssetDate.toString());
           this.increaseAssetService.insertOrUpdateIncreaseAsset(this.increaseAsset)
           .pipe(finalize(() => (this.saving = false)))
           .subscribe((result) => {
-            
+            debugger
               this.increaseAsset = result;
-              // ghi tăng gtafi sản
               this.selectedAssetTable.map((item) => { 
                 item.increaseAssetId = this.increaseAsset.id;
+                debugger
                 //  item.increaseAssetDate = moment.utc( this.increaseAsset.increaseAssetDate.toString());
-                  item.creationTime = moment.utc( item.creationTime?.toString());
-                  item.startDate = moment.utc( item.startDate?.toString());
-                  item.amortizationDate = moment.utc( item.amortizationDate?.toString());
-                  item.increaseAssetDate = moment.utc( item.increaseAssetDate?.toString());
+                  item.creationTime = moment.utc( item.creationTime.toString());
+                  item.startDate = moment.utc( item.startDate.toString());
+                  item.amortizationDate = moment.utc( item.amortizationDate.toString());
+                  item.increaseAssetDate = moment.utc( item.increaseAssetDate.toString());
                 });
                 debugger
-              this.assetService.increaseAssetList(0,this.selectedAssetTable).subscribe();
+              // this.assetService.increaseAssetList(this.selectedAssetTable).subscribe();
               // xóa tài sản ghi tăng
-
-              if(this.deleteAssetConfirmedList.length > 0 ){
-                debugger
-                this.deleteAssetConfirmedList.map((item) => { 
-                    item.creationTime = moment.utc( item.creationTime?.toString());
-                    item.startDate = moment.utc( item.startDate?.toString());
-                    item.amortizationDate = moment.utc( item.amortizationDate?.toString());
-                    item.increaseAssetDate = moment.utc( item.increaseAssetDate?.toString());
-                  });
-
-                this.assetService.increaseAssetList(1,this.deleteAssetConfirmedList).subscribe();
-              }
+              
+              // if(this.deleteAssetConfirmedList.length > 0 ){
+              //   this.assetService.test(1,this.deleteAssetConfirmedList).subscribe();
+              // }
               this.notify.info(this.l("SavedSuccessfully"));
               this.close();
               // this.modalSave.emit(null);
@@ -229,7 +218,7 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
   onSelectedAsset(assetForEdit : AssetDto, event ){
     
     console.log(event.target.checked);
-    debugger
+    
     if(event.target.checked)
     {
       this.deleteAssetList.push(assetForEdit);
@@ -249,14 +238,11 @@ export class CreateOrEditIncreaseAssetComponent extends AppComponentBase impleme
       (isConfirmed) => {
           if (isConfirmed) {
               this.loading = true;
-debugger
-              this.selectedAssetTable = this.selectedAssetTable.filter(x => !this.deleteAssetList.map(y => y.id).includes(x?.id));
-              // this.deletedAssetListFromTable = this.deleteAssetList;
+
+              this.addAssetToIncreaseList = this.addAssetToIncreaseList.filter(x => !this.deleteAssetList.map(y => y.id).includes(x?.id));
+              
              this.deleteAssetList.forEach((item) => {
               this.deleteAssetConfirmedList.push(item);
-             });
-             this.deleteAssetList.forEach((item) => {
-              this.deletedAssetListFromTable.push(item);
              });
               this.deleteAssetList = []; 
           }
@@ -264,25 +250,20 @@ debugger
   );
   }
   deleteAssetItemFromTable(asset : AssetDto){
-    debugger
     this.message.confirm(
-      this.l('Tài sản với tên ' + asset.assetName+ " sẽ bị xóa khỏi bảng"),
+      this.l('Tài sản với tên ' + asset.assetName+ " sẽ bị xóa"),
       this.l('Bạn chắc chắn thực hiện chức năng này?'),
       (isConfirmed) => {
           if (isConfirmed) {
               this.loading = true;
               //xóa ở bảng
-              this.deletedAssetListFromTable.push(asset);
-            //  this.deletedAssetListFromTable.push(asset);
-              this.selectedAssetTable = this.selectedAssetTable.filter(x => x.id != asset.id);
-              // set tổng nguyên giá
-              this.selectedAssetTable.forEach((item) =>{
-                // this.increaseAsset.totalAssetValue += item.orginalPrice;
-              })
-            //  this.deleteAssetList.forEach((item) => {
-              this.deleteAssetConfirmedList.push(asset);
-            //  });
-              // this.deleteAssetList = []; 
+              this.deleteAssetList.push(asset);
+              this.addAssetToIncreaseList = this.addAssetToIncreaseList.filter(x => !this.deleteAssetList.map(y => y.id).includes(x?.id));
+              
+             this.deleteAssetList.forEach((item) => {
+              this.deleteAssetConfirmedList.push(item);
+             });
+              this.deleteAssetList = []; 
 
           }
       }
@@ -297,14 +278,14 @@ debugger
   // }
   onSelectedAllAsset(event){
     if(event.target.checked){
-      for( let i = this.selectedAssetTable.length-1; i>= 0; i-- ){
+      for( let i = this.addAssetToIncreaseList.length-1; i>= 0; i-- ){
         
         var selector = 'input[name="selectedAsset"]:not(:checked)'  ;
         $(selector).click();
     } 
   }   
     else{
-      for( let i = this.selectedAssetTable.length-1; i>= 0; i-- ){
+      for( let i = this.addAssetToIncreaseList.length-1; i>= 0; i-- ){
         
         var selector = 'input[name="selectedAsset"]:checked'  ;
         $(selector).click();
@@ -328,14 +309,14 @@ debugger
     console.log("list =", this.selectedAssetTable);
   }
   getDepartmentList(){
-    
+    debugger
     this.departmentService.getDepartments()
     .subscribe((result)=>{
       this.departmentList = result.items;
     })
   }
   // onSelectEmployeeFromTable(asset: AssetDto){
-  //   
+  //   debugger
   //   console.log(  )
   //   this.getEmployeeListByDepartment(asset.departmentId);
   // }
@@ -352,6 +333,7 @@ debugger
     })
   }
   editSelectedAsset(asset){
+    debugger
     console.log("asset=", asset);
     var index = this.selectedAssetTable.findIndex(c => c.id == asset.id);
     console.log("index=", index);
