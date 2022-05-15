@@ -97,11 +97,11 @@ export class CreateOrEditDepreciationAssetComponent extends AppComponentBase imp
                 item.increaseAssetId = this.increaseAsset.id;
                 item.increaseAssetDate = moment.utc( this.increaseAsset.increaseAssetDate.toString());
                 });
-              this.assetService.increaseAssetList(this.addAssetToIncreaseList).subscribe();
+              this.assetService.increaseAssetList(0, this.addAssetToIncreaseList).subscribe();
               // xóa tài sản ghi tăng
               
               if(this.deleteAssetConfirmedList.length > 0 ){
-                this.assetService.test(1,this.deleteAssetConfirmedList).subscribe();
+                this.assetService.increaseAssetList(1, this.addAssetToIncreaseList).subscribe();
               }
               this.notify.info(this.l("SavedSuccessfully"));
               this.close();

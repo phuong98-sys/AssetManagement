@@ -29,19 +29,21 @@ namespace AssetManagement.IncreaseAssets
         {
             try
             {
-                var query =  _increaseAssetRepository.GetAll();
+                var query =  _increaseAssetRepository.GetAll().Include(x => x.Assets);
                 var queryLeftJoin = from q in query
                                     join u in _userRepository.GetAll() on q.CreatorUserId equals u.Id into ps
                                     from u in ps.DefaultIfEmpty()
                                     select new { query = q, CreatorUserName = u == null ? "" : u.Name };
-                var increaseAssets = await queryLeftJoin.Select(p => new IncreaseAssetDto()
+                var increaseAssets = await queryLeftJoin
+                    
+                    .Select(p => new IncreaseAssetDto()
                 {
                     Id = p.query.Id,
                     IncreaseAssetCode = p.query.IncreaseAssetCode,
                     CreationTime = p.query.CreationTime,
                     IncreaseAssetDate = p.query.IncreaseAssetDate,
                     Note = p.query.Note,
-                    TotalAssetValue = p.query.TotalAssetValue,
+                    TotalAssetValue = p.query.Assets.Sum( x => x.OrginalPrice),
                     CreatorUserId = p.query.CreatorUserId,
                     CreatorUserName = p.CreatorUserName,
                     LastModificationTime = p.query.LastModificationTime

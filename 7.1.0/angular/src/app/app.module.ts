@@ -74,6 +74,9 @@ import { AddAssetTransferComponent } from './contents/transfer/add-asset-transfe
 import { CreateOrEditPlaneMaintainComponent } from './contents/plane-maintain/create-or-edit-plane-maintain/create-or-edit-plane-maintain.component';
 import { CreateOrEditProposeAssetComponent } from './contents/propose-asset/create-or-edit-propose-asset/create-or-edit-propose-asset.component';
 import { CreateOrEditPlaneShopComponent } from './contents/plane-shop/create-or-edit-plane-shop/create-or-edit-plane-shop.component';
+import { AddAssetIncreaseAssetComponent } from './contents/increase-asset/add-asset-increase-asset/add-asset-increase-asset.component';
+import { AddAssetReduceAssetComponent } from './contents/reduce-asset/add-asset-reduce-asset/add-asset-reduce-asset.component';
+import { EditReduceAssetModalComponent } from './contents/reduce-asset/edit-reduce-asset-modal/edit-reduce-asset-modal.component';
 // import { AddAssetIncreaseAssetComponent } from './contents/increase-asset/add-asset-increase-asset/add-asset-increase-asset.component';
 @NgModule({
   declarations: [
@@ -130,7 +133,11 @@ import { CreateOrEditPlaneShopComponent } from './contents/plane-shop/create-or-
     CreateOrEditPlaneMaintainComponent,
     CreateOrEditProposeAssetComponent,
     CreateOrEditPlaneShopComponent,
-    // AddAssetIncreaseAssetComponent,
+    AddAssetIncreaseAssetComponent,
+    AddAssetReduceAssetComponent,
+    AddAssetIncreaseAssetComponent,
+    EditIncreaseAssetModalComponent,
+    EditReduceAssetModalComponent
   ],
   imports: [
     CommonModule,

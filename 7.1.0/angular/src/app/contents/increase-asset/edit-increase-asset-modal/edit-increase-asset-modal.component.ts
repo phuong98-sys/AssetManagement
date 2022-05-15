@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
@@ -16,6 +16,7 @@ export class EditIncreaseAssetModalComponent extends AppComponentBase implements
   @ViewChild("EditAssetIncreaseModal", { static: true }) modal: ModalDirective;
   @ViewChild("assetForm", { static: true }) private submitForm: NgForm;
   @Output() modalSave = new EventEmitter<any>();
+
   active = false;
   saving = false;
   loading = false;
@@ -59,8 +60,9 @@ export class EditIncreaseAssetModalComponent extends AppComponentBase implements
   }
   show(asset?: AssetDto): void {
     debugger
-    this.submitForm.form.reset();
+    // this.submitForm.form.reset();
     this.asset = asset;
+
     this.modal.show();
     
   }
@@ -81,7 +83,7 @@ export class EditIncreaseAssetModalComponent extends AppComponentBase implements
     return form.valid;
 }
   save(){
-    debugger
+    
     this.modalSave.emit(this.asset);
     this.close();
   }
@@ -183,7 +185,7 @@ export class EditIncreaseAssetModalComponent extends AppComponentBase implements
     }
   }
   checkDepreciationOfAsset(){
-    debugger
+    
     if(this.asset.depreciationOfAsset < this.asset.orginalPrice){
       this.asset.residualValue = this.asset.orginalPrice - this.asset.depreciationOfAsset;
       this.depreciationOfAssetMessage = "";
