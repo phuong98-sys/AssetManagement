@@ -664,6 +664,122 @@ export class AssetServiceProxy {
     }
 
     /**
+     * @param transferId (optional) 
+     * @return Success
+     */
+     getTransfer(transferId: number | undefined): Observable<AssetDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Asset/GetTransfer?";
+        if (transferId === null)
+            throw new Error("The parameter 'suggestionHandlingId' cannot be null.");
+        else if (transferId !== undefined)
+            url_ += "suggestionHandlingId=" + encodeURIComponent("" + transferId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTransfer(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTransfer(<any>response_);
+                } catch (e) {
+                    return <Observable<AssetDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AssetDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+    protected processGetTransfer(response: HttpResponseBase): Observable<AssetDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = AssetDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AssetDtoListResultDto>(<any>null);
+    }
+
+    /**
+     * @param inputList (optional) 
+     * @param transferId (optional) 
+     * @return Success
+     */
+    deleteTransfer(inputList: AssetInputDto[] | undefined, transferId: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Asset/DeleteTransfer?";
+        if (inputList === null)
+            throw new Error("The parameter 'inputList' cannot be null.");
+        else if (inputList !== undefined)
+            inputList && inputList.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "inputList[" + index + "]." + attr + "=" + encodeURIComponent("" + (<any>item)[attr]) + "&";
+        			}
+            });
+        if (transferId === null)
+            throw new Error("The parameter 'suggestionHandlingId' cannot be null.");
+        else if (transferId !== undefined)
+            url_ += "transferId=" + encodeURIComponent("" + transferId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteTransfer(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteTransfer(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteTransfer(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+    /**
      * @param reduceId (optional) 
      * @return Success
      */
@@ -3745,7 +3861,7 @@ export class TransferServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    insertOrUpdateTransfer(body: TransferInputDto | undefined): Observable<TransferListDto> {
+    insertOrUpdateTransfer(body: TransferInputDto | undefined): Observable<TransferDto> {
         let url_ = this.baseUrl + "/api/services/app/Transfer/InsertOrUpdateTransfer";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -3768,14 +3884,14 @@ export class TransferServiceProxy {
                 try {
                     return this.processInsertOrUpdateTransfer(<any>response_);
                 } catch (e) {
-                    return <Observable<TransferListDto>><any>_observableThrow(e);
+                    return <Observable<TransferDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<TransferListDto>><any>_observableThrow(response_);
+                return <Observable<TransferDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processInsertOrUpdateTransfer(response: HttpResponseBase): Observable<TransferListDto> {
+    protected processInsertOrUpdateTransfer(response: HttpResponseBase): Observable<TransferDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -3786,7 +3902,7 @@ export class TransferServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = TransferListDto.fromJS(resultData200);
+            result200 = TransferDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -3794,7 +3910,7 @@ export class TransferServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<TransferListDto>(<any>null);
+        return _observableOf<TransferDto>(<any>null);
     }
 
     /**
@@ -3854,15 +3970,15 @@ export class TransferServiceProxy {
     }
 
     /**
-     * @param id (optional) 
+     * @param input (optional) 
      * @return Success
      */
-    deleteTransfer(id: number | undefined): Observable<void> {
+    deleteTransfer(input: number | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/Transfer/DeleteTransfer?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        if (input === null)
+            throw new Error("The parameter 'input' cannot be null.");
+        else if (input !== undefined)
+            url_ += "input=" + encodeURIComponent("" + input) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {

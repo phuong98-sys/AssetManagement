@@ -5,6 +5,7 @@ import { PrimengTableHelper } from '@shared/helpers/PrimengTableHelper';
 import { TransferInputDto, TransferServiceProxy } from '@shared/service-proxies/service-proxies';
 import { LazyLoadEvent } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-transfer',
@@ -54,23 +55,22 @@ export class TransferComponent extends AppComponentBase implements OnInit {
     this._router.navigate(["/app/contents/transfer/" + transfer?.id]);
   }
   deleteTransfer(transfer: TransferInputDto){
-    /*this.message.confirm(
-      this.l('Kế hoạch bảo dưỡng "' + planeMaintain.id + '" này sẽ bị xóa'),
-      this.l('Bạn chắc chắn xóa kế hoạch bảo dưỡng này'),
+    this.message.confirm(
+      this.l('Phiếu mã số "' + transfer.numbersTransfer+ '" này sẽ bị xóa'),
+      this.l('Bạn chắc chắn xóa phiếu này'),
       (isConfirmed) => {
-          if (isConfirmed) {
-              this.loading = true;
-              this.planeMaintainService
-              .deletePlaneMaintain(planeMaintain.id)
-              .pipe(finalize(() => this.loading = false))
-              .subscribe(() => {
-                debugger
-                  this.getPlaneMaintains();
-                  this.notify.success(this.l('SuccessfullyDeleted'));
-              });
-            }
-        } 
-    );*/
+        if (isConfirmed) {
+            this.loading = true;
+            this.transferService
+            .deleteTransfer(transfer.id)
+            .pipe(finalize(() => this.loading = false))
+            .subscribe(() => {
+                this.getTransfers();
+                this.notify.success(this.l('SuccessfullyDeleted'));
+            });
+        }
+    }
+    );
   }
 
 }

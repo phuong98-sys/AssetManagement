@@ -1,6 +1,11 @@
 import { Component, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
-import { AssetDto, DepartmentDto, TransferDto } from '@shared/service-proxies/service-proxies';
+import { AssetDto, AssetServiceProxy, DepartmentDto, TransferDto, TransferInputDto, TransferServiceProxy } from '@shared/service-proxies/service-proxies';
+import { ModalDirective } from 'ngx-bootstrap/modal';
+import { forkJoin } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { AddAssetTransferComponent } from '../add-asset-transfer/add-asset-transfer.component';
 
 @Component({
@@ -11,10 +16,16 @@ import { AddAssetTransferComponent } from '../add-asset-transfer/add-asset-trans
 export class CreateOrEditTransferComponent extends AppComponentBase implements OnInit {
   @Output() modalSave = new EventEmitter<any>();
   @ViewChild('addAssetTransferModal', { static: true }) addAssetTransferModal: AddAssetTransferComponent
+  @ViewChild("createOrEditModal", { static: true }) modal: ModalDirective;
+  @ViewChild("transferForm", { static: true }) private submitForm: NgForm;
   active = false;
   saving = false;
   loading = false;
   transfer : TransferDto = new TransferDto();
+  transferId: number;
+  selectedAssetTable: AssetDto[] = [];
+  transferList:TransferInputDto[];
+  deletedAssetListFromTable : AssetDto[] = [];
   addAssetToTransferList : AssetDto[] = [];
   employeeList: any;//
   departmentList: DepartmentDto[] = [];
@@ -23,14 +34,59 @@ export class CreateOrEditTransferComponent extends AppComponentBase implements O
         //
         advancedFiltersVisible = false;
         keyword ='';
-  constructor( injector: Injector) {
-    super(injector);
+  constructor( 
+    injector: Injector,
+    private assetService: AssetServiceProxy,
+    private transferService: TransferServiceProxy,
+    private _router: Router,
+    private _activatedRoute: ActivatedRoute) {
+      super(injector);
+      if (this._activatedRoute.snapshot.params['id']) {
+        this.transferId = Number(this._activatedRoute.snapshot.params['id']);
+        this.getAssetTransfer(this.transferId);
+        debugger
+      }
    }
 
   ngOnInit(): void {
+    debugger
+    this.getTransferForEdit();
+    
+   this.getTransfers();
+   this.getTransferList();
   }
   close(){
 
+  }
+  getTransferList(){
+    this.transferService.getTransfers()
+    .subscribe((result)=>{
+        this.transferList = result.items;
+    });
+  }
+  getTransfers(){
+    this.transferService.getTransfers().subscribe((result) => {
+      this.transferList = result.items;
+    });
+  }
+  getAssetTransfer(transferId: number){
+    this.assetService.getTransfer(transferId)
+    .subscribe((result) => {
+        this.selectedAssetTable = result.items;
+    })
+  }
+  show(transfer?: TransferInputDto): void {
+    // if(suggestionHandling?.id){
+    //   this.suggestionHandling = suggestionHandling;
+    // }
+    this.addAssetTransferModal.show(this.deletedAssetListFromTable);
+    this.deletedAssetListFromTable = [];
+    
+  }
+  addAssetTransferToTable(assetList){
+    
+    this.selectedAssetTable = [ ...this.selectedAssetTable, ...assetList];
+    console.log("list =", this.selectedAssetTable);
   }
   save(a? : any){
 
@@ -53,6 +109,21 @@ export class CreateOrEditTransferComponent extends AppComponentBase implements O
         $(selector).click();
     }  
     }
+  }
+  getTransferForEdit(){
+    forkJoin(
+    this.transferService.getTransfer(this.transferId),
+    /*this.departmentService.getDepartments(),
+    this.employeeService.getEmployees()*/
+    )
+    .pipe(finalize(() => (this.loading = false)))
+      .subscribe(([res1, ]) => {
+        
+        this.transfer = res1;
+        //this.suggestionHandling.creationTime = res1["creationTime"]? res1["creationTime"].format("YYYY-MM-DD"):<any>undefined;
+        this.transfer.dateFound = res1["dateFound"]? res1["dateFound"].format("YYYY-MM-DD"):<any>undefined;
+        
+      })
   }
   setNumbersTransfer(){
 
