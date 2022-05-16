@@ -52,7 +52,7 @@ namespace AssetManagement.Assets
                         AssetTypeName = a.AssetType.AssetTypeName,
                         AssetStatusId = a.AssetStatusId,
                         CreationTime = a.CreationTime,
-                        ReduceAssetId = a.ReasonReduceId,
+                        ReduceAssetId = a.ReduceAssetId,
                         ReasonReduceName = a.ReasonReduce.ReasonReduceName,
                         ReasonReduceId = a.ReasonReduceId,
                         ReasonReduceNote = a.ReasonReduceNote,
@@ -220,7 +220,7 @@ namespace AssetManagement.Assets
                      AssetTypeName = a.AssetType.AssetTypeName,
                      AssetStatusId = a.AssetStatusId,
                      CreationTime = a.CreationTime,
-                     ReduceAssetId = a.ReasonReduceId,
+                     ReduceAssetId = a.ReduceAssetId,
                      ReasonReduceId = a.ReasonReduceId,
                      CreatorUserId = a.CreatorUserId,
                      DepartmentName = a.Department.DepartmentName,
@@ -241,49 +241,67 @@ namespace AssetManagement.Assets
             }
 
         }
-        public async Task<ListResultDto<SuggestionHandlingDetailDto>> SuggestionHandlingList(List<AssetInputDto> inputList, int suggestionHandlingId)
+        public async Task<ListResultDto<SuggestionHandlingDetailDto>> SuggestionHandlingList(List<AssetSuggestionHandlingDto> inputList, int suggestionHandlingId, int index)
         {
             try
             {
-
-
-                var suggestionHandlingDetailList = new List<SuggestionHandlingDetail>();
-                foreach (var asset in inputList)
+                if(index == 0)
                 {
-                    var suggestionHandlingDetailForEdit = await _suggestionHandlingDetailRepository.FirstOrDefaultAsync(x => x.AssetId == asset.Id && x.SuggestionHandlingId == suggestionHandlingId);
-                    if (suggestionHandlingDetailForEdit != null)
+                    var suggestionHandlingDetailList = new List<SuggestionHandlingDetail>();
+                    foreach (var asset in inputList)
                     {
-                        // edit asser
-                        var assetForEdit = await _assetRepository.FirstOrDefaultAsync(x => x.Id == asset.Id);
-                        ObjectMapper.Map(asset, assetForEdit);
-                        // edit suggestionHandling
+                        var suggestionHandlingDetailForEdit = await _suggestionHandlingDetailRepository.FirstOrDefaultAsync(x => x.AssetId == asset.Id && x.SuggestionHandlingId == suggestionHandlingId);
+                        if (suggestionHandlingDetailForEdit != null)
+                        {
+                            // edit asser
+                            //var assetForEdit = await _assetRepository.FirstOrDefaultAsync(x => x.Id == asset.Id);
+                            //ObjectMapper.Map(asset, assetForEdit);
+                            // edit suggestionHandling
 
-                        var suggestionHandlingDetail = new SuggestionHandlingDetailInputDto();
-                        ObjectMapper.Map<SuggestionHandlingDetail>(suggestionHandlingDetailForEdit);
-                        suggestionHandlingDetailForEdit.HandlingMethodId = asset.ReasonReduceId;
-                        suggestionHandlingDetailForEdit.HandlingMethod = asset.ReasonReduceNote;
-                        await CurrentUnitOfWork.SaveChangesAsync();
-                        suggestionHandlingDetailList.Add(suggestionHandlingDetailForEdit);
-                    }
-                    else
-                    {
-                        var suggestionHandlingDetail = new SuggestionHandlingDetailInputDto();
-                        suggestionHandlingDetail.AssetId = (int)asset.Id;
-                        suggestionHandlingDetail.SuggestionHandlingId = suggestionHandlingId;
-                        suggestionHandlingDetail.HandlingMethodId = asset.ReasonReduceId;
-                        suggestionHandlingDetail.HandlingMethod = asset.ReasonReduceNote;
-                        suggestionHandlingDetail.CreatorUserId = AbpSession.GetUserId();
-                        var suggestionHandlingDetail2 = ObjectMapper.Map<SuggestionHandlingDetail>(suggestionHandlingDetail);
-                        suggestionHandlingDetailList.Add(suggestionHandlingDetail2);
-                        await _suggestionHandlingDetailRepository.InsertAsync(suggestionHandlingDetail2);
-                        await CurrentUnitOfWork.SaveChangesAsync();
-                        ObjectMapper.Map<SuggestionHandlingDetail>(suggestionHandlingDetail2);
-                        //insert
-                    }
+                            var suggestionHandlingDetail = new SuggestionHandlingDetailInputDto();
+                            suggestionHandlingDetailForEdit.HandlingMethodId = asset.HandlingMethodId;
+                            suggestionHandlingDetailForEdit.HandlingMethod = asset.HandlingMethod;
+                            //ObjectMapper.Map<SuggestionHandlingDetail>(suggestionHandlingDetailForEdit);
+                            await _suggestionHandlingDetailRepository.UpdateAsync(suggestionHandlingDetailForEdit);
+                            //await CurrentUnitOfWork.SaveChangesAsync();
+                            suggestionHandlingDetailList.Add(suggestionHandlingDetailForEdit);
+                        }
+                        else
+                        {
+                            var suggestionHandlingDetail = new SuggestionHandlingDetailInputDto();
+                            suggestionHandlingDetail.AssetId = (int)asset.Id;
+                            suggestionHandlingDetail.SuggestionHandlingId = suggestionHandlingId;
+                            suggestionHandlingDetail.HandlingMethodId = asset.HandlingMethodId;
+                            suggestionHandlingDetail.HandlingMethod = asset.HandlingMethod;
+                            suggestionHandlingDetail.CreatorUserId = AbpSession.GetUserId();
+                            var suggestionHandlingDetail2 = ObjectMapper.Map<SuggestionHandlingDetail>(suggestionHandlingDetail);
+                            suggestionHandlingDetailList.Add(suggestionHandlingDetail2);
+                            await _suggestionHandlingDetailRepository.InsertAsync(suggestionHandlingDetail2);
+                            await CurrentUnitOfWork.SaveChangesAsync();
+                            ObjectMapper.Map<SuggestionHandlingDetail>(suggestionHandlingDetail2);
+                            //insert
+                        }
 
+                    }
+                    var suggestionHandlingDetailList2 = ObjectMapper.Map<List<SuggestionHandlingDetailDto>>(suggestionHandlingDetailList);
+                    return new ListResultDto<SuggestionHandlingDetailDto>(suggestionHandlingDetailList2);
                 }
-                var suggestionHandlingDetailList2 = ObjectMapper.Map<List<SuggestionHandlingDetailDto>>(suggestionHandlingDetailList);
-                return new ListResultDto<SuggestionHandlingDetailDto>(suggestionHandlingDetailList2);
+                if(index == 1){
+                    foreach (var asset in inputList)
+                    {
+                        var suggestionHandlingDetailForEdit = await _suggestionHandlingDetailRepository.FirstOrDefaultAsync(x => x.AssetId == asset.Id && x.SuggestionHandlingId == suggestionHandlingId);
+                        if (suggestionHandlingDetailForEdit != null)
+                        {
+                            _suggestionHandlingDetailRepository.Delete(suggestionHandlingDetailForEdit);
+                            //await CurrentUnitOfWork.SaveChangesAsync();
+                        }
+                        
+
+                    }
+                    return null;
+                }
+                return null;
+               
             }
             catch (Exception e)
             {
@@ -291,7 +309,7 @@ namespace AssetManagement.Assets
             }
 
         }
-        public async Task<ListResultDto<AssetDto>> GetSuggestionHandling(int suggestionHandlingId)
+        public async Task<ListResultDto<AssetSuggestionHandlingDto>> GetSuggestionHandling(int suggestionHandlingId)
         {
             try
             {
@@ -299,9 +317,9 @@ namespace AssetManagement.Assets
                 var queryLeftJoin = from s in _suggestionHandlingDetailRepository.GetAll().Where(x => x.SuggestionHandlingId == suggestionHandlingId)
                                     join a in query on s.AssetId equals a.Id into ps
                                     from u in ps.DefaultIfEmpty()
-                                    select new { query = u  };
+                                    select new { query = u , HandlingMethodId = s.HandlingMethodId, HandlingMethod = s.HandlingMethod };
                 var assets = await queryLeftJoin
-                    .Select(t => new AssetDto()
+                    .Select(t => new AssetSuggestionHandlingDto
                     {
                         Id = t.query.Id,
                         AssetCode = t.query.AssetCode,
@@ -321,7 +339,7 @@ namespace AssetManagement.Assets
                         AssetTypeName = t.query.AssetType.AssetTypeName,
                         AssetStatusId = t.query.AssetStatusId,
                         CreationTime = t.query.CreationTime,
-                        ReduceAssetId = t.query.ReasonReduceId,
+                        ReduceAssetId = t.query.ReduceAssetId,
                         ReasonReduceId = t.query.ReasonReduceId,
                         CreatorUserId = t.query.CreatorUserId,
                         DepartmentName = t.query.Department.DepartmentName,
@@ -331,11 +349,13 @@ namespace AssetManagement.Assets
                         ReasonReduceNote = t.query.ReasonReduceNote,
                         CreatorUserName = t.query.User.Name,
                         DepartmentId = t.query.DepartmentId,
-                        EmployeeId = t.query.EmployeeId
+                        EmployeeId = t.query.EmployeeId,
+                        HandlingMethodId = t.HandlingMethodId,
+                        HandlingMethod = t.HandlingMethod
                     })
                 .ToListAsync();
-                var assetDtos = ObjectMapper.Map<List<AssetDto>>(assets);
-                return new ListResultDto<AssetDto>(assetDtos);
+                var assetDtos = ObjectMapper.Map<List<AssetSuggestionHandlingDto>>(assets);
+                return new ListResultDto<AssetSuggestionHandlingDto>(assetDtos);
             }
             catch (Exception e)
             {
@@ -343,7 +363,7 @@ namespace AssetManagement.Assets
             }
 
         }
-        public async Task DeleteSuggestionHandling(List<AssetInputDto> inputList , int suggestionHandlingId)
+        public async Task DeleteSuggestionHandling(List<AssetSuggestionHandlingDto> inputList , int suggestionHandlingId)
         {
             try
             {
@@ -353,7 +373,7 @@ namespace AssetManagement.Assets
                     if (suggestionHandlingDetailForEdit != null)
                     {
                         _suggestionHandlingDetailRepository.Delete(suggestionHandlingDetailForEdit);
-                        await CurrentUnitOfWork.SaveChangesAsync();
+                        //await CurrentUnitOfWork.SaveChangesAsync();
                     }
                    
                 }

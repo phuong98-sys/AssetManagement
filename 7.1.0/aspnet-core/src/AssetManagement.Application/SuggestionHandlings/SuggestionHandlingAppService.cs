@@ -86,16 +86,16 @@ namespace AssetManagement.SuggestionHandlings
             {
 
                 // xóa ở suggestionHandling List Detail
-                var suggestionHandlingDetailList = _suggestionHandlingDetailRepository.GetAll().Where(x => x.SuggestionHandlingId == input).ToList();
+                var suggestionHandlingDetailList = _suggestionHandlingDetailRepository.GetAll().Where(x => x.SuggestionHandlingId == input);
                 foreach (var suggestionHandlingDetail in suggestionHandlingDetailList)
                 {
                      _suggestionHandlingDetailRepository.Delete(suggestionHandlingDetail);
-                    await CurrentUnitOfWork.SaveChangesAsync();
+                    //await CurrentUnitOfWork.SaveChangesAsync();
                 }
                 // xóa ở phiếu suggestionHandling 
-                var suggestionHandling = _suggestionHandlingRepository.GetAll().Where(y => y.Id == input).FirstOrDefault();
-                await _suggestionHandlingRepository.DeleteAsync(suggestionHandling);
-                await CurrentUnitOfWork.SaveChangesAsync();
+                var suggestionHandling = await _suggestionHandlingRepository.FirstOrDefaultAsync(y => y.Id == input);
+               _suggestionHandlingRepository.Delete(suggestionHandling);
+                //await CurrentUnitOfWork.SaveChangesAsync();
             }
             catch (Exception e)
             {

@@ -1,6 +1,6 @@
 
 import { AppComponentBase } from '@shared/app-component-base';
-import { AssetDto, AssetServiceProxy, ReasonReduceDto, ReasonReduceServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AssetDto, AssetServiceProxy, AssetSuggestionHandlingDto, ReasonReduceDto, ReasonReduceServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AddAssetSuggestionHandlingComponent } from '../add-asset-suggestion-handling/add-asset-suggestion-handling.component';
 import { Component, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
@@ -39,8 +39,8 @@ export class CreateOrEditSuggestionHandlingComponent extends AppComponentBase im
   assetMessage = '';
   increaseAssetId: number;
   increaseAssetCodeMessage = "";
-  deleteAssetList : AssetDto[] = [];
-  deleteAssetConfirmedList : AssetDto[] = [];
+  deleteAssetList : AssetSuggestionHandlingDto[] = [];
+  deleteAssetConfirmedList : AssetSuggestionHandlingDto[] = [];
   departmentList : DepartmentDto[] = [];
   // selectedDepartment: DepartmentDto;
   employeeList : EmployeeDto[] =[];
@@ -52,10 +52,10 @@ export class CreateOrEditSuggestionHandlingComponent extends AppComponentBase im
     //
     advancedFiltersVisible = false;
     keyword ='';
-  selectedAssetTable: AssetDto[] = [];
+  selectedAssetTable: any[] = [];
   deletedAssetListFromTable : AssetDto[] = [];
   suggestionHandling : SuggestionHandlingDto = new SuggestionHandlingDto();
-  addAssetToSuggestionHandlingList : AssetDto[] = [];
+  addAssetToSuggestionHandlingList : any[] = [];
   selectedPetitioner: EmployeeDto; //ge
   suggestionHandlingId: number;
   suggestionHandlingCodeMessage = '';
@@ -66,6 +66,7 @@ export class CreateOrEditSuggestionHandlingComponent extends AppComponentBase im
     {id: 2, name : 'đã phê duyệt'},
   ]
   reasonReduceList: ReasonReduceDto[] = [];
+  assetListCopy: AssetSuggestionHandlingDto = new AssetSuggestionHandlingDto;
   constructor(
     injector: Injector,
     private assetService: AssetServiceProxy,
@@ -79,10 +80,9 @@ export class CreateOrEditSuggestionHandlingComponent extends AppComponentBase im
         if (this._activatedRoute.snapshot.params['id']) {
           this.suggestionHandlingId = Number(this._activatedRoute.snapshot.params['id']);
           this.getAssetSuggestionHandling(this.suggestionHandlingId);
-          this.getDepartmentList();
-          this.getEmployeeList();
-          debugger
         }
+        this.getDepartmentList();
+        this.getEmployeeList();
   }
 
   ngOnInit(): void {
@@ -92,6 +92,8 @@ export class CreateOrEditSuggestionHandlingComponent extends AppComponentBase im
      
     this.getSuggestionHandlings();
     this.getReasonReduceList();
+    this.getDepartmentList();
+    this.getEmployeeList();
   }
   getReasonReduceList(){
     this.reasonReduceService.getReasonReduces()
@@ -114,7 +116,9 @@ export class CreateOrEditSuggestionHandlingComponent extends AppComponentBase im
     // if(suggestionHandling?.id){
     //   this.suggestionHandling = suggestionHandling;
     // }
-    this.addAssetSuggestionHandlingModal.show(this.deletedAssetListFromTable);
+    debugger
+    console.log("fi =",this.selectedAssetTable);
+    this.addAssetSuggestionHandlingModal.show(this.deletedAssetListFromTable, this.selectedAssetTable);
     this.deletedAssetListFromTable = [];
     
   }
@@ -134,31 +138,32 @@ export class CreateOrEditSuggestionHandlingComponent extends AppComponentBase im
        this.suggestionHandling.creationTime =  moment.utc(this.suggestionHandling.creationTime.toString());
        this.suggestionHandling.suggestionHandlingDate = moment.utc( this.suggestionHandling.suggestionHandlingDate.toString());
        this.suggestionHandling.implementationDate = moment.utc( this.suggestionHandling.suggestionHandlingDate.toString());
+       this.suggestionHandling.creatorUserName = this.appSession.user.name;
           this.suggestionHandlingService.insertOrUpdateSuggestionHandling(this.suggestionHandling)
           .pipe(finalize(() => (this.saving = false)))
           .subscribe((result) => {
             debugger
-              // this.suggestionHandling = result;
-              // // ghi tăng gtafi sản
-              // this.selectedAssetTable.map((item) => { 
-              //     item.creationTime = moment.utc( item.creationTime?.toString());
-              //     item.startDate = moment.utc( item.startDate?.toString());
-              //     item.amortizationDate = moment.utc( item.amortizationDate?.toString());
-              //   });
-              //   debugger
-              // this.assetService.suggestionHandlingList( this.suggestionHandling.id,this.selectedAssetTable).subscribe();
-              // xóa tài sản ghi tăng
+              this.suggestionHandling = result;
+              // ghi tăng gtafi sản
+              this.selectedAssetTable.map((item) => { 
+                  item.creationTime = moment.utc( item.creationTime?.toString());
+                  item.startDate = moment.utc( item.startDate?.toString());
+                  item.amortizationDate = moment.utc( item.amortizationDate?.toString());
+                });
+                debugger
+              this.assetService.suggestionHandlingList( this.suggestionHandling.id,0, this.selectedAssetTable).subscribe();
+              //xóa tài sản ghi tăng
 
-              // if(this.deleteAssetConfirmedList.length > 0 ){
-              //   debugger
-              //   this.deleteAssetConfirmedList.map((item) => { 
-              //       item.creationTime = moment.utc( item.creationTime?.toString());
-              //       item.startDate = moment.utc( item.startDate?.toString());
-              //       item.amortizationDate = moment.utc( item.amortizationDate?.toString());
-              //     });
+              if(this.deleteAssetConfirmedList.length > 0 ){
+                debugger
+                this.deleteAssetConfirmedList.map((item) => { 
+                    item.creationTime = moment.utc( item.creationTime?.toString());
+                    item.startDate = moment.utc( item.startDate?.toString());
+                    item.amortizationDate = moment.utc( item.amortizationDate?.toString());
+                  });
 
-              //   this.assetService.deleteSuggestionHandling(this.deleteAssetConfirmedList, this.suggestionHandling.id).subscribe();
-              // }
+                this.assetService.suggestionHandlingList(this.suggestionHandling.id,1, this.deleteAssetConfirmedList).subscribe();
+              }
               this.notify.info(this.l("SavedSuccessfully"));
               this.close();
               // this.modalSave.emit(null);
@@ -253,7 +258,7 @@ export class CreateOrEditSuggestionHandlingComponent extends AppComponentBase im
         this.selectedHandlingStatus = this.suggestionHandlingStatusList.find(x => x.id == this.suggestionHandling.suggestionHandlingStatus)
       })
   }
-  onSelectedAsset(assetForEdit : AssetDto, event ){
+  onSelectedAsset(assetForEdit : AssetSuggestionHandlingDto, event ){
     
     console.log(event.target.checked);
     debugger
@@ -290,7 +295,7 @@ debugger
       }
   );
   }
-  deleteAssetItemFromTable(asset : AssetDto){
+  deleteAssetItemFromTable(asset : AssetSuggestionHandlingDto){
     debugger
     this.message.confirm(
       this.l('Tài sản với tên ' + asset.assetName+ " sẽ bị xóa khỏi bảng"),
@@ -341,37 +346,44 @@ debugger
   onSelectDepartmet(){
 
   }
-  onSelectHandlingMethodFromTableFromTable(asset : AssetDto){
+  onSelectHandlingMethodFromTableFromTable(asset : AssetSuggestionHandlingDto){
     var index = this.selectedAssetTable.findIndex(c => c.id == asset.id);
     this.selectedAssetTable[index].employeeId = null;
+    this.selectedAssetTable[index].handlingMethodId = asset.handlingMethodId;
     // var amortizationValue = Number(((asset.orginalPrice)/(asset.numberOfDayUsedAsset*12)).toFixed(3));
     // this.addAssetToIncreaseList[index].amortizationValue = amortizationValue;
     // this.selectedAssetTable[]
     // this.getEmployeeListByDepartment(asset.departmentId);
   }
-  onSelectReasonReduceNoteFromTable(asset : AssetDto){
+  onSelectReasonReduceNoteFromTable(asset , handlingMethod){
     var index = this.selectedAssetTable.findIndex(c => c.id == asset.id);
-    this.selectedAssetTable[index] = asset;
-    this.selectedAssetTable[index].reasonReduceNote = asset.reasonReduceNote;
-
-    // var amortizationValue = Number(((asset.orginalPrice)/(asset.numberOfDayUsedAsset*12)).toFixed(3));
-    // this.addAssetToReduceList[index].amortizationValue = amortizationValue;
-    // this.selectedAssetTable[]
-    // this.getEmployeeListByDepartment(asset.departmentId);
+    this.selectedAssetTable[index].handlingMethod =handlingMethod;
   }
-  onSelectRecoverableValueFromTable(asset : AssetDto){
-    var index = this.selectedAssetTable.findIndex(c => c.id == asset.id);
-    this.selectedAssetTable[index] = asset;
-    this.selectedAssetTable[index].recoverableValue = asset.recoverableValue;
+  // onSelectRecoverableValueFromTable(asset : AssetDto){
+  //   var index = this.selectedAssetTable.findIndex(c => c.id == asset.id);
+  
+  //   this.selectedAssetTable[index].recoverableValue = asset.recoverableValue;
+  // }
+  addAssetSuggestionHandlingToTable(assetList: any){
+    debugger
+    assetList.map((item)=>{
+      item.handlingMethodId = item.reasonReduceId,
+      item.handlingMethod = item.reasonReduceNote
+    });
+    assetList.forEach((item) =>{
+       
+      this.assetListCopy.id = item.id;
+      this.assetListCopy.assetCode = item.assetCode;
+      this.assetListCopy.assetName = item.assetName;
+      this.assetListCopy.handlingMethodId = item.reasonReduceId;
+      this.assetListCopy.handlingMethod = item.reasonReduceNote;
+      this.assetListCopy.departmentId = item.departmentId;
+          this.selectedAssetTable.push(this.assetListCopy);
 
-    // var amortizationValue = Number(((asset.orginalPrice)/(asset.numberOfDayUsedAsset*12)).toFixed(3));
-    // this.addAssetToReduceList[index].amortizationValue = amortizationValue;
-    // this.selectedAssetTable[]
-    // this.getEmployeeListByDepartment(asset.departmentId);
-  }
-  addAssetSuggestionHandlingToTable(assetList){
+    });
     
-    this.selectedAssetTable = [ ...this.selectedAssetTable, ...assetList];
+    console.log("list  1=", assetList);
+    // this.selectedAssetTable = [ ...this.selectedAssetTable, ...a];
     console.log("list =", this.selectedAssetTable);
   }
   getDepartmentList(){
@@ -421,7 +433,14 @@ debugger
     this.suggestionHandling.suggestionHandlingStatus = this.selectedHandlingStatus.id;
     this.suggestionHandling.suggestionHandlingStatusName = this.selectedHandlingStatus.name;
   }
-  selecteAssetListToSuggestionHandling(){
-    
+  onSelectReasonReduceFromTable(asset : AssetSuggestionHandlingDto){
+    var index = this.selectedAssetTable.findIndex(c => c.id == asset.id);
+    this.selectedAssetTable[index].handlingMethodId = asset.handlingMethodId;
+
+    // var amortizationValue = Number(((asset.orginalPrice)/(asset.numberOfDayUsedAsset*12)).toFixed(3));
+    // this.addAssetToReduceList[index].amortizationValue = amortizationValue;
+    // this.selectedAssetTable[]
+    // this.getEmployeeListByDepartment(asset.departmentId);
   }
+  
 }

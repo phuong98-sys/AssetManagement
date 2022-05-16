@@ -21,8 +21,8 @@ namespace AssetManagement.Assets
         Task ReduceAssetList(List<AssetInputDto> inputList, int index);
         //Task DeleteListAssetReduced(List<AssetInputDto> inputList);
         Task<ListResultDto<AssetDto>> GetAssetReduced(int reduceId);
-        Task<ListResultDto<SuggestionHandlingDetailDto>> SuggestionHandlingList(List<AssetInputDto> inputList, int suggestionHandlingId);
-        Task<ListResultDto<AssetDto>> GetSuggestionHandling(int suggestionHandlingId);
-        Task DeleteSuggestionHandling(List<AssetInputDto> inputList, int suggestionHandlingId);
+        Task<ListResultDto<SuggestionHandlingDetailDto>> SuggestionHandlingList(List<AssetSuggestionHandlingDto> inputList, int suggestionHandlingId, int index);
+        Task<ListResultDto<AssetSuggestionHandlingDto>> GetSuggestionHandling(int suggestionHandlingId);
+        Task DeleteSuggestionHandling(List<AssetSuggestionHandlingDto> inputList, int suggestionHandlingId);
     }
 }

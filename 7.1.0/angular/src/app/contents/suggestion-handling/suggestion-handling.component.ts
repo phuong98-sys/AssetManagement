@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
 import { AssetInputDto, AssetTypeDto, SuggestionHandlingDto, SuggestionHandlingServiceProxy } from '@shared/service-proxies/service-proxies';
 import * as moment from 'moment';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-suggestion-handling',
@@ -65,13 +66,13 @@ export class SuggestionHandlingComponent extends AppComponentBase implements OnI
       (isConfirmed) => {
           if (isConfirmed) {
               this.loading = true;
-              // this.suggestionHandlingService
-              // .deleteAsset(asset.id)
-              // .pipe(finalize(() => this.loading = false))
-              // .subscribe(() => {
-              //     this.getAll();
-              //     this.notify.success(this.l('SuccessfullyDeleted'));
-              //});
+              this.suggestionHandlingService
+              .deleteSuggestionHandling(suggestionHandling.id)
+              .pipe(finalize(() => this.loading = false))
+              .subscribe(() => {
+                  this.getAll();
+                  this.notify.success(this.l('SuccessfullyDeleted'));
+              });
           }
       }
   );
