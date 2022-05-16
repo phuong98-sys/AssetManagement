@@ -96,7 +96,7 @@ export class CreateOrEditTransferComponent extends AppComponentBase implements O
       this.saving= true;
       // ghi tăng tài sản
       debugger
-       this.transfer.creationTime =  moment.utc(this.transfer.creationTime.toString());
+       //this.transfer.creationTime =  moment.utc(this.transfer.creationTime?.toString());
        this.transfer.dateFound = moment.utc( this.transfer.dateFound.toString());
           this.transferService.insertOrUpdateTransfer(this.transfer)
           .pipe(finalize(() => (this.saving = false)))

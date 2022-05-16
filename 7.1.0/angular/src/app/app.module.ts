@@ -77,6 +77,7 @@ import { CreateOrEditPlaneShopComponent } from './contents/plane-shop/create-or-
 import { AddAssetIncreaseAssetComponent } from './contents/increase-asset/add-asset-increase-asset/add-asset-increase-asset.component';
 import { AddAssetReduceAssetComponent } from './contents/reduce-asset/add-asset-reduce-asset/add-asset-reduce-asset.component';
 import { EditReduceAssetModalComponent } from './contents/reduce-asset/edit-reduce-asset-modal/edit-reduce-asset-modal.component';
+import { AddAssetProposeAssetComponent } from './contents/propose-asset/add-asset-propose-asset/add-asset-propose-asset.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -136,7 +137,8 @@ import { EditReduceAssetModalComponent } from './contents/reduce-asset/edit-redu
     AddAssetReduceAssetComponent,
     AddAssetIncreaseAssetComponent,
     EditIncreaseAssetModalComponent,
-    EditReduceAssetModalComponent
+    EditReduceAssetModalComponent,
+    AddAssetProposeAssetComponent
   ],
   imports: [
     CommonModule,
