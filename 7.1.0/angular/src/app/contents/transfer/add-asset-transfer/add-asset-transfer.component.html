@@ -14,7 +14,7 @@
                 <div class="content-component" style="padding: 10px">
                     <div _ngcontent-olq-c180="" class="row align-items-center">
                         <div class="col-6">
-                            <span> Đã chọn : {{selectedAssetReduceList.length}} tài sản </span>
+                            <span> Đã chọn : {{selectedAssetTransferList.length}} tài sản </span>
                             <div class="btn btn-primary" style="margin-left: 10px" (click)="clickUnTickAssetListSeleted()">Bỏ chọn</div>
                         </div>
                         <div _ngcontent-olq-c180="" class="col-6"><div _ngcontent-olq-c180="" class="form-group m-form__group align-items-center"><div _ngcontent-olq-c180="" class="input-group"><input _ngcontent-olq-c180="" name="filterText" autofocus="" placeholder="Tìm kiếm theo mã tài sản, tên tài sản, tên loại tài sản, bộ phận,..." type="text" class="form-control m-input ng-untouched ng-pristine ng-valid" ng-reflect-name="filterText" ng-reflect-model=""><span _ngcontent-olq-c180="" class="input-group-btn"><button _ngcontent-olq-c180="" type="submit" class="btn btn-search"><i _ngcontent-olq-c180="" class="fa fa-search"></i></button></span></div>
@@ -90,7 +90,7 @@
                         </p-dropdown>
                     </div>
                     <div class="form-group col-7">
-                        <label for="reasonReduceNote">{{"Lí do ghi giảm" | localize}}</label>
+                        <label for="reasonReduceNote">{{"Lí do" | localize}}</label>
                         <input id="reasonReduceNote" #reasonReduceNote="ngModel" type="text" name="reasonReduceNote" class="form-control" [(ngModel)]="asset.reasonReduceNote" />
             
                     </div>
@@ -98,7 +98,7 @@
                 <div class="modal-footer">
                     <div class="btn btn-cancel" (click)="cancel()">{{"Hủy" |
                         localize}}</div>
-                    <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')" [disabled] = "selectedAssetReduceList?.length > 0 && !selectedDepartment?.id"><i class="fa fa-save" style="margin-right: 5px"></i>
+                    <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')" [disabled] = "selectedAssetTransferList?.length > 0 && !selectedDepartment?.id"><i class="fa fa-save" style="margin-right: 5px"></i>
                         <span>{{"Đồng ý" | localize}}</span></button>
                 </div>             
             </form>

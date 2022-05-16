@@ -667,7 +667,71 @@ export class AssetServiceProxy {
         }
         return _observableOf<void>(<any>null);
     }
+     /**
+     * @param suggestionHandlingId (optional) 
+     * @param index (optional) 
+     * @param body (optional) 
+     * @return Success
+     */
+      transferList(transferId: number | undefined, index: number | undefined, body: AssetTransferDto[] | undefined): Observable<TransferDetailDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Asset/TransferList?";
+        if (transferId === null)
+            throw new Error("The parameter 'transferId' cannot be null.");
+        else if (transferId !== undefined)
+            url_ += "transferId=" + encodeURIComponent("" + transferId) + "&";
+        if (index === null)
+            throw new Error("The parameter 'index' cannot be null.");
+        else if (index !== undefined)
+            url_ += "index=" + encodeURIComponent("" + index) + "&";
+        url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processTransferList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processTransferList(<any>response_);
+                } catch (e) {
+                    return <Observable<TransferDetailDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TransferDetailDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processTransferList(response: HttpResponseBase): Observable<TransferDetailDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = TransferDetailDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TransferDetailDtoListResultDto>(<any>null);
+    }
     /**
      * @param transferId (optional) 
      * @return Success
@@ -675,9 +739,9 @@ export class AssetServiceProxy {
      getTransfer(transferId: number | undefined): Observable<AssetDtoListResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Asset/GetTransfer?";
         if (transferId === null)
-            throw new Error("The parameter 'suggestionHandlingId' cannot be null.");
+            throw new Error("The parameter 'transferId' cannot be null.");
         else if (transferId !== undefined)
-            url_ += "suggestionHandlingId=" + encodeURIComponent("" + transferId) + "&";
+            url_ += "transferId=" + encodeURIComponent("" + transferId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -740,7 +804,7 @@ export class AssetServiceProxy {
         			}
             });
         if (transferId === null)
-            throw new Error("The parameter 'suggestionHandlingId' cannot be null.");
+            throw new Error("The parameter 'transferId' cannot be null.");
         else if (transferId !== undefined)
             url_ += "transferId=" + encodeURIComponent("" + transferId) + "&";
         url_ = url_.replace(/[?&]$/, "");
@@ -5812,7 +5876,261 @@ export class AssetSuggestionHandlingDtoListResultDto implements IAssetSuggestion
 export interface IAssetSuggestionHandlingDtoListResultDto {
     items: AssetSuggestionHandlingDto[] | undefined;
 }
+//
+export class AssetTransferDto implements IAssetTransferDto {
+    id: number;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    assetCode: string;
+    assetName: string | undefined;
+    increaseAssetDate: moment.Moment | undefined;
+    reduceAssetDate: moment.Moment | undefined;
+    numberOfDayAmortization: number | undefined;
+    numberOfDayUsedAsset: number | undefined;
+    numberOfDayRemaing: number | undefined;
+    orginalPrice: number;
+    depreciationOfAsset: number | undefined;
+    residualValue: number | undefined;
+    usageStatus: string | undefined;
+    reasonForReduction: string | undefined;
+    recoverableValue: number | undefined;
+    increaseAssetId: number | undefined;
+    reduceAssetId: number | undefined;
+    assetTypeId: number | undefined;
+    assetTypeName: string | undefined;
+    assetStatusId: number;
+    reasonReduceId: number | undefined;
+    reasonReduceName: string | undefined;
+    reasonReduceNote: string | undefined;
+    lastModifierUserName: string | undefined;
+    creatorUserName: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    departmentName: string | undefined;
+    departmentId: number | undefined;
+    startDate: moment.Moment | undefined;
+    endDate: moment.Moment | undefined;
+    userName: string | undefined;
+    amortizationDate: moment.Moment;
+    monthlyAmortizationRate: number | undefined;
+    annualAmortizationRate: number | undefined;
+    annualAmortizationValue: number | undefined;
+    monthlyAmortizationValue: number | undefined;
+    employeeName: string | undefined;
+    employeeId: number | undefined;
+    initialAmortizationValue: number | undefined;
+    describe: string | undefined;
 
+    constructor(data?: IAssetTransferDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.assetCode = _data["assetCode"];
+            this.assetName = _data["assetName"];
+            this.increaseAssetDate = _data["increaseAssetDate"] ? moment(_data["increaseAssetDate"].toString()) : <any>undefined;
+            this.reduceAssetDate = _data["reduceAssetDate"] ? moment(_data["reduceAssetDate"].toString()) : <any>undefined;
+            this.numberOfDayAmortization = _data["numberOfDayAmortization"];
+            this.numberOfDayUsedAsset = _data["numberOfDayUsedAsset"];
+            this.numberOfDayRemaing = _data["numberOfDayRemaing"];
+            this.orginalPrice = _data["orginalPrice"];
+            this.depreciationOfAsset = _data["depreciationOfAsset"];
+            this.residualValue = _data["residualValue"];
+            this.usageStatus = _data["usageStatus"];
+            this.reasonForReduction = _data["reasonForReduction"];
+            this.recoverableValue = _data["recoverableValue"];
+            this.increaseAssetId = _data["increaseAssetId"];
+            this.reduceAssetId = _data["reduceAssetId"];
+            this.assetTypeId = _data["assetTypeId"];
+            this.assetTypeName = _data["assetTypeName"];
+            this.assetStatusId = _data["assetStatusId"];
+            this.reasonReduceId = _data["reasonReduceId"];
+            this.reasonReduceName = _data["reasonReduceName"];
+            this.reasonReduceNote = _data["reasonReduceNote"];
+            this.lastModifierUserName = _data["lastModifierUserName"];
+            this.creatorUserName = _data["creatorUserName"];
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.departmentName = _data["departmentName"];
+            this.departmentId = _data["departmentId"];
+            this.startDate = _data["startDate"] ? moment(_data["startDate"].toString()) : <any>undefined;
+            this.endDate = _data["endDate"] ? moment(_data["endDate"].toString()) : <any>undefined;
+            this.userName = _data["userName"];
+            this.amortizationDate = _data["amortizationDate"] ? moment(_data["amortizationDate"].toString()) : <any>undefined;
+            this.monthlyAmortizationRate = _data["monthlyAmortizationRate"];
+            this.annualAmortizationRate = _data["annualAmortizationRate"];
+            this.annualAmortizationValue = _data["annualAmortizationValue"];
+            this.monthlyAmortizationValue = _data["monthlyAmortizationValue"];
+            this.employeeName = _data["employeeName"];
+            this.employeeId = _data["employeeId"];
+            this.initialAmortizationValue = _data["initialAmortizationValue"];
+            this.describe = _data["describe"];
+        }
+    }
+
+    static fromJS(data: any): AssetTransferDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AssetTransferDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["assetCode"] = this.assetCode;
+        data["assetName"] = this.assetName;
+        data["increaseAssetDate"] = this.increaseAssetDate ? this.increaseAssetDate.toISOString() : <any>undefined;
+        data["reduceAssetDate"] = this.reduceAssetDate ? this.reduceAssetDate.toISOString() : <any>undefined;
+        data["numberOfDayAmortization"] = this.numberOfDayAmortization;
+        data["numberOfDayUsedAsset"] = this.numberOfDayUsedAsset;
+        data["numberOfDayRemaing"] = this.numberOfDayRemaing;
+        data["orginalPrice"] = this.orginalPrice;
+        data["depreciationOfAsset"] = this.depreciationOfAsset;
+        data["residualValue"] = this.residualValue;
+        data["usageStatus"] = this.usageStatus;
+        data["reasonForReduction"] = this.reasonForReduction;
+        data["recoverableValue"] = this.recoverableValue;
+        data["increaseAssetId"] = this.increaseAssetId;
+        data["reduceAssetId"] = this.reduceAssetId;
+        data["assetTypeId"] = this.assetTypeId;
+        data["assetTypeName"] = this.assetTypeName;
+        data["assetStatusId"] = this.assetStatusId;
+        data["reasonReduceId"] = this.reasonReduceId;
+        data["reasonReduceName"] = this.reasonReduceName;
+        data["reasonReduceNote"] = this.reasonReduceNote;
+        data["lastModifierUserName"] = this.lastModifierUserName;
+        data["creatorUserName"] = this.creatorUserName;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["departmentName"] = this.departmentName;
+        data["departmentId"] = this.departmentId;
+        data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
+        data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
+        data["userName"] = this.userName;
+        data["amortizationDate"] = this.amortizationDate ? this.amortizationDate.toISOString() : <any>undefined;
+        data["monthlyAmortizationRate"] = this.monthlyAmortizationRate;
+        data["annualAmortizationRate"] = this.annualAmortizationRate;
+        data["annualAmortizationValue"] = this.annualAmortizationValue;
+        data["monthlyAmortizationValue"] = this.monthlyAmortizationValue;
+        data["employeeName"] = this.employeeName;
+        data["employeeId"] = this.employeeId;
+        data["initialAmortizationValue"] = this.initialAmortizationValue;
+        data["describe"] = this.describe;
+        return data; 
+    }
+
+    clone(): AssetTransferDto {
+        const json = this.toJSON();
+        let result = new AssetTransferDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAssetTransferDto {
+    id: number;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    assetCode: string;
+    assetName: string | undefined;
+    increaseAssetDate: moment.Moment | undefined;
+    reduceAssetDate: moment.Moment | undefined;
+    numberOfDayAmortization: number | undefined;
+    numberOfDayUsedAsset: number | undefined;
+    numberOfDayRemaing: number | undefined;
+    orginalPrice: number;
+    depreciationOfAsset: number | undefined;
+    residualValue: number | undefined;
+    usageStatus: string | undefined;
+    reasonForReduction: string | undefined;
+    recoverableValue: number | undefined;
+    increaseAssetId: number | undefined;
+    reduceAssetId: number | undefined;
+    assetTypeId: number | undefined;
+    assetTypeName: string | undefined;
+    assetStatusId: number;
+    reasonReduceId: number | undefined;
+    reasonReduceName: string | undefined;
+    reasonReduceNote: string | undefined;
+    lastModifierUserName: string | undefined;
+    creatorUserName: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    departmentName: string | undefined;
+    departmentId: number | undefined;
+    startDate: moment.Moment | undefined;
+    endDate: moment.Moment | undefined;
+    userName: string | undefined;
+    amortizationDate: moment.Moment;
+    monthlyAmortizationRate: number | undefined;
+    annualAmortizationRate: number | undefined;
+    annualAmortizationValue: number | undefined;
+    monthlyAmortizationValue: number | undefined;
+    employeeName: string | undefined;
+    employeeId: number | undefined;
+    initialAmortizationValue: number | undefined;
+    describe: string | undefined;
+}
+
+export class AssetTransferDtoListResultDto implements IAssetTransferDtoListResultDto {
+    items: AssetTransferDto[] | undefined;
+
+    constructor(data?: IAssetTransferDtoListResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(AssetTransferDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): AssetTransferDtoListResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AssetTransferDtoListResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): AssetTransferDtoListResultDto {
+        const json = this.toJSON();
+        let result = new AssetTransferDtoListResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAssetTransferDtoListResultDto {
+    items: AssetTransferDto[] | undefined;
+}
+//
 export class AssetTypeDto implements IAssetTypeDto {
     id: number | undefined;
     assetTypeCode: string;
@@ -10386,7 +10704,125 @@ export interface ITransferListDto {
     userCode: string | undefined;
     creationTime: moment.Moment;
 }
+//
+export class TransferDetailDto implements ITransferDetailDto {
+    id: number | undefined;
+    creationTime: moment.Moment;
+    transferId: number;
+    assetId: number;
+    describe: string;
+    creatorUserId: number | undefined;
+    creatorUserName: string | undefined;
 
+    constructor(data?: ITransferDetailDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.transferId = _data["transferId"];
+            this.assetId = _data["assetId"];
+            this.describe = _data["describe"];
+            this.creatorUserId = _data["creatorUserId"];
+            this.creatorUserName = _data["creatorUserName"];
+        }
+    }
+
+    static fromJS(data: any): TransferDetailDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TransferDetailDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["transferId"] = this.transferId;
+        data["assetId"] = this.assetId;
+        data["describe"] = this.describe;
+        data["creatorUserId"] = this.creatorUserId;
+        data["creatorUserName"] = this.creatorUserName;
+        return data; 
+    }
+
+    clone(): TransferDetailDto {
+        const json = this.toJSON();
+        let result = new TransferDetailDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITransferDetailDto {
+    id: number | undefined;
+    creationTime: moment.Moment;
+    transferId: number;
+    assetId: number;
+    describe: string;
+    creatorUserId: number | undefined;
+    creatorUserName: string | undefined;
+}
+
+export class TransferDetailDtoListResultDto implements ITransferDetailDtoListResultDto {
+    items: TransferDetailDto[] | undefined;
+
+    constructor(data?: ITransferDetailDtoListResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(TransferDetailDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): TransferDetailDtoListResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TransferDetailDtoListResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): TransferDetailDtoListResultDto {
+        const json = this.toJSON();
+        let result = new TransferDetailDtoListResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITransferDetailDtoListResultDto {
+    items: TransferDetailDto[] | undefined;
+}
+//
 export class UserDto implements IUserDto {
     id: number;
     userName: string;

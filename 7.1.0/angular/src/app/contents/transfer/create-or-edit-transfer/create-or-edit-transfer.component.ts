@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormGroup, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
-import { AssetDto, AssetServiceProxy, DepartmentDto, TransferDto, TransferInputDto, TransferServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AssetDto, AssetServiceProxy, AssetTransferDto, DepartmentDto, TransferDto, TransferInputDto, TransferServiceProxy } from '@shared/service-proxies/service-proxies';
+import * as moment from 'moment';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -27,6 +28,7 @@ export class CreateOrEditTransferComponent extends AppComponentBase implements O
   transferList:TransferInputDto[];
   deletedAssetListFromTable : AssetDto[] = [];
   addAssetToTransferList : AssetDto[] = [];
+  deleteAssetConfirmedList : AssetTransferDto[] = [];
   employeeList: any;//
   departmentList: DepartmentDto[] = [];
   transferStatusList : TransferDto[]=[]; //
@@ -88,11 +90,56 @@ export class CreateOrEditTransferComponent extends AppComponentBase implements O
     this.selectedAssetTable = [ ...this.selectedAssetTable, ...assetList];
     console.log("list =", this.selectedAssetTable);
   }
-  save(a? : any){
-
+  save(){
+    if (this.validateForm(this.submitForm?.form)) {
+      
+      this.saving= true;
+      // ghi tăng tài sản
+      debugger
+       this.transfer.creationTime =  moment.utc(this.transfer.creationTime.toString());
+       this.transfer.dateFound = moment.utc( this.transfer.dateFound.toString());
+          this.transferService.insertOrUpdateTransfer(this.transfer)
+          .pipe(finalize(() => (this.saving = false)))
+          .subscribe((result) => {
+            debugger
+              this.transfer = result;
+              this.notify.info(this.l("SavedSuccessfully"));
+              this.close();
+              // this.modalSave.emit(null);
+          });
+      }
   }
-  onDeleteAssetListFromTable(a?: any){
+  validateForm(form) {
+    Object.keys(form?.controls).forEach((key) => {
+        form.get(key).markAsTouched();
+    });
 
+    return form.valid;
+}
+  deleteAssetItemFromTable(asset : AssetTransferDto){
+    debugger
+    this.message.confirm(
+      this.l('Tài sản với tên ' + asset.assetName+ " sẽ bị xóa khỏi bảng"),
+      this.l('Bạn chắc chắn thực hiện chức năng này?'),
+      (isConfirmed) => {
+          if (isConfirmed) {
+              this.loading = true;
+              //xóa ở bảng
+              this.deletedAssetListFromTable.push(asset);
+            //  this.deletedAssetListFromTable.push(asset);
+              this.selectedAssetTable = this.selectedAssetTable.filter(x => x.id != asset.id);
+              // set tổng nguyên giá
+              this.selectedAssetTable.forEach((item) =>{
+                // this.suggestionHandling.totalAssetValue += item.orginalPrice;
+              })
+            //  this.deleteAssetList.forEach((item) => {
+              this.deleteAssetConfirmedList.push(asset);
+            //  });
+              // this.deleteAssetList = []; 
+
+          }
+      }
+  );
   }
   onSelectedAllAsset(event){
     if(event.target.checked){
@@ -127,6 +174,11 @@ export class CreateOrEditTransferComponent extends AppComponentBase implements O
   }
   setNumbersTransfer(){
 
+  }
+  onSelectDepartmentFromTableFromTable(asset : AssetTransferDto){
+    var index = this.selectedAssetTable.findIndex(c => c.id == asset.id);
+    this.selectedAssetTable[index].employeeId = null;
+    this.selectedAssetTable[index].departmentId = asset.departmentId;
   }
   onChangeAny(){}
   selecteAssetListToTransfer(){

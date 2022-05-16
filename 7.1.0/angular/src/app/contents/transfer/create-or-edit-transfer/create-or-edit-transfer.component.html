@@ -75,10 +75,10 @@
                         <th pResizableColumn pSortableColumn="departmentName" style="width:150px">
                             Bộ phận sử dụng
                         </th>
-                        <th pResizableColumn pSortableColumn="handlingMethodId" style="width:150px">
-                            Hình thức xử lí
+                        <th pResizableColumn pSortableColumn="departmentName" style="width:150px">
+                            Bộ phận mới
                         </th>
-                        <th pResizableColumn pSortableColumn="handlingMethod" style="width:150px">
+                        <th pResizableColumn pSortableColumn="describe" style="width:150px">
                             Ghi chú
                         </th>
 
@@ -94,15 +94,10 @@
                         <!-- <td style="width:120px">{{ assetSelected.orginalPrice }}</td>    -->
                         <td style="width:150px">{{ assetSelected.departmentName}}</td>
                         
-                        <!-- <td style="width:120px">{{ assetSelected.handlingMethod}}</td> -->
-                       
-                        <!-- <td style="width:150px">{{ assetSelected.departmentName}}</td> -->
-                         <td style="width:150px">
-                            <select name="handlingMethod" [(ngModel)]="assetSelected.handlingMethodId" class="form-control" (change)="onSelectHandlingMethodFromTable(assetSelected)"> 
-                                <option *ngFor="let handlingMethod of handlingMethodList" [value]="handlingMethod.id" >{{handlingMethod.handlingMethodName}}</option> 
-                            </select> 
+                        <td style="width:200px">
+                            
                         </td>    
-                        <td style="width:150px">{{ assetSelected.handlingMethod}}</td>
+                        <td style="width:150px">{{ assetSelected.department}}</td>
                         <!-- <td style="width:120px"></td>   -->
                        <!--  <td style="width:150px"><input type="number" class="input-number form-control" [(ngModel)]= "assetSelected.numberOfDayUsedAsset" (change)="renderAmortizationValueOfAssetFromTable(assetSelected)" min="1" required/></td> -->
                         <!-- <td style="width:200px">{{ assetSelected.amortizationValue}}</td>

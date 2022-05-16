@@ -27,8 +27,8 @@ export class AddAssetTransferComponent  extends  AppComponentBase implements OnI
   asset: AssetDto = new AssetDto();
   assetList : AssetDto[];
   totalRecords = 0;
-  selectedAssetReduceList : AssetDto[] = [];
-  handlingMethodList : any;//
+  selectedAssetTransferList : AssetDto[] = [];
+  handlingMethodList : any;//de
   selectedHandlingMethod: any;//
   // lebelTotalAssetSelected = 0;
   totalAsset = 0;
@@ -67,14 +67,6 @@ export class AddAssetTransferComponent  extends  AppComponentBase implements OnI
     this.modal.show();
     
   }
-  // getAssets(){
-  //   this.assetService.getAssets().subscribe((result)=>{
-      
-  //     this.assetHaveNotIncreaseList = result.items.filter((item)=> item.increaseAssetId == null);
-  //     this.assetList = this.assetHaveNotIncreaseList;
-  //   });
-   
-  // }
   getAssets(event?: LazyLoadEvent){
       this.primengTableHelper.showLoadingIndicator();
       this.loading = true;
@@ -88,15 +80,15 @@ export class AddAssetTransferComponent  extends  AppComponentBase implements OnI
     }
   save(){
     debugger
-    this.assetList = this.assetList.filter(x => !this.selectedAssetReduceList.map(y => y?.id).includes(x?.id));
-    this.selectedAssetReduceList;
-    this.selectedAssetReduceList.map((item) => {
+    this.assetList = this.assetList.filter(x => !this.selectedAssetTransferList.map(y => y?.id).includes(x?.id));
+    this.selectedAssetTransferList;
+    this.selectedAssetTransferList.map((item) => {
       item.departmentId = this.selectedDepartment.id;
       item.reasonReduceNote = this.asset.reasonReduceNote;
     })
-    this.modalSave.emit(this.selectedAssetReduceList);
+    this.modalSave.emit(this.selectedAssetTransferList);
 
-    this.selectedAssetReduceList = [];
+    this.selectedAssetTransferList = [];
     this.close();
   }
   close(): void {
@@ -107,22 +99,19 @@ export class AddAssetTransferComponent  extends  AppComponentBase implements OnI
     // this.submitForm.form.reset();
 
   }
-  // renderAmortizationValue(){
-  //   this.asset.monthlyAmortizationValue = Number(((this.asset.orginalPrice)/(this.asset.numberOfDayUsedAsset*12)).toFixed(3));
-  // }
   onSelectedAssetReduce(asset : AssetDto, event ){
     debugger
     console.log(event.target.checked);
     
     if(event.target.checked)
     {
-      this.selectedAssetReduceList.push(asset);
+      this.selectedAssetTransferList.push(asset);
       // this.lebelTotalAssetSelected ++;
     }
     else{
-      var index = this.selectedAssetReduceList?.indexOf(asset);
+      var index = this.selectedAssetTransferList?.indexOf(asset);
       if (index !== -1) {
-          this.selectedAssetReduceList.splice(index, 1);
+          this.selectedAssetTransferList.splice(index, 1);
       }   
       var a =this.selectedDepartment;
     }
@@ -130,13 +119,13 @@ export class AddAssetTransferComponent  extends  AppComponentBase implements OnI
   }
   clickUnTickAssetListSeleted(){
     debugger
-      for( let i = this.selectedAssetReduceList.length-1; i>= 0; i-- ){
+      for( let i = this.selectedAssetTransferList.length-1; i>= 0; i-- ){
         
         var selector = 'input[name="selectedAssetIncrease"]:checked'  ;
         $(selector).click();
     } 
   
-    this.selectedAssetReduceList = [];
+    this.selectedAssetTransferList = [];
     // this.lebelTotalAssetSelected = 0;
   }
   onSelectedAllAsset(event){
@@ -157,7 +146,7 @@ export class AddAssetTransferComponent  extends  AppComponentBase implements OnI
     }
   }
   cancel(){
-    this.selectedAssetReduceList = [];
+    this.selectedAssetTransferList = [];
     this.selectedDepartment = null;
     this.asset.reasonReduceNote = null;
     this.clickUnTickAssetListSeleted();
