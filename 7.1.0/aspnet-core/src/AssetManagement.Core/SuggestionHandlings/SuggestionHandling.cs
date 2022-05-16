@@ -26,8 +26,10 @@ namespace AssetManagement.SuggestionHandlings
         public String SuggestionHandlingStatusName { get; set; }
         public int? ApproverId { get; set; }
         public int? PetitionerId { get; set; }
+        public string? PetitionerName { get; set; }
         public int? UserId { get; set; }
-       
+        public string? CreatorUserName { get; set; }
+
         [ForeignKey(nameof(DepartmentId))]
         public Department Department { get; set; } // them tu department table
         public int? DepartmentId { get; set; }

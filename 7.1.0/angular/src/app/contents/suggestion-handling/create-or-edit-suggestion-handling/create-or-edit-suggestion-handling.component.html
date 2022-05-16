@@ -75,7 +75,7 @@
             </div>
             <div class="col-6">
                 <div _ngcontent-olq-c180="" class="form-group m-form__group align-items-center"><div _ngcontent-olq-c180="" class="input-group" style="justify-content: stretch">
-                    <button class="btn btn-increase-asset ml-1" >Xóa tài sản</button>
+                    <button class="btn btn-increase-asset ml-1" (click)="onDeleteAssetListFromTable()">Xóa tài sản</button>
                     <button style="position: absolute; right: 0px" class="btn btn-increase-asset ml-1" (click)="show()">Chọn tài sản</button>
                 </div>
                 </div>
@@ -145,12 +145,21 @@
                         <!-- <td style="width:120px">{{ assetSelected.handlingMethod}}</td> -->
                        
                         <!-- <td style="width:150px">{{ assetSelected.departmentName}}</td> -->
-                         <td style="width:150px">
+                         <!-- <td style="width:150px">
                             <select name="handlingMethod" [(ngModel)]="assetSelected.handlingMethodId" class="form-control" (change)="onSelectHandlingMethodFromTable(assetSelected)"> 
                                 <option *ngFor="let handlingMethod of handlingMethodList" [value]="handlingMethod.id" >{{handlingMethod.handlingMethodName}}</option> 
                             </select> 
                         </td>    
-                        <td style="width:150px">{{ assetSelected.handlingMethod}}</td>
+                        <td style="width:150px">{{ assetSelected.handlingMethod}}</td> -->
+
+                        <td style="width:200px">
+                            <select name="duration" [(ngModel)]="assetSelected.handlingMethodId" class="form-control" (change)="onSelectReasonReduceFromTable(assetSelected)"> 
+                                <option *ngFor="let reasonReduce of reasonReduceList" [value]="reasonReduce.id" >{{reasonReduce.reasonReduceName}}</option> 
+                            </select> 
+                        </td>
+                        <td style="width:150px">
+                            <input class="form-control" type="text" [(ngModel)]= "assetSelected.handlingMethod" (change)="onSelectReasonReduceNoteFromTable(assetSelected, assetSelected.handlingMethod)"/>
+                        </td>
                         <!-- <td style="width:120px"></td>   -->
                        <!--  <td style="width:150px"><input type="number" class="input-number form-control" [(ngModel)]= "assetSelected.numberOfDayUsedAsset" (change)="renderAmortizationValueOfAssetFromTable(assetSelected)" min="1" required/></td> -->
                         <!-- <td style="width:200px">{{ assetSelected.amortizationValue}}</td>

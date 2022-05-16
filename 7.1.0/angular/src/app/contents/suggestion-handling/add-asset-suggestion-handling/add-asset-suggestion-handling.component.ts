@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
 import { PrimengTableHelper } from '@shared/helpers/PrimengTableHelper';
 import { PagedListingComponentBase } from '@shared/paged-listing-component-base';
-import { AssetDto, AssetServiceProxy, ReasonReduceDto, ReasonReduceServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AssetDto, AssetServiceProxy, AssetSuggestionHandlingDto, ReasonReduceDto, ReasonReduceServiceProxy } from '@shared/service-proxies/service-proxies';
 import * as moment from 'moment';
 import { ModalDirective } from 'ngx-bootstrap/modal/modal.directive';
 import { SortEvent } from 'primeng/api';
@@ -68,10 +68,14 @@ export class AddAssetSuggestionHandlingComponent  extends  AppComponentBase impl
   //   }
   // }
 
-  show(revertAssetList?: AssetDto[]){
+  show(revertAssetList?: AssetDto[], selectedAssetList? : any[]){
     debugger
-    if(revertAssetList.length > 0){
+    if(revertAssetList?.length > 0){
       this.assetList = [ ...this.assetList, ...revertAssetList];
+    }
+    if(selectedAssetList?.length > 0)
+    {
+      this.assetList = this.assetList.filter(x => !selectedAssetList.map(y => y?.id).includes(x?.id));
     }
     this.assetList.sort((a,b) => a.assetCode.localeCompare(b.assetCode));
     this.modal.show();
@@ -96,8 +100,9 @@ export class AddAssetSuggestionHandlingComponent  extends  AppComponentBase impl
       this.assetService.getAssets()
       .subscribe(result => {
         this.loading = false;
+        debugger
           this.assetList = result.items.filter((item)=> item.reduceAssetId == null);
-          debugger
+        
           this.totalAsset = this.assetList.length-1;
           // this.assetList.map((item)=>{ 
           //   // item.creationTime = item.creationTime? moment(item.creationTime).format("DD/MM/YYYY") : undefined;
@@ -127,11 +132,11 @@ export class AddAssetSuggestionHandlingComponent  extends  AppComponentBase impl
     //   }
     debugger
     this.assetList = this.assetList.filter(x => !this.selectedAssetReduceList.map(y => y?.id).includes(x?.id));
-    this.selectedAssetReduceList;
     this.selectedAssetReduceList.map((item) => {
       item.reasonReduceId = this.selectedReasonReduce.id;
       item.reasonReduceNote = this.asset.reasonReduceNote;
     })
+    console.log("1 =",this.selectedAssetReduceList);
     this.modalSave.emit(this.selectedAssetReduceList);
 
     this.selectedAssetReduceList = [];

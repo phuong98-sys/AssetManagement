@@ -28,6 +28,7 @@ namespace AssetManagement.SuggestionHandlings.DTO
         public int? PetitionerId { get; set; }
         public string? PetitionerName { get; set; }
         public int? UserId { get; set; }
+        public string? CreatorUserName { get; set; }
         public int? DepartmentId { get; set; }
         public string? DepartmentName { get; set; }
     }
@@ -49,6 +50,7 @@ namespace AssetManagement.SuggestionHandlings.DTO
         public int? PetitionerId { get; set; }
         public string? PetitionerName { get; set; }
         public int? UserId { get; set; }
+        public string? CreatorUserName { get; set; }
         public int? DepartmentId { get; set; }
         public string? DepartmentName { get; set; }
     }
@@ -70,6 +72,7 @@ namespace AssetManagement.SuggestionHandlings.DTO
         public int? HandlingMethodId { get; set; }
         public long? CreatorUserId { get; set; }
         public string? CreatorUserName { get; set; }
+
 
     }
     [AutoMapTo(typeof(SuggestionHandlingDetail))]
