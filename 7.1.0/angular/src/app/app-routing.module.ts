@@ -26,14 +26,14 @@ import { SuggestionHandlingComponent } from './contents/suggestion-handling/sugg
 import { CreateOrEditSuggestionHandlingComponent } from './contents/suggestion-handling/create-or-edit-suggestion-handling/create-or-edit-suggestion-handling.component';
 import { AddAssetSuggestionHandlingComponent } from './contents/suggestion-handling/add-asset-suggestion-handling/add-asset-suggestion-handling.component';
 import { CreateOrEditAssetTypeComponent } from './contents/asset-type/create-or-edit-asset-type/create-or-edit-asset-type.component';
-import { DepreciationAssetComponent } from './aontents/depreciation-asset/depreciation-asset.component';
-import { CreateOrEditDepreciationAssetComponent } from './aontents/depreciation-asset/create-or-edit-depreciation-asset/create-or-edit-depreciation-asset.component';
+import { CreateOrEditDepreciationAssetComponent } from './contents/depreciation/create-or-edit-depreciation-asset/create-or-edit-depreciation-asset.component';
 import { TransferComponent } from './contents/transfer/transfer.component';
 import { CreateOrEditTransferComponent } from './contents/transfer/create-or-edit-transfer/create-or-edit-transfer.component';
 import { AddAssetTransferComponent } from './contents/transfer/add-asset-transfer/add-asset-transfer.component';
 import { CreateOrEditPlaneMaintainComponent } from './contents/plane-maintain/create-or-edit-plane-maintain/create-or-edit-plane-maintain.component';
 import { CreateOrEditProposeAssetComponent } from './contents/propose-asset/create-or-edit-propose-asset/create-or-edit-propose-asset.component';
 import { CreateOrEditPlaneShopComponent } from './contents/plane-shop/create-or-edit-plane-shop/create-or-edit-plane-shop.component';
+import { DepreciationComponent } from './contents/depreciation/depreciation/depreciation.component';
 //import { AddAssetProposeAssetComponent } from './contents/propose-asset/add-asset-propose-asset/add-asset-propose-asset.component';
 
 @NgModule({
@@ -81,7 +81,7 @@ import { CreateOrEditPlaneShopComponent } from './contents/plane-shop/create-or-
                         {path: 'suggestion-handling/create', component: CreateOrEditSuggestionHandlingComponent, canActivate: [AppRouteGuard] },
                         {path: 'suggestion-handling/:id', component: CreateOrEditSuggestionHandlingComponent, canActivate: [AppRouteGuard] },
                         {path: 'suggestion-handling/addAsset', component: AddAssetSuggestionHandlingComponent, canActivate: [AppRouteGuard] },
-                        {path: 'depreciation-asset', component: DepreciationAssetComponent, canActivate: [AppRouteGuard] },
+                        {path: 'depreciation-asset', component: DepreciationComponent, canActivate: [AppRouteGuard] },
                         {path: 'depreciation-asset/create', component: CreateOrEditDepreciationAssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'depreciation-asset/:id', component: CreateOrEditDepreciationAssetComponent, canActivate: [AppRouteGuard] },
                         {path: 'transfer', component: TransferComponent, canActivate: [AppRouteGuard] },

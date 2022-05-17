@@ -1,8 +1,11 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
 using Abp.Runtime.Session;
+using Abp.Timing;
 using Abp.UI;
 using AssetManagement.Assets.DTO;
+using AssetManagement.Depreciations;
+using AssetManagement.Depreciations.DTO;
 using AssetManagement.SuggestionHandlingDetails;
 using AssetManagement.SuggestionHandlings;
 using AssetManagement.SuggestionHandlings.DTO;
@@ -19,11 +22,14 @@ namespace AssetManagement.Assets
     {
         private readonly IRepository<Asset> _assetRepository;
         private readonly IRepository<SuggestionHandlingDetail> _suggestionHandlingDetailRepository;
+        private readonly IRepository<DepreciationDetail> _depreciationDetailRepository;
         public AssetAppService(IRepository<Asset> assetRepository,
-            IRepository<SuggestionHandlingDetail> suggestionHandlingDetailRepository)
+            IRepository<SuggestionHandlingDetail> suggestionHandlingDetailRepository,
+            IRepository<DepreciationDetail> depreciationDetailRepository)
         {
             _assetRepository = assetRepository;
             _suggestionHandlingDetailRepository = suggestionHandlingDetailRepository;
+            _depreciationDetailRepository = depreciationDetailRepository;
         }
         public async Task<ListResultDto<AssetDto>> GetAssets()
         {
@@ -38,12 +44,13 @@ namespace AssetManagement.Assets
                         AssetName = a.AssetName,
                         IncreaseAssetDate = a.IncreaseAssetDate,
                         //NumberOfDayAmortization = 1,
-                        NumberOfDayUsedAsset = a.NumberOfDayUsedAsset,
+                        OrginalPrice = a.OrginalPrice,                  //  nguyên giá
+                        MonthlyAmortizationValue = a.MonthlyAmortizationValue, // giá trị khấu hao tháng
+                        DepreciationOfAsset = a.DepreciationOfAsset,            // khấu hao lũy kế
+                        ResidualValue = a.ResidualValue,                    // giá trị còn lại
+                        NumberOfDayUsedAsset = a.NumberOfDayUsedAsset,      // số năm sử dụng
+                        AmortizationDate = a.AmortizationDate,                 // ngày bắt đầu tính khấu hao
                         NumberOfDayRemaing = a.NumberOfDayRemaing,
-                        OrginalPrice = a.OrginalPrice,
-                        MonthlyAmortizationValue = a.MonthlyAmortizationValue,
-                        DepreciationOfAsset = a.DepreciationOfAsset,
-                        ResidualValue = a.ResidualValue,
                         UsageStatus = a.AssetStatus.AssetStatusName,
                         ReasonForReduction = a.ReasonReduce.ReasonReduceName,
                         RecoverableValue= a.RecoverableValue,
@@ -62,6 +69,7 @@ namespace AssetManagement.Assets
                         StartDate = a.StartDate,
                         AnnualAmortizationValue = a.AnnualAmortizationValue,
                         CreatorUserName = a.User.Name
+                      
                     }).ToListAsync();
                 var assetDtos = ObjectMapper.Map<List<AssetDto>>(assets);
                 return new ListResultDto<AssetDto>(assetDtos);
@@ -72,6 +80,7 @@ namespace AssetManagement.Assets
 
             }
         }
+       
         public async Task<AssetListDto> InsertOrUpdateAsset(AssetInputDto input)
         {
             try
@@ -241,6 +250,182 @@ namespace AssetManagement.Assets
             }
 
         }
+        public double SetDepreciation(DateTime Date)
+        {
+            var Today = Clock.Now;
+            var DifferenceMonth = ((Today.Year - Date.Year) * 12) + Today.Month - Date.Month - 1;
+            var NumberDayOfMonth1 = DateTime.DaysInMonth(Today.Year, Today.Month);
+            var NumberDayOfMonth2 = DateTime.DaysInMonth(Date.Month, Date.Month);
+            var NumberOfDay1 = Today.Day;
+            var NumberOfDay2 = NumberDayOfMonth2 - Date.Day + 1;
+            var Month1 = (double)NumberOfDay1 / NumberDayOfMonth1;
+            var Month2 = (double)NumberOfDay2 / NumberDayOfMonth2;
+
+            var TotalMonth = Month1 + DifferenceMonth + Month2;
+            if (TotalMonth < 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return Math.Round(TotalMonth, 3, MidpointRounding.AwayFromZero);
+            }
+
+        }
+        public double SetDepreciationByMonth(DateTime Date, int Month, int Year)
+        {
+            var DifferenceMonth = ((Year - Date.Year) * 12) + Month - Date.Month;
+            var NumberDayOfMonth2 = DateTime.DaysInMonth(Date.Month, Date.Month);
+            var NumberOfDay2 = NumberDayOfMonth2 - Date.Day + 1;
+            var Month2 = (double)NumberOfDay2 / NumberDayOfMonth2;
+
+            var TotalMonth = DifferenceMonth + Month2;
+            if (TotalMonth < 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return Math.Round(TotalMonth, 3, MidpointRounding.AwayFromZero);
+            }
+
+
+        }
+        public async Task<ListResultDto<AssetDto>> GetAssetDepreciations(List<AssetDto> assetList)
+        {
+            try
+            {
+                //var query = _assetRepository.GetAll();
+                //var queryLeftJoin = from q in query
+                //                    join a in assetList on q.Id equals a.Id into ps
+                //                    from u in ps.DefaultIfEmpty()
+                //                    select new { query = q };
+                //var assets = await queryLeftJoin
+                //    .Select(a => new AssetDto
+                //    {
+                //        Id = a.query.Id,
+                //        AssetCode = a.query.AssetCode,
+                //        AssetName = a.query.AssetName,
+                //        IncreaseAssetDate = a.query.IncreaseAssetDate,
+                //        NumberOfDayRemaing = a.query.NumberOfDayRemaing,
+
+                //        AmortizationDate = a.query.AmortizationDate,                 // ngày bắt đầu tính khấu hao
+                //        OrginalPrice = a.query.OrginalPrice,                  //  nguyên giá
+                //        MonthlyAmortizationValue = a.query.MonthlyAmortizationValue, // giá trị khấu hao tháng
+                //        DepreciationOfAsset = a.query.DepreciationOfAsset,          // khấu hao lũy kế
+                //        ResidualValue = a.query.OrginalPrice,                    // giá trị còn lại
+                //        NumberOfDayUsedAsset = a.query.NumberOfDayUsedAsset,      // số năm sử dụng
+
+
+                //        UsageStatus = a.query.AssetStatus.AssetStatusName,
+                //        ReasonForReduction = a.query.ReasonReduce.ReasonReduceName,
+                //        RecoverableValue = a.query.RecoverableValue,
+                //        IncreaseAssetId = a.query.IncreaseAssetId,
+                //        AssetTypeId = a.query.AssetTypeId,
+                //        AssetTypeName = a.query.AssetType.AssetTypeName,
+                //        AssetStatusId = a.query.AssetStatusId,
+                //        CreationTime = a.query.CreationTime,
+                //        ReduceAssetId = a.query.ReduceAssetId,
+                //        ReasonReduceName = a.query.ReasonReduce.ReasonReduceName,
+                //        ReasonReduceId = a.query.ReasonReduceId,
+                //        ReasonReduceNote = a.query.ReasonReduceNote,
+                //        CreatorUserId = a.query.CreatorUserId,
+                //        DepartmentName = a.query.Department.DepartmentName,
+                //        EmployeeName = a.query.Employee.EmployeeName,
+                //        StartDate = a.query.StartDate,
+                //        AnnualAmortizationValue = a.query.AnnualAmortizationValue,
+                //        CreatorUserName = a.query.User.Name
+                //    }).ToListAsync();
+                //foreach (  var assetDepreciation in assets)
+                // {
+                //     ass
+                // }
+                 assetList.ForEach(asset =>
+                {
+                    asset.AmortizationDate = asset.AmortizationDate;              // ngày bắt đầu tính khấu hao
+                    asset.OrginalPrice = asset.OrginalPrice;          //  nguyên giá
+                    asset.MonthlyAmortizationValue = asset.MonthlyAmortizationValue; // giá trị khấu hao tháng
+                    asset.DepreciationOfAsset = asset.DepreciationOfAsset + (SetDepreciation(asset.AmortizationDate) * asset.MonthlyAmortizationValue);            // khấu hao lũy kế
+                    asset.ResidualValue = asset.OrginalPrice - asset.DepreciationOfAsset;                 // giá trị còn lại
+                    asset.NumberOfDayUsedAsset = asset.NumberOfDayUsedAsset;      // số năm sử dụng
+                });
+                //var assetDtos = ObjectMapper.Map<List<AssetDto>>(assetList);
+                return new ListResultDto<AssetDto>(assetList);
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+        }
+        public async Task<ListResultDto<AssetDto>> GetAssetDepreciationsByMonth(List<AssetDto> assetList, int month, int year)
+        {
+            try
+            {
+
+                var query = _assetRepository.GetAll();
+                var queryLeftJoin = from q in query
+                                    join a in assetList on q.Id equals a.Id into ps
+                                    from u in ps.DefaultIfEmpty()
+                                    select new { query = q};
+                var assets = await queryLeftJoin
+                    .Select(a => new AssetDto
+                    {
+                        Id = a.query.Id,
+                        AssetCode = a.query.AssetCode,
+                        AssetName = a.query.AssetName,
+                        IncreaseAssetDate = a.query.IncreaseAssetDate,
+                        NumberOfDayRemaing = a.query.NumberOfDayRemaing,
+
+                        AmortizationDate = a.query.AmortizationDate,                 // ngày bắt đầu tính khấu hao
+                        OrginalPrice = a.query.OrginalPrice,                  //  nguyên giá
+                        MonthlyAmortizationValue = a.query.MonthlyAmortizationValue, // giá trị khấu hao tháng
+                        DepreciationOfAsset = a.query.DepreciationOfAsset,          // khấu hao lũy kế
+                        ResidualValue = a.query.OrginalPrice,                    // giá trị còn lại
+                        NumberOfDayUsedAsset = a.query.NumberOfDayUsedAsset,      // số năm sử dụng
+
+
+                        UsageStatus = a.query.AssetStatus.AssetStatusName,
+                        ReasonForReduction = a.query.ReasonReduce.ReasonReduceName,
+                        RecoverableValue = a.query.RecoverableValue,
+                        IncreaseAssetId = a.query.IncreaseAssetId,
+                        AssetTypeId = a.query.AssetTypeId,
+                        AssetTypeName = a.query.AssetType.AssetTypeName,
+                        AssetStatusId = a.query.AssetStatusId,
+                        CreationTime = a.query.CreationTime,
+                        ReduceAssetId = a.query.ReduceAssetId,
+                        ReasonReduceName = a.query.ReasonReduce.ReasonReduceName,
+                        ReasonReduceId = a.query.ReasonReduceId,
+                        ReasonReduceNote = a.query.ReasonReduceNote,
+                        CreatorUserId = a.query.CreatorUserId,
+                        DepartmentName = a.query.Department.DepartmentName,
+                        EmployeeName = a.query.Employee.EmployeeName,
+                        StartDate = a.query.StartDate,
+                        AnnualAmortizationValue = a.query.AnnualAmortizationValue,
+                        CreatorUserName = a.query.User.Name
+                    }).ToListAsync();
+                //foreach (  var assetDepreciation in assets)
+                // {
+                //     ass
+                // }
+                assets.ForEach(asset =>
+                {
+                    asset.AmortizationDate = asset.AmortizationDate;              // ngày bắt đầu tính khấu hao
+                    asset.OrginalPrice = asset.OrginalPrice;          //  nguyên giá
+                    asset.MonthlyAmortizationValue = asset.MonthlyAmortizationValue; // giá trị khấu hao tháng
+                    asset.DepreciationOfAsset = asset.DepreciationOfAsset + (SetDepreciationByMonth(asset.AmortizationDate, month, year) * asset.MonthlyAmortizationValue);            // khấu hao lũy kế
+                    asset.ResidualValue = asset.OrginalPrice - asset.DepreciationOfAsset;                 // giá trị còn lại
+                    asset.NumberOfDayUsedAsset = asset.NumberOfDayUsedAsset;      // số năm sử dụng
+                });
+                var assetDtos = ObjectMapper.Map<List<AssetDto>>(assets);
+                return new ListResultDto<AssetDto>(assetDtos);
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+        }
         public async Task<ListResultDto<SuggestionHandlingDetailDto>> SuggestionHandlingList(List<AssetSuggestionHandlingDto> inputList, int suggestionHandlingId, int index)
         {
             try
@@ -269,8 +454,8 @@ namespace AssetManagement.Assets
                         else
                         {
                             var suggestionHandlingDetail = new SuggestionHandlingDetailInputDto();
-                            suggestionHandlingDetail.AssetId = (int)asset.Id;
-                            suggestionHandlingDetail.SuggestionHandlingId = suggestionHandlingId;
+                            suggestionHandlingDetail.AssetId = asset.Id;
+                            suggestionHandlingDetail.SuggestionHandlingId = (int)suggestionHandlingId;
                             suggestionHandlingDetail.HandlingMethodId = asset.HandlingMethodId;
                             suggestionHandlingDetail.HandlingMethod = asset.HandlingMethod;
                             suggestionHandlingDetail.CreatorUserId = AbpSession.GetUserId();
@@ -300,6 +485,7 @@ namespace AssetManagement.Assets
                     }
                     return null;
                 }
+                
                 return null;
                
             }
@@ -308,6 +494,119 @@ namespace AssetManagement.Assets
                 throw (e);
             }
 
+        }
+        public async Task<ListResultDto<DepreciationDetailDto>> DepreciationList(List<AssetDto> inputList, int depreciationId, int index)
+        {
+            try
+            {
+                if (index == 0)
+                {
+                    var depreciationDetailList = new List<DepreciationDetail>();
+                    foreach (var asset in inputList)
+                    {
+                        var depreciationDetailForEdit = await _depreciationDetailRepository.FirstOrDefaultAsync(x => x.AssetId == asset.Id && x.DepreciationId == depreciationId);
+                        if (depreciationDetailForEdit != null)
+                        {
+                            //edit asser
+                            //var assetForEdit = await _assetRepository.FirstOrDefaultAsync(x => x.Id == asset.Id);
+                            //assetForEdit.isDepreciation = true;
+                            //ObjectMapper.Map(asset, assetForEdit);
+                            // edit depreciation
+
+                            var depreciationDetail = new DepreciationDetailInputDto();
+                            depreciationDetailForEdit.AmortizationDate = asset.AmortizationDate;
+                            depreciationDetailForEdit.OrginalPrice = asset.OrginalPrice;
+                            depreciationDetailForEdit.MonthlyAmortizationValue = asset.MonthlyAmortizationValue == null ? 0 : (double)asset.MonthlyAmortizationValue;
+                            depreciationDetailForEdit.DepreciationOfAsset = asset.DepreciationOfAsset == null ? 0 : (double)asset.DepreciationOfAsset;
+                            depreciationDetailForEdit.ResidualValue = asset.ResidualValue == null ? 0 : (double)asset.ResidualValue;
+                            depreciationDetailForEdit.NumberOfDayUsedAsset = (int)asset.NumberOfDayUsedAsset;
+                            //ObjectMapper.Map<DepreciationDetail>(depreciationDetailForEdit);
+                            await _depreciationDetailRepository.UpdateAsync(depreciationDetailForEdit);
+                            //await CurrentUnitOfWork.SaveChangesAsync();
+                            depreciationDetailList.Add(depreciationDetailForEdit);
+                        }
+                        else
+                        {
+                            var depreciationDetail = new DepreciationDetailInputDto();
+                            depreciationDetail.AssetId = (int)asset.Id;
+                            depreciationDetail.DepreciationId = depreciationId;
+                            depreciationDetail.AmortizationDate = asset.AmortizationDate;
+                            depreciationDetail.OrginalPrice = asset.OrginalPrice;
+                            depreciationDetail.MonthlyAmortizationValue = asset.MonthlyAmortizationValue == null ?0 : (double)asset.MonthlyAmortizationValue;
+                            depreciationDetail.DepreciationOfAsset = asset.DepreciationOfAsset == null ? 0 :  (double)asset.DepreciationOfAsset;
+                            depreciationDetail.ResidualValue = asset.ResidualValue == null ? 0 : (double)asset.ResidualValue;
+                            depreciationDetail.NumberOfDayUsedAsset = (int)asset.NumberOfDayUsedAsset;
+                            depreciationDetail.CreatorUserId = AbpSession.GetUserId();
+                            var depreciationDetail2 = ObjectMapper.Map<DepreciationDetail>(depreciationDetail);
+                            depreciationDetailList.Add(depreciationDetail2);
+                            await _depreciationDetailRepository.InsertAsync(depreciationDetail2);
+                            await CurrentUnitOfWork.SaveChangesAsync();
+                            ObjectMapper.Map<DepreciationDetail>(depreciationDetail2);
+                            //insert
+                            //edit asset
+                            var assetForEdit = await _assetRepository.FirstOrDefaultAsync(x => x.Id == asset.Id);
+                                var a = assetForEdit;
+                            a.isDepreciation = true;
+                            ObjectMapper.Map(a, assetForEdit);
+                        }
+
+                    }
+                    var depreciationDetailList2 = ObjectMapper.Map<List<DepreciationDetailDto>>(depreciationDetailList);
+                    return new ListResultDto<DepreciationDetailDto>(depreciationDetailList2);
+                }
+                if (index == 1)
+                {
+                    foreach (var asset in inputList)
+                    {
+                        var depreciationDetailForEdit = await _depreciationDetailRepository.FirstOrDefaultAsync(x => x.AssetId == asset.Id && x.DepreciationId == depreciationId);
+                        if (depreciationDetailForEdit != null)
+                        {
+                            _depreciationDetailRepository.Delete(depreciationDetailForEdit);
+                            //await CurrentUnitOfWork.SaveChangesAsync();
+                        }
+
+
+                    }
+                    return null;
+                }
+                return null;
+
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+
+        }
+        public async Task<ListResultDto<AssetDto>> test(List<AssetDto> inputList, int year, int month)
+        {
+            if( year > 0 && month > 0)
+            {
+                inputList.ForEach(asset =>
+                {
+                    asset.AmortizationDate = asset.AmortizationDate;              // ngày bắt đầu tính khấu hao
+                    asset.OrginalPrice = asset.OrginalPrice;          //  nguyên giá
+                    asset.MonthlyAmortizationValue = asset.MonthlyAmortizationValue; // giá trị khấu hao tháng
+                    asset.DepreciationOfAsset = asset.DepreciationOfAsset + (SetDepreciationByMonth(asset.AmortizationDate, month, year) * asset.MonthlyAmortizationValue);            // khấu hao lũy kế
+                    asset.ResidualValue = asset.OrginalPrice - asset.DepreciationOfAsset;                 // giá trị còn lại
+                    asset.NumberOfDayUsedAsset = asset.NumberOfDayUsedAsset;      // số năm sử dụng
+                });
+            }
+            else
+            {
+                inputList.ForEach(asset =>
+                {
+                    asset.AmortizationDate = asset.AmortizationDate;              // ngày bắt đầu tính khấu hao
+                    asset.OrginalPrice = asset.OrginalPrice;          //  nguyên giá
+                    asset.MonthlyAmortizationValue = asset.MonthlyAmortizationValue; // giá trị khấu hao tháng
+                    asset.DepreciationOfAsset = asset.DepreciationOfAsset + (SetDepreciation(asset.AmortizationDate) * asset.MonthlyAmortizationValue);            // khấu hao lũy kế
+                    asset.ResidualValue = asset.OrginalPrice - asset.DepreciationOfAsset;                 // giá trị còn lại
+                    asset.NumberOfDayUsedAsset = asset.NumberOfDayUsedAsset;      // số năm sử dụng
+                });
+            }
+            
+            var assetDtos = ObjectMapper.Map<List<AssetDto>>(inputList);
+            return new ListResultDto<AssetDto>(assetDtos);
         }
         public async Task<ListResultDto<AssetSuggestionHandlingDto>> GetSuggestionHandling(int suggestionHandlingId)
         {
@@ -363,6 +662,59 @@ namespace AssetManagement.Assets
             }
 
         }
+        public async Task<ListResultDto<AssetDto>> GetDepreciation(int depreciationId)
+        {
+            try
+            {
+                var query = _assetRepository.GetAll();
+                var queryLeftJoin = from s in _depreciationDetailRepository.GetAll().Where(x => x.DepreciationId == depreciationId)
+                                    join a in query on s.AssetId equals a.Id into ps
+                                    from u in ps.DefaultIfEmpty()
+                                    select new { query = u , depreciation = s};
+                var assets = await queryLeftJoin
+                    .Select(t => new AssetDto
+                    {
+                        Id = t.query.Id,
+                        AssetCode = t.query.AssetCode,
+                        AssetName = t.query.AssetName,
+                        IncreaseAssetDate = t.query.IncreaseAssetDate,
+                        NumberOfDayRemaing = t.query.NumberOfDayRemaing,
+                        UsageStatus = t.query.AssetStatus.AssetStatusName,
+                        ReasonForReduction = t.query.ReasonReduce.ReasonReduceName,
+                        RecoverableValue = t.query.RecoverableValue,
+                        IncreaseAssetId = t.query.IncreaseAssetId,
+                        AssetTypeId = t.query.AssetTypeId,
+                        AssetTypeName = t.query.AssetType.AssetTypeName,
+                        AssetStatusId = t.query.AssetStatusId,
+                        CreationTime = t.query.CreationTime,
+                        ReduceAssetId = t.query.ReduceAssetId,
+                        ReasonReduceId = t.query.ReasonReduceId,
+                        CreatorUserId = t.query.CreatorUserId,
+                        DepartmentName = t.query.Department.DepartmentName,
+                        EmployeeName = t.query.Employee.EmployeeName,
+                        StartDate = t.query.StartDate,
+                        AnnualAmortizationValue = t.query.AnnualAmortizationValue,
+                        ReasonReduceNote = t.query.ReasonReduceNote,
+                        CreatorUserName = t.query.User.Name,
+                        DepartmentId = t.query.DepartmentId,
+                        EmployeeId = t.query.EmployeeId,
+                        AmortizationDate = t.depreciation.AmortizationDate,
+                        OrginalPrice = t.depreciation.OrginalPrice,
+                        MonthlyAmortizationValue = t.depreciation.MonthlyAmortizationValue,
+                        DepreciationOfAsset = t.depreciation.DepreciationOfAsset,
+                        ResidualValue = t.depreciation.ResidualValue,
+                        NumberOfDayUsedAsset = t.depreciation.NumberOfDayUsedAsset
+                    })
+                .ToListAsync();
+                var assetDtos = ObjectMapper.Map<List<AssetDto>>(assets);
+                return new ListResultDto<AssetDto>(assetDtos);
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+
+        }
         public async Task DeleteSuggestionHandling(List<AssetSuggestionHandlingDto> inputList , int suggestionHandlingId)
         {
             try
@@ -376,6 +728,27 @@ namespace AssetManagement.Assets
                         //await CurrentUnitOfWork.SaveChangesAsync();
                     }
                    
+                }
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+
+        }
+        public async Task DeleteDepreciation(List<AssetDto> inputList, int depreciationId)
+        {
+            try
+            {
+                foreach (var asset in inputList)
+                {
+                    var depreciationDetailForEdit = await _depreciationDetailRepository.FirstOrDefaultAsync(x => x.AssetId == asset.Id && x.DepreciationId == depreciationId);
+                    if (depreciationDetailForEdit != null)
+                    {
+                        _depreciationDetailRepository.Delete(depreciationDetailForEdit);
+                        //await CurrentUnitOfWork.SaveChangesAsync();
+                    }
+
                 }
             }
             catch (Exception e)

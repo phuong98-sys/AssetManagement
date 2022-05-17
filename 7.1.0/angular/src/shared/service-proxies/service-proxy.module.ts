@@ -25,6 +25,7 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.PlaneMaintainServiceProxy,
         ApiServiceProxies.ProposeAssetServiceProxy,
         ApiServiceProxies.PlaneShopServiceProxy,
+        ApiServiceProxies.DepreciationServiceProxy,
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }
     ]
 })

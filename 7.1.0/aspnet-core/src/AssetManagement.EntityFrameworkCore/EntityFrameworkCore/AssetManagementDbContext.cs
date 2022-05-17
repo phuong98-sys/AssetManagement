@@ -19,6 +19,7 @@ using AssetManagement.Employees;
 using AssetManagement.Transfers;
 using AssetManagement.PlaneMaintains;
 using AssetManagement.ProposeAssetDetails;
+using AssetManagement.Depreciations;
 
 namespace AssetManagement.EntityFrameworkCore
 {
@@ -41,6 +42,8 @@ namespace AssetManagement.EntityFrameworkCore
         public DbSet<Transfer> Transfers { get; set; }
         public DbSet<PlaneMaintain> PlaneMaintains { get; set; }
         public DbSet<ProposeAssetDetail> ProposeAssetDetails { get; set; }
+        public DbSet<Depreciation> Depreciations { get; set; }
+        public DbSet<DepreciationDetail> DepreciationDtails { get; set; }
         public AssetManagementDbContext(DbContextOptions<AssetManagementDbContext> options)
             : base(options)
         {

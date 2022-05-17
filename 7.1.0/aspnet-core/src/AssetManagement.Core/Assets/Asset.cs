@@ -74,6 +74,7 @@ namespace AssetManagement.Assets
 
         public int? EmployeeId { get; set; }
         public double? InitialAmortizationValue { get; set; }
+        public bool? isDepreciation { get; set; }
 
         public Asset()
         {

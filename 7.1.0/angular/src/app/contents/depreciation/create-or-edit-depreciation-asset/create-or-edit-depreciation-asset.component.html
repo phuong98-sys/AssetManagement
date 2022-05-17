@@ -1,0 +1,160 @@
+<div class="increase-asset-component" busyIf="loading">
+    <div class="header-title-container main-header navbar navbar-expand navbar-white navbar-light" style="margin-left: 0 !important">
+        <h4 class="header-title">
+            <span class="title-page parent-title" (click)="close()">Chứng từ khấu hao</span>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="title-page title-child" *ngIf="depreciation?.id">{{"Sửa chứng từ" | localize}}</span>
+            <span class="title-page title-child" *ngIf="!depreciation?.id">{{"Tạo mới chứng từ" | localize}}</span>
+        </h4>
+    </div>
+    <div class="increase-asset-container">
+        <div class="increase-asset-content pd-0">
+            <form #depreciationForm="ngForm" novalidate (ngSubmit)="save()" (keydown.enter)="$event.preventDefault()">        
+                <div class="modal-body row bg-white">
+                    <div class="title-page text-title col-12" style="margin-bottom: 10px;">Thông tin chứng từ</div>
+
+                    <div class="form-group col-2">
+                        <label for="year">{{"Năm" | localize}} *</label>
+                        <input id="year" #year="ngModel" type="number" name="year" class="form-control" [(ngModel)]="depreciation.year" required maxlength="256" (change)="setDepreciationCode()" min="1" />
+                    </div>
+                    <div class="form-group col-2">
+                        <label for="month">{{"Tháng" | localize}} *</label>
+                        <input id="month" #month="ngModel" type="number" name="month" class="form-control" [(ngModel)]="depreciation.month" required maxlength="256" (change)="setDepreciationCode()" min="1" max="12" />
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="AssetCode">{{"Mã chứng từ" | localize}} *</label>
+                        <input id="AssetCode" #assetCode="ngModel" type="text" name="AssetCode" class="form-control" [(ngModel)]="depreciation.depreciationCode" required maxlength="256" (change)="setDepreciationCode()"/>
+                        <div style="display: grid;">
+                            <span *ngIf="!depreciation.depreciationCode" class="error-message">Trường này không được để trống</span> 
+                            <span class="error-message" *ngIf="depreciation.depreciationCode">{{depreciationCodeMessage}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="AssetName">{{"Ngày chứng từ" | localize}} </label>
+                        <input id="AssetName" #assetName="ngModel" type="date" name="AssetName" class="form-control" [(ngModel)]="depreciation.creationTime" required maxlength="256" />
+                       
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="DepreciationDate">{{"Ngày tính khấu hao" | localize}} </label>
+                        <input id="DepreciationDate" #depreciationDate="ngModel" type="date" name="DepreciationDate" class="form-control" [(ngModel)]="depreciation.depreciationDate"/>
+                        
+                    </div>
+                    <div class="form-group col-8">
+                        <label for="increaseNote">{{"Nội dung" | localize}} </label>
+                        <input id="depreciationNote" #depreciationNote="ngModel" rows="4" cols="50" name="DepreciationNote" class="form-control" [(ngModel)]="depreciation.description"/>
+                    </div>
+                    <div class="form-group col-12">
+                        <label for="increaseNote" style="font-size: 20px;">{{"Tổng khấu hao:" | localize}} </label>
+                       
+                    </div>
+                </div>                
+            </form>
+        </div>
+        
+    </div>
+    <div class="increase-asset-table" style="margin-top: 20px">
+        <div class="bg-white pd-16">
+            <div _ngcontent-olq-c180="" class="row align-items-center">
+                <div _ngcontent-olq-c180="" class="col-6">
+                    <div _ngcontent-olq-c180="" class="form-group m-form__group align-items-center">
+                        <div _ngcontent-olq-c180="" class="input-group">
+                            <input _ngcontent-olq-c180="" name="filterText" autofocus="" placeholder="Tìm kiếm theo mã tài sản, tên tài sản, tên loại tài sản người tạo" type="text" class="form-control m-input ng-untouched ng-pristine ng-valid" ng-reflect-name="filterText" ng-reflect-model="">
+                            <span _ngcontent-olq-c180="" class="input-group-btn">
+                                <button _ngcontent-olq-c180="" type="submit" class="btn btn-search">
+                                    <i _ngcontent-olq-c180="" class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div _ngcontent-olq-c180="" class="form-group m-form__group align-items-center"><div _ngcontent-olq-c180="" class="input-group" style="justify-content: stretch">
+                        <button class="btn btn-increase-asset ml-1" (click)="onDeleteAssetListFromTable()">Xóa tài sản</button>
+                        <button style="position: absolute; right: 250px" class="btn btn-increase-asset ml-1" (click)="show()">Chọn tài sản</button>
+                        <button style="position: absolute; right: 0px" class="btn btn-increase-asset ml-1" (click)="showDepreciation()">Trích khấu hao</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="content-component">
+                <p-table [scrollable]="true" scrollHeight="600px" scrollWidth="1100px" [value]="selectedAssetTable" [resizableColumns]="true" [autoLayout]="true">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width:50px" class="pl-1">
+                                <input type="checkbox" name="selectedAllAsset" [(ngModel)]="isSelectedAllAsset" (click)="onSelectedAllAsset($event)"/>
+                            </th>
+                            <th style="width:100px"> Xóa
+                            <th pResizableColumn pSortableColumn="assetCode" style="width:100px">
+                                Mã tài sản
+                                <p-sortIcon field="assetCode"></p-sortIcon>
+                            </th>
+                            <th pResizableColumn pSortableColumn="assetName" style="width:110px">
+                                Tên tài sản
+                                <p-sortIcon field="assetName"></p-sortIcon>
+                            </th>
+                            <th pResizableColumn pSortableColumn="departmentName" style="width:150px">
+                                Bộ phận sử dụng
+                                <p-sortIcon field="departmentName"></p-sortIcon>
+                            </th>
+                            <th pResizableColumn pSortableColumn="employeeName" style="width:150px">
+                                Người sử dụng
+                                <p-sortIcon field="employeeName"></p-sortIcon>
+                            </th>
+                            <th pResizableColumn pSortableColumn="orginalPrice" style="width:150px">
+                                Nguyên giá 
+                                <p-sortIcon field="orginalPrice"></p-sortIcon>
+                            </th>
+                            <th pResizableColumn pSortableColumn="depreciationOfAsset" style="width:210px">
+                                Khấu hao lũy kế
+                                <p-sortIcon field="depreciationOfAsset"></p-sortIcon>
+                            </th>
+                            <th pResizableColumn pSortableColumn="residualValue" style="width:210px">
+                                Giá trị còn lại
+                                <p-sortIcon field="residualValue"></p-sortIcon>
+                            </th>
+                            <th pResizableColumn pSortableColumn="numberOfDayUsedAsset" style="width:170px">
+                                Số tháng khấu hao
+                                <p-sortIcon field="numberOfDayUsedAsset"></p-sortIcon>
+                            </th>
+                    
+                            <th pResizableColumn pSortableColumn="monthlyAmortizationValue" style="width:200px">
+                               Giá trị khấu hao tháng
+                                <p-sortIcon field="monthlyAmortizationValue"></p-sortIcon>
+                            </th>
+                            <th pResizableColumn pSortableColumn="amortizationDate" style="width:170px">
+                                Ngày tính khấu hao
+                                 <p-sortIcon field="amortizationDate"></p-sortIcon>
+                             </th>
+                            <th style="width:100px">
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-assetSelected>
+                        <tr>
+                            <td style="width:50px" class="pl-1"><input type="checkbox" name="selectedAsset" (change)="onSelectedAsset(assetSelected, $event)"></td>
+                            <td style="width:100px"><button type="button" class="btn btn-sm bg-danger ng-tns-c137-2" (click) = "deleteAssetItemFromTable(assetSelected)"><i class="fas fa-trash ng-tns-c137-2"></i> Xóa </button></td>
+                            <td style="width:100px">{{ assetSelected.assetCode}}</td>
+                            <td style="width:110px">{{ assetSelected.assetName}}</td>
+                            <td style="width:150px">{{ assetSelected.departmentName}}</td>
+                            <td style="width:150px">{{ assetSelected.employeeName}}</td>
+                            <td style="width:150px">{{ assetSelected.orginalPrice }}</td> 
+                            <td style="width:210px">{{ assetSelected.depreciationOfAsset }}</td> 
+                            <td style="width:210px">{{ assetSelected.residualValue }}</td>
+                                <!-- <input type="number" class="input-number form-control" [(ngModel)]= "assetSelected.numberOfDayUsedAsset" (change)="renderAmortizationValueOfAssetFromTable(assetSelected)" min="1" required/></td> -->
+                            <td style="width:170px">{{ assetSelected.numberOfDayUsedAsset*12}}</td>
+                            <td style="width:200px">{{ assetSelected.monthlyAmortizationValue}}</td>
+                            <td style="width:170px">{{ assetSelected.amortizationDate | date : 'dd/MM/yyyy'}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button [disabled]="saving" type="button" class="btn bg-danger" (click)="close()">{{"Hủy" |
+            localize}}</button> 
+        <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')" [disabled]="!depreciationForm.form.valid" (click)="save()"><i class="fa fa-save" style="margin-right: 5px"></i>
+            <span>{{"Lưu" | localize}}</span></button>
+    </div>
+</div>
+<app-add-asset-depreciation #addAssetDepreciationAssetModal (modalSave)="addAssetDepreciationToTable($event)"></app-add-asset-depreciation>

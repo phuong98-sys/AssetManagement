@@ -61,8 +61,6 @@ import { SuggestionHandlingComponent } from './contents/suggestion-handling/sugg
 import { CreateOrEditSuggestionHandlingComponent } from './contents/suggestion-handling/create-or-edit-suggestion-handling/create-or-edit-suggestion-handling.component';
 import { AddAssetSuggestionHandlingComponent } from './contents/suggestion-handling/add-asset-suggestion-handling/add-asset-suggestion-handling.component';
 import { CreateOrEditAssetTypeComponent } from './contents/asset-type/create-or-edit-asset-type/create-or-edit-asset-type.component';
-import { DepreciationAssetComponent } from './aontents/depreciation-asset/depreciation-asset.component';
-import { CreateOrEditDepreciationAssetComponent } from './aontents/depreciation-asset/create-or-edit-depreciation-asset/create-or-edit-depreciation-asset.component';
 
 import {TreeModule} from 'primeng/tree';
 import {TreeTableModule} from 'primeng/treetable';
@@ -77,6 +75,9 @@ import { CreateOrEditPlaneShopComponent } from './contents/plane-shop/create-or-
 import { AddAssetIncreaseAssetComponent } from './contents/increase-asset/add-asset-increase-asset/add-asset-increase-asset.component';
 import { AddAssetReduceAssetComponent } from './contents/reduce-asset/add-asset-reduce-asset/add-asset-reduce-asset.component';
 import { EditReduceAssetModalComponent } from './contents/reduce-asset/edit-reduce-asset-modal/edit-reduce-asset-modal.component';
+import { AddAssetDepreciationAssetComponent } from './contents/depreciation/add-asset-depreciation-asset/add-asset-depreciation-asset.component';
+import { DepreciationComponent } from './contents/depreciation/depreciation/depreciation.component';
+import { CreateOrEditDepreciationAssetComponent } from './contents/depreciation/create-or-edit-depreciation-asset/create-or-edit-depreciation-asset.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -124,8 +125,6 @@ import { EditReduceAssetModalComponent } from './contents/reduce-asset/edit-redu
     CreateOrEditSuggestionHandlingComponent,
     AddAssetSuggestionHandlingComponent,
     CreateOrEditAssetTypeComponent,
-    DepreciationAssetComponent,
-    CreateOrEditDepreciationAssetComponent,
     TransferComponent,
     CreateOrEditTransferComponent,
     AddAssetTransferComponent,
@@ -136,7 +135,10 @@ import { EditReduceAssetModalComponent } from './contents/reduce-asset/edit-redu
     AddAssetReduceAssetComponent,
     AddAssetIncreaseAssetComponent,
     EditIncreaseAssetModalComponent,
-    EditReduceAssetModalComponent
+    EditReduceAssetModalComponent,
+    AddAssetDepreciationAssetComponent,
+    DepreciationComponent,
+    CreateOrEditDepreciationAssetComponent
   ],
   imports: [
     CommonModule,
