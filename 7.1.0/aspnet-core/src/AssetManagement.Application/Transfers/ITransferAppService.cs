@@ -13,7 +13,7 @@ namespace AssetManagement.Transfers
     public interface ITransferAppService : IApplicationService
     {
         Task<ListResultDto<TransferDto>> GetTransfers();
+        Task<TransferDto> InsertOrUpdateTransfer(TransferInputDto input);
         TransferDto GetTransfer(GetTransferInput input);
-        Task<TransferListDto> InsertOrUpdateTransfer(TransferInputDto input);
     }
 }

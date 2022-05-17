@@ -1,14 +1,13 @@
 import { Component, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormGroup, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
-import { ProposeAssetDto, AssetDto, AssetServiceProxy, ProposeAssetInputDto, ProposeAssetServiceProxy, ProposeAssetDetailDto, ProposeAssetDetailInputDto } from '@shared/service-proxies/service-proxies';
+import { AssetDto, AssetServiceProxy, DepartmentDto, ProposeAssetDto, ProposeAssetInputDto, ProposeAssetServiceProxy } from '@shared/service-proxies/service-proxies';
 import * as moment from 'moment';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-
-type NewType = EventEmitter<any>;
+import { AddAssetProposeAssetComponent } from '../add-asset-propose-asset/add-asset-propose-asset.component';
 
 @Component({
   selector: 'app-create-or-edit-propose-asset',
@@ -16,126 +15,188 @@ type NewType = EventEmitter<any>;
   styleUrls: ['./create-or-edit-propose-asset.component.css']
 })
 export class CreateOrEditProposeAssetComponent extends AppComponentBase implements OnInit {
+  @Output() modalSave = new EventEmitter<any>();
+  @ViewChild('addAssetProposeAssetModal', { static: true }) addAssetProposeAssetModal: AddAssetProposeAssetComponent
   @ViewChild("createOrEditModal", { static: true }) modal: ModalDirective;
   @ViewChild("proposeAssetForm", { static: true }) private submitForm: NgForm;
-  @Output() modalSave: NewType = new EventEmitter<any>();
   active = false;
   saving = false;
   loading = false;
-  canChangeUserName = true;
-  proposeAsset: ProposeAssetInputDto = new ProposeAssetInputDto();
-  proposeAssetDetail: ProposeAssetDetailInputDto = new ProposeAssetDetailInputDto();
-  assetList: AssetDto[];
-  proposeAssetList: ProposeAssetDto [];
-  selectedAsset: ProposeAssetDetailDto;
-  dateFoundInput: any;
-  proposeAssetId : number;
-  addAssetToProposeAssetList : ProposeAssetDetailDto[] = [];
-  keyword ='';
-  constructor(
+  proposeAsset : ProposeAssetDto = new ProposeAssetDto();
+  proposeAssetId: number;
+  selectedAssetTable: AssetDto[] = [];
+  proposeAssetList:ProposeAssetInputDto[];
+  deletedAssetListFromTable : AssetDto[] = [];
+  addAssetToProposeAssetList : AssetDto[] = [];
+  //deleteAssetConfirmedList : AssetProposeAssetDto[] = [];
+  employeeList: any;//
+  departmentList: DepartmentDto[] = [];
+  proposeAssetStatusList : ProposeAssetDto[]=[]; //
+  selectedAny: any; //
+        //
+        advancedFiltersVisible = false;
+        keyword ='';
+  constructor( 
     injector: Injector,
-    private proposeAssetService: ProposeAssetServiceProxy,
-
     private assetService: AssetServiceProxy,
-    private _activatedRoute: ActivatedRoute,
-    private _router: Router) {
-        super(injector);
-        
-        if (this._activatedRoute.snapshot.params['id']) {
-          this.proposeAssetId = Number(this._activatedRoute.snapshot.params['id']);
-          
+    private proposeAssetService: ProposeAssetServiceProxy,
+    private _router: Router,
+    private _activatedRoute: ActivatedRoute) {
+      super(injector);
+      if (this._activatedRoute.snapshot.params['id']) {
+        this.proposeAssetId = Number(this._activatedRoute.snapshot.params['id']);
+        this.getAssetProposeAsset(this.proposeAssetId);
+        debugger
       }
-  }
+   }
 
   ngOnInit(): void {
+    debugger
     this.getProposeAssetForEdit();
-    this.getProposeAssets();
+    
+   this.getProposeAssets();
+   this.getProposeAssetList();
+  }
+  close(){
 
   }
-  getProposeAssets(){
-    this.proposeAssetService.getProposeAssets().subscribe((result)=>{
-      this.proposeAssetList = result.items;
-      
+  getProposeAssetList(){
+    this.proposeAssetService.getProposeAssets()
+    .subscribe((result)=>{
+        this.proposeAssetList = result.items;
     });
   }
-  onSelectAsset(){
-    this.proposeAssetDetail.assetTypeName=this.selectedAsset.assetTypeName;
-    this.proposeAssetDetail.departmentName=this.selectedAsset.departmentName;
-    this.proposeAssetDetail.quantity=this.selectedAsset.quantity;
-    this.proposeAssetDetail.assetName=this.selectedAsset.assetName;
-    this.proposeAssetDetail.describe=this.selectedAsset.describe;
-    this.proposeAssetDetail.estimates=this.selectedAsset.estimates;
+  getProposeAssets(){
+    this.proposeAssetService.getProposeAssets().subscribe((result) => {
+      this.proposeAssetList = result.items;
+    });
+  }
+  getAssetProposeAsset(proposeAssetId: number){
+    /*this.assetService.getProposeAsset(proposeAssetId)
+    .subscribe((result) => {
+        this.selectedAssetTable = result.items;
+    })*/
   }
   show(proposeAsset?: ProposeAssetInputDto): void {
-    if(proposeAsset?.id){
-      this.proposeAsset = proposeAsset;
-      //this.selectedAsset = this.assetList.find((item)=> item.id == planeMaintain.assetId);
-    }
-    this.modal.show();
+    // if(suggestionHandling?.id){
+    //   this.suggestionHandling = suggestionHandling;
+    // }
+    //this.addAssetProposeAssetModal.show(this.deletedAssetListFromTable);
+    this.deletedAssetListFromTable = [];
     
   }
+  addAssetProposeAssetToTable(assetList){
+    
+    this.selectedAssetTable = [ ...this.selectedAssetTable, ...assetList];
+    console.log("list =", this.selectedAssetTable);
+  }
+  save(){
+    if (this.validateForm(this.submitForm?.form)) {
+      
+      this.saving= true;
+      // ghi tăng tài sản
+      debugger
+       this.proposeAsset.creationTime =  moment.utc(this.proposeAsset.creationTime.toString());
+       this.proposeAsset.dateFound = moment.utc( this.proposeAsset.dateFound.toString());
+          this.proposeAssetService.insertOrUpdateProposeAsset(this.proposeAsset)
+          .pipe(finalize(() => (this.saving = false)))
+          .subscribe((result) => {
+            debugger
+              this.proposeAsset = result;
+              this.notify.info(this.l("SavedSuccessfully"));
+              this.close();
+              // this.modalSave.emit(null);
+          });
+      }
+  }
   validateForm(form) {
-    Object.keys(form.controls).forEach((key) => {
+    Object.keys(form?.controls).forEach((key) => {
         form.get(key).markAsTouched();
     });
 
     return form.valid;
-  }
-  save(){
-    /*debugger
-    if (this.validateForm(this.submitForm.form)) {
-      this.saving= true;
-      this.planeMaintain.expectedDate= moment.utc( this.expectedDateInput);
+}
+/*
+  deleteAssetItemFromTable(asset : AssetProposeAssetDto){
+    debugger
+    this.message.confirm(
+      this.l('Tài sản với tên ' + asset.assetName+ " sẽ bị xóa khỏi bảng"),
+      this.l('Bạn chắc chắn thực hiện chức năng này?'),
+      (isConfirmed) => {
+          if (isConfirmed) {
+              this.loading = true;
+              //xóa ở bảng
+              this.deletedAssetListFromTable.push(asset);
+            //  this.deletedAssetListFromTable.push(asset);
+              this.selectedAssetTable = this.selectedAssetTable.filter(x => x.id != asset.id);
+              // set tổng nguyên giá
+              this.selectedAssetTable.forEach((item) =>{
+                // this.suggestionHandling.totalAssetValue += item.orginalPrice;
+              })
+            //  this.deleteAssetList.forEach((item) => {
+              this.deleteAssetConfirmedList.push(asset);
+            //  });
+              // this.deleteAssetList = []; 
 
-      this.planeMaintainService
-      .insertOrUpdatePlaneMaintain(this.planeMaintain)
-      .pipe(
-          finalize(() => {
-              this.saving = false;
-          })
-      )
-      .subscribe(() => {
-        this.saving = false;
-        if(!this.planeMaintain.id){
-          this.notify.info(this.l("SavedSuccessfully"));
-        }
-        else{
-          this.notify.info(this.l("UpdatedSuccessfully"));
-        }
-          this.close();
-          this.modalSave.emit(null);
-      });
-
-    }*/
+          }
+      }
+  );
   }
-  resetForm(){
-    this.proposeAsset.id=null;
-  }
-  close(): void {
-    
-    this.active = false;
-    this.submitForm.form.reset();
-    this._router.navigate(['app/contents/propose-asset']);
+  */
+  onSelectedAllAsset(event){
+    if(event.target.checked){
+      for( let i = this.addAssetToProposeAssetList.length-1; i>= 0; i-- ){
+        
+        var selector = 'input[name="selectedAsset"]:not(:checked)'  ;
+        $(selector).click();
+    } 
+  }   
+    else{
+      for( let i = this.addAssetToProposeAssetList.length-1; i>= 0; i-- ){
+        
+        var selector = 'input[name="selectedAsset"]:checked'  ;
+        $(selector).click();
+    }  
+    }
   }
   getProposeAssetForEdit(){
     forkJoin(
-      this.proposeAssetService.getProposeAsset(this.proposeAssetId),
-      this.assetService.getAssets()
-  )
-      .pipe(finalize(() => (this.loading = false)))
-      .subscribe(([res1, res2]) => {
-          this.proposeAsset = res1;
-          this.assetList = res2.items;
-          //this.selectedAsset = this.assetList.find((item)=> item.id == this.proposeAsset.assetId);
-      });
-  }
-  selecteAssetListToProposeAsset(){
-    
-    //this.addAssetTransferModal.show();
+    this.proposeAssetService.getProposeAsset(this.proposeAssetId),
+    /*this.departmentService.getDepartments(),
+    this.employeeService.getEmployees()*/
+    )
+    .pipe(finalize(() => (this.loading = false)))
+      .subscribe(([res1, ]) => {
+        
+        this.proposeAsset = res1;
+        //this.suggestionHandling.creationTime = res1["creationTime"]? res1["creationTime"].format("YYYY-MM-DD"):<any>undefined;
+        this.proposeAsset.dateFound = res1["dateFound"]? res1["dateFound"].format("YYYY-MM-DD"):<any>undefined;
+        
+      })
   }
   setNumbersProposeAsset(){
 
   }
+  /*
+  onSelectDepartmentFromTableFromTable(asset : AssetProposeAssetDto){
+    var index = this.selectedAssetTable.findIndex(c => c.id == asset.id);
+    this.selectedAssetTable[index].employeeId = null;
+    this.selectedAssetTable[index].departmentId = asset.departmentId;
+  }
+  */
+  onChangeAny(){}
+  selecteAssetListToProposeAsset(){
+    
+    //this.addAssetProposeAssetModal.show();
+  }
+  // show(increaseAsset?: IncreaseAssetInputDto): void {
+  //   if(increaseAsset?.id){
+  //     this.increaseAsset = increaseAsset;
+  //     // this.selectedAssetType = this.assetTypeList.find((item)=> item.id == asset.assetTypeId);
+  //   }
+  //   this.modal.show();
+    
+  // }
 }
 
 

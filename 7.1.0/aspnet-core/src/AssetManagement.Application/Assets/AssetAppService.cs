@@ -9,6 +9,8 @@ using AssetManagement.Depreciations.DTO;
 using AssetManagement.SuggestionHandlingDetails;
 using AssetManagement.SuggestionHandlings;
 using AssetManagement.SuggestionHandlings.DTO;
+using AssetManagement.TransferDetails;
+using AssetManagement.Transfers.DTO;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,13 +24,16 @@ namespace AssetManagement.Assets
     {
         private readonly IRepository<Asset> _assetRepository;
         private readonly IRepository<SuggestionHandlingDetail> _suggestionHandlingDetailRepository;
-        private readonly IRepository<DepreciationDetail> _depreciationDetailRepository;
+        private readonly IRepository<TransferDetail> _transferDetailRepository;
+         private readonly IRepository<DepreciationDetail> _depreciationDetailRepository;
         public AssetAppService(IRepository<Asset> assetRepository,
             IRepository<SuggestionHandlingDetail> suggestionHandlingDetailRepository,
+            IRepository<TransferDetail> transferDetailRepository,
             IRepository<DepreciationDetail> depreciationDetailRepository)
         {
             _assetRepository = assetRepository;
             _suggestionHandlingDetailRepository = suggestionHandlingDetailRepository;
+            _transferDetailRepository = transferDetailRepository;
             _depreciationDetailRepository = depreciationDetailRepository;
         }
         public async Task<ListResultDto<AssetDto>> GetAssets()
@@ -728,6 +733,148 @@ namespace AssetManagement.Assets
                         //await CurrentUnitOfWork.SaveChangesAsync();
                     }
                    
+                }
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+
+        }
+        //
+        public async Task<ListResultDto<TransferDetailDto>> TransferList(List<AssetTransferDto> inputList, int transferId, int index)
+        {
+            try
+            {
+                if (index == 0)
+                {
+                    var transferDetailList = new List<TransferDetail>();
+                    foreach (var asset in inputList)
+                    {
+                        var transferDetailForEdit = await _transferDetailRepository.FirstOrDefaultAsync(x => x.AssetId == asset.Id && x.TransferId == transferId);
+                        if (transferDetailForEdit != null)
+                        {
+                            // edit asser
+                            //var assetForEdit = await _assetRepository.FirstOrDefaultAsync(x => x.Id == asset.Id);
+                            //ObjectMapper.Map(asset, assetForEdit);
+                            // edit transfer
+
+                            var transferDetail = new TransferDetailInputDto();
+                            transferDetailForEdit.Describe = asset.Describe;
+                            //ObjectMapper.Map<transferDetail>(transferDetailForEdit);
+                            await _transferDetailRepository.UpdateAsync(transferDetailForEdit);
+                            //await CurrentUnitOfWork.SaveChangesAsync();
+                            transferDetailList.Add(transferDetailForEdit);
+                        }
+                        else
+                        {
+                            var transferDetail = new TransferDetailInputDto();
+                            transferDetail.AssetId = (int)asset.Id;
+                            transferDetail.TransferId = transferId;
+                            transferDetail.Describe = asset.Describe;
+                            transferDetail.CreatorUserId = AbpSession.GetUserId();
+                            var transferDetail2 = ObjectMapper.Map<TransferDetail>(transferDetail);
+                            transferDetailList.Add(transferDetail2);
+                            await _transferDetailRepository.InsertAsync(transferDetail2);
+                            await CurrentUnitOfWork.SaveChangesAsync();
+                            ObjectMapper.Map<TransferDetail>(transferDetail2);
+                            //insert
+                        }
+
+                    }
+                    var transferDetailList2 = ObjectMapper.Map<List<TransferDetailDto>>(transferDetailList);
+                    return new ListResultDto<TransferDetailDto>(transferDetailList2);
+                }
+                if (index == 1)
+                {
+                    foreach (var asset in inputList)
+                    {
+                        var transferDetailForEdit = await _transferDetailRepository.FirstOrDefaultAsync(x => x.AssetId == asset.Id && x.TransferId == transferId);
+                        if (transferDetailForEdit != null)
+                        {
+                            _transferDetailRepository.Delete(transferDetailForEdit);
+                            //await CurrentUnitOfWork.SaveChangesAsync();
+                        }
+
+
+                    }
+                    return null;
+                }
+                return null;
+
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+
+        }
+        public async Task<ListResultDto<AssetTransferDto>> GetTransfer(int transferId)
+        {
+            try
+            {
+                var query = _assetRepository.GetAll();
+                var queryLeftJoin = from s in _transferDetailRepository.GetAll().Where(x => x.TransferId == transferId)
+                                    join a in query on s.AssetId equals a.Id into ps
+                                    from u in ps.DefaultIfEmpty()
+                                    select new { query = u, Describe = s.Describe };
+                var assets = await queryLeftJoin
+                    .Select(t => new AssetTransferDto
+                    {
+                        Id = t.query.Id,
+                        AssetCode = t.query.AssetCode,
+                        AssetName = t.query.AssetName,
+                        IncreaseAssetDate = t.query.IncreaseAssetDate,
+                        NumberOfDayUsedAsset = t.query.NumberOfDayUsedAsset,
+                        NumberOfDayRemaing = t.query.NumberOfDayRemaing,
+                        OrginalPrice = t.query.OrginalPrice,
+                        MonthlyAmortizationValue = t.query.MonthlyAmortizationValue,
+                        DepreciationOfAsset = t.query.DepreciationOfAsset,
+                        ResidualValue = t.query.ResidualValue,
+                        UsageStatus = t.query.AssetStatus.AssetStatusName,
+                        ReasonForReduction = t.query.ReasonReduce.ReasonReduceName,
+                        RecoverableValue = t.query.RecoverableValue,
+                        IncreaseAssetId = t.query.IncreaseAssetId,
+                        AssetTypeId = t.query.AssetTypeId,
+                        AssetTypeName = t.query.AssetType.AssetTypeName,
+                        AssetStatusId = t.query.AssetStatusId,
+                        CreationTime = t.query.CreationTime,
+                        ReduceAssetId = t.query.ReduceAssetId,
+                        ReasonReduceId = t.query.ReasonReduceId,
+                        CreatorUserId = t.query.CreatorUserId,
+                        DepartmentName = t.query.Department.DepartmentName,
+                        EmployeeName = t.query.Employee.EmployeeName,
+                        StartDate = t.query.StartDate,
+                        AnnualAmortizationValue = t.query.AnnualAmortizationValue,
+                        ReasonReduceNote = t.query.ReasonReduceNote,
+                        CreatorUserName = t.query.User.Name,
+                        DepartmentId = t.query.DepartmentId,
+                        EmployeeId = t.query.EmployeeId,
+                        Describe = t.Describe
+                    })
+                .ToListAsync();
+                var assetDtos = ObjectMapper.Map<List<AssetTransferDto>>(assets);
+                return new ListResultDto<AssetTransferDto>(assetDtos);
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+
+        }
+        public async Task DeleteTransfer(List<AssetTransferDto> inputList, int transferId)
+        {
+            try
+            {
+                foreach (var asset in inputList)
+                {
+                    var transferDetailForEdit = await _transferDetailRepository.FirstOrDefaultAsync(x => x.AssetId == asset.Id && x.TransferId == transferId);
+                    if (transferDetailForEdit != null)
+                    {
+                        _transferDetailRepository.Delete(transferDetailForEdit);
+                        //await CurrentUnitOfWork.SaveChangesAsync();
+                    }
+
                 }
             }
             catch (Exception e)

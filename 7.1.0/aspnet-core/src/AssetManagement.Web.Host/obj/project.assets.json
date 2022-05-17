@@ -9486,11 +9486,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\AssetManagement.Web.Host.csproj",
+      "projectUniqueName": "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\AssetManagement.Web.Host.csproj",
       "projectName": "AssetManagement.Web.Host",
-      "projectPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\AssetManagement.Web.Host.csproj",
+      "projectPath": "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\AssetManagement.Web.Host.csproj",
       "packagesPath": "C:\\Users\\Huyen\\.nuget\\packages\\",
-      "outputPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\obj\\",
+      "outputPath": "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Host\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Huyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -9507,8 +9507,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Core\\AssetManagement.Web.Core.csproj": {
-              "projectPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Core\\AssetManagement.Web.Core.csproj"
+            "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Core\\AssetManagement.Web.Core.csproj": {
+              "projectPath": "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Web.Core\\AssetManagement.Web.Core.csproj"
             }
           }
         }

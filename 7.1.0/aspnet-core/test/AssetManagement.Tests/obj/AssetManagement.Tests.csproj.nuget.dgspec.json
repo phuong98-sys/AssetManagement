@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\AssetManagement.Tests.csproj": {}
+    "F:\\BaoVe\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\AssetManagement.Tests.csproj": {}
   },
   "projects": {
-    "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj": {
+    "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj",
+        "projectUniqueName": "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj",
         "projectName": "AssetManagement.Application",
-        "projectPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj",
+        "projectPath": "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj",
         "packagesPath": "C:\\Users\\Huyen\\.nuget\\packages\\",
-        "outputPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\obj\\",
+        "outputPath": "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Huyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,8 +28,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
-                "projectPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj"
+              "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
+                "projectPath": "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj"
               }
             }
           }
@@ -63,14 +63,14 @@
         }
       }
     },
-    "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
+    "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj",
+        "projectUniqueName": "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj",
         "projectName": "AssetManagement.Core",
-        "projectPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj",
+        "projectPath": "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj",
         "packagesPath": "C:\\Users\\Huyen\\.nuget\\packages\\",
-        "outputPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\obj\\",
+        "outputPath": "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Huyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -132,14 +132,14 @@
         }
       }
     },
-    "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj": {
+    "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj",
+        "projectUniqueName": "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj",
         "projectName": "AssetManagement.EntityFrameworkCore",
-        "projectPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj",
+        "projectPath": "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj",
         "packagesPath": "C:\\Users\\Huyen\\.nuget\\packages\\",
-        "outputPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\obj\\",
+        "outputPath": "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Huyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -156,8 +156,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
-                "projectPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj"
+              "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj": {
+                "projectPath": "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Core\\AssetManagement.Core.csproj"
               }
             }
           }
@@ -209,14 +209,14 @@
         }
       }
     },
-    "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\AssetManagement.Tests.csproj": {
+    "F:\\BaoVe\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\AssetManagement.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\AssetManagement.Tests.csproj",
+        "projectUniqueName": "F:\\BaoVe\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\AssetManagement.Tests.csproj",
         "projectName": "AssetManagement.Tests",
-        "projectPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\AssetManagement.Tests.csproj",
+        "projectPath": "F:\\BaoVe\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\AssetManagement.Tests.csproj",
         "packagesPath": "C:\\Users\\Huyen\\.nuget\\packages\\",
-        "outputPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\obj\\",
+        "outputPath": "F:\\BaoVe\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Huyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -233,11 +233,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj": {
-                "projectPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj"
+              "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj": {
+                "projectPath": "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj"
               },
-              "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj": {
-                "projectPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj"
+              "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj": {
+                "projectPath": "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj"
               }
             }
           }

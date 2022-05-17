@@ -11624,11 +11624,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\AssetManagement.Tests.csproj",
+      "projectUniqueName": "F:\\BaoVe\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\AssetManagement.Tests.csproj",
       "projectName": "AssetManagement.Tests",
-      "projectPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\AssetManagement.Tests.csproj",
+      "projectPath": "F:\\BaoVe\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\AssetManagement.Tests.csproj",
       "packagesPath": "C:\\Users\\Huyen\\.nuget\\packages\\",
-      "outputPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\obj\\",
+      "outputPath": "F:\\BaoVe\\7.1.0\\aspnet-core\\test\\AssetManagement.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Huyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -11645,11 +11645,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj": {
-              "projectPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj"
+            "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj": {
+              "projectPath": "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.Application\\AssetManagement.Application.csproj"
             },
-            "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj": {
-              "projectPath": "F:\\QLTS\\AssetManagement\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj"
+            "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj": {
+              "projectPath": "F:\\BaoVe\\7.1.0\\aspnet-core\\src\\AssetManagement.EntityFrameworkCore\\AssetManagement.EntityFrameworkCore.csproj"
             }
           }
         }

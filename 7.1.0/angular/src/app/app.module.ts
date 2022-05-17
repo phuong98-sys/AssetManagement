@@ -78,6 +78,8 @@ import { EditReduceAssetModalComponent } from './contents/reduce-asset/edit-redu
 import { AddAssetDepreciationAssetComponent } from './contents/depreciation/add-asset-depreciation-asset/add-asset-depreciation-asset.component';
 import { DepreciationComponent } from './contents/depreciation/depreciation/depreciation.component';
 import { CreateOrEditDepreciationAssetComponent } from './contents/depreciation/create-or-edit-depreciation-asset/create-or-edit-depreciation-asset.component';
+import { AddAssetProposeAssetComponent } from './contents/propose-asset/add-asset-propose-asset/add-asset-propose-asset.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -138,7 +140,8 @@ import { CreateOrEditDepreciationAssetComponent } from './contents/depreciation/
     EditReduceAssetModalComponent,
     AddAssetDepreciationAssetComponent,
     DepreciationComponent,
-    CreateOrEditDepreciationAssetComponent
+    CreateOrEditDepreciationAssetComponent,
+    AddAssetProposeAssetComponent
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,4 @@
-<div bsModal #EditAssetIncreaseModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" >
+<div bsModal #AddAssetReduceModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" >
     <div class="modal-dialog modal-lg">
         <div class="modal-content" busyIf="loading">
             <form #assetForm="ngForm" novalidate (ngSubmit)="save()" (keydown.enter)="$event.preventDefault()">
@@ -12,50 +12,66 @@
                 </div>
                
                 <div class="content-component" style="padding: 10px">
-                    <div> 
-                        <button class="btn" style="margin-left: 10px">Bỏ chọn</button>
+                    <div _ngcontent-olq-c180="" class="row align-items-center">
+                        <div class="col-6">
+                            <span> Đã chọn : {{selectedAssetTransferList.length}} tài sản </span>
+                            <div class="btn btn-primary" style="margin-left: 10px" (click)="clickUnTickAssetListSeleted()">Bỏ chọn</div>
+                        </div>
+                        <div _ngcontent-olq-c180="" class="col-6"><div _ngcontent-olq-c180="" class="form-group m-form__group align-items-center"><div _ngcontent-olq-c180="" class="input-group"><input _ngcontent-olq-c180="" name="filterText" autofocus="" placeholder="Tìm kiếm theo mã tài sản, tên tài sản, tên loại tài sản, bộ phận,..." type="text" class="form-control m-input ng-untouched ng-pristine ng-valid" ng-reflect-name="filterText" ng-reflect-model=""><span _ngcontent-olq-c180="" class="input-group-btn"><button _ngcontent-olq-c180="" type="submit" class="btn btn-search"><i _ngcontent-olq-c180="" class="fa fa-search"></i></button></span></div>
+                        </div>
                     </div>
-                    <p-table (onLazyLoad)="getAssets($event)" [paginator]="false" [lazy]="true" [rows]="3" [totalRecords]="totalRecords"  [scrollable]="true" scrollHeight="320px" scrollWidth="1100px" [value]="assetList" [resizableColumns]="true" [autoLayout]="true" [responsive]="primengTableHelper.isResponsive">
+                    
+                    <div>
+                </div>                       
+                </div>
+                    <p-table (onLazyLoad)="getAssets($event)" [sortField]="sortField" [sortOrder]="sortOrder" [paginator]="false" [lazy]="true" [rows]="3" [totalRecords]="totalRecords"  [scrollable]="true" scrollHeight="320px" scrollWidth="1100px" [value]="assetList" [resizableColumns]="true" [autoLayout]="true" [responsive]="primengTableHelper.isResponsive">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th style="width:50px" class="pl-1">
-                                    <input type="checkbox" />
+                                    <input type="checkbox" name ="selectedAllAsset" (change)="onSelectedAllAsset($event)"/>
                                 </th>
                                 <th pResizableColumn pSortableColumn="assetCode" style="width:120px">
                                     Mã tài sản
-                                    <p-sortIcon field="assetCode"></p-sortIcon>
                                 </th>
                                 <th pResizableColumn pSortableColumn="assetTypeName" style="width:120px">
                                     Loại tài sản
-                                    <p-sortIcon field="assetTypeName"></p-sortIcon>
                                 </th>
                                 <th pResizableColumn pSortableColumn="assetName" style="width:120px">
                                     Tên tài sản
-                                    <p-sortIcon field="assetName"></p-sortIcon>
                                 </th>
                                 <th pResizableColumn pSortableColumn="orginalPrice" style="width:120px">
                                     Nguyên Giá 
-                                    <p-sortIcon field="orginalPrice"></p-sortIcon>
                                 </th>
-                                <th pResizableColumn pSortableColumn="increaseAssetDate" style="width:140px">
-                                    Ngày ghi tăng
-                                    <p-sortIcon field="increaseAssetDate"></p-sortIcon>
+                                <th pResizableColumn pSortableColumn="depreciationOfAsset" style="width:140px">
+                                   Hao mòn lũy kế
                                 </th>
                                 <th pResizableColumn pSortableColumn="residualValue" style="width:140px">
                                     Giá trị còn lại
-                                    <p-sortIcon field="residualValue"></p-sortIcon>
+                                </th>
+                                <th pResizableColumn pSortableColumn="departmentName" style="width:140px">
+                                    Bộ phận
+                                </th>
+                                <th pResizableColumn pSortableColumn="employeeName" style="width:140px">
+                                    Nhân viên
+                                </th>
+                                <th pResizableColumn pSortableColumn="increaseAssetDate" style="width:140px">
+                                    Ngày ghi tăng
                                 </th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-asset>
                             <tr>
-                                <td style="width:50px" class="pl-1"><input type ="checkbox"></td>
+                                <td style="width:50px" class="pl-1"><input type ="checkbox" name="selectedAssetIncrease" (change)="onSelectedAssetReduce(asset, $event)"></td>
                                 <td style="width:120px">{{ asset.assetCode }}</td>
                                 <td style="width:120px">{{ asset.assetTypeName}}</td>
                                 <td style="width:120px">{{ asset.assetName}}</td>
                                 <td style="width:120px">{{ asset.orginalPrice }}</td>
-                                <td style="width:140px">{{ asset.increaseAssetDate}}</td>
+                                <td style="width:140px">{{ asset.depreciationOfAsset }}</td>
                                 <td style="width:140px">{{ asset.residualValue}}</td>
+                                <td style="width:140px">{{ asset.departmentName}}</td>
+                                <td style="width:140px">{{ asset.employeeName}}</td>
+                                <td style="width:140px">{{ asset.increaseAssetDate | date: 'dd/MM/yyyy'}}</td>
+                               
                             </tr>
                         </ng-template>
                         <div class="" *ngIf="totalRecords == 0">
@@ -65,31 +81,28 @@
                         </div>      
                     </p-table>
                 </div>
-                
                 <div class="modal-body row">
-                    <div class="form-group col-4">
-                        <label for="OrginalPrice">{{"Bộ phận sử dụng mới" | localize}} *</label>
-                        <!--<p-dropdown id="departmentName" #departmentName="ngModel" name="departmentName" [options]="departmentNameList"
-                        [(ngModel)]="selectedDepartmentName" placeholder="{{ l('Bộ phận sử dụng mới') }}" optionLabel="departmentName"
+                    <div class="form-group col-5">
+                        <label for="departmentName">{{"Bộ phận mới" | localize}} *</label>
+                        <p-dropdown id="departmentName" #departmentName="ngModel" name="departmentName" [options]="departmentList"
+                        [(ngModel)]="selectedDepartment" placeholder="{{ l('Chọn bộ phận sử dụng mới') }}" optionLabel="departmentName"
                         styleClass="form-control brandSelection-dropdown" required>
-                        </p-dropdown>-->
-                        <input id="OrginalPrice" #orginalPrice="ngModel" type="text" name="OrginalPrice" class="form-control" [(ngModel)]="asset.orginalPrice" />
+                        </p-dropdown>
                     </div>
-                    <div class="form-group col-4">
-                        <label for="OrginalPrice">{{"Ghi chú" | localize}}</label>
-                        <input id="OrginalPrice" #orginalPrice="ngModel" type="text" name="OrginalPrice" class="form-control" [(ngModel)]="asset.orginalPrice" />
+                    <div class="form-group col-7">
+                        <label for="reasonReduceNote">{{"Lí do" | localize}}</label>
+                        <input id="reasonReduceNote" #reasonReduceNote="ngModel" type="text" name="reasonReduceNote" class="form-control" [(ngModel)]="asset.reasonReduceNote" />
             
                     </div>
                 </div>   
                 <div class="modal-footer">
-                    <button [disabled]="saving" type="button" class="btn btn-cancel" (click)="close()">{{"Hủy" |
-                        localize}}</button>
-                    <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')" ><i class="fa fa-save" style="margin-right: 5px" ></i>
-                        <span>{{"Lưu" | localize}}</span></button>
+                    <div class="btn btn-cancel" (click)="cancel()">{{"Hủy" |
+                        localize}}</div>
+                    <button type="submit" class="btn btn-primary" buttonBusy="saving" busyText="l('SavingWithThreeDot')" [disabled] = "selectedAssetTransferList?.length > 0 && !selectedDepartment?.id"><i class="fa fa-save" style="margin-right: 5px"></i>
+                        <span>{{"Đồng ý" | localize}}</span></button>
                 </div>             
             </form>
             
         </div>
     </div>
 </div>
-
