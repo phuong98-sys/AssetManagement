@@ -129,12 +129,12 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
                   item.amortizationDate = moment.utc( item.amortizationDate?.toString());
                   item.reduceAssetDate = moment.utc( this.reduceAsset.reduceAssetDate?.toString());
                 });
-                debugger
+                
               this.assetService.reduceAssetList(0,this.selectedAssetTable).subscribe();
               // xóa tài sản ghi tăng
 
               if(this.deleteAssetConfirmedList.length > 0 ){
-                debugger
+                
                 this.deleteAssetConfirmedList.map((item) => { 
                     item.creationTime = moment.utc( item.creationTime?.toString());
                     item.startDate = moment.utc( item.startDate?.toString());
@@ -235,7 +235,7 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
   onSelectedAsset(assetForEdit : AssetDto, event ){
     
     console.log(event.target.checked);
-    debugger
+    
     if(event.target.checked)
     {
       this.deleteAssetList.push(assetForEdit);
@@ -255,7 +255,7 @@ export class CreateOrEditReduceAssetComponent extends AppComponentBase implement
       (isConfirmed) => {
           if (isConfirmed) {
               this.loading = true;
-debugger
+
               this.selectedAssetTable = this.selectedAssetTable.filter(x => !this.deleteAssetList.map(y => y.id).includes(x?.id));
               // this.deletedAssetListFromTable = this.deleteAssetList;
              this.deleteAssetList.forEach((item) => {
@@ -270,7 +270,7 @@ debugger
   );
   }
   deleteAssetItemFromTable(asset : AssetDto){
-    debugger
+    
     this.message.confirm(
       this.l('Tài sản với tên ' + asset.assetName+ " sẽ bị xóa khỏi bảng"),
       this.l('Bạn chắc chắn thực hiện chức năng này?'),
@@ -351,7 +351,7 @@ debugger
     // this.getEmployeeListByDepartment(asset.departmentId);
   }
   addAssetReduceToTable(assetList){
-    debugger
+    
     this.selectedAssetTable = [ ...this.selectedAssetTable, ...assetList];
     console.log("list =", this.selectedAssetTable);
   }

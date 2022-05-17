@@ -69,7 +69,7 @@ export class AddAssetSuggestionHandlingComponent  extends  AppComponentBase impl
   // }
 
   show(revertAssetList?: AssetDto[], selectedAssetList? : any[]){
-    debugger
+    
     if(revertAssetList?.length > 0){
       this.assetList = [ ...this.assetList, ...revertAssetList];
     }
@@ -100,7 +100,7 @@ export class AddAssetSuggestionHandlingComponent  extends  AppComponentBase impl
       this.assetService.getAssets()
       .subscribe(result => {
         this.loading = false;
-        debugger
+        
           this.assetList = result.items.filter((item)=> item.reduceAssetId == null);
         
           this.totalAsset = this.assetList.length-1;
@@ -130,7 +130,7 @@ export class AddAssetSuggestionHandlingComponent  extends  AppComponentBase impl
     //         this.modalSave.emit(null);
     //     });
     //   }
-    debugger
+    
     this.assetList = this.assetList.filter(x => !this.selectedAssetReduceList.map(y => y?.id).includes(x?.id));
     this.selectedAssetReduceList.map((item) => {
       item.reasonReduceId = this.selectedReasonReduce.id;
@@ -154,7 +154,7 @@ export class AddAssetSuggestionHandlingComponent  extends  AppComponentBase impl
   //   this.asset.monthlyAmortizationValue = Number(((this.asset.orginalPrice)/(this.asset.numberOfDayUsedAsset*12)).toFixed(3));
   // }
   onSelectedAssetReduce(asset : AssetDto, event ){
-    debugger
+    
     console.log(event.target.checked);
     
     if(event.target.checked)
@@ -172,7 +172,7 @@ export class AddAssetSuggestionHandlingComponent  extends  AppComponentBase impl
 
   }
   clickUnTickAssetListSeleted(){
-    debugger
+    
       for( let i = this.selectedAssetReduceList.length-1; i>= 0; i-- ){
         
         var selector = 'input[name="selectedAssetIncrease"]:checked'  ;
@@ -183,7 +183,7 @@ export class AddAssetSuggestionHandlingComponent  extends  AppComponentBase impl
     // this.lebelTotalAssetSelected = 0;
   }
   onSelectedAllAsset(event){
-    debugger
+    
     if(event.target.checked){
       for( let i = this.totalAsset; i>= 0; i-- ){
         

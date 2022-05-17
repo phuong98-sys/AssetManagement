@@ -53,7 +53,7 @@
                 </div>
             </td>
             <td style="width:100px">{{ transfer.numbersTransfer }}</td>
-            <td style="width:100px">{{ transfer.dateFound}}</td>
+            <td style="width:100px">{{ transfer.dateFound | date: 'dd/MM/yyyy'}}</td>
             <td style="width:120px">{{ transfer.departmentName }}</td>
             <td style="width:140px">{{ transfer.content}}</td>
             <td style="width:150px">{{ transfer.approvalStatus }}</td>

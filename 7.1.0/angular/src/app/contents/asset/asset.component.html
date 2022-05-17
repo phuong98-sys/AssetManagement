@@ -139,17 +139,17 @@
         </div>
     </div>
 </form>
-<div _ngcontent-olq-c180="" class="form-group m-form__group align-items-center"><div _ngcontent-olq-c180="" class="input-group" style="justify-content: stretch">
+<!-- <div _ngcontent-olq-c180="" class="form-group m-form__group align-items-center"><div _ngcontent-olq-c180="" class="input-group" style="justify-content: stretch">
     <button class="btn btn-increase-asset ml-1" >Xóa tài sản</button>
   
-</div>
+</div> -->
 <div class="content-component">
     <p-table (onLazyLoad)="getAssets($event)" [paginator]="false" [lazy]="true" [rows]="3" [totalRecords]="totalRecords"  [scrollable]="true" scrollHeight="320px" scrollWidth="1100px" [value]="assetList" [resizableColumns]="true" [autoLayout]="true" [responsive]="primengTableHelper.isResponsive">
     <ng-template pTemplate="header">
         <tr>
-            <th style="width:50px" class="pl-1">
+            <!-- <th style="width:50px" class="pl-1">
                 <input type="checkbox" name="selectedAllAsset" [(ngModel)]="isSelectedAllAsset" (click)="onSelectedAllAsset($event)"/>
-            </th>
+            </th> -->
             <th pResizableColumn style="width:150px">
                 Chức năng
             </th>
@@ -249,7 +249,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-asset>
         <tr>
-            <td style="width:50px" class="pl-1"><input type="checkbox" name="selectedAsset"></td>
+            <!-- <td style="width:50px" class="pl-1"><input type="checkbox" name="selectedAsset"></td> -->
             <td style="width:150px">
                 <div class="btn-group dropdown" dropdown container="body">
                     <button dropdownToggle class="dropdown-toggle btn btn-sm btn-primary">

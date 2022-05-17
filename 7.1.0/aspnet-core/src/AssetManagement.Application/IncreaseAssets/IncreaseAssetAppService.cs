@@ -112,7 +112,7 @@ namespace AssetManagement.IncreaseAssets
         //    }
         //}
 
-        public async Task DeleteIncreaseAsset(DeleteIncreaseAssetInput input)
+        public async Task<bool> DeleteIncreaseAsset(DeleteIncreaseAssetInput input)
         {
             try
             {
@@ -128,7 +128,13 @@ namespace AssetManagement.IncreaseAssets
                 //    asset.CreationTime = null;
                 //    asset.IncreaseAssetDate = null;
                 //}
-
+                foreach(var a in increaseAsset.Assets)
+                {
+                    if(a.IsDeleted == true)
+                    {
+                        return false;
+                    }
+                }
                 increaseAsset.Assets.ForEach(asset =>
                 {
                     asset.IncreaseAssetId = null;
@@ -139,6 +145,7 @@ namespace AssetManagement.IncreaseAssets
                     asset.AssetStatusId = 1;
                 });
                 await _increaseAssetRepository.DeleteAsync(increaseAsset);
+                return true;
             }
             catch (Exception e)
             {

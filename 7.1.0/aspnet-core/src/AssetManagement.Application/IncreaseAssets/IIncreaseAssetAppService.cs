@@ -13,7 +13,7 @@ namespace AssetManagement.IncreaseAssets
     {
         Task<IncreaseAssetDto> InsertOrUpdateIncreaseAsset(IncreaseAssetInputDto input);
         Task<ListResultDto<IncreaseAssetDto>> GetIncreaseAssets();
-        Task DeleteIncreaseAsset(DeleteIncreaseAssetInput input);
+        Task<bool> DeleteIncreaseAsset(DeleteIncreaseAssetInput input);
         IncreaseAssetDto GetIncreaseAsset(GetIncreaseAssetInput input);
     }
 }

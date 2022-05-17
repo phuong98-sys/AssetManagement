@@ -1416,7 +1416,7 @@ export class AssetServiceProxy {
      * @param id (optional) 
      * @return Success
      */
-    deleteAsset(id: number | undefined): Observable<void> {
+    deleteAsset(id: number | undefined): Observable<boolean> {
         let url_ = this.baseUrl + "/api/services/app/Asset/DeleteAsset?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -1428,6 +1428,7 @@ export class AssetServiceProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Accept": "text/plain"
             })
         };
 
@@ -1438,14 +1439,14 @@ export class AssetServiceProxy {
                 try {
                     return this.processDeleteAsset(<any>response_);
                 } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
+                    return <Observable<boolean>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<void>><any>_observableThrow(response_);
+                return <Observable<boolean>><any>_observableThrow(response_);
         }));
     }
 
-    protected processDeleteAsset(response: HttpResponseBase): Observable<void> {
+    protected processDeleteAsset(response: HttpResponseBase): Observable<boolean> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1454,14 +1455,17 @@ export class AssetServiceProxy {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<void>(<any>null);
+        return _observableOf<boolean>(<any>null);
     }
 }
 
@@ -2343,7 +2347,7 @@ export class IncreaseAssetServiceProxy {
      * @param id (optional) 
      * @return Success
      */
-    deleteIncreaseAsset(id: number | undefined): Observable<void> {
+    deleteIncreaseAsset(id: number | undefined): Observable<boolean> {
         let url_ = this.baseUrl + "/api/services/app/IncreaseAsset/DeleteIncreaseAsset?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -2355,6 +2359,7 @@ export class IncreaseAssetServiceProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Accept": "text/plain"
             })
         };
 
@@ -2365,14 +2370,14 @@ export class IncreaseAssetServiceProxy {
                 try {
                     return this.processDeleteIncreaseAsset(<any>response_);
                 } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
+                    return <Observable<boolean>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<void>><any>_observableThrow(response_);
+                return <Observable<boolean>><any>_observableThrow(response_);
         }));
     }
 
-    protected processDeleteIncreaseAsset(response: HttpResponseBase): Observable<void> {
+    protected processDeleteIncreaseAsset(response: HttpResponseBase): Observable<boolean> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -2381,14 +2386,17 @@ export class IncreaseAssetServiceProxy {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<void>(<any>null);
+        return _observableOf<boolean>(<any>null);
     }
 }
 
@@ -6670,6 +6678,7 @@ export class AssetTransferDto implements IAssetTransferDto {
     employeeId: number | undefined;
     initialAmortizationValue: number | undefined;
     describe: string | undefined;
+    isDepreciation: boolean | undefined;
 
     constructor(data?: IAssetTransferDto) {
         if (data) {
@@ -6723,6 +6732,7 @@ export class AssetTransferDto implements IAssetTransferDto {
             this.employeeId = _data["employeeId"];
             this.initialAmortizationValue = _data["initialAmortizationValue"];
             this.describe = _data["describe"];
+            this.isDepreciation = _data["isDepreciation"];
         }
     }
 
@@ -6776,6 +6786,7 @@ export class AssetTransferDto implements IAssetTransferDto {
         data["employeeId"] = this.employeeId;
         data["initialAmortizationValue"] = this.initialAmortizationValue;
         data["describe"] = this.describe;
+        data["isDepreciation"] = this.isDepreciation;
         return data; 
     }
 
@@ -6829,6 +6840,7 @@ export interface IAssetTransferDto {
     employeeId: number | undefined;
     initialAmortizationValue: number | undefined;
     describe: string | undefined;
+    isDepreciation: boolean | undefined;
 }
 
 export class AssetTransferDtoListResultDto implements IAssetTransferDtoListResultDto {

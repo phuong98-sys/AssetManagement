@@ -244,7 +244,8 @@ namespace AssetManagement.Assets
                     ReasonReduceNote = a.ReasonReduceNote,
                      CreatorUserName = a.User.Name,
                      DepartmentId = a.DepartmentId,
-                     EmployeeId = a.EmployeeId
+                     EmployeeId = a.EmployeeId,
+                     isDepreciation = a.isDepreciation
                  }).ToListAsync();
                 var assets = ObjectMapper.Map<List<AssetDto>>(assetDtos);
                 return new ListResultDto<AssetDto>(assets);
@@ -672,47 +673,51 @@ namespace AssetManagement.Assets
             try
             {
                 var query = _assetRepository.GetAll();
-                var queryLeftJoin = from s in _depreciationDetailRepository.GetAll().Where(x => x.DepreciationId == depreciationId)
-                                    join a in query on s.AssetId equals a.Id into ps
-                                    from u in ps.DefaultIfEmpty()
-                                    select new { query = u , depreciation = s};
-                var assets = await queryLeftJoin
-                    .Select(t => new AssetDto
-                    {
-                        Id = t.query.Id,
-                        AssetCode = t.query.AssetCode,
-                        AssetName = t.query.AssetName,
-                        IncreaseAssetDate = t.query.IncreaseAssetDate,
-                        NumberOfDayRemaing = t.query.NumberOfDayRemaing,
-                        UsageStatus = t.query.AssetStatus.AssetStatusName,
-                        ReasonForReduction = t.query.ReasonReduce.ReasonReduceName,
-                        RecoverableValue = t.query.RecoverableValue,
-                        IncreaseAssetId = t.query.IncreaseAssetId,
-                        AssetTypeId = t.query.AssetTypeId,
-                        AssetTypeName = t.query.AssetType.AssetTypeName,
-                        AssetStatusId = t.query.AssetStatusId,
-                        CreationTime = t.query.CreationTime,
-                        ReduceAssetId = t.query.ReduceAssetId,
-                        ReasonReduceId = t.query.ReasonReduceId,
-                        CreatorUserId = t.query.CreatorUserId,
-                        DepartmentName = t.query.Department.DepartmentName,
-                        EmployeeName = t.query.Employee.EmployeeName,
-                        StartDate = t.query.StartDate,
-                        AnnualAmortizationValue = t.query.AnnualAmortizationValue,
-                        ReasonReduceNote = t.query.ReasonReduceNote,
-                        CreatorUserName = t.query.User.Name,
-                        DepartmentId = t.query.DepartmentId,
-                        EmployeeId = t.query.EmployeeId,
-                        AmortizationDate = t.depreciation.AmortizationDate,
-                        OrginalPrice = t.depreciation.OrginalPrice,
-                        MonthlyAmortizationValue = t.depreciation.MonthlyAmortizationValue,
-                        DepreciationOfAsset = t.depreciation.DepreciationOfAsset,
-                        ResidualValue = t.depreciation.ResidualValue,
-                        NumberOfDayUsedAsset = t.depreciation.NumberOfDayUsedAsset
-                    })
-                .ToListAsync();
-                var assetDtos = ObjectMapper.Map<List<AssetDto>>(assets);
-                return new ListResultDto<AssetDto>(assetDtos);
+                var d = _depreciationDetailRepository.GetAll().Where(x => x.DepreciationId == depreciationId);
+   
+                    var queryLeftJoin = from s in d
+                                        join a in query on s.AssetId equals a.Id into ps
+                                        from u in ps.DefaultIfEmpty()
+                                        select new { query = u, depreciation = s };
+                    var assets = await queryLeftJoin
+                        .Select(t => new AssetDto
+                        {
+                            Id = t.query.Id,
+                            AssetCode = t.query.AssetCode,
+                            AssetName = t.query.AssetName,
+                            IncreaseAssetDate = t.query.IncreaseAssetDate,
+                            NumberOfDayRemaing = t.query.NumberOfDayRemaing,
+                            UsageStatus = t.query.AssetStatus.AssetStatusName,
+                            ReasonForReduction = t.query.ReasonReduce.ReasonReduceName,
+                            RecoverableValue = t.query.RecoverableValue,
+                            IncreaseAssetId = t.query.IncreaseAssetId,
+                            AssetTypeId = t.query.AssetTypeId,
+                            AssetTypeName = t.query.AssetType.AssetTypeName,
+                            AssetStatusId = t.query.AssetStatusId,
+                            CreationTime = t.query.CreationTime,
+                            ReduceAssetId = t.query.ReduceAssetId,
+                            ReasonReduceId = t.query.ReasonReduceId,
+                            CreatorUserId = t.query.CreatorUserId,
+                            DepartmentName = t.query.Department.DepartmentName,
+                            EmployeeName = t.query.Employee.EmployeeName,
+                            StartDate = t.query.StartDate,
+                            AnnualAmortizationValue = t.query.AnnualAmortizationValue,
+                            ReasonReduceNote = t.query.ReasonReduceNote,
+                            CreatorUserName = t.query.User.Name,
+                            DepartmentId = t.query.DepartmentId,
+                            EmployeeId = t.query.EmployeeId,
+                            AmortizationDate = t.depreciation.AmortizationDate,
+                            OrginalPrice = t.depreciation.OrginalPrice,
+                            MonthlyAmortizationValue = t.depreciation.MonthlyAmortizationValue == null ? 0 : t.depreciation.MonthlyAmortizationValue,
+                            DepreciationOfAsset = t.depreciation.DepreciationOfAsset == null ? 0 : t.depreciation.DepreciationOfAsset,
+                            ResidualValue = t.depreciation.ResidualValue == null ? 0 : t.depreciation.ResidualValue,
+                            NumberOfDayUsedAsset = t.depreciation.NumberOfDayUsedAsset == null ? 0 : t.depreciation.NumberOfDayUsedAsset
+                        })
+                    .ToListAsync();
+                    var assetDtos = ObjectMapper.Map<List<AssetDto>>(assets);
+                    return new ListResultDto<AssetDto>(assetDtos);
+                
+                
             }
             catch (Exception e)
             {
@@ -919,8 +924,7 @@ namespace AssetManagement.Assets
             }
 
         }
-
-        public async Task DeleteAsset(DeleteAssetInput input)
+        public async Task<bool> DeleteAsset(DeleteAssetInput input)
         {
             try
             {
@@ -931,7 +935,19 @@ namespace AssetManagement.Assets
                 }
                 else
                 {
-                    _assetRepository.Delete(task);
+                    if(task.IncreaseAssetId == null || task.ReduceAssetId != null)
+                    {
+                        // xóa ở depreciation List Detail
+                        var DepreciationDetailList = _depreciationDetailRepository.GetAll().Where(x => x.DepreciationId == input.Id);
+                        foreach (var DepreciationDetail in DepreciationDetailList)
+                        {
+                            _depreciationDetailRepository.Delete(DepreciationDetail);
+                            //await CurrentUnitOfWork.SaveChangesAsync();
+                        }
+                        _assetRepository.Delete(task);
+                        return true;
+                    }
+                    return false;
                 }
             }
             catch (Exception e)

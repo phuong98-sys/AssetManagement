@@ -35,7 +35,7 @@ export class TransferComponent extends AppComponentBase implements OnInit {
     this.getTransfers();
   }
   getTransfers(event?: LazyLoadEvent){
-    debugger
+    
   this.primengTableHelper.showLoadingIndicator();
     this.loading = true;
     this.transferService.getTransfers()

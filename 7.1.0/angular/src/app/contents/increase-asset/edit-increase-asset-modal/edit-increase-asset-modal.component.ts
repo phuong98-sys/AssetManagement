@@ -59,7 +59,7 @@ export class EditIncreaseAssetModalComponent extends AppComponentBase implements
   ngOnInit(): void {
   }
   show(asset?: AssetDto): void {
-    debugger
+    
     // this.submitForm.form.reset();
     this.asset = asset;
 

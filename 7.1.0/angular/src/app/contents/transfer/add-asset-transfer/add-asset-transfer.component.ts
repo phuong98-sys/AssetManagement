@@ -59,7 +59,7 @@ export class AddAssetTransferComponent  extends  AppComponentBase implements OnI
   }
 
   show(revertAssetList?: AssetDto[]){
-    debugger
+    
     if(revertAssetList.length > 0){
       this.assetList = [ ...this.assetList, ...revertAssetList];
     }
@@ -74,12 +74,12 @@ export class AddAssetTransferComponent  extends  AppComponentBase implements OnI
       .subscribe(result => {
         this.loading = false;
           this.assetList = result.items.filter((item)=> item.increaseAssetId == null);
-          debugger
+          
           this.totalAsset = this.assetList.length-1;
       });
     }
   save(){
-    debugger
+    
     this.assetList = this.assetList.filter(x => !this.selectedAssetTransferList.map(y => y?.id).includes(x?.id));
     this.selectedAssetTransferList;
     this.selectedAssetTransferList.map((item) => {
@@ -100,7 +100,7 @@ export class AddAssetTransferComponent  extends  AppComponentBase implements OnI
 
   }
   onSelectedAssetReduce(asset : AssetDto, event ){
-    debugger
+    
     console.log(event.target.checked);
     
     if(event.target.checked)
@@ -118,7 +118,7 @@ export class AddAssetTransferComponent  extends  AppComponentBase implements OnI
 
   }
   clickUnTickAssetListSeleted(){
-    debugger
+    
       for( let i = this.selectedAssetTransferList.length-1; i>= 0; i-- ){
         
         var selector = 'input[name="selectedAssetIncrease"]:checked'  ;
@@ -129,7 +129,7 @@ export class AddAssetTransferComponent  extends  AppComponentBase implements OnI
     // this.lebelTotalAssetSelected = 0;
   }
   onSelectedAllAsset(event){
-    debugger
+    
     if(event.target.checked){
       for( let i = this.totalAsset; i>= 0; i-- ){
         

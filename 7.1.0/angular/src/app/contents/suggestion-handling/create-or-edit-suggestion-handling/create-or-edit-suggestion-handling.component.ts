@@ -87,7 +87,7 @@ export class CreateOrEditSuggestionHandlingComponent extends AppComponentBase im
 
   ngOnInit(): void {
     // this.getAssets();
-    debugger
+    
      this.getSuggestionHandlingForEdit();
      
     this.getSuggestionHandlings();
@@ -116,7 +116,7 @@ export class CreateOrEditSuggestionHandlingComponent extends AppComponentBase im
     // if(suggestionHandling?.id){
     //   this.suggestionHandling = suggestionHandling;
     // }
-    debugger
+    
     console.log("fi =",this.selectedAssetTable);
     this.addAssetSuggestionHandlingModal.show(this.deletedAssetListFromTable, this.selectedAssetTable);
     this.deletedAssetListFromTable = [];
@@ -134,7 +134,7 @@ export class CreateOrEditSuggestionHandlingComponent extends AppComponentBase im
       
       this.saving= true;
       // ghi tăng tài sản
-      debugger
+      
        this.suggestionHandling.creationTime =  moment.utc(this.suggestionHandling.creationTime.toString());
        this.suggestionHandling.suggestionHandlingDate = moment.utc( this.suggestionHandling.suggestionHandlingDate.toString());
        this.suggestionHandling.implementationDate = moment.utc( this.suggestionHandling.suggestionHandlingDate.toString());
@@ -142,7 +142,7 @@ export class CreateOrEditSuggestionHandlingComponent extends AppComponentBase im
           this.suggestionHandlingService.insertOrUpdateSuggestionHandling(this.suggestionHandling)
           .pipe(finalize(() => (this.saving = false)))
           .subscribe((result) => {
-            debugger
+            
               this.suggestionHandling = result;
               // ghi tăng gtafi sản
               this.selectedAssetTable.map((item) => { 
@@ -150,12 +150,12 @@ export class CreateOrEditSuggestionHandlingComponent extends AppComponentBase im
                   item.startDate = moment.utc( item.startDate?.toString());
                   item.amortizationDate = moment.utc( item.amortizationDate?.toString());
                 });
-                debugger
+                
               this.assetService.suggestionHandlingList( this.suggestionHandling.id,0, this.selectedAssetTable).subscribe();
               //xóa tài sản ghi tăng
 
               if(this.deleteAssetConfirmedList.length > 0 ){
-                debugger
+                
                 this.deleteAssetConfirmedList.map((item) => { 
                     item.creationTime = moment.utc( item.creationTime?.toString());
                     item.startDate = moment.utc( item.startDate?.toString());
@@ -261,7 +261,7 @@ export class CreateOrEditSuggestionHandlingComponent extends AppComponentBase im
   onSelectedAsset(assetForEdit : AssetSuggestionHandlingDto, event ){
     
     console.log(event.target.checked);
-    debugger
+    
     if(event.target.checked)
     {
       this.deleteAssetList.push(assetForEdit);
@@ -281,7 +281,7 @@ export class CreateOrEditSuggestionHandlingComponent extends AppComponentBase im
       (isConfirmed) => {
           if (isConfirmed) {
               this.loading = true;
-debugger
+
               this.selectedAssetTable = this.selectedAssetTable.filter(x => !this.deleteAssetList.map(y => y.id).includes(x?.id));
               // this.deletedAssetListFromTable = this.deleteAssetList;
              this.deleteAssetList.forEach((item) => {
@@ -296,7 +296,7 @@ debugger
   );
   }
   deleteAssetItemFromTable(asset : AssetSuggestionHandlingDto){
-    debugger
+    
     this.message.confirm(
       this.l('Tài sản với tên ' + asset.assetName+ " sẽ bị xóa khỏi bảng"),
       this.l('Bạn chắc chắn thực hiện chức năng này?'),
@@ -365,7 +365,7 @@ debugger
   //   this.selectedAssetTable[index].recoverableValue = asset.recoverableValue;
   // }
   addAssetSuggestionHandlingToTable(assetList: any){
-    debugger
+    
     assetList.map((item)=>{
       item.handlingMethodId = item.reasonReduceId,
       item.handlingMethod = item.reasonReduceNote
@@ -420,7 +420,7 @@ debugger
     // this.addAssetToIncreaseList[index].amortizationValue = amortizationValue;
   }
   onChangePetitioner(){
-    debugger
+    
     this.suggestionHandling.petitionerId = this.selectedPetitioner.id;
     this.suggestionHandling.petitionerName = this.selectedPetitioner.employeeName;
   }

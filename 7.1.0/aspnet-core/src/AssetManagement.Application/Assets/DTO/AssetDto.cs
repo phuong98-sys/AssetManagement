@@ -202,6 +202,7 @@ namespace AssetManagement.Assets.DTO
         public int? EmployeeId { get; set; }
         public double? InitialAmortizationValue { get; set; }
         public string Describe { get; set; }
+        public bool? isDepreciation { get; set; }
     }
     [AutoMapFrom(typeof(Asset))]
     public class AssetListDto: CreationAuditedEntityDto<int?>

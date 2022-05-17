@@ -46,12 +46,12 @@ export class CreateOrEditTransferComponent extends AppComponentBase implements O
       if (this._activatedRoute.snapshot.params['id']) {
         this.transferId = Number(this._activatedRoute.snapshot.params['id']);
         this.getAssetTransfer(this.transferId);
-        debugger
+        
       }
    }
 
   ngOnInit(): void {
-    debugger
+    
     this.getTransferForEdit();
     
    this.getTransfers();
@@ -74,7 +74,7 @@ export class CreateOrEditTransferComponent extends AppComponentBase implements O
   getAssetTransfer(transferId: number){
     this.assetService.getTransfer(transferId)
     .subscribe((result) => {
-        // this.selectedAssetTable = result.items;
+        this.selectedAssetTable = result.items;
     })
   }
   show(transfer?: TransferInputDto): void {
@@ -95,13 +95,13 @@ export class CreateOrEditTransferComponent extends AppComponentBase implements O
       
       this.saving= true;
       // ghi tăng tài sản
-      debugger
+      
        //this.transfer.creationTime =  moment.utc(this.transfer.creationTime?.toString());
        this.transfer.dateFound = moment.utc( this.transfer.dateFound.toString());
           this.transferService.insertOrUpdateTransfer(this.transfer)
           .pipe(finalize(() => (this.saving = false)))
           .subscribe((result) => {
-            debugger
+            
               this.transfer = result;
               this.notify.info(this.l("SavedSuccessfully"));
               this.close();
@@ -117,7 +117,7 @@ export class CreateOrEditTransferComponent extends AppComponentBase implements O
     return form.valid;
 }
   deleteAssetItemFromTable(asset : AssetTransferDto){
-    debugger
+    
     this.message.confirm(
       this.l('Tài sản với tên ' + asset.assetName+ " sẽ bị xóa khỏi bảng"),
       this.l('Bạn chắc chắn thực hiện chức năng này?'),

@@ -60,7 +60,8 @@ export class CreateOrEditDepreciationAssetComponent extends AppComponentBase imp
   depreciationStatusList  = [
     {id: 1, name : 'chưa phê duyệt'},
     {id: 2, name : 'đã phê duyệt'},
-  ]
+  ];
+  isDepreciation = true;
   // assetListCopy: AssetDepreciationDto = new AssetDepreciationDto;
   constructor(
     injector: Injector,
@@ -75,6 +76,7 @@ export class CreateOrEditDepreciationAssetComponent extends AppComponentBase imp
         if (this._activatedRoute.snapshot.params['id']) {
           this.depreciationId = Number(this._activatedRoute.snapshot.params['id']);
           this.getAssetDepreciation(this.depreciationId);
+          this.getDepreciationForEdit();
         }
         this.getDepartmentList();
         this.getEmployeeList();
@@ -82,8 +84,8 @@ export class CreateOrEditDepreciationAssetComponent extends AppComponentBase imp
 
   ngOnInit(): void {
     this.getAssets();
-    debugger
-     this.getDepreciationForEdit();
+    
+     
      
     this.getDepreciations();
     // this.getReasonReduceList();
@@ -111,7 +113,7 @@ export class CreateOrEditDepreciationAssetComponent extends AppComponentBase imp
     // if(depreciation?.id){
     //   this.depreciation = depreciation;
     // }
-    debugger
+    
     console.log("table =",this.selectedAssetTable);
     console.log("de =",this.deletedAssetListFromTable);
     this.addAssetDepreciationAssetModal.show(this.deletedAssetListFromTable, this.selectedAssetTable);
@@ -126,45 +128,50 @@ export class CreateOrEditDepreciationAssetComponent extends AppComponentBase imp
     return form.valid;
 }
   save(){
-    if (this.validateForm(this.submitForm?.form)) {
+    if(!this.isDepreciation){
+      this.message.warn("Không thể lưu vì chưa trích khấu hao khi bảng tài sản thay đổi")
+    }
+    else{
+      if (this.validateForm(this.submitForm?.form)) {
       
-      this.saving= true;
-      // ghi tăng tài sản
-      debugger
-       this.depreciation.creationTime =  moment.utc(this.depreciation.creationTime.toString());
-       this.depreciation.depreciationDate = moment.utc( this.depreciation.depreciationDate.toString());
-      
-       this.depreciation.creatorUserName = this.appSession.user.name;
-          this.depreciationService.insertOrUpdateDepreciation(this.depreciation)
-          .pipe(finalize(() => (this.saving = false)))
-          .subscribe((result) => {
-            debugger
-              this.depreciation = result;
-              // ghi tăng gtafi sản
-              this.selectedAssetTable.map((item) => { 
-                  item.creationTime = moment.utc( item.creationTime?.toString());
-                  item.startDate = moment.utc( item.startDate?.toString());
-                  item.amortizationDate = moment.utc( item.amortizationDate?.toString());
-                });
-                debugger
-              this.assetService.depreciationList( this.depreciation.id,0, this.selectedAssetTable).subscribe();
-              // //xóa tài sản ghi tăng
-
-              if(this.deleteAssetConfirmedList.length > 0 ){
-                debugger
-                this.deleteAssetConfirmedList.map((item) => { 
+        this.saving= true;
+        // ghi tăng tài sản
+        
+         this.depreciation.creationTime =  moment.utc(this.depreciation?.creationTime.toString());
+         this.depreciation.depreciationDate = moment.utc( this.depreciation.depreciationDate.toString());
+        
+         this.depreciation.creatorUserName = this.appSession.user.name;
+            this.depreciationService.insertOrUpdateDepreciation(this.depreciation)
+            .pipe(finalize(() => (this.saving = false)))
+            .subscribe((result) => {
+              
+                this.depreciation = result;
+                // ghi tăng gtafi sản
+                this.selectedAssetTable.map((item) => { 
                     item.creationTime = moment.utc( item.creationTime?.toString());
                     item.startDate = moment.utc( item.startDate?.toString());
                     item.amortizationDate = moment.utc( item.amortizationDate?.toString());
                   });
-
-                this.assetService.depreciationList(this.depreciation.id,1, this.deleteAssetConfirmedList).subscribe();
-              }
-              this.notify.info(this.l("SavedSuccessfully"));
-              this.close();
-              // this.modalSave.emit(null);
-          });
-      }
+                  
+                this.assetService.depreciationList( this.depreciation.id,0, this.selectedAssetTable).subscribe();
+                // //xóa tài sản ghi tăng
+  
+                if(this.deleteAssetConfirmedList.length > 0 ){
+                  
+                  this.deleteAssetConfirmedList.map((item) => { 
+                      item.creationTime = moment.utc( item.creationTime?.toString());
+                      item.startDate = moment.utc( item.startDate?.toString());
+                      item.amortizationDate = moment.utc( item.amortizationDate?.toString());
+                    });
+  
+                  this.assetService.depreciationList(this.depreciation.id,1, this.deleteAssetConfirmedList).subscribe();
+                }
+                this.notify.info(this.l("SavedSuccessfully"));
+                this.close();
+                // this.modalSave.emit(null);
+            });
+        }
+    }
   }
   close(): void {
     
@@ -255,7 +262,7 @@ export class CreateOrEditDepreciationAssetComponent extends AppComponentBase imp
   onSelectedAsset(assetForEdit : AssetDto, event ){
     
     console.log(event.target.checked);
-    debugger
+    
     if(event.target.checked)
     {
       this.deleteAssetList.push(assetForEdit);
@@ -275,7 +282,7 @@ export class CreateOrEditDepreciationAssetComponent extends AppComponentBase imp
       (isConfirmed) => {
           if (isConfirmed) {
               this.loading = true;
-debugger
+
               this.selectedAssetTable = this.selectedAssetTable.filter(x => !this.deleteAssetList.map(y => y.id).includes(x?.id));
               // this.deletedAssetListFromTable = this.deleteAssetList;
              this.deleteAssetList.forEach((item) => {
@@ -290,7 +297,7 @@ debugger
   );
   }
   deleteAssetItemFromTable(asset : AssetDto){
-    debugger
+    
     this.message.confirm(
       this.l('Tài sản với tên ' + asset.assetName+ " sẽ bị xóa khỏi bảng"),
       this.l('Bạn chắc chắn thực hiện chức năng này?'),
@@ -359,7 +366,7 @@ debugger
   //   this.selectedAssetTable[index].recoverableValue = asset.recoverableValue;
   // }
   addAssetDepreciationToTable(assetList: any){
-    debugger
+    
 
     // assetList.forEach((item) =>{
        
@@ -370,7 +377,9 @@ debugger
     //       this.selectedAssetTable.push(this.assetListCopy);
 
     // });
-    
+    if(assetList.length > 0){
+      this.isDepreciation = false;
+    }
     console.log("list  1=", assetList);
     this.selectedAssetTable = [ ...this.selectedAssetTable, ...assetList];
     console.log("list =", this.selectedAssetTable);
@@ -407,7 +416,7 @@ debugger
     console.log("selected asset =",  this.selectedAssetTable[index]);
   }
   // onChangePetitioner(){
-  //   debugger
+  //   
   //   this.depreciation.petitionerId = this.selectedPetitioner.id;
   //   this.depreciation.petitionerName = this.selectedPetitioner.employeeName;
   // }
@@ -429,6 +438,7 @@ debugger
       this.message.warn("Bạn cần nhập năm và tháng để trích khấu hao");
     }
     else{
+      this.isDepreciation = true;
       this.getAssets();
       this.assetList = this.assetList.filter(x => this.selectedAssetTable.map(y => y?.id).includes(x?.id));
       this.selectedAssetTable.map((item) =>{

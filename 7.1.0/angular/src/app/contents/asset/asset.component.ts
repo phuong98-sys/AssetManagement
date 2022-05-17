@@ -95,9 +95,14 @@ export class AssetComponent extends  PagedListingComponentBase<AssetDto> impleme
               this.assetService
               .deleteAsset(asset.id)
               .pipe(finalize(() => this.loading = false))
-              .subscribe(() => {
+              .subscribe((result) => {
+                if(result){
                   this.getAssets();
                   this.notify.success(this.l('SuccessfullyDeleted'));
+                }
+                 else{
+                   this.message.error("Không thể xóa tài sản đã ghi tăng");
+                 }
               });
           }
       }

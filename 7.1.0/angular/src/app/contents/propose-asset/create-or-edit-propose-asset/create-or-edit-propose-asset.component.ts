@@ -46,12 +46,12 @@ export class CreateOrEditProposeAssetComponent extends AppComponentBase implemen
       if (this._activatedRoute.snapshot.params['id']) {
         this.proposeAssetId = Number(this._activatedRoute.snapshot.params['id']);
         this.getAssetProposeAsset(this.proposeAssetId);
-        debugger
+        
       }
    }
 
   ngOnInit(): void {
-    debugger
+    
     this.getProposeAssetForEdit();
     
    this.getProposeAssets();
@@ -95,13 +95,13 @@ export class CreateOrEditProposeAssetComponent extends AppComponentBase implemen
       
       this.saving= true;
       // ghi tăng tài sản
-      debugger
+      
        this.proposeAsset.creationTime =  moment.utc(this.proposeAsset.creationTime.toString());
        this.proposeAsset.dateFound = moment.utc( this.proposeAsset.dateFound.toString());
           this.proposeAssetService.insertOrUpdateProposeAsset(this.proposeAsset)
           .pipe(finalize(() => (this.saving = false)))
           .subscribe((result) => {
-            debugger
+            
               this.proposeAsset = result;
               this.notify.info(this.l("SavedSuccessfully"));
               this.close();
@@ -118,7 +118,7 @@ export class CreateOrEditProposeAssetComponent extends AppComponentBase implemen
 }
 /*
   deleteAssetItemFromTable(asset : AssetProposeAssetDto){
-    debugger
+    
     this.message.confirm(
       this.l('Tài sản với tên ' + asset.assetName+ " sẽ bị xóa khỏi bảng"),
       this.l('Bạn chắc chắn thực hiện chức năng này?'),

@@ -72,9 +72,14 @@ export class IncreaseAssetComponent extends AppComponentBase implements OnInit {
                 this.increaseAssetService
                 .deleteIncreaseAsset(increaseAsset.id)
                 .pipe(finalize(() => this.loading = false))
-                .subscribe(() => {
+                .subscribe((result) => {
+                  if(result = true){
                     this.getAll();
                     this.notify.success(this.l('SuccessfullyDeleted'));
+                  }
+                   else{
+                     this.message.warn(" Chứng từ không thể xóa do đã có tài sản trích khấu hao trong chứng từ");
+                   }
                 });
             }
         }

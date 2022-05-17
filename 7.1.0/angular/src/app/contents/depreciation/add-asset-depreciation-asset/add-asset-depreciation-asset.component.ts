@@ -69,7 +69,7 @@ export class AddAssetDepreciationAssetComponent extends  AppComponentBase implem
   // }
 
   show(revertAssetList?: any[], selectedAssetList? : any[]){
-    debugger
+    
     if(revertAssetList?.length > 0){
       this.assetList = [ ...this.assetList, ...revertAssetList];
     }
@@ -77,19 +77,22 @@ export class AddAssetDepreciationAssetComponent extends  AppComponentBase implem
     {
       this.assetList = this.assetList.filter(x => !selectedAssetList.map(y => y?.id).includes(x?.id));
     }
-  
-    this.assetList.sort((a,b) => a.assetCode.localeCompare(b.assetCode));
-    this.modal.show();
-    
+      this.assetService.getAssets()
+      .subscribe((ressult)=>{
+        this.assetList = ressult.items.filter(x => this.assetList.map(y => y?.id).includes(x?.id));
+        this.assetList.sort((a,b) => a.assetCode.localeCompare(b.assetCode));
+        this.modal.show();
+      });
   }
-  // getAssets(){
-  //   this.assetService.getAssets().subscribe((result)=>{
-      
-  //     this.assetHaveNotIncreaseList = result.items.filter((item)=> item.increaseAssetId == null);
-  //     this.assetList = this.assetHaveNotIncreaseList;
-  //   });
+  getAsseCopys(){
+    this.assetService.getAssets().subscribe((result)=>{
+      this.assetService.getAssets()
+      .subscribe((ressult)=>{
+        this.assetListCopy = ressult.items;
+      });
+    });
    
-  // }
+  }
   getAssets(event?: LazyLoadEvent){
     //   if (this.primengTableHelper.shouldResetPaging(event)) {
     //     this.paginator?.changePage(0);
@@ -101,7 +104,7 @@ export class AddAssetDepreciationAssetComponent extends  AppComponentBase implem
       this.assetService.getAssets()
       .subscribe(result => {
         this.loading = false;
-        debugger
+        
           this.assetList = result.items.filter((item)=> item.increaseAssetId != null && item.reduceAssetId == null);
         
           this.totalAsset = this.assetList.length-1;
@@ -110,7 +113,7 @@ export class AddAssetDepreciationAssetComponent extends  AppComponentBase implem
     }
   save(){
   
-    debugger
+    
     this.assetList = this.assetList.filter(x => !this.selectedAssetReduceList.map(y => y?.id).includes(x?.id));
     this.modalSave.emit(this.selectedAssetReduceList);
 
@@ -129,7 +132,7 @@ export class AddAssetDepreciationAssetComponent extends  AppComponentBase implem
   //   this.asset.monthlyAmortizationValue = Number(((this.asset.orginalPrice)/(this.asset.numberOfDayUsedAsset*12)).toFixed(3));
   // }
   onSelectedAssetReduce(asset : AssetDto, event ){
-    debugger
+    
     console.log(event.target.checked);
     
     if(event.target.checked)
@@ -147,7 +150,7 @@ export class AddAssetDepreciationAssetComponent extends  AppComponentBase implem
 
   }
   clickUnTickAssetListSeleted(){
-    debugger
+    
       for( let i = this.selectedAssetReduceList.length-1; i>= 0; i-- ){
         
         var selector = 'input[name="selectedAssetIncrease"]:checked'  ;
@@ -158,7 +161,7 @@ export class AddAssetDepreciationAssetComponent extends  AppComponentBase implem
     // this.lebelTotalAssetSelected = 0;
   }
   onSelectedAllAsset(event){
-    debugger
+    
     if(event.target.checked){
       for( let i = this.totalAsset; i>= 0; i-- ){
         

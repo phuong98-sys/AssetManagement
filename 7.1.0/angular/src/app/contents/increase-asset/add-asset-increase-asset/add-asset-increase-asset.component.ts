@@ -59,7 +59,7 @@ export class AddAssetIncreaseAssetComponent extends  AppComponentBase implements
   // }
 
   show(revertAssetList?: AssetDto[]){
-    debugger
+    
     if(revertAssetList.length > 0){
       this.assetList = [ ...this.assetList, ...revertAssetList];
     }
@@ -87,7 +87,7 @@ export class AddAssetIncreaseAssetComponent extends  AppComponentBase implements
       .subscribe(result => {
         this.loading = false;
           this.assetList = result.items.filter((item)=> item.increaseAssetId == null && item.reduceAssetId == null);
-          debugger
+          
           this.totalAsset = this.assetList.length-1;
           // this.assetList.map((item)=>{ 
           //   // item.creationTime = item.creationTime? moment(item.creationTime).format("DD/MM/YYYY") : undefined;
@@ -115,7 +115,7 @@ export class AddAssetIncreaseAssetComponent extends  AppComponentBase implements
     //         this.modalSave.emit(null);
     //     });
     //   }
-    debugger
+    
     this.assetList = this.assetList.filter(x => !this.selectedAssetIncreaseList.map(y => y?.id).includes(x?.id));
     this.modalSave.emit(this.selectedAssetIncreaseList);
     this.selectedAssetIncreaseList = [];
@@ -133,7 +133,7 @@ export class AddAssetIncreaseAssetComponent extends  AppComponentBase implements
   //   this.asset.monthlyAmortizationValue = Number(((this.asset.orginalPrice)/(this.asset.numberOfDayUsedAsset*12)).toFixed(3));
   // }
   onSelectedAssetIncreasse(asset : AssetDto, event ){
-    debugger
+    
     console.log(event.target.checked);
     
     if(event.target.checked)
@@ -151,7 +151,7 @@ export class AddAssetIncreaseAssetComponent extends  AppComponentBase implements
 
   }
   clickUnTickAssetListSeleted(){
-    debugger
+    
       for( let i = this.selectedAssetIncreaseList.length-1; i>= 0; i-- ){
         
         var selector = 'input[name="selectedAssetIncrease"]:checked'  ;
@@ -162,7 +162,7 @@ export class AddAssetIncreaseAssetComponent extends  AppComponentBase implements
     // this.lebelTotalAssetSelected = 0;
   }
   onSelectedAllAsset(event){
-    debugger
+    
     if(event.target.checked){
       for( let i = this.totalAsset; i>= 0; i-- ){
         
